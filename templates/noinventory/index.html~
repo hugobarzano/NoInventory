@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+
+
+
+        {% block body_block %}
+
+    <div class="page-header">
+                <h1>¡Bienvenido a Gestion de Inventario!</h1>
+    </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Inventarios Destacados</h3>
+        </div>
+      </div>
+            <div id="accordion">
+             {% if items %}
+                       {% for i in items %}
+                          <h3>{{i.nombre_item}} Fecha: {{i.fecha_alta_item}} </h3>
+                          <div id="{{i.id_item}}">
+                            <p>
+                              Descripcion: {{ i.descripcion_item }}
+                            </p>
+                              Tags: {{i.tag_item}}
+                              <br>
+                              Estado: {{i.estado_item}}
+                              <br>
+                              Tipo: {{ i.tipo_item }}
+                              QR: <img src="/static/images/{{ i.id_item }}.jpg" alt="Picture of bar" />
+                               <button class="btn btn-default btn-xs borrarBoton" data-item="{{i.id_item}}">Borrar</button>
+                            </div>
+                       {% endfor %}
+               {% else %}
+                   <strong>No hay Objetos.</strong>
+               {% endif %}
+               </div>
+               <img src="/static/images/bar.jpg" alt="Picture of bar" />
+               <!--Funcionalidad de borrado asincrono -->
+               <script>
+                 $(".borrarBoton").click(function(){
+                   var itemid;
+                   itemid = $(".borrarBoton").attr("data-item");
+                    console.log(itemid);
+                   $.get('/borrarItem?dato='+itemid, function(data){
+                          console.log(data);
+                          console.log(itemid);
+                          $("#"+itemid).html("Borrado");
+                        });
+                      });
+               </script>
+
+
+                <script src="http://code.highcharts.com/highcharts.js"></script>
+                <div id="container" style="height: 300px"></div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Informes Destacados</h3>
+        </div>
+      </div>
+
+        {% endblock %}
