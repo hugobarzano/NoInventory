@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load qr %}
 {% block title %}Index{% endblock %}
 
 
@@ -27,6 +28,8 @@
                 Estado: {{i.estado_item}}
                 <br>
                 Tipo: {{ i.tipo_item }}
+                <br>
+                {{ i.qr_data|qrcode:"my alt" }}
                 <button class="btn btn-default btn-xs borrarBoton" data-item="{{i.id}}">Borrar</button>
               </div>
           {% endfor %}
