@@ -8,7 +8,7 @@
     <meta name="author" content="Hugo Barzano Cruz">
     <link rel="icon" href="http://getbootstrap.com/favicon.ico">
 
-    <title>Inventariado - {% block title %} {% endblock %}</title>
+    <title>NO-INVETORY - {% block title %} {% endblock %}</title>
 
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
@@ -18,7 +18,29 @@
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <link rel="stylesheet" href="/resources/demos/style.css">
-    <!--funcionalidad de listar items -->
+    <!--funcionalidad dragable items -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <style>
+    #draggable { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; }
+    #droppable { width: 150px; height: 150px; padding: 0.5em; float: left; margin: 10px; }
+    </style>
+    <script>
+      $(function() {
+        $( "#draggable" ).draggable();
+        $( "#droppable" ).droppable({
+          drop: function( event, ui ) {
+            $( this )
+            .addClass( "ui-state-highlight" )
+            .find( "p" )
+            .html( "Clasificado!" );
+          }
+        });
+      });
+  </script>
+
 
 
   </head>
@@ -37,10 +59,9 @@
           <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
               <li><a href="{% url 'index' %}">Home</a></li>
-              <li><a href="{% url 'nuevoItem' %}">Nuevo</a></li>
-
-
-
+              <li><a href="{% url 'inventarios' %}">Inventarios</a></li>
+              <li><a href="{% url 'items' %}">Items</a></li>
+              <li><a href="{% url 'prueba' %}">Prueba</a></li>
 
             </ul>
       </div>
@@ -57,50 +78,15 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <!--barra lateral izquida-->
-            <div class="panel panel-primary">
-              <div class="panel-heading">
-                <h3 class="panel-title">accesibilidad</h3>
-              </div>
-            </div>
-            <button id='btnNormal'>Letra Normal</button>
-            <button id='btnGrande'>Letra Grande</button>
-            <button id='btnMuyGrande'>Letra Más Grande</button>
-            <!--<script src="http://code.jquery.com/jquery.js"></script>-->
-            <script>
-              $("#btnGrande").click( function() {
-                 $( "body" ).css( "font-size", "19px" );
-                 $( "h3" ).css( "font-size", "19px" );
-                 $( "h1" ).css( "font-size", "38px" );
 
 
-                 //$( "div.panel panel-primary" ).css( "font-size", "20px" );
-              });
-              $("#btnMuyGrande").click( function() {
-                 $( "body" ).css( "font-size", "27px" );
-                 $( "h3.panel-title" ).css( "font-size", "27px" );
-                 $( "h1" ).css( "font-size", "40px" );
-                 //$( "div.panel panel-primary" ).css( "font-size", "30px" );
-
-              });
-              $("#btnNormal").click( function() {
-                 $( "body" ).css( "font-size", "14px" );
-                 $( "h3.panel-title" ).css( "font-size", "14px" );
-                 $( "h1" ).css( "font-size", "36px" );
-                 //$( "div.panel panel-primary" ).css( "font-size", "14px" );
-
-              });
-              </script>
               <script>
               $(function() {
                 $( "#accordion" ).accordion();
               });
               </script>
 
-
-
-
-
-                {% block side_block %}{% endblock %}
+                {% block lateral_izquierda %}{% endblock %}
 
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

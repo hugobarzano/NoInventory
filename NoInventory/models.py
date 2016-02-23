@@ -35,4 +35,10 @@ class Item(models.Model):
             tipo_item=self.tipo_item,
             estado_item=self.estado_item)
 
-            
+class Inventario(models.Model):
+    id_inventario = models.AutoField(primary_key=True)
+    nombre_inventario = models.CharField(max_length=150, blank=True)
+    fecha_alta_inventario = models.DateField(null=True, blank=False, auto_now_add=True)
+    descripcion_inventario = models.TextField(max_length=300, blank=True)
+    tag_inventario = models.CharField(max_length=150, blank=True)
+    caracteristicas_inventario = models.CharField(max_length=300, blank=True)

@@ -3,5 +3,10 @@ from NoInventory import views
 
 urlpatterns = patterns('',
         url(r'^$', views.index, name='index'),
+        url(r'^inventarios$', views.inventarios, name='inventarios'),
+        url(r'^inventario/(?P<id_inventario>[\w\-]+)/$', views.inventario, name='inventario'),
+        url(r'^items$', views.items, name='items'),
+        url(r'^prueba$', views.prueba, name='prueba'),
         url(r'^nuevoItem/$', views.nuevoItem, name='nuevoItem'),
+        url(r'^nuevoInventario/$', views.nuevoInventario, name='nuevoInventario'),
         )

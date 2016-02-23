@@ -7,59 +7,47 @@
         {% block body_block %}
 
     <div class="page-header">
-                <h1>¡Bienvenido a Gestion de Inventario!</h1>
+                <h1>¡Bienvenido a No-inventory!</h1>
     </div>
 
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <h3 class="panel-title">Inventarios Destacados</h3>
+          <h3 class="panel-title">¿Qué es No-inventory?</h3>
+            <hr>
+            No-inventory es la aplicación que te permitirá llevar un control exaustivo de todos los activos de tu negocio
         </div>
+             Facil Catalogación
+            <br>
+             Facil Localización
+            <br>
+             Facil seguimiento
       </div>
-      <div id="accordion">
-        {% if lista_items %}
-          {% for i in lista_items %}
-              <h3>Nombre: {{i.nombre_item}} Fecha: {{i.fecha_alta_item}} </h3>
-              <div id="{{i.id}}">
-                <p>
-                  Descripcion: {{ i.descripcion_item }}
-                </p>
-                Tags: {{i.tag_item}}
-                <br>
-                Estado: {{i.estado_item}}
-                <br>
-                Tipo: {{ i.tipo_item }}
-                <br>
-                {{ i.qr_data|qrcode:"my alt" }}
-                <button class="btn btn-default btn-xs borrarBoton" data-item="{{i.id}}">Borrar</button>
-              </div>
-          {% endfor %}
-        {% else %}
-             <strong>No hay Objetos.</strong>
-        {% endif %}
-        </div>
 
-
-               <!--Funcionalidad de borrado asincrono -->
-               <script>
-                 $(".borrarBoton").click(function(){
-                   var itemid;
-                   itemid = $(".borrarBoton").attr("data-item");
-                    console.log(itemid);
-                   $.get('/borrarItem?dato='+itemid, function(data){
-                          console.log(data);
-                          console.log(itemid);
-                          $("#"+itemid).html("Borrado");
-                        });
-                      });
-               </script>
-
-
-                <script src="http://code.highcharts.com/highcharts.js"></script>
-                <div id="container" style="height: 300px"></div>
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <h3 class="panel-title">Informes Destacados</h3>
+          <h3 class="panel-title">¿Qué servicios proporciona No-inventory?</h3>
+            <hr>
+            No-inventory presenta los siguientes servicios
         </div>
+             servicio
+            <br>
+             servicio
+            <br>
+             servicio
       </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">¿Por qué utilizar No-inventory?</h3>
+            <hr>
+            No-inventory utiliza un motor de bases de datos No-relacional que proporciona una mayor flexibilidad y eficiencia en la administración de sus activos
+        </div>
+             servicio
+            <br>
+             servicio
+            <br>
+             servicio
+      </div>
+
 
         {% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load qr %}
+{% block title %}Index{% endblock %}
+
+
+{% block lateral_izquierda %}
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Acciones</h3>
+  </div>
+</div>
+<a href="/noinventory/agregarObjeto/{{ i|documento_id }}">  <button id='nuevoInventario'>Nuevo Inventario</button></a>
+{% endblock %}
+
+
+        {% block body_block %}
+
+    <div class="page-header">
+                <h1>¡Bienvenido a Gestion de Inventario!</h1>
+    </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Inventarios Destacados</h3>
+        </div>
+      </div>
+        {% if inventario %}
+              <h3>Nombre: {{inventario.nombre_inventario}} Fecha: {{inventario.fecha_alta_inventario}} </h3>
+              <div id="{{i.id}}">
+                <p>
+                  Descripcion: {{ inventario.descripcion_inventario }}
+                </p>
+                Tags: {{inventario.tag_inventario}}
+                <br>
+                {{ inventario.qr_data|qrcode:"my alt" }}
+
+              </div>
+        {% else %}
+             <strong>No hay Inventario</strong>
+        {% endif %}
+        </div>
+        <br>
+        <br>
+        <br>
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Inventario dinamico </h3>
+        </div>
+      </div>
+
+
+      <div id="draggable" class="ui-widget-content">
+        <p>Item de prueba</p>
+      </div>
+
+      <div id="droppable" class="ui-widget-header">
+        <p>Inventario de prueba</p>
+      </div>
+
+
+        {% endblock %}
