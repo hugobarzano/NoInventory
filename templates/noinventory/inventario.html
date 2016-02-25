@@ -8,8 +8,13 @@
   <div class="panel-heading">
     <h3 class="panel-title">Acciones</h3>
   </div>
+
+          <form id="inventarioform" method="post" action=" ">
+            {% load bootstrap %}
+            {{ form.items|bootstrap_horizontal:'col-lg-3' }}
+            <input type="submit" name="submit" value="ADD Objeto" />
+          </form>
 </div>
-<a href="/noinventory/agregarObjeto/{{ i|documento_id }}">  <button id='nuevoInventario'>Nuevo Inventario</button></a>
 {% endblock %}
 
 
@@ -33,6 +38,8 @@
                 Tags: {{inventario.tag_inventario}}
                 <br>
                 {{ inventario.qr_data|qrcode:"my alt" }}
+
+                 {{ inventario.items_inventario }}
 
               </div>
         {% else %}

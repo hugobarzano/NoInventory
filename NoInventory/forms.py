@@ -1,9 +1,15 @@
 from django import forms
 from NoInventory.models import *
 
+from bson import Binary, Code
+from bson.json_util import dumps
+from bson.json_util import loads
+import json
+
 from pymongo import MongoClient
 client = MongoClient('mongodb://localhost:27017/')
 db = client['items-database']
+db2 = client['inventarios-database']
 
 
 class ItemForm(forms.ModelForm):
@@ -38,29 +44,49 @@ class InventarioForm(forms.ModelForm):
 
 class SelectItem(forms.Form):
     tupla= []
+    tupla2=[]
     aux2 = []
+    aux4 = []
+    lista_items=[]
     ESTADO=(
     ('presente', 'presente'),
     ('no presente', 'no presente'),
     ('pendiente','pendiente'),)
+
+    #db2.inventarios.remove()
+    #db.items.remove()
     items=db.items.find()
-    print items[1]
-    #for i in items:
-    for i in range(2):
-        #print i["_id"]
-        #tupla.append(str(items[i]["_id"])+","+str(items[i]["_id"]))
-        tupla.append(str(items[i]["_id"]))
-        tupla.append(str(items[i]["_id"]))
+    for i in items:
+        lista_items.append(i)
+
+    print "aux6:"
+    #print lista_items[0]["nombre_item"]
+
+    for i in lista_items:
+        tupla.append(str(i["_id"]))
+        tupla.append(str(i["_id"]))
+
+        tupla2.append(i["nombre_item"])
+        tupla2.append(i["nombre_item"])
+
         aux=tuple(tupla)
         aux2.append(aux)
+        tupla=[]
 
-    print tupla
-    SEL=tuple(aux2)
-    print "tupletizando"
-    print SEL
-    print "ESTADO"
-    print ESTADO
+        aux3=tuple(tupla2)
+        aux4.append(aux3)
+        tupla2=[]
+
     #print tupla
-    items = forms.CharField(max_length=150,widget=forms.Select(choices=ESTADO))
+    SEL=tuple(aux2)
+    SEL2=tuple(aux4)
+    print "tupletizando1"
+    print SEL
+    print "tupletizando2"
+    print SEL2
+    print "ESTADO"
+    #print ESTADO
+    #print tupla
+    items = forms.CharField(max_length=150,widget=forms.Select(choices=SEL2))
 
     #items = forms.ModelChoiceField(db.items.find())

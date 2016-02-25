@@ -33,17 +33,29 @@ def inventarios(request):
     contexto = {"lista_inventarios":lista_inventarios}
     return render(request, 'noinventory/inventarios.html',contexto)
 
+@csrf_exempt
 def inventario(request,id_inventario):
-    inventario=db2.inventarios.find_one({"_id": ObjectId(id_inventario)})
-    lista_inventarios=db2.inventarios.find()
-    contexto = {"inventario":inventario}
-    return render(request, 'noinventory/inventario.html',contexto)
+    if request.method == 'POST':
+        form = SelectItem(request.POST)
+        if form.is_valid():
+            item=db.items.find_one({"nombre_item": form.data["items"]})
+            print "item:"
+            print item["_id"]
+            #db2.inventarios.update_one({"_id":id_inventario},{"$push": {"items_inventario": item["_id"]}})
+            db2.inventarios.update({"_id": id_inventario},{"$addToSet": {"items_inventario" : item["_id"]}})
+            inventario=db2.inventarios.find_one({"_id": ObjectId(id_inventario)})
+            print "inventario"
+            print inventario
+            contexto = {"inventario":inventario,"form": form}
+            return render(request, 'noinventory/inventario.html',contexto)
+        else:
+            print form.errors
+    else:
+        inventario=db2.inventarios.find_one({"_id": ObjectId(id_inventario)})
+        form = SelectItem()
+        contexto = {"inventario":inventario,"form": form}
+    return render(request, 'noinventory/inventario.html', contexto)
 
-def agregarObjeto(request,id_inventario,id_objeto):
-    inventario=db2.inventarios.find_one({"_id": ObjectId(id_inventario)})
-    lista_inventarios=db2.inventarios.find()
-    contexto = {"inventario":inventario}
-    return render(request, 'noinventory/inventario.html',contexto)
 
 @csrf_exempt
 def nuevoItem(request):
@@ -89,7 +101,8 @@ def nuevoInventario(request):
                         "fecha_alta_inventario": time.strftime("%c"),
                         "descripcion_inventario": form.data['descripcion_inventario'],
                         "tag_inventario": form.data['tag_inventario'],
-                        "caracteristicas_inventario":form.data['caracteristicas_inventario']
+                        "caracteristicas_inventario":form.data['caracteristicas_inventario'],
+                        "items_inventario": []
                         }
             id_inventario=db2.inventarios.insert(inventario)
             #print id_item
