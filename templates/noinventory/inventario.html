@@ -24,14 +24,19 @@
                 <h1>¡Bienvenido a Gestion de Inventario!</h1>
     </div>
 
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Inventarios Destacados</h3>
+
+
+      <div class="row placeholders">
+      <div class="col-xs-12 col-sm-6 placeholder">
+         <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{inventario.nombre_inventario}} </h3>
+          </div>
         </div>
-      </div>
+        <ul class="list-group">
+           <li class="list-group-item">
         {% if inventario %}
-              <h3>Nombre: {{inventario.nombre_inventario}} Fecha: {{inventario.fecha_alta_inventario}} </h3>
-              <div id="{{i.id}}">
+              Fecha: {{inventario.fecha_alta_inventario}} </h3>
                 <p>
                   Descripcion: {{ inventario.descripcion_inventario }}
                 </p>
@@ -41,29 +46,24 @@
 
                  {{ inventario.items_inventario }}
 
-              </div>
         {% else %}
              <strong>No hay Inventario</strong>
         {% endif %}
-        </div>
-        <br>
-        <br>
-        <br>
-
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Inventario dinamico </h3>
-        </div>
+      </li>
+      </ul>
       </div>
 
 
-      <div id="draggable" class="ui-widget-content">
-        <p>Item de prueba</p>
-      </div>
+           <div class="col-xs-12 col-sm-6 placeholder">
+              <div class="panel panel-primary">
+            <div class="panel-heading">
+                    <h3 class="panel-title">Items</h3>
+            </div>
+    </div>
+  </div>
 
-      <div id="droppable" class="ui-widget-header">
-        <p>Inventario de prueba</p>
-      </div>
+
+
 
 
         {% endblock %}

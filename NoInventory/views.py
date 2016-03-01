@@ -33,19 +33,46 @@ def inventarios(request):
     contexto = {"lista_inventarios":lista_inventarios}
     return render(request, 'noinventory/inventarios.html',contexto)
 
+
 @csrf_exempt
 def inventario(request,id_inventario):
+    nombre_items=[]
+    inventario=db2.inventarios.find_one({"_id": ObjectId(id_inventario)})
+    print "inventario Despues de insertar:"
+    print inventario["items_inventario"]
+    for i in inventario["items_inventario"]:
+        item=db.items.find_one({"_id": i})
+        nombre_items.append(item["nombre_item"])
+    print nombre_items
+    contexto = {"inventario":inventario,"form": form}
+    return render(request, 'noinventory/inventario.html',contexto)
+        else:
+            print form.errors
+    else:
+        inventario=db2.inventarios.find_one({"_id": ObjectId(id_inventario)})
+        form = SelectItem()
+        contexto = {"inventario":inventario,"form": form}
+    return render(request, 'noinventory/inventario.html', contexto)
+
+
+
+
+@csrf_exempt
+def inventario2(request,id_inventario):
+    nombre_items=[]
     if request.method == 'POST':
         form = SelectItem(request.POST)
         if form.is_valid():
             item=db.items.find_one({"nombre_item": form.data["items"]})
-            print "item:"
-            print item["_id"]
-            #db2.inventarios.update_one({"_id":id_inventario},{"$push": {"items_inventario": item["_id"]}})
-            db2.inventarios.update({"_id": id_inventario},{"$addToSet": {"items_inventario" : item["_id"]}})
             inventario=db2.inventarios.find_one({"_id": ObjectId(id_inventario)})
-            print "inventario"
-            print inventario
+            db2.inventarios.update({"_id": ObjectId(id_inventario)},{"$push": {"items_inventario" :  item["_id"],}})
+            inventario=db2.inventarios.find_one({"_id": ObjectId(id_inventario)})
+            print "inventario Despues de insertar:"
+            print inventario["items_inventario"]
+            for i in inventario["items_inventario"]:
+                item=db.items.find_one({"_id": i})
+                nombre_items.append(item["nombre_item"])
+            print nombre_items
             contexto = {"inventario":inventario,"form": form}
             return render(request, 'noinventory/inventario.html',contexto)
         else:

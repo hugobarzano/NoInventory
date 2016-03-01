@@ -84,9 +84,5 @@ class SelectItem(forms.Form):
     print SEL
     print "tupletizando2"
     print SEL2
-    print "ESTADO"
-    #print ESTADO
-    #print tupla
     items = forms.CharField(max_length=150,widget=forms.Select(choices=SEL2))
-
-    #items = forms.ModelChoiceField(db.items.find())
+    SEL2=[]
