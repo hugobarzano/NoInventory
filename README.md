@@ -21,3 +21,7 @@ Contacto: [hugobarzano@gmail.com]
 ###Herramientas y cosas utiles
 
 [Investigar 123d](http://www.123dapp.com/catch)
+
+###Tutoriales
+
+[Implementar lector codigos](http://code.tutsplus.com/tutorials/android-sdk-create-a-barcode-reader--mobile-17162)
