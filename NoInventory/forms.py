@@ -43,46 +43,7 @@ class InventarioForm(forms.ModelForm):
         fields = ('nombre_inventario','descripcion_inventario','tag_inventario','caracteristicas_inventario')
 
 class SelectItem(forms.Form):
-    tupla= []
-    tupla2=[]
-    aux2 = []
-    aux4 = []
-    lista_items=[]
-    ESTADO=(
-    ('presente', 'presente'),
-    ('no presente', 'no presente'),
-    ('pendiente','pendiente'),)
-
-    #db2.inventarios.remove()
-    #db.items.remove()
-    items=db.items.find()
-    for i in items:
-        lista_items.append(i)
-
-    print "aux6:"
-    #print lista_items[0]["nombre_item"]
-
-    for i in lista_items:
-        tupla.append(str(i["_id"]))
-        tupla.append(str(i["_id"]))
-
-        tupla2.append(i["nombre_item"])
-        tupla2.append(i["nombre_item"])
-
-        aux=tuple(tupla)
-        aux2.append(aux)
-        tupla=[]
-
-        aux3=tuple(tupla2)
-        aux4.append(aux3)
-        tupla2=[]
-
-    #print tupla
-    SEL=tuple(aux2)
-    SEL2=tuple(aux4)
-    print "tupletizando1"
-    print SEL
-    print "tupletizando2"
-    print SEL2
-    items = forms.CharField(max_length=150,widget=forms.Select(choices=SEL2))
-    SEL2=[]
+    def __init__(self,*args,**kwargs):
+        super(SelectItem, self).__init__(*args,**kwargs)
+        lista_items=db.items.find()
+        self.fields['items'] = forms.ChoiceField(label="items", choices=[(x["nombre_item"], x["nombre_item"]) for x in lista_items])

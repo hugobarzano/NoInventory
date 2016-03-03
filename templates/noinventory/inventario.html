@@ -24,28 +24,39 @@
                 <h1>¡Bienvenido a Gestion de Inventario!</h1>
     </div>
 
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{inventario.nombre_inventario}}</h3>
+      </div>
+    </div>
+    <ul class="list-group">
+       <li class="list-group-item">
+    {% if inventario %}
+          Fecha: {{inventario.fecha_alta_inventario}} </h3>
+            <p>
+              Descripcion: {{ inventario.descripcion_inventario }}
+            </p>
+            Tags: {{inventario.tag_inventario}}
+            <br>
+            {{ inventario.qr_data|qrcode:"my alt" }}
+    {% else %}
+         <strong>No hay Inventario</strong>
+    {% endif %}
+  </li>
+  </ul>
 
 
       <div class="row placeholders">
       <div class="col-xs-12 col-sm-6 placeholder">
          <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">{{inventario.nombre_inventario}} </h3>
+            <h3 class="panel-title">Items del inventario </h3>
           </div>
         </div>
         <ul class="list-group">
            <li class="list-group-item">
         {% if inventario %}
-              Fecha: {{inventario.fecha_alta_inventario}} </h3>
-                <p>
-                  Descripcion: {{ inventario.descripcion_inventario }}
-                </p>
-                Tags: {{inventario.tag_inventario}}
-                <br>
-                {{ inventario.qr_data|qrcode:"my alt" }}
-
                  {{ inventario.items_inventario }}
-
         {% else %}
              <strong>No hay Inventario</strong>
         {% endif %}
@@ -54,13 +65,35 @@
       </div>
 
 
-           <div class="col-xs-12 col-sm-6 placeholder">
-              <div class="panel panel-primary">
-            <div class="panel-heading">
-                    <h3 class="panel-title">Items</h3>
-            </div>
+    <div class="col-xs-12 col-sm-6 placeholder">
+      <div class="panel panel-primary">
+       <div class="panel-heading">
+         <h3 class="panel-title">Items </h3>
+       </div>
+     </div>
+
+     <div id="accordion">
+       {% if lista_items %}
+         {% for i in lista_items %}
+             <h3>Nombre: {{i.nombre_item}} Fecha: {{i.fecha_alta_item}} </h3>
+             <div id="{{i.id}}">
+               <p>
+                 Descripcion: {{ i.descripcion_item }}
+               </p>
+               Tags: {{i.tag_item}}
+               <br>
+               Estado: {{i.estado_item}}
+               <br>
+               Tipo: {{ i.tipo_item }}
+               <br>
+               <a href="/noinventory/addToInventario/{{ inventario|documento_id }}/{{ i|documento_id}}"> <button class="btn btn-default btn-xs">Añadir</button></a>
+             </div>
+         {% endfor %}
+       {% else %}
+            <strong>No hay Objetos.</strong>
+       {% endif %}
+       </div>
     </div>
-  </div>
 
 
 

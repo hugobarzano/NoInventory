@@ -35,7 +35,7 @@ def inventarios(request):
 
 
 @csrf_exempt
-def inventario(request,id_inventario):
+def inventario2(request,id_inventario):
     nombre_items=[]
     inventario=db2.inventarios.find_one({"_id": ObjectId(id_inventario)})
     print "inventario Despues de insertar:"
@@ -44,25 +44,24 @@ def inventario(request,id_inventario):
         item=db.items.find_one({"_id": i})
         nombre_items.append(item["nombre_item"])
     print nombre_items
-    contexto = {"inventario":inventario,"form": form}
-    return render(request, 'noinventory/inventario.html',contexto)
-        else:
-            print form.errors
-    else:
-        inventario=db2.inventarios.find_one({"_id": ObjectId(id_inventario)})
-        form = SelectItem()
-        contexto = {"inventario":inventario,"form": form}
+
+    inventario=db2.inventarios.find_one({"_id": ObjectId(id_inventario)})
+    lista_items=db.items.find()
+    form = SelectItem()
+    contexto = {"inventario":inventario,"lista_items":lista_items,"form": form}
     return render(request, 'noinventory/inventario.html', contexto)
 
 
 
 
 @csrf_exempt
-def inventario2(request,id_inventario):
+def inventario(request,id_inventario):
     nombre_items=[]
     if request.method == 'POST':
         form = SelectItem(request.POST)
         if form.is_valid():
+            print "formulario nombre:"
+            print form.data["items"]
             item=db.items.find_one({"nombre_item": form.data["items"]})
             inventario=db2.inventarios.find_one({"_id": ObjectId(id_inventario)})
             db2.inventarios.update({"_id": ObjectId(id_inventario)},{"$push": {"items_inventario" :  item["_id"],}})
@@ -73,16 +72,29 @@ def inventario2(request,id_inventario):
                 item=db.items.find_one({"_id": i})
                 nombre_items.append(item["nombre_item"])
             print nombre_items
-            contexto = {"inventario":inventario,"form": form}
+            lista_items=db.items.find()
+            contexto = {"inventario":inventario,"lista_items":lista_items,"form": form}
             return render(request, 'noinventory/inventario.html',contexto)
         else:
             print form.errors
     else:
         inventario=db2.inventarios.find_one({"_id": ObjectId(id_inventario)})
         form = SelectItem()
-        contexto = {"inventario":inventario,"form": form}
+        lista_items=db.items.find()
+        contexto = {"inventario":inventario,"lista_items":lista_items,"form": form}
     return render(request, 'noinventory/inventario.html', contexto)
 
+
+@csrf_exempt
+def addToInventario(request,id_inventario,id_item):
+        item=db.items.find_one({"_id": ObjectId(id_item)})
+        inventario=db2.inventarios.find_one({"_id": ObjectId(id_inventario)})
+        db2.inventarios.update({"_id": ObjectId(id_inventario)},{"$addToSet": {"items_inventario" :  item["_id"],}})
+        inventario=db2.inventarios.find_one({"_id": ObjectId(id_inventario)})
+        form = SelectItem()
+        lista_items=db.items.find()
+        contexto = {"inventario":inventario,"lista_items":lista_items,"form": form}
+        return render(request, 'noinventory/inventario.html', contexto)
 
 @csrf_exempt
 def nuevoItem(request):
@@ -153,3 +165,40 @@ def jsonTOstringInventario(elemento):
     #d=json.dumps(elemento)
     texto="Nombre Inventario:" + elemento["nombre_inventario"] + "\nIdentificador:"+str(elemento["_id"]) + "\nFecha de Alta:"+elemento["fecha_alta_inventario"]+"\nDescripcion:"+elemento["descripcion_inventario"]+"\nTags:"+elemento["tag_inventario"]
     return texto
+
+def desplegable():
+    tupla= []
+    tupla2=[]
+    aux2 = []
+    aux4 = []
+    lista_items=[]
+    items=db.items.find()
+    for i in items:
+        lista_items.append(i)
+
+    print "aux6:"
+    #print lista_items[0]["nombre_item"]
+
+    for i in lista_items:
+        tupla.append(str(i["_id"]))
+        tupla.append(str(i["_id"]))
+
+        tupla2.append(i["nombre_item"])
+        tupla2.append(i["nombre_item"])
+
+        aux=tuple(tupla)
+        aux2.append(aux)
+        tupla=[]
+
+        aux3=tuple(tupla2)
+        aux4.append(aux3)
+        tupla2=[]
+
+    #print tupla
+    SEL=tuple(aux2)
+    SEL2=tuple(aux4)
+    print "tupletizando1"
+    print SEL
+    print "tupletizando2"
+    print SEL2
+    return SEL2
