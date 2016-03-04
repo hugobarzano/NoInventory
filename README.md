@@ -1,4 +1,4 @@
-# Gestion Inventario
+#NO-INVENTORY
 
 ##Trabajo de Fin de Grado - Programa Becas Talentum StartUP
 ###Descripción
@@ -25,3 +25,7 @@ Contacto: [hugobarzano@gmail.com]
 ###Tutoriales
 
 [Implementar lector codigos](http://code.tutsplus.com/tutorials/android-sdk-create-a-barcode-reader--mobile-17162)
+
+###Presentación Concurso Software libre
+
+[Hackaton Marzo](https://www.dropbox.com/s/2z3nephfqtxzdzc/NO-INVENTORY.pdf?dl=1)
