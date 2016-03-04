@@ -11,11 +11,13 @@ Contacto: [hugobarzano@gmail.com]
 
 [Objetivos](https://github.com/hugobarzano/NoInventory/blob/master/documentacion/objetivos.md) del proyecto, cosas que se quieren hacer, cosas que se han hecho, cosa de interes.  
 
-#Infraestructura
-git
+###Infraestructura
+
 La infraestrutura del proyecto se encuentra alojada en el respositorio [osl-computer-management](https://github.com/hugobarzano/osl-computer-management)
 
+###Aplicación Android
 
+La aplicación Android del proyecto se encuentra alojada en el repositorio [NoInventory-Android-Apps] (https://github.com/hugobarzano/NoInventory-Android-Apps)
 
 ###NinjaMock
 [Diseño de la web](https://ninjamock.com/s/KDGZS)
