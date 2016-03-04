@@ -11,6 +11,10 @@ Contacto: [hugobarzano@gmail.com]
 
 [Objetivos](https://github.com/hugobarzano/NoInventory/blob/master/documentacion/objetivos.md) del proyecto, cosas que se quieren hacer, cosas que se han hecho, cosa de interes.  
 
+#Infraestructura
+
+La infraestrutura del proyecto se encuentra alojada en el respositorio [osl-computer-managemt](https://github.com/hugobarzano/osl-computer-management)
+
 
 
 ###NinjaMock
