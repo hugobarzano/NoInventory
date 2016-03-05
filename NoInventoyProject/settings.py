@@ -38,7 +38,13 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'NoInventory',
     'bootstrapform',
+    'registration',
 )
+REGISTRATION_OPEN = True
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
+LOGIN_REDIRECT_URL = '/noinventory/'
+LOGIN_URL = '/accounts/login/'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',

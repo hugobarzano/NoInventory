@@ -48,16 +48,3 @@ class SelectItem(forms.Form):
         super(SelectItem, self).__init__(*args,**kwargs)
         lista_items=db.items.find()
         self.fields['items'] = forms.ChoiceField(label="items", choices=[(x["nombre_item"], x["nombre_item"]) for x in lista_items])
-
-
-class UsuarioForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
-
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'password')
-
-class PerfilUsuarioForm(forms.ModelForm):
-    class Meta:
-        model = PerfilUsuario
-        fields = ('organizacion',)

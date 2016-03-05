@@ -2,13 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
-class PerfilUsuario(models.Model):
-    # This line is required. Links UserProfile to a User model instance.
-    usuario = models.OneToOneField(User)
-    organizacion = models.CharField(max_length=150, blank=True)
-
-    def __unicode__(self):
-        return self.usuario.username
 
 
 # Create your models here.

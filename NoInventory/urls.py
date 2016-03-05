@@ -10,5 +10,4 @@ urlpatterns = patterns('',
         url(r'^prueba$', views.prueba, name='prueba'),
         url(r'^nuevoItem/$', views.nuevoItem, name='nuevoItem'),
         url(r'^nuevoInventario/$', views.nuevoInventario, name='nuevoInventario'),
-        url(r'^registro/$', views.registro, name='registro'),
         )

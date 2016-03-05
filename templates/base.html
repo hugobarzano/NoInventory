@@ -59,17 +59,26 @@
           <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
               <li><a href="{% url 'index' %}">Home</a></li>
-              <li><a href="{% url 'inventarios' %}">Inventarios</a></li>
-              <li><a href="{% url 'items' %}">Items</a></li>
-              <li><a href="{% url 'prueba' %}">Prueba</a></li>
-              <li><a href="{% url 'registro' %}">Register Here</a></li>
+              {% if user.is_authenticated %}
+                     <li><a href="{% url 'inventarios' %}?next=/noinventory/">Inventarios</a></li>
+                     <li><a href="{% url 'items' %}?next=/noinventory/">Items</a></li>
+                     <li><a href="{% url 'prueba' %}?next=/noinventory/">Prueba</a></li>
+              {% else %}
+
+              {% endif %}
 
             </ul>
       </div>
         </div>
+
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-
+            {% if user.is_authenticated %}
+                   <li><a href="{% url 'auth_logout' %}?next=/noinventory/">Logout</a></li>
+            {% else %}
+                  <li><a href="{% url 'registration_register' %}">Registrate </a></li>
+                  <li><a href="{% url 'auth_login' %}">Login</a></li>
+            {% endif %}
               </ul>
         </div>
       </div>
@@ -79,7 +88,6 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <!--barra lateral izquida-->
-
 
               <script>
               $(function() {
