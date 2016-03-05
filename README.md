@@ -5,7 +5,9 @@
 
 Repositorio para el proyecto de gestión y administración de inventariado
 
-Contacto: [hugobarzano@gmail.com]
+Blog: [http://no-inventory.es/](http://no-inventory.es/)
+Twiiter: [@no_inventory](https://twitter.com/no_inventory)
+Contacto: hugobarzano@gmail.com
 
 ###Objetivos
 
