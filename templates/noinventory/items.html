@@ -53,13 +53,12 @@
           $(".borrarBoton").click(function(){
             var itemid;
             itemid = $(".borrarBoton").attr("data-item");
-             console.log(itemid);
-            $.get('/borrarItem?dato='+itemid, function(data){
-                   console.log(data);
-                   console.log(itemid);
-                   $("#"+itemid).html("Borrado");
-                 });
-               });
+            $.get('/noinventory/borrarItem?dato='+itemid, function(data){
+                 console.log(itemid);
+                 console.log(data.items)
+                 $("#"+itemid).html("Borrado");
+                });
+            });
         </script>
 
                 <script src="http://code.highcharts.com/highcharts.js"></script>

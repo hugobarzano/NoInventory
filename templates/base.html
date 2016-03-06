@@ -17,12 +17,10 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <link rel="stylesheet" href="/resources/demos/style.css">
     <!--funcionalidad dragable items -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <link rel="stylesheet" href="/resources/demos/style.css">
     <style>
     #draggable { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; }
     #droppable { width: 150px; height: 150px; padding: 0.5em; float: left; margin: 10px; }
@@ -52,17 +50,17 @@
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar">mimimimimimi</span>
-            <span class="icon-bar">mimimimimimimimi</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
           <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
               <li><a href="{% url 'index' %}">Home</a></li>
               {% if user.is_authenticated %}
-                     <li><a href="{% url 'inventarios' %}?next=/noinventory/">Inventarios</a></li>
-                     <li><a href="{% url 'items' %}?next=/noinventory/">Items</a></li>
-                     <li><a href="{% url 'prueba' %}?next=/noinventory/">Prueba</a></li>
+                     <li><a href="{% url 'inventarios' %}">Inventarios</a></li>
+                     <li><a href="{% url 'items' %}">Items</a></li>
+                     <li><a href="{% url 'prueba' %}">Prueba</a></li>
               {% else %}
 
               {% endif %}

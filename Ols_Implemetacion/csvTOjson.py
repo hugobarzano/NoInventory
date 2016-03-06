@@ -4,7 +4,8 @@ from pymongo import MongoClient
 
 
 client = MongoClient('mongodb://localhost:27017/')
-db3 = client['entidades-database']
+db = client['noinventory-database']
+
 
 
 def csvTOjson():
@@ -22,14 +23,14 @@ def csvTOmongo():
     fieldnames = ("COD_ENTIDAD","ENTIDAD")
     reader = csv.DictReader( csvfile, fieldnames)
     for row in reader:
-        db3.entidades.insert(row)
+        db.entidades.insert(row)
 
 
 
 if __name__ == '__main__':
     print "Convirtiendo a Json"
     #csvTOjson()
-    #csvTOmongo()
-    ent=db3.entidades.find()
+    csvTOmongo()
+    ent=db.entidades.find()
     for i in ent:
         print i

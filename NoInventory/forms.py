@@ -9,9 +9,8 @@ import json
 
 from pymongo import MongoClient
 client = MongoClient('mongodb://localhost:27017/')
-db = client['items-database']
-db2 = client['inventarios-database']
-db3 = client['entidades-database']
+db = client['noinventory-database']
+
 
 
 
@@ -29,7 +28,7 @@ class ItemForm(forms.ModelForm):
     tag_item = forms.CharField(max_length=150, help_text="Tag para ayudar a clasificar el objeto")
     tipo_item=forms.CharField(max_length=150,widget=forms.Select(choices=TIPO))
     estado_item =forms.CharField(max_length=150,widget=forms.Select(choices=ESTADO))
-    lista_entidades=db3.entidades.find()
+    lista_entidades=db.entidades.find()
     entidad = forms.ChoiceField(label="Entidad", choices=[(x["ENTIDAD"], x["ENTIDAD"]) for x in lista_entidades])
 
 
