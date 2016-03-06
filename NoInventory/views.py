@@ -211,3 +211,16 @@ def desplegable():
     print "tupletizando2"
     print SEL2
     return SEL2
+
+@csrf_exempt
+def borrarItem(request):
+    i_id = None
+    if request.method == 'GET':
+        i_id = request.GET['dato']
+        print i_id
+        db.items.remove( {"_id" : i_id } )
+        items = db.items.find()
+        contexto = {'items': items}
+        print "Borrando"
+        print contexto
+        return HttpResponse(contexto)
