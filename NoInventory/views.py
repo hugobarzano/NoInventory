@@ -12,8 +12,10 @@ from pymongo import MongoClient
 client = MongoClient('mongodb://localhost:27017/')
 db = client['items-database']
 db2 = client['inventarios-database']
+db3 = client['entidades-database']
 items=db.items
 inventarios=db2.inventarios
+
 
 def index(request):
     lista_items=db.items.find()
@@ -102,13 +104,18 @@ def nuevoItem(request):
     if request.method == 'POST':
         form = ItemForm(request.POST)
         if form.is_valid():
+            entidad=db3.entidades.find_one({"ENTIDAD":form.data["entidad"]})
+            print entidad
             item = {    "nombre_item": form.data['nombre_item'],
                         "fecha_alta_item": time.strftime("%c"),
                         "descripcion_item": form.data['descripcion_item'],
                         "tag_item": form.data['tag_item'],
                         "tipo_item": form.data['tipo_item'],
                         "estado_item": form.data['estado_item'],
+                        "codigo_centro":entidad["COD_ENTIDAD"],
+                        "centro":entidad["ENTIDAD"],
                         }
+            print item
             id_item=db.items.insert(item)
             #print id_item
             qr_data_generated=jsonTOstring(db.items.find_one({"_id": id_item}))

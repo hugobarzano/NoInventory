@@ -33,8 +33,10 @@
                 Tags: {{i.tag_item}}
                 <br>
                 Estado: {{i.estado_item}}
-                <br>
                 Tipo: {{ i.tipo_item }}
+                <br>
+                Centro: {{i.centro}}
+                Codigo Centro: {{ i.codigo_centro }}
                 <br>
                 {{ i.qr_data|qrcode:"my alt" }}
                 <button class="btn btn-default btn-xs borrarBoton" data-item="{{i.id}}">Borrar</button>
