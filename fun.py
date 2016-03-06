@@ -1,5 +1,5 @@
 import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'NoInventoyProject.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'NoInventoryProject.settings')
 import django
 django.setup()
 from pymongo import MongoClient

@@ -1,5 +1,5 @@
 """
-Django settings for NoInventoyProject project.
+Django settings for NoInventoryProject project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -56,9 +56,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'NoInventoyProject.urls'
+ROOT_URLCONF = 'NoInventoryProject.urls'
 
-WSGI_APPLICATION = 'NoInventoyProject.wsgi.application'
+WSGI_APPLICATION = 'NoInventoryProject.wsgi.application'
 
 
 # Database

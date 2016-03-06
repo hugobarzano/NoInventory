@@ -9,7 +9,7 @@ class MyRegistrationView(RegistrationView):
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'NoInventoyProject.views.home', name='home'),
+    # url(r'^$', 'NoInventoryProject.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
