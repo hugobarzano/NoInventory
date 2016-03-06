@@ -6,6 +6,7 @@ from bson import ObjectId
 from django.http import HttpResponse
 from NoInventory.forms import *
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 from pymongo import MongoClient
 client = MongoClient('mongodb://localhost:27017/')
@@ -132,6 +133,7 @@ def jsonTOstring(elemento):
 
 
 @csrf_exempt
+@login_required
 def nuevoInventario(request):
     if request.method == 'POST':
         form = InventarioForm(request.POST)
