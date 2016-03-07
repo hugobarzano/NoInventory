@@ -36,12 +36,14 @@ La aplicación Android del proyecto se encuentra alojada en el repositorio [NoIn
 [Documento casos de uso](https://www.dropbox.com/s/90tang9wazsx1vt/casos_uso.odt?dl=1)
 
 ####Análisis de Requisitos
-[Documento requisitos de información](https://www.dropbox.com/s/ipidn2bou6xmexf/requitos.odt?dl=1)
+[Documento requisitos de información](https://www.dropbox.com/s/ipidn2bou6xmexf/requitos.odt?dl)
 
 ###Herramientas y cosas utiles
 
 [Investigar 123d](http://www.123dapp.com/catch)
 [Realizar Diagramas Online](https://creately.com/app/?tempID=h165rwt81&login_type=demo#)
+
+[Disparadores para redes sociales](https://ifttt.com/recipes)
 
 ###Tutoriales
 

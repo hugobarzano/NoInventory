@@ -62,6 +62,7 @@
                      <li><a href="{% url 'items' %}">Items</a></li>
                      <li><a href="{% url 'prueba' %}">Prueba</a></li>
               {% else %}
+                     <li><a href="http://no-inventory.es/">Blog</a></li>
 
               {% endif %}
 
@@ -72,6 +73,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
+                  <li><a href="http://no-inventory.es/">Blog</a></li>
                    <li><a href="{% url 'auth_logout' %}?next=/noinventory/">Logout</a></li>
             {% else %}
                   <li><a href="{% url 'registration_register' %}">Registrate </a></li>
