@@ -6,12 +6,11 @@ from item import *
 def load_all_items_from_database(manejador):
     print("Cargando todos los items de la base de datos:")
     items = manejador.read()
-    items = []
     at_least_one_item = False
     for i in items:
         at_least_one_item = True
         tmp_item = Item.build_from_json(i)
-        print("ID = {} | Fecha = {}".format(tmp_item._id,tmp_item.fecha_alta_item))
+        print("ID = {} |Nombre = {}| Fecha = {}".format(tmp_item._id,tmp_item.nombre_item,tmp_item.fecha_alta_item))
     if not at_least_one_item:
         print("No hay items en la base de datos")
 
@@ -56,10 +55,11 @@ def test_delete(manejador, new_item):
 
 def main():
     manejador = ItemsDriver()
-
+    #manejador.destroyDriver()
     print "\n#######################################################"
     print "LANZANDO BATERIA DE TEST - OPERACIONES CRUD PARA ITEMS"
     print "#######################################################\n"
+
 
     load_all_items_from_database(manejador)
 

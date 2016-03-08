@@ -8,6 +8,7 @@ from NoInventory.forms import *
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic.base import View
+from bson.json_util import dumps
 
 from item import *
 gestorItems = ItemsDriver()
@@ -243,8 +244,8 @@ class ItemCreator(View):
         form = ItemForm(request.POST)
         if form.is_valid():
             entidad=db.entidades.find_one({"ENTIDAD":form.data["entidad"]})
-            print entidad
-            item =Item.build_from_json({    "nombre_item": form.data['nombre_item'],
+            #print entidad
+            item =Item.build_from_json({"nombre_item": form.data['nombre_item'],
                         "fecha_alta_item": time.strftime("%c"),
                         "descripcion_item": form.data['descripcion_item'],
                         "tag_item": form.data['tag_item'],
@@ -275,37 +276,37 @@ class ItemCreator(View):
 class ItemUpdater(View):
 
     def get(self, request,id_item):
-        res=gestorItems.read(item_id=id_item)
-        for i in res:
-            print Item.build_from_json(i)
+        cursor=gestorItems.read(item_id=id_item)
+        for i in cursor:
+            currentItem = Item.build_from_json(i)
 
-        form = ItemForm()
-        return render(request, 'noinventory/nuevoItem.html', {'form': form})
+        aux=currentItem.get_as_json()
+        print aux
+        form = ItemForm(aux)
+        form.data["descripcion_item"]=str(form.data["descripcion_item"])+"\nUltima modificacion: "+time.strftime("%c")
+        form.data["entidad"]=aux["centro"]
+        return render(request, 'noinventory/modificarItem.html', {'form': form,'id_item':currentItem._id})
 
-    def post(self, request):
+    def post(self, request,id_item):
+        cursor=gestorItems.read(item_id=id_item)
+        for i in cursor:
+            c = Item.build_from_json(i)
         form = ItemForm(request.POST)
         if form.is_valid():
             entidad=db.entidades.find_one({"ENTIDAD":form.data["entidad"]})
-            print entidad
-            item = {    "nombre_item": form.data['nombre_item'],
-                        "fecha_alta_item": time.strftime("%c"),
+            #print entidad
+            itemUpdated =Item.build_from_json({"_id":c._id,
+                        "nombre_item": form.data['nombre_item'],
+                        "fecha_alta_item": c.fecha_alta_item,
                         "descripcion_item": form.data['descripcion_item'],
                         "tag_item": form.data['tag_item'],
                         "tipo_item": form.data['tipo_item'],
                         "estado_item": form.data['estado_item'],
                         "codigo_centro":entidad["COD_ENTIDAD"],
                         "centro":entidad["ENTIDAD"],
-                        }
-            print item
-            id_item=db.items.insert(item)
-            #print id_item
-            qr_data_generated=jsonTOstring(db.items.find_one({"_id": id_item}))
-            #print qr_data_generated
-            db.items.update_one({"_id":id_item},{"$set": {"qr_data": qr_data_generated}})
-            lista_items=db.items.find()
-            #print lista_items
-            #for i in lista_items:
-                #print i
+                        })
+            gestorItems.update(itemUpdated)
+            lista_items=gestorItems.read()
             contexto = {"lista_items":lista_items}
             return render(request, 'noinventory/items.html',contexto)
         else:

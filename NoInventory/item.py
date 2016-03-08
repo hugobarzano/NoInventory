@@ -8,10 +8,12 @@ class Item(object):
     """Clase para almacenar informacion de los items"""
 
     def __init__(self, item_id=None,nombre_item=None,fecha_alta_item=None, descripcion_item=None,tag_item=None,tipo_item=None,estado_item=None,codigo_centro=None,centro=None):
+
         if item_id is None:
             self._id = ObjectId()
         else:
             self._id = item_id
+
         self.nombre_item=nombre_item
         self.fecha_alta_item = time.strftime("%c")
         self.descripcion_item = descripcion_item
@@ -31,6 +33,8 @@ class Item(object):
         """ Metodo usado para contruir objetos item apartir de Json"""
         if json_data is not None:
             try:
+                #print"Jsonnnn"
+                #print json_data
                 return Item(json_data.get('_id', None),
                     json_data['nombre_item'],
                     json_data['fecha_alta_item'],
@@ -65,7 +69,7 @@ class ItemsDriver(object):
 
     def read(self, item_id=None):
         if item_id is None:
-            return self.database.items.find({})
+            return self.database.items.find()
         else:
             return self.database.items.find({"_id":ObjectId(item_id)})
 
@@ -86,85 +90,5 @@ class ItemsDriver(object):
         else:
             raise Exception("Imposible Borrar")
 
-
-
-
-def load_all_items_from_database(manejador):
-    print("Loading all items from database:")
-    #items = manejador.read()
-    items = []
-    at_least_one_item = False
-    for i in items:
-        at_least_one_item = True
-        tmp_item = Item.build_from_json(i)
-        #print("ID = {} | Fecha = {}".format(tmp_item._id,tmp_item.fecha_alta_item))
-    if not at_least_one_item:
-        print("No items in the database")
-
-
-def test_create(manejador, new_item):
-    print("\n\nSaving new_item to database")
-    manejador.create(new_item)
-    print("new_item saved to database")
-    print("Loading new_item from database")
-    db_items = manejador.read(item_id=new_item._id)
-    for i in db_items:
-        items_from_db = Item.build_from_json(i)
-        print("new_item = {}".format(items_from_db.get_as_json()))
-
-
-def test_update(manejador, new_item):
-    print("\n\nUpdating new_items in database")
-    manejador.update(new_item)
-    print("new_item updated in database")
-    print("Reloading new_item from database")
-    db_items = manejador.read(item_id=new_item._id)
-    for i in db_items:
-        items_from_db = Item.build_from_json(i)
-        print("new_item = {}".format(items_from_db.get_as_json()))
-
-
-def test_delete(manejador, new_item):
-    print("\n\nDeleting new_item to database")
-    manejador.delete(new_item)
-    print("new_item deleted from database")
-    print("Trying to reload new_item from database")
-    db_items = manejador.read(item_id=new_item._id)
-    coincidencia = False
-    for i in db_items:
-        coincidencia = True
-        items_from_db = Item.build_from_json(i)
-        print("new_item = {}".format(item_from_db.get_as_json()))
-
-    if not coincidencia:
-        print("Item with id = {} was not found in the database".format(new_item._id))
-
-
-def main():
-    manejador = ItemsDriver()
-    (manejador)
-
-    #display all items from DB
-    load_all_items_from_database
-
-
-    #create new_project and read back from database
-    new_item = Item.build_from_json({"nombre_item":"HP pavilion",
-        "fecha_alta_item":time.strftime("%c"),
-        "descripcion_item":"Ordenador portatil super potentorro",
-        "tag_item":"Ultrabook, Notebook",
-        "tipo_item":"funcional",
-        "estado_item":"presente",
-        "codigo_centro":"06UG02",
-        "centro":"Administracion de  Servicios Centrales"})
-    test_create(manejador, new_item)
-
-    #update new_item
-    new_item.descripcion_item = "Ordenador portatil nada pontente"
-    test_update(manejador, new_item)
-
-    #delete new_project and try to read back from database
-    test_delete(manejador, new_item)
-
-if __name__ == '__main__':
-    main()
+    def destroyDriver(self):
+        self.database.items.remove()
