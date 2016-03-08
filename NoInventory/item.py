@@ -3,6 +3,7 @@ from pymongo import MongoClient
 import time
 
 
+
 class Item(object):
     """Clase para almacenar informacion de los items"""
 
@@ -66,7 +67,7 @@ class ItemsDriver(object):
         if item_id is None:
             return self.database.items.find({})
         else:
-            return self.database.items.find({"_id":item_id})
+            return self.database.items.find({"_id":ObjectId(item_id)})
 
 
     def update(self, item):

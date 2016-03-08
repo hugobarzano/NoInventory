@@ -45,6 +45,8 @@ La aplicación Android del proyecto se encuentra alojada en el repositorio [NoIn
 
 [Disparadores para redes sociales](https://ifttt.com/recipes)
 
+[POST-TUNELING](https://baxeico.wordpress.com/2014/06/25/put-and-delete-http-requests-with-django-and-jquery/)
+
 ###Tutoriales
 
 [Implementar lector codigos](http://code.tutsplus.com/tutorials/android-sdk-create-a-barcode-reader--mobile-17162)

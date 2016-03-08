@@ -7,6 +7,10 @@ from django.http import HttpResponse
 from NoInventory.forms import *
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.views.generic.base import View
+
+from item import *
+gestorItems = ItemsDriver()
 
 from pymongo import MongoClient
 client = MongoClient('mongodb://localhost:27017/')
@@ -22,36 +26,8 @@ def index(request):
 
 @csrf_exempt
 def items(request):
-    if request.method == 'POST':
-        form = ItemForm(request.POST)
-        if form.is_valid():
-            entidad=db.entidades.find_one({"ENTIDAD":form.data["entidad"]})
-            print entidad
-            item = {    "nombre_item": form.data['nombre_item'],
-                        "fecha_alta_item": time.strftime("%c"),
-                        "descripcion_item": form.data['descripcion_item'],
-                        "tag_item": form.data['tag_item'],
-                        "tipo_item": form.data['tipo_item'],
-                        "estado_item": form.data['estado_item'],
-                        "codigo_centro":entidad["COD_ENTIDAD"],
-                        "centro":entidad["ENTIDAD"],
-                        }
-            print item
-            id_item=db.items.insert(item)
-            #print id_item
-            qr_data_generated=jsonTOstring(db.items.find_one({"_id": id_item}))
-            #print qr_data_generated
-            db.items.update_one({"_id":id_item},{"$set": {"qr_data": qr_data_generated}})
-            lista_items=db.items.find()
-            #print lista_items
-            #for i in lista_items:
-                #print i
-            contexto = {"lista_items":lista_items}
-            return render(request, 'noinventory/items.html',contexto)
-        else:
-            print form.errors
-    else:
-        lista_items=db.items.find()
+
+        lista_items=gestorItems.read()
         contexto = {"lista_items":lista_items}
         return render(request, 'noinventory/items.html',contexto)
 
@@ -254,3 +230,95 @@ def borrarItem(request):
         db.items.remove( {"_id" : ObjectId(i_id) } )
         contexto = {'items': items}
         return HttpResponse(contexto)
+
+
+
+class ItemCreator(View):
+
+    def get(self, request):
+        form = ItemForm()
+        return render(request, 'noinventory/nuevoItem.html', {'form': form})
+
+    def post(self, request):
+        form = ItemForm(request.POST)
+        if form.is_valid():
+            entidad=db.entidades.find_one({"ENTIDAD":form.data["entidad"]})
+            print entidad
+            item =Item.build_from_json({    "nombre_item": form.data['nombre_item'],
+                        "fecha_alta_item": time.strftime("%c"),
+                        "descripcion_item": form.data['descripcion_item'],
+                        "tag_item": form.data['tag_item'],
+                        "tipo_item": form.data['tipo_item'],
+                        "estado_item": form.data['estado_item'],
+                        "codigo_centro":entidad["COD_ENTIDAD"],
+                        "centro":entidad["ENTIDAD"],
+                        })
+            gestorItems.create(item)
+            lista_items=gestorItems.read()
+            contexto = {"lista_items":lista_items}
+            return render(request, 'noinventory/items.html',contexto)
+        else:
+            print form.errors
+
+    def put(self, request):
+        # TODO: PUT ACTIONS
+        return render(request,"template_put.html")
+
+    def delete(self, request):
+        i_id = request.GET['itemid']
+        print i_id
+        db.items.remove( {"_id" : ObjectId(i_id) } )
+        lista_items=db.items.find()
+        contexto = {"lista_items":lista_items}
+        return HttpResponse()
+
+class ItemUpdater(View):
+
+    def get(self, request,id_item):
+        res=gestorItems.read(item_id=id_item)
+        for i in res:
+            print Item.build_from_json(i)
+
+        form = ItemForm()
+        return render(request, 'noinventory/nuevoItem.html', {'form': form})
+
+    def post(self, request):
+        form = ItemForm(request.POST)
+        if form.is_valid():
+            entidad=db.entidades.find_one({"ENTIDAD":form.data["entidad"]})
+            print entidad
+            item = {    "nombre_item": form.data['nombre_item'],
+                        "fecha_alta_item": time.strftime("%c"),
+                        "descripcion_item": form.data['descripcion_item'],
+                        "tag_item": form.data['tag_item'],
+                        "tipo_item": form.data['tipo_item'],
+                        "estado_item": form.data['estado_item'],
+                        "codigo_centro":entidad["COD_ENTIDAD"],
+                        "centro":entidad["ENTIDAD"],
+                        }
+            print item
+            id_item=db.items.insert(item)
+            #print id_item
+            qr_data_generated=jsonTOstring(db.items.find_one({"_id": id_item}))
+            #print qr_data_generated
+            db.items.update_one({"_id":id_item},{"$set": {"qr_data": qr_data_generated}})
+            lista_items=db.items.find()
+            #print lista_items
+            #for i in lista_items:
+                #print i
+            contexto = {"lista_items":lista_items}
+            return render(request, 'noinventory/items.html',contexto)
+        else:
+            print form.errors
+
+    def put(self, request):
+        # TODO: PUT ACTIONS
+        return render(request,"template_put.html")
+
+    def delete(self, request):
+        i_id = request.GET['itemid']
+        print i_id
+        db.items.remove( {"_id" : ObjectId(i_id) } )
+        lista_items=db.items.find()
+        contexto = {"lista_items":lista_items}
+        return HttpResponse()

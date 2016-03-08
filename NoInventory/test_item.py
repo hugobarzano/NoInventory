@@ -5,13 +5,13 @@ from item import *
 
 def load_all_items_from_database(manejador):
     print("Cargando todos los items de la base de datos:")
-    #items = manejador.read()
+    items = manejador.read()
     items = []
     at_least_one_item = False
     for i in items:
         at_least_one_item = True
         tmp_item = Item.build_from_json(i)
-        #print("ID = {} | Fecha = {}".format(tmp_item._id,tmp_item.fecha_alta_item))
+        print("ID = {} | Fecha = {}".format(tmp_item._id,tmp_item.fecha_alta_item))
     if not at_least_one_item:
         print("No hay items en la base de datos")
 
@@ -80,6 +80,7 @@ def main():
     #update new_item
     new_item.descripcion_item = "Ordenador portatil nada pontente"
     test_update(manejador, new_item)
+    load_all_items_from_database(manejador)
 
     #delete new_project and try to read back from database
     test_delete(manejador, new_item)
