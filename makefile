@@ -15,5 +15,8 @@ free:
 run:
 	sudo python manage.py runserver 0.0.0.0:80
 
-test:
+test_item:
 	python NoInventory/test_item.py
+
+test_inventory:
+	python NoInventory/test_inventario.py

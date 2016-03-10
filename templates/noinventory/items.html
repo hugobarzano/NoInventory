@@ -57,12 +57,12 @@
             alert('Object deleted!');
             $.ajax({
               type: 'GET',
-              url: '/noinventory/prueba',
+              url: '/noinventory/nuevoItem/',
               data: {itemid: itemid, },
               success: function() {
                 alert('Object deleted!')
               },
-              headers: { 'X_METHODOVERRIDE': 'DELETE' }
+              headers: { 'X-METHODOVERRIDE': 'DELETE' }
             });
           });
         </script>
