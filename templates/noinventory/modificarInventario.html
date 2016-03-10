@@ -3,7 +3,7 @@
 {% block body_block %}
         <h1>Añadir Inventario</h1>
 
-        <form id="inventarioform" method="post" action="/noinventory/nuevoInventario/">
+        <form id="inventarioform" method="post" action="/noinventory/nuevoInventario/{{id_inventario}}/">
           {% csrf_token %}
           {% load bootstrap %}
           {{ form.nombre_inventario|bootstrap }}
@@ -12,6 +12,6 @@
           {{ form.caracteristicas_inventario|bootstrap }}
 
 
-            <input type="submit" name="submit" value="Crear Inventario" />
+            <input type="submit" name="submit" value="Actualizar" />
         </form>
   {% endblock %}

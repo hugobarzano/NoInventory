@@ -11,7 +11,9 @@ from django.views.generic.base import View
 from bson.json_util import dumps
 
 from item import *
+from inventario import *
 gestorItems = ItemsDriver()
+gestorInventarios = InventariosDriver()
 
 from pymongo import MongoClient
 client = MongoClient('mongodb://localhost:27017/')
@@ -261,17 +263,6 @@ class ItemCreator(View):
         else:
             print form.errors
 
-    def put(self, request):
-        # TODO: PUT ACTIONS
-        return render(request,"template_put.html")
-
-    def delete(self, request):
-        i_id = request.GET['itemid']
-        print i_id
-        db.items.remove( {"_id" : ObjectId(i_id) } )
-        lista_items=db.items.find()
-        contexto = {"lista_items":lista_items}
-        return HttpResponse()
 
 class ItemUpdater(View):
 
@@ -312,14 +303,58 @@ class ItemUpdater(View):
         else:
             print form.errors
 
-    def put(self, request):
-        # TODO: PUT ACTIONS
-        return render(request,"template_put.html")
+class InventoryCreator(View):
 
-    def delete(self, request):
-        i_id = request.GET['itemid']
-        print i_id
-        db.items.remove( {"_id" : ObjectId(i_id) } )
-        lista_items=db.items.find()
-        contexto = {"lista_items":lista_items}
-        return HttpResponse()
+    def get(self, request):
+        form = InventarioForm()
+        return render(request, 'noinventory/nuevoInventario.html', {'form': form})
+
+    def post(self, request):
+        form = InventarioForm(request.POST)
+        if form.is_valid():
+            inventario =Inventario.build_from_json({"nombre_inventario": form.data['nombre_inventario'],
+                        "fecha_alta_inventario": time.strftime("%c"),
+                        "descripcion_inventario": form.data['descripcion_inventario'],
+                        "tag_inventario": form.data['tag_inventario'],
+                        "caracteristicas_inventario":form.data['caracteristicas_inventario'],
+                        "items_inventario": []
+                        })
+            gestorInventarios.create(inventario)
+            lista_inventarios=gestorInventarios.read()
+            contexto = {"lista_inventarios":lista_inventarios}
+            return render(request, 'noinventory/inventarios.html',contexto)
+        else:
+            print form.errors
+
+class InventoryUpdater(View):
+
+    def get(self, request,id_inventario):
+        cursor=gestorInventarios.read(inventario_id=id_inventario)
+        currentInventory=Inventario()
+        for i in cursor:
+            currentInventory = Inventario.build_from_json(i)
+        aux=currentInventory.get_as_json()
+        form = InventarioForm(aux)
+        form.data["descripcion_inventario"]=str(form.data["descripcion_inventario"])+"\nUltima modificacion: "+time.strftime("%c")
+        return render(request, 'noinventory/modificarInventario.html', {'form': form,'id_inventario':currentInventory._id})
+
+    def post(self, request,id_inventario):
+        cursor=gestorInventarios.read(inventario_id=id_inventario)
+        for i in cursor:
+            c = Inventario.build_from_json(i)
+        form = InventarioForm(request.POST)
+        if form.is_valid():
+            inventarioUpdated =Inventario.build_from_json({"_id":c._id,
+                        "nombre_inventario": form.data['nombre_inventario'],
+                        "fecha_alta_inventario": c.fecha_alta_inventario,
+                        "descripcion_inventario": form.data['descripcion_inventario'],
+                        "tag_inventario": form.data['tag_inventario'],
+                        "caracteristicas_inventario": form.data['caracteristicas_inventario'],
+                        "items_inventario": c.items_inventario,
+                        })
+            gestorInventarios.update(inventarioUpdated)
+            lista_inventarios=gestorInventarios.read()
+            contexto = {"lista_inventarios":lista_inventarios}
+            return render(request, 'noinventory/inventarios.html',contexto)
+        else:
+            print form.errors

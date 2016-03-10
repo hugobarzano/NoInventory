@@ -9,7 +9,7 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<a href="{% url 'nuevoInventario' %}"> <button id='nuevoInventario'>Nuevo Inventario</button></a>
+<a href="/noinventory/nuevoInventario"> <button id='nuevoInventario'>Nuevo Inventario</button></a>
 {% endblock %}
 
 
@@ -37,6 +37,7 @@
                 {{ i.qr_data|qrcode:"my alt" }}
                 <button class="btn btn-default btn-xs borrarBoton" data-inventory="{{i.id}}">Borrar</button>
                  <a href="/noinventory/inventario/{{ i|documento_id }}"> <button class="btn btn-default btn-xs">Items</button></a>
+                 <a href="/noinventory/modificarInventario/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Modificar</button> </a>
               </div>
           {% endfor %}
         {% else %}

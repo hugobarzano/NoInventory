@@ -51,20 +51,16 @@
 
         <!--Funcionalidad de borrado asincrono -->
         <script>
-          $(".borrarBoton").click(function(){
-            var itemid;
-            itemid = $(".borrarBoton").attr("data-item");
-            alert('Object deleted!');
-            $.ajax({
-              type: 'GET',
-              url: '/noinventory/nuevoItem/',
-              data: {itemid: itemid, },
-              success: function() {
-                alert('Object deleted!')
-              },
-              headers: { 'X-METHODOVERRIDE': 'DELETE' }
-            });
-          });
+                   $(".borrarBoton").click(function(){
+                     var itemid;
+                     itemid = $(".borrarBoton").attr("data-item");
+                      console.log(itemid);
+                     $.get('/borrarItem?dato='+itemid, function(data){
+                            console.log(data);
+                            console.log(itemid);
+                            $("#"+itemid).html(data.nombre);
+                          });
+                        });
         </script>
 
                 <script src="http://code.highcharts.com/highcharts.js"></script>
