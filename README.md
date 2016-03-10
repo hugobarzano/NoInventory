@@ -5,6 +5,13 @@
 
 Repositorio para el proyecto de gestión y administración de inventariado
 
+
+############################################################################
+
+[![Build Status](https://travis-ci.org/hugobarzano/NoInventory.svg?branch=master)](https://travis-ci.org/hugobarzano/NoInventory)
+
+############################################################################
+
 Blog: [http://no-inventory.es/](http://no-inventory.es/)
 
 Twiiter: [@no_inventory](https://twitter.com/no_inventory)
