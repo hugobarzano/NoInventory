@@ -1,5 +1,5 @@
 db:
-  image: mongo:3.0.4
+  image: sameersbn/mongodb:latest
 web:
   image: hugobarzano/noinventory:latest
   command: sh -c "cd /NoInventory && python manage.py makemigrations --noinput"

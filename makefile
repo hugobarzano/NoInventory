@@ -29,7 +29,7 @@ docker:
 
 docker_compose:
 		sudo service docker restart
-		sudo docker pull mongodb
+		sudo docker pull sameersbn/mongodb:latest
 		sudo docker pull hugobarzano/noinventory:latest
 		sudo docker-compose up
 		echo Voy a esperar 10 segundos a la base de datos
