@@ -21,3 +21,8 @@ test_item:
 
 test_inventory:
 	python NoInventory/test_inventario.py
+
+docker:
+	sudo service docker restart
+	sudo docker build -f Dockerfile -t aplicacion --no-cache=true .
+	sudo docker run -t -i aplicacion sh -c "ifconfig && cd /NoInventory &&  python manage.py makemigrations --noinput && 	python manage.py migrate --noinput && python manage.py syncdb --noinput && sudo python manage.py runserver 0.0.0.0:80"

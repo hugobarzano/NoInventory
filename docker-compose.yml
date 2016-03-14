@@ -1,0 +1,17 @@
+db:
+  image: postgres
+web:
+  image:  hugobarzano/osl-computer-management:computer-management
+  command: sh -c "cd /osl-computer-management && python manage.py makemigrations --noinput"
+  command: sh -c "cd /osl-computer-management && python manage.py migrate --noinput"
+  command: sh -c "cd /osl-computer-management && python manage.py syncdb --noinput"
+  command: sh -c "cd /osl-computer-management && python populate.py"
+  command: sh -c "ifconfig && cd /osl-computer-management && sudo python manage.py runserver 0.0.0.0:80"
+
+  ports:
+    - "80:80"
+    - "5432:5432"
+  links:
+    - db
+  environment:
+    - COMPOSE=true
