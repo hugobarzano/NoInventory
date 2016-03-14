@@ -1,5 +1,5 @@
 db:
-  image: sameersbn/mongodb:latest
+  image: mongo:3.0.2
 web:
   image: hugobarzano/noinventory:latest
   command: sh -c "cd /NoInventory && python manage.py makemigrations --noinput"
@@ -9,7 +9,6 @@ web:
 
   ports:
     - "80:80"
-    - "27017:27017"
   links:
     - db
   environment:
