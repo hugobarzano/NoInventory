@@ -9,6 +9,7 @@ Repositorio para el proyecto de gestión y administración de inventariado
 ############################################################################
 
 [![Build Status](https://travis-ci.org/hugobarzano/NoInventory.svg?branch=master)](https://travis-ci.org/hugobarzano/NoInventory)
+[![DockerHub](https://www.dropbox.com/s/fl5hrbbjm4g2jec/docker_l.png?dl=1)](https://hub.docker.com/r/hugobarzano/noinventory/)
 
 ############################################################################
 
