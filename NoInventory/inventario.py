@@ -52,11 +52,11 @@ class InventariosDriver(object):
     def __init__(self):
         # inizializar MongoClient
         # aacceso a la base de datos
-        ON_COMPOSE = os.environ.get('COMPOSE')
-        if ON_COMPOSE:
-            self.client = MongoClient(host='db', port=27017)
-        else:
-            self.client = MongoClient(host='localhost', port=27017)
+        #ON_COMPOSE = os.environ.get('COMPOSE')
+        #if ON_COMPOSE:
+        #    self.client = MongoClient(host='db', port=27017)
+        #else:
+        self.client = MongoClient(host='localhost', port=27017)
         self.database = self.client['inventarios']
 
 
