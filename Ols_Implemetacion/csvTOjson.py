@@ -1,9 +1,14 @@
 import csv
 import json
 from pymongo import MongoClient
+import os
 
 
-client = MongoClient('mongodb://localhost:27017/')
+ON_COMPOSE = os.environ.get('COMPOSE')
+if ON_COMPOSE:
+    client = MongoClient('mongodb://db:27017/')
+else:
+    client = MongoClient('mongodb://localhost:27017/')
 db = client['noinventory-database']
 
 

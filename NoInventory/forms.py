@@ -8,7 +8,12 @@ from bson.json_util import loads
 import json
 
 from pymongo import MongoClient
-client = MongoClient('mongodb://localhost:27017/')
+
+ON_COMPOSE = os.environ.get('COMPOSE')
+if ON_COMPOSE:
+    client = MongoClient('mongodb://db:27017/')
+else:
+    client = MongoClient('mongodb://localhost:27017/')
 db = client['noinventory-database']
 
 
