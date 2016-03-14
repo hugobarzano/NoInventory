@@ -3,6 +3,7 @@ from bson.objectid import ObjectId
 from pymongo import MongoClient
 import time
 from item import *
+import os
 
 def load_all_items_from_database(manejador):
     print("Cargando todos los items de la base de datos:")

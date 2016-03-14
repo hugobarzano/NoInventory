@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic.base import View
 from bson.json_util import dumps
-
+import os
 from item import *
 from inventario import *
 gestorItems = ItemsDriver()

@@ -3,6 +3,7 @@ from bson.objectid import ObjectId
 from pymongo import MongoClient
 import time
 from inventario import *
+import os
 
 def cargar_todos_inventarios(manejador):
     print("Cargando todos los inventarios de la base de datos:")
