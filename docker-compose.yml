@@ -1,5 +1,7 @@
 db:
   image: mongo:3.0.2
+  ports:
+    - "27017:27017"
 web:
   image: hugobarzano/noinventory:latest
   command: sh -c "cd /NoInventory && python manage.py makemigrations --noinput"
