@@ -105,6 +105,7 @@ class ItemsDriver(object):
             # which appears in the collection, otherwise it saves the data
             # as a new document in the collection
             self.database.items.save(item.get_as_json())
+            self.generateQR(item)
         else:
             raise Exception("Imposible actualizar Item")
 

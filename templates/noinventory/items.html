@@ -38,7 +38,7 @@
                 Centro: {{i.centro}}
                 Codigo Centro: {{ i.codigo_centro }}
                 <br>
-                {{ i.qr_data|qrcode:"my alt" }}
+                {{ i.qr_data|qrcode:"qr_data" }}
               <button class="btn btn-default btn-xs borrarBoton" data-item="{{ i|documento_id}}">Borrar</button>
               <a href="/noinventory/modificarItem/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Modificar</button> </a>
               </div>

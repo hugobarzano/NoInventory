@@ -260,6 +260,7 @@ class ItemCreator(View):
                         "estado_item": form.data['estado_item'],
                         "codigo_centro":entidad["COD_ENTIDAD"],
                         "centro":entidad["ENTIDAD"],
+                        "qr_data":" ",
                         })
             gestorItems.create(item)
             lista_items=gestorItems.read()
@@ -300,6 +301,7 @@ class ItemUpdater(View):
                         "estado_item": form.data['estado_item'],
                         "codigo_centro":entidad["COD_ENTIDAD"],
                         "centro":entidad["ENTIDAD"],
+                        "qr_data":c.qr_data,
                         })
             gestorItems.update(itemUpdated)
             lista_items=gestorItems.read()

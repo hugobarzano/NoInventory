@@ -3,6 +3,7 @@ from bson.objectid import ObjectId
 from pymongo import *
 import time
 from inventario import *
+from item import *
 import os
 
 def cargar_todos_inventarios(manejador):
@@ -57,12 +58,23 @@ def test_delete(manejador, new_inventario):
 
 def main():
     manejador = InventariosDriver()
+    manejadorItem = ItemsDriver()
     print "\n#######################################################"
     print "LANZANDO BATERIA DE TEST - OPERACIONES CRUD PARA INVENTARIOS"
     print "#######################################################\n"
 
 
-    cargar_todos_inventarios(manejador)
+    #cargar_todos_inventarios(manejador)
+    new_item = Item.build_from_json({"nombre_item":"HP pavilion",
+        "fecha_alta_item":time.strftime("%c"),
+        "descripcion_item":"Ordenador portatil super potentorro",
+        "tag_item":"Ultrabook, Notebook",
+        "tipo_item":"funcional",
+        "estado_item":"presente",
+        "codigo_centro":"06UG02",
+        "centro":"Administracion de  Servicios Centrales",
+        "qr_data":" "})
+    manejadorItem.create(new_item)
 
     #display all items from DB
     #create new_project and read back from database
@@ -73,15 +85,17 @@ def main():
         "caracteristicas_inventario":"chatarra perjudial para reciclar",
         "items_inventario":"id de prueba"})
     test_create(manejador, new_inventario)
+
+    manejador.addToInventario(new_inventario._id,new_item._id,manejadorItem)
     #cargar_todos_inventarios(manejador)
     #update new_item
-    new_inventario.caracteristicas_inventario = "Cambiando caracteristicas para actualizar"
-    test_update(manejador, new_inventario)
+    #new_inventario.caracteristicas_inventario = "Cambiando caracteristicas para actualizar"
+    #test_update(manejador, new_inventario)
     #cargar_todos_inventarios(manejador)
 
     #delete new_project and try to read back from database
-    test_delete(manejador, new_inventario)
-    cargar_todos_inventarios(manejador)
+    #test_delete(manejador, new_inventario)
+    #cargar_todos_inventarios(manejador)
 
     print "\nLimpiando Base de datos..."
     manejador.destroyDriver()

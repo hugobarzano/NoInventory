@@ -6,8 +6,8 @@ db:
   #command: sh -c "iptables -A INPUT -p tcp --dport 27017 -j ACCEPT"
 
   #command: sh -c "ls -la ~/"
-  command: sh -c "sed -i 's/^ bind_ip = 127.0.0.1/ bind_ip = 0.0.0.0/g' /etc/mongod.conf"
-  command: sh -c "sudo -i echo bind_ip = 0.0.0.0 >> /etc/mongod.conf.orig"
+  #command: sh -c "sed -i 's/^bind_ip = 127.0.0.1/bind_ip = 0.0.0.0/g' /etc/mongod.conf"
+  #command: sh -c "sudo -i echo bind_ip = 0.0.0.0 >> /etc/mongod.conf.orig"
   #command: sh -c "sed 's/bind_ip = 127.0.0.1/#bind_ip = 127.0.0.1/g'  /etc/mongod.conf.orig"
   command: sh -c "cd /etc/ && cat mongod.conf.orig"
 
