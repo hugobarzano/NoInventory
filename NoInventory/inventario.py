@@ -1,5 +1,5 @@
 from bson.objectid import ObjectId
-from pymongo import MongoClient
+from pymongo import *
 import time
 import os
 

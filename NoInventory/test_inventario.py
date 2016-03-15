@@ -1,6 +1,6 @@
 from bson.objectid import ObjectId
 #from pymongo.objectid import ObjectId
-from pymongo import MongoClient
+from pymongo import *
 import time
 from inventario import *
 import os

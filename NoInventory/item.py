@@ -1,9 +1,12 @@
 from bson.objectid import ObjectId
-from pymongo import MongoClient
+from pymongo import *
 import time
 import os
 
-
+def jsonTOstring(elemento):
+    #d=json.dumps(elemento)
+    texto="Nombre Item:" + elemento["nombre_item"] + "\nIdentificador:"+str(elemento["_id"]) + "\nFecha de Alta:"+elemento["fecha_alta_item"]+"\nDescripcion:"+elemento["descripcion_item"]+"\nEstado:"+elemento["estado_item"]+"\nTipo:"+elemento["tipo_item"]+"\nTags:"+elemento["tag_item"]
+    return texto
 
 class Item(object):
     """Clase para almacenar informacion de los items"""
@@ -70,6 +73,15 @@ class ItemsDriver(object):
             self.database.items.insert(item.get_as_json())
         else:
             raise Exception("Imposible crear Item")
+
+    def generateQR(self,item):
+        if item is not None:
+            qr_data_generated=jsonTOstring(item.get_as_json())
+            print "qr_data_generated:\n"
+            print qr_data_generated
+            #self.database.items.update_one({"_id":item._id},{"$set": {"qr_data": qr_data_generated}})
+        else:
+            raise Exception("Imposible generar QR para el item")
 
 
     def read(self, item_id=None):

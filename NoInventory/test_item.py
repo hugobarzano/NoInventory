@@ -1,6 +1,6 @@
 from bson.objectid import ObjectId
 #from pymongo.objectid import ObjectId
-from pymongo import MongoClient
+from pymongo import *
 import time
 from item import *
 import os
@@ -63,7 +63,7 @@ def main():
     print "#######################################################\n"
 
 
-    load_all_items_from_database(manejador)
+    #load_all_items_from_database(manejador)
 
     #display all items from DB
 
@@ -77,15 +77,16 @@ def main():
         "estado_item":"presente",
         "codigo_centro":"06UG02",
         "centro":"Administracion de  Servicios Centrales"})
-    test_create(manejador, new_item)
+    manejador.generateQR(new_item)
+    #test_create(manejador, new_item)
 
     #update new_item
-    new_item.descripcion_item = "Ordenador portatil nada pontente"
-    test_update(manejador, new_item)
-    load_all_items_from_database(manejador)
+    #new_item.descripcion_item = "Ordenador portatil nada pontente"
+    #test_update(manejador, new_item)
+    #load_all_items_from_database(manejador)
 
     #delete new_project and try to read back from database
-    test_delete(manejador, new_item)
+    #test_delete(manejador, new_item)
 
     print "\n##########################################################"
     print "FINALIZANDO BATERIA DE TEST - OPERACIONES CRUD PARA ITEMS"
