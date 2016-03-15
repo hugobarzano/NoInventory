@@ -18,7 +18,8 @@ RUN sudo apt-get -y install libpq-dev
 RUN sudo apt-get -y install mongodb
 RUN sudo easy_install pip
 RUN sudo pip install --upgrade pip
-RUN sudo python -m pip install pymongo
+RUN sudo python -m pip install pymongo==2.8
+
 
 
 #Instalamos la aplicacion
