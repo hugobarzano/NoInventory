@@ -11,7 +11,7 @@ def jsonTOstring(elemento):
 class Item(object):
     """Clase para almacenar informacion de los items"""
 
-    def __init__(self, item_id=None,nombre_item=None,fecha_alta_item=None, descripcion_item=None,tag_item=None,tipo_item=None,estado_item=None,codigo_centro=None,centro=None):
+    def __init__(self, item_id=None,nombre_item=None,fecha_alta_item=None, descripcion_item=None,tag_item=None,tipo_item=None,estado_item=None,codigo_centro=None,centro=None,qr_data=None):
 
         if item_id is None:
             self._id = ObjectId()
@@ -26,6 +26,7 @@ class Item(object):
         self.estado_item=estado_item
         self.codigo_centro=codigo_centro
         self.centro=centro
+        self.qr_data=qr_data
 
     def get_as_json(self):
         """ Metodo que devuelve el objeto en formato Json, para almacenar en MongoDB """
@@ -47,7 +48,8 @@ class Item(object):
                     json_data['tipo_item'],
                     json_data['estado_item'],
                     json_data['codigo_centro'],
-                    json_data['centro'])
+                    json_data['centro'],
+                    json_data['qr_data'])
             except KeyError as e:
                 raise Exception("Clave no encontrada en json: {}".format(e.message))
         else:
@@ -76,6 +78,7 @@ class ItemsDriver(object):
     def create(self, item):
         if item is not None:
             self.database.items.insert(item.get_as_json())
+            self.generateQR(item)
         else:
             raise Exception("Imposible crear Item")
 
@@ -84,7 +87,7 @@ class ItemsDriver(object):
             qr_data_generated=jsonTOstring(item.get_as_json())
             print "qr_data_generated:\n"
             print qr_data_generated
-            #self.database.items.update_one({"_id":item._id},{"$set": {"qr_data": qr_data_generated}})
+            self.database.items.update({"_id":item._id},{"$set": {"qr_data": qr_data_generated}})
         else:
             raise Exception("Imposible generar QR para el item")
 

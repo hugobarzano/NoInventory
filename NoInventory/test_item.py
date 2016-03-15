@@ -76,9 +76,20 @@ def main():
         "tipo_item":"funcional",
         "estado_item":"presente",
         "codigo_centro":"06UG02",
-        "centro":"Administracion de  Servicios Centrales"})
-    manejador.generateQR(new_item)
-    test_create(manejador, new_item)
+        "centro":"Administracion de  Servicios Centrales",
+        "qr_data":" "})
+    manejador.create(new_item)
+    salida=manejador.read(item_id=new_item._id)
+    for i in salida:
+        it = Item.build_from_json(i)
+    print "informacion qr:\n"
+    print it.qr_data
+    #test_create(manejador, new_item)
+    #manejador.generateQR(new_item)
+    #salida=manejador.read(new_item._id)
+    #print "actualizado"
+    #for s in salida:
+        #print s
 
     #update new_item
     #new_item.descripcion_item = "Ordenador portatil nada pontente"
