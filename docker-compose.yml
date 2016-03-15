@@ -1,15 +1,19 @@
 db:
-  image: mongo:3.0.4
+  image: hugobarzano/noinventory:mongo
+
+  #command: sh -c "sudo service mongodb restart"
+
   ports:
     - "27017:27017"
-  command: sh -c "cd /etc/ && ls -la"
+
+  #command: sh -c "cd /etc/ && ls -la"
   #command: sh -c "iptables -A INPUT -p tcp --dport 27017 -j ACCEPT"
 
   #command: sh -c "ls -la ~/"
   #command: sh -c "sed -i 's/^bind_ip = 127.0.0.1/bind_ip = 0.0.0.0/g' /etc/mongod.conf"
   #command: sh -c "sudo -i echo bind_ip = 0.0.0.0 >> /etc/mongod.conf.orig"
   #command: sh -c "sed 's/bind_ip = 127.0.0.1/#bind_ip = 127.0.0.1/g'  /etc/mongod.conf.orig"
-  command: sh -c "cd /etc/ && cat mongod.conf.orig"
+  #command: sh -c "cd /etc/ && cat mongod.conf.orig"
 
 
 web:

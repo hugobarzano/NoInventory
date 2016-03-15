@@ -7,4 +7,4 @@ ENV PYTHONUNBUFFERED 1
 RUN sudo apt-get -y update
 
 RUN sudo apt-get -y install mongodb
-RUN sudo sed -i 's/^bind_ip = 127.0.0.1/bind_ip = 0.0.0.0/g' /etc/mongodb.conf
+RUN sudo sed -i 's/^bind_ip = 127.0.0.1/\#bind_ip = 127.0.0.1/g' /etc/mongodb.conf

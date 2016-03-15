@@ -2,7 +2,7 @@ from bson.objectid import ObjectId
 from pymongo import *
 import time
 import os
-
+from item import *
 class Inventario(object):
     """Clase para almacenar informacion de los inventarios"""
 
@@ -88,6 +88,15 @@ class InventariosDriver(object):
             self.database.inventarios.remove(inventario.get_as_json())
         else:
             raise Exception("Imposible Borrar Inventario")
+
+    def addToInventario(self,inventario_id,item_id,manejador_item):
+        item=manejador_item.read(item_id=item_id)
+        if item is not None:
+            for i in item:
+                item_object = Item.build_from_json(i)
+            self.database.inventarios.update({"_id": ObjectId(inventario_id)},{"$addToSet": {"items_inventario" : item_object._id,}})
+        else:
+            raise Exception("Item no valido para add")
 
     def destroyDriver(self):
         self.database.inventarios.remove()

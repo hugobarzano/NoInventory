@@ -44,7 +44,7 @@ def prueba(request):
     return render(request, 'noinventory/prueba.html', {'form': form})
 
 def inventarios(request):
-    lista_inventarios=db.inventarios.find()
+    lista_inventarios=gestorInventarios.read()
     contexto = {"lista_inventarios":lista_inventarios}
     return render(request, 'noinventory/inventarios.html',contexto)
 
@@ -93,21 +93,25 @@ def inventario(request,id_inventario):
         else:
             print form.errors
     else:
-        inventario=db.inventarios.find_one({"_id": ObjectId(id_inventario)})
+        inventario=gestorInventarios.read(inventario_id=id_inventario)
+        for i in inventario:
+            inventario_object = Inventario.build_from_json(i)
+        #print "incentario object"
+        #print inventario_object._id
+
+
         form = SelectItem()
-        lista_items=db.items.find()
-        contexto = {"inventario":inventario,"lista_items":lista_items,"form": form}
+        lista_items=gestorItems.read()
+        contexto = {"inventario":inventario_object,"inventario_id":inventario_object._id,"lista_items":lista_items,"form": form}
     return render(request, 'noinventory/inventario.html', contexto)
 
 
 @csrf_exempt
 def addToInventario(request,id_inventario,id_item):
-        item=db.items.find_one({"_id": ObjectId(id_item)})
-        inventario=db.inventarios.find_one({"_id": ObjectId(id_inventario)})
-        db.inventarios.update({"_id": ObjectId(id_inventario)},{"$addToSet": {"items_inventario" :  item["_id"],}})
-        inventario=db.inventarios.find_one({"_id": ObjectId(id_inventario)})
-        form = SelectItem()
-        lista_items=db.items.find()
+        gestorInventarios.addToInventario(id_inventario,id_item,gestorItems)
+        lista_items=gestorItems.read()
+        inventario=gestorInventarios.read(inventario_id=id_inventario)
+        form=SelectItem()
         contexto = {"inventario":inventario,"lista_items":lista_items,"form": form}
         return render(request, 'noinventory/inventario.html', contexto)
 

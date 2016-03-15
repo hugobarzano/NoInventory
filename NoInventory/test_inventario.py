@@ -83,10 +83,17 @@ def main():
         "descripcion_inventario":"Inventario con items imposibles de manufacturar. Para reciclaje",
         "tag_inventario":"Reciclar",
         "caracteristicas_inventario":"chatarra perjudial para reciclar",
-        "items_inventario":"id de prueba"})
+        "items_inventario":[]})
     test_create(manejador, new_inventario)
 
     manejador.addToInventario(new_inventario._id,new_item._id,manejadorItem)
+
+    inven=manejador.read(inventario_id=new_inventario._id)
+    for i in inven:
+        res = Inventario.build_from_json(i)
+
+    print "items del inventario"
+    print res.items_inventario
     #cargar_todos_inventarios(manejador)
     #update new_item
     #new_inventario.caracteristicas_inventario = "Cambiando caracteristicas para actualizar"
