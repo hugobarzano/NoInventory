@@ -77,7 +77,7 @@ def main():
         "estado_item":"presente",
         "codigo_centro":"06UG02",
         "centro":"Administracion de  Servicios Centrales"})
-    manejador.generateQR(new_item)
+    #manejador.generateQR(new_item)
     #test_create(manejador, new_item)
 
     #update new_item
