@@ -1,11 +1,14 @@
 db:
   image: mongo:3.0.2
+  command: sh -c "sudo service mongodb restart"
+
   ports:
     - "27017:27017"
   restart: always
-  
+
 web:
   image: hugobarzano/noinventory:latest
+  command: sh -c "sudo service mongodb restart"
   command: sh -c "cd /NoInventory && python manage.py makemigrations --noinput"
   command: sh -c "cd /NoInventory && python manage.py migrate --noinput"
   command: sh -c "cd /NoInventory && python manage.py syncdb --noinput"
