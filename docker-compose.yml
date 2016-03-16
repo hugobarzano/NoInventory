@@ -1,7 +1,7 @@
 db:
   image: hugobarzano/noinventory:mongo
 
-  #command: sh -c "sudo service mongodb restart"
+  command: sh -c "sudo service mongodb restart"
 
   ports:
     - "27017:27017"

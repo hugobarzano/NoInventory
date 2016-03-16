@@ -19,11 +19,11 @@ from pymongo import MongoClient
 
 ON_COMPOSE = os.environ.get('COMPOSE')
 if ON_COMPOSE:
-    client = MongoClient(os.environ['DB_PORT_27017_TCP_ADDR'],27017)
+    client = MongoClient('db',27017)
 else:
     client = MongoClient('mongodb://localhost:27017/')
 db = client['noinventory-database']
-
+#os.environ['DB_PORT_27017_TCP_ADDR']
 items=db.items
 inventarios=db.inventarios
 entidades=db.entidades

@@ -55,7 +55,7 @@ class InventariosDriver(object):
         ON_COMPOSE = os.environ.get('COMPOSE')
         #print ON_COMPOSE
         if ON_COMPOSE:
-            self.client = MongoClient(host=os.environ['DB_PORT_27017_TCP_ADDR'],port=27017)
+            self.client = MongoClient(host='db',port=27017)
         #    time.sleep(0.01)
         else:
             self.client = MongoClient(host='localhost', port=27017)
