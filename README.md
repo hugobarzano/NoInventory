@@ -58,6 +58,7 @@ La aplicación Android del proyecto se encuentra alojada en el repositorio [NoIn
 ###Tutoriales
 
 [Implementar lector codigos](http://code.tutsplus.com/tutorials/android-sdk-create-a-barcode-reader--mobile-17162)
+[implementar interfaz](http://www.androidhive.info/2013/11/android-sliding-menu-using-navigation-drawer/)
 
 ###Presentación Concurso Software libre
 

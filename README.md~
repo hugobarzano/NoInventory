@@ -5,6 +5,14 @@
 
 Repositorio para el proyecto de gestión y administración de inventariado
 
+
+############################################################################
+
+[![Build Status](https://travis-ci.org/hugobarzano/NoInventory.svg?branch=master)](https://travis-ci.org/hugobarzano/NoInventory)
+[![DockerHub](https://www.dropbox.com/s/fl5hrbbjm4g2jec/docker_l.png?dl=1)](https://hub.docker.com/r/hugobarzano/noinventory/)
+
+############################################################################
+
 Blog: [http://no-inventory.es/](http://no-inventory.es/)
 
 Twiiter: [@no_inventory](https://twitter.com/no_inventory)
@@ -36,12 +44,16 @@ La aplicación Android del proyecto se encuentra alojada en el repositorio [NoIn
 [Documento casos de uso](https://www.dropbox.com/s/90tang9wazsx1vt/casos_uso.odt?dl=1)
 
 ####Análisis de Requisitos
-[Documento requisitos de información](https://www.dropbox.com/s/ipidn2bou6xmexf/requitos.odt?dl=1)
+[Documento requisitos de información](https://www.dropbox.com/s/ipidn2bou6xmexf/requitos.odt?dl)
 
 ###Herramientas y cosas utiles
 
 [Investigar 123d](http://www.123dapp.com/catch)
 [Realizar Diagramas Online](https://creately.com/app/?tempID=h165rwt81&login_type=demo#)
+
+[Disparadores para redes sociales](https://ifttt.com/recipes)
+
+[POST-TUNELING](https://baxeico.wordpress.com/2014/06/25/put-and-delete-http-requests-with-django-and-jquery/)
 
 ###Tutoriales
 
