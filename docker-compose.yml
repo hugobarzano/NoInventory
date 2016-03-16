@@ -2,9 +2,8 @@ db:
   image: hugobarzano/noinventory:mongo
 
   command: sh -c "sudo service mongodb restart"
-  command: sh -c "cd /var/lib/ && ls -la"
-  command: sh -c "iptables -A INPUT -s 0.0.0.0 -p tcp --destination-port 27017 -m state --state NEW,ESTABLISHED -j ACCEPT"
-  command: sh -c "iptables -A OUTPUT -d 0.0.0.0 -p tcp --source-port 27017 -m state --state ESTABLISHED -j ACCEPT"
+  #command: sh -c "cd /var/lib/ && ls -la"
+
   #command: sh -c "rm /var/lib/mongodb"
   #command: sh -c "cd /var/lib/ && ls -la"
   #command: sh -c "sudo service mongodb restart"
