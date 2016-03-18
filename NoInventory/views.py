@@ -30,8 +30,8 @@ entidades=db.entidades
 
 
 def index(request):
-    print "variable entorno:"
-    print os.environ['DB_PORT_27017_TCP_ADDR']
+    #print "variable entorno:"
+    #print VAR
     return render(request, 'noinventory/index.html')
 
 @csrf_exempt
