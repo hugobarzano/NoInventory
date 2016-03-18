@@ -3,14 +3,11 @@ db:
   volumes:
     - db:/data/db
 
-  command: sh -c "sudo service mongodb restart"
-  #command: sh -c "cd /var/lib/ && ls -la"
+  command: sh -c "sudo service mongodb restart && echo entrando sleppe && sleep 60 && echo saliendo sleep"
 
   #command: sh -c "rm /var/lib/mongodb"
   #command: sh -c "cd /var/lib/ && ls -la"
   #command: sh -c "sudo service mongodb restart"
-
-
   ports:
     - "27017:27017"
 
@@ -33,7 +30,6 @@ web:
 
   ports:
     - "80:80"
-    - "27017:27017"
   links:
     - db
   environment:
