@@ -34,3 +34,5 @@ docker_compose:
 	echo Voy a esperar 10 segundos a la base de datos
 	sleep 10
 	sudo docker-compose run web
+
+	sudo docker run -t -p 80:80 -p 27017:27017 -i hugobarzano/noinventory:mongo /bin/bash
