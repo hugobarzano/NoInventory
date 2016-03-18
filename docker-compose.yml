@@ -1,5 +1,7 @@
 db:
   image: hugobarzano/noinventory:mongo
+  volumes:
+    - db:/data/db
 
   command: sh -c "sudo service mongodb restart"
   #command: sh -c "cd /var/lib/ && ls -la"
@@ -10,7 +12,6 @@ db:
 
 
   ports:
-    - "80:80"
     - "27017:27017"
 
   #command: sh -c "cd /etc/ && ls -la"
