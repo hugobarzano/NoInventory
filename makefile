@@ -22,6 +22,12 @@ test_item:
 test_inventory:
 	python NoInventory/test_inventario.py
 
+docker_manual:
+	sudo docker-compose run db /bin/bash
+	#ejecutar dentro sudo service mongodb restart y esperar
+	sudo docker-compose run web /bin/bashy listo
+	#ejecutar dentro python manage.py runserver 0.0.0.0:80
+
 docker:
 	sudo service docker restart
 	sudo docker build -f Dockerfile -t aplicacion --no-cache=true .

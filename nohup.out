@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/usr/local/bin/docker-compose", line 11, in <module>
+    sys.exit(main())
+  File "/usr/local/lib/python2.7/dist-packages/compose/cli/main.py", line 56, in main
+    command.sys_dispatch()
+  File "/usr/local/lib/python2.7/dist-packages/compose/cli/docopt_command.py", line 23, in sys_dispatch
+    self.dispatch(sys.argv[1:], None)
+  File "/usr/local/lib/python2.7/dist-packages/compose/cli/docopt_command.py", line 26, in dispatch
+    self.perform_command(*self.parse(argv, global_options))
+  File "/usr/local/lib/python2.7/dist-packages/compose/cli/main.py", line 191, in perform_command
+    handler(project, command_options)
+  File "/usr/local/lib/python2.7/dist-packages/compose/cli/main.py", line 524, in run
+    run_one_off_container(container_options, project, service, options)
+  File "/usr/local/lib/python2.7/dist-packages/compose/cli/main.py", line 745, in run_one_off_container
+    pty.start(sockets)
+  File "/usr/local/lib/python2.7/dist-packages/dockerpty/pty.py", line 334, in start
+    self._hijack_tty(pumps)
+  File "/usr/local/lib/python2.7/dist-packages/dockerpty/pty.py", line 373, in _hijack_tty
+    pump.flush()
+  File "/usr/local/lib/python2.7/dist-packages/dockerpty/io.py", line 378, in flush
+    raise e
+OSError: [Errno 9] Bad file descriptor
