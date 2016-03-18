@@ -66,7 +66,7 @@ class ItemsDriver(object):
         #print ON_COMPOSE
         if ON_COMPOSE:
         #    time.sleep(0.1)
-            self.client = MongoClient(host='db', port=27017)
+            self.client = MongoClient('mongodb://172.17.0.2:27017/')
         #    time.sleep(0.1)
         else:
             time.sleep(0.1)

@@ -3,7 +3,7 @@ db:
   volumes:
     - db:/data/db
 
-  command: sh -c "sudo service mongodb restart && echo entrando sleppe && sleep 60 && echo saliendo sleep"
+  command: sh -c "ifconfig && sudo service mongodb restart && echo entrando sleppe && sleep 600 && echo saliendo sleep"
 
   #command: sh -c "rm /var/lib/mongodb"
   #command: sh -c "cd /var/lib/ && ls -la"
@@ -22,11 +22,11 @@ db:
 
 
 web:
-  image: hugobarzano/noinventory:latest
+  image: hugobarzano/noinventory:app
   command: sh -c "cd /NoInventory && python manage.py makemigrations --noinput"
   command: sh -c "cd /NoInventory && python manage.py migrate --noinput"
   command: sh -c "cd /NoInventory && python manage.py syncdb --noinput"
-  command: sh -c "ifconfig && cd /NoInventory && sudo python manage.py runserver 0.0.0.0:80"
+  command: sh -c "ifconfig && sleep 20 && cd /NoInventory && sudo python manage.py runserver 0.0.0.0:80"
 
   ports:
     - "80:80"
