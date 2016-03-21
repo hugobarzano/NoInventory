@@ -17,4 +17,8 @@ urlpatterns = patterns('',
         (r'^modificarItem/(?P<id_item>[\w\-]+)/$',ItemUpdater.as_view()),
         (r'^nuevoInventario/$', InventoryCreator.as_view()),
         (r'^modificarInventario/(?P<id_inventario>[\w\-]+)/$',InventoryUpdater.as_view()),
+        url(r'^preferencias/$',views.preferencias,name='preferencias'),
+        url(r'^inventariosJson/$',views.inventariosJson,name='inventariosJson'),
+        url(r'^itemsJson/$',views.itemsJson,name='itemsJson'),
+
         )

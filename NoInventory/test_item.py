@@ -98,6 +98,7 @@ def main():
 
     #delete new_project and try to read back from database
     #test_delete(manejador, new_item)
+    #manejador.destroyDriver()
 
     print "\n##########################################################"
     print "FINALIZANDO BATERIA DE TEST - OPERACIONES CRUD PARA ITEMS"

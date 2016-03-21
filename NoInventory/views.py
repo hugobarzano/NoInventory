@@ -1,5 +1,9 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from django.http import JsonResponse
 # Create your views here.
 import time
 from bson import ObjectId
@@ -49,6 +53,51 @@ def inventarios(request):
     lista_inventarios=gestorInventarios.read()
     contexto = {"lista_inventarios":lista_inventarios}
     return render(request, 'noinventory/inventarios.html',contexto)
+
+def preferencias(request):
+    return render(request, 'noinventory/preferencias.html')
+
+
+
+
+class JSONResponse(HttpResponse):
+	"""
+	Un HttpResponse que renderiza su contenido a formato JSON.
+	"""
+	def __init__(self, data, **kwargs):
+		content = JSONRenderer().render(data)
+		kwargs['content_type'] = 'application/json'
+		super(JSONResponse, self).__init__(content, **kwargs)
+
+def inventariosJson(request):
+    aux2 = []
+    lista_inventarios=gestorInventarios.read()
+    for i in lista_inventarios:
+        aux = Inventario.build_from_json(i)
+        aux2=aux.get_as_json()
+        print aux2
+    contexto = {"lista_inventarios":aux2}
+    return JsonResponse(contexto)
+
+def itemsJson(request):
+    lista_items=gestorItems.read()
+    aux=[]
+    aux3=[]
+    for i in lista_items:
+        #aux.append(i)
+        aux = Item.build_from_json(i)
+        aux2=aux.get_as_json()
+        aux2["_id"]=str(aux2["_id"])
+        aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"]}
+        aux3.append(aux4)
+        #aux2=aux.get_as_json()
+    #print aux.get_as_json()
+    #aux2=aux.get_as_json()
+    #aux2["_id"]=str(aux2["_id"])
+    print aux3
+    #contexto = {"lista_items":aux}
+    return JsonResponse(aux3,safe=False)
+
 
 
 @csrf_exempt
@@ -271,7 +320,7 @@ class ItemCreator(View):
             gestorItems.create(item)
             lista_items=gestorItems.read()
             contexto = {"lista_items":lista_items}
-            return render(request, 'noinventory/items.html',contexto)
+            return redirect('/noinventory/items',contexto)
         else:
             print form.errors
 
@@ -312,7 +361,7 @@ class ItemUpdater(View):
             gestorItems.update(itemUpdated)
             lista_items=gestorItems.read()
             contexto = {"lista_items":lista_items}
-            return render(request, 'noinventory/items.html',contexto)
+            return redirect('/noinventory/items',contexto)
         else:
             print form.errors
 
@@ -335,7 +384,7 @@ class InventoryCreator(View):
             gestorInventarios.create(inventario)
             lista_inventarios=gestorInventarios.read()
             contexto = {"lista_inventarios":lista_inventarios}
-            return render(request, 'noinventory/inventarios.html',contexto)
+            return redirect('/noinventory/inventarios',contexto)
         else:
             print form.errors
 
@@ -368,6 +417,6 @@ class InventoryUpdater(View):
             gestorInventarios.update(inventarioUpdated)
             lista_inventarios=gestorInventarios.read()
             contexto = {"lista_inventarios":lista_inventarios}
-            return render(request, 'noinventory/inventarios.html',contexto)
+            return redirect('/noinventory/inventario/'+str(c._id),contexto)
         else:
             print form.errors

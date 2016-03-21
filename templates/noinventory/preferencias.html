@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load qr %}
+{% block title %}Index{% endblock %}
+
+
+
+{% block body_block %}
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Administracion</h3>
+  </div>
+      <a href="/noinventory/nuevoItem"> <button id='nuevoItem'>Eliminar Todos los Items</button></a>
+
+      <br>
+      <a href="/noinventory/nuevoItem"> <button id='nuevoItem'>Eliminar Todos los Inventarios</button></a>
+
+      <br>
+</div>
+
+
+
+  {% endblock %}
