@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from NoInventory.models import *
 
+from clasificacion import *
+
 from bson import Binary, Code
 from bson.json_util import dumps
 from bson.json_util import loads
@@ -12,12 +14,12 @@ from pymongo import MongoClient
 
 ON_COMPOSE = os.environ.get('COMPOSE')
 if ON_COMPOSE:
-    client = MongoClient('db',27017)
+    client = MongoClient('mongodb://172.17.0.2:27017/')
 else:
     client = MongoClient('mongodb://localhost:27017/')
 db = client['noinventory-database']
 
-
+manejadorClasificacion=ClasificacionDriver()
 
 
 class ItemForm(forms.ModelForm):
@@ -34,8 +36,13 @@ class ItemForm(forms.ModelForm):
     tag_item = forms.CharField(max_length=150, help_text="Tag para ayudar a clasificar el objeto")
     tipo_item=forms.CharField(max_length=150,widget=forms.Select(choices=TIPO))
     estado_item =forms.CharField(max_length=150,widget=forms.Select(choices=ESTADO))
+    #lista_entidades=manejadorClasificacion.database.tag1.find()
     lista_entidades=db.entidades.find()
-    entidad = forms.ChoiceField(label="Entidad", choices=[(x["ENTIDAD"], x["ENTIDAD"]) for x in lista_entidades])
+    #lista_entidades=db.entidades.find()
+    #for i in lista_entidades:
+        #print i
+    #entidad = forms.ChoiceField(label="Entidad", choices=[(x["VALOR1"], x["VALOR1"]) for x in lista_entidades])
+    entidad = forms.ChoiceField(label="TAG 1", choices=[(x["ENTIDAD"], x["ENTIDAD"]) for x in lista_entidades])
 
 
     class Meta:

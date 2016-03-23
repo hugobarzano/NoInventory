@@ -94,7 +94,8 @@ class InventariosDriver(object):
         if item is not None:
             for i in item:
                 item_object = Item.build_from_json(i)
-            self.database.inventarios.update({"_id": ObjectId(inventario_id)},{"$addToSet": {"items_inventario" : item_object._id,}})
+                print item_object.nombre_item
+            self.database.inventarios.update({"_id": ObjectId(inventario_id)},{"$addToSet": {"items_inventario" : item_object.nombre_item,}})
         else:
             raise Exception("Item no valido para add")
 

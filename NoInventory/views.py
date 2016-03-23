@@ -18,6 +18,8 @@ from item import *
 from inventario import *
 gestorItems = ItemsDriver()
 gestorInventarios = InventariosDriver()
+manejadorClasificacion=ClasificacionDriver()
+
 
 from pymongo import MongoClient
 
@@ -57,17 +59,14 @@ def inventarios(request):
 def preferencias(request):
     return render(request, 'noinventory/preferencias.html')
 
+def deleteItems(request):
+    gestorItems.destroyDriver()
+    return redirect('/noinventory/preferencias')
 
+def deleteInventorys(request):
+    gestorInventarios.destroyDriver()
+    return redirect('/noinventory/preferencias')
 
-
-class JSONResponse(HttpResponse):
-	"""
-	Un HttpResponse que renderiza su contenido a formato JSON.
-	"""
-	def __init__(self, data, **kwargs):
-		content = JSONRenderer().render(data)
-		kwargs['content_type'] = 'application/json'
-		super(JSONResponse, self).__init__(content, **kwargs)
 
 def inventariosJson(request):
     aux2 = []
@@ -122,39 +121,19 @@ def inventario2(request,id_inventario):
 
 @csrf_exempt
 def inventario(request,id_inventario):
-    nombre_items=[]
-    if request.method == 'POST':
-        form = SelectItem(request.POST)
-        if form.is_valid():
-            print "formulario nombre:"
-            print form.data["items"]
-            item=db.items.find_one({"nombre_item": form.data["items"]})
-            inventario=db.inventarios.find_one({"_id": ObjectId(id_inventario)})
-            db.inventarios.update({"_id": ObjectId(id_inventario)},{"$push": {"items_inventario" :  item["_id"],}})
-            inventario=db.inventarios.find_one({"_id": ObjectId(id_inventario)})
-            print "inventario Despues de insertar:"
-            print inventario["items_inventario"]
-            for i in inventario["items_inventario"]:
-                item=db.items.find_one({"_id": i})
-                nombre_items.append(item["nombre_item"])
-            print nombre_items
-            lista_items=db.items.find()
-            contexto = {"inventario":inventario,"lista_items":lista_items,"form": form}
-            return render(request, 'noinventory/inventario.html',contexto)
-        else:
-            print form.errors
-    else:
-        inventario=gestorInventarios.read(inventario_id=id_inventario)
-        for i in inventario:
-            inventario_object = Inventario.build_from_json(i)
-        #print "incentario object"
-        #print inventario_object._id
+    inventario_object=Inventario()
 
+    lista_items=gestorItems.read()
+    inventario=gestorInventarios.read(inventario_id=id_inventario)
+    for i in inventario:
+        inventario_object = Inventario.build_from_json(i)
 
-        form = SelectItem()
-        lista_items=gestorItems.read()
-        contexto = {"inventario":inventario_object,"inventario_id":inventario_object._id,"lista_items":lista_items,"form": form}
-    return render(request, 'noinventory/inventario.html', contexto)
+    for j in inventario_object.items_inventario:
+        print j
+
+    contexto = {"inventario":inventario_object,"inventario_id":id_inventario,"lista_items":lista_items}
+    return render(request, 'noinventory/inventario.html',contexto)
+
 
 
 @csrf_exempt
@@ -162,9 +141,11 @@ def addToInventario(request,id_inventario,id_item):
         gestorInventarios.addToInventario(id_inventario,id_item,gestorItems)
         lista_items=gestorItems.read()
         inventario=gestorInventarios.read(inventario_id=id_inventario)
-        form=SelectItem()
-        contexto = {"inventario":inventario,"lista_items":lista_items,"form": form}
-        return render(request, 'noinventory/inventario.html', contexto)
+        inventario_object=Inventario()
+        for i in inventario:
+            inventario_object = Inventario.build_from_json(i)
+        contexto = {"inventario":inventario_object,"inventario_id":id_inventario,"lista_items":lista_items}
+        return redirect('/noinventory/inventario/'+id_inventario,contexto)
 
 @csrf_exempt
 def nuevoItem(request):
@@ -306,6 +287,7 @@ class ItemCreator(View):
         form = ItemForm(request.POST)
         if form.is_valid():
             entidad=db.entidades.find_one({"ENTIDAD":form.data["entidad"]})
+            #entidad=
             #print entidad
             item =Item.build_from_json({"nombre_item": form.data['nombre_item'],
                         "fecha_alta_item": time.strftime("%c"),

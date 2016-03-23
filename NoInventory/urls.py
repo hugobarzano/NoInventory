@@ -20,5 +20,6 @@ urlpatterns = patterns('',
         url(r'^preferencias/$',views.preferencias,name='preferencias'),
         url(r'^inventariosJson/$',views.inventariosJson,name='inventariosJson'),
         url(r'^itemsJson/$',views.itemsJson,name='itemsJson'),
-
+        url(r'^deleteItems/$',views.deleteItems,name='deleteItems'),
+        url(r'^deleteInventorys/$',views.deleteInventorys,name='deleteInventorys'),
         )

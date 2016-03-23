@@ -9,11 +9,7 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 
-          <form id="inventarioform" method="post" action=" ">
-            {% load bootstrap %}
-            {{ form.items|bootstrap_horizontal:'col-lg-3' }}
-            <input type="submit" name="submit" value="ADD Objeto" />
-          </form>
+
 </div>
 {% endblock %}
 
@@ -56,7 +52,15 @@
         <ul class="list-group">
            <li class="list-group-item">
         {% if inventario %}
-                 {{ inventario.items_inventario }}
+          {% if inventario.items_inventario  %}
+            {% for n in inventario.items_inventario %}
+            <br>
+            <h> {{ n }}  </h>
+            <br>
+             {% endfor %}
+          {%else %}
+            <strong> No hay Items asociados </strong>
+          {% endif %}
         {% else %}
              <strong>No hay Inventario</strong>
         {% endif %}

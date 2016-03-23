@@ -3,7 +3,7 @@
 {% block body_block %}
         <h1>Añadir item</h1>
 
-        <form id="itemform" method="post" action="/noinventory/nuevoItem/">
+        <form id="itemformCreator" method="post" action="/noinventory/nuevoItem/">
           {% csrf_token %}
           {% load bootstrap %}
           {{ form.nombre_item|bootstrap }}
