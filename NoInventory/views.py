@@ -8,6 +8,7 @@ from django.http import JsonResponse
 import time
 from bson import ObjectId
 from django.http import HttpResponse
+from django.http import HttpResponseServerError
 from NoInventory.forms import *
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -16,9 +17,11 @@ from bson.json_util import dumps
 import os
 from item import *
 from inventario import *
+from clasificacion import *
 gestorItems = ItemsDriver()
 gestorInventarios = InventariosDriver()
-manejadorClasificacion=ClasificacionDriver()
+gestorClasificacion=ClasificacionDriver()
+
 
 
 from pymongo import MongoClient
@@ -38,6 +41,7 @@ entidades=db.entidades
 def index(request):
     #print "variable entorno:"
     #print VAR
+    #return redirect('/noinventory/index/')
     return render(request, 'noinventory/index.html')
 
 @csrf_exempt
@@ -51,13 +55,25 @@ def prueba(request):
     form = SelectItem()
     return render(request, 'noinventory/prueba.html', {'form': form})
 
+@csrf_exempt
 def inventarios(request):
     lista_inventarios=gestorInventarios.read()
     contexto = {"lista_inventarios":lista_inventarios}
     return render(request, 'noinventory/inventarios.html',contexto)
 
 def preferencias(request):
-    return render(request, 'noinventory/preferencias.html')
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            print "formulario valido"
+            newfile = Document(docfile = request.FILES['archivo'])
+            gestorClasificacion.createTag1(newfile)
+            return redirect('/noinventory/preferencias')
+    else:
+        form = DocumentForm() # A empty, unbound form
+    return render(request, 'noinventory/preferencias.html', {'form': form})
+
+    #return render(request, 'noinventory/preferencias.html')
 
 def deleteItems(request):
     gestorItems.destroyDriver()
@@ -67,6 +83,16 @@ def deleteInventorys(request):
     gestorInventarios.destroyDriver()
     return redirect('/noinventory/preferencias')
 
+def inicialiceTags(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            newfile = Document(docfile = request.FILES['archivo'])
+            gestorClasificacion.createTag1(newfile)
+            return redirect('/noinventory/preferencias')
+    else:
+        form = DocumentForm() # A empty, unbound form
+    return render(request, 'noinventory/preferencias.html', {'form': form})
 
 def inventariosJson(request):
     aux2 = []
@@ -165,8 +191,8 @@ def nuevoItem2(request):
                         "tag_item": form.data['tag_item'],
                         "tipo_item": form.data['tipo_item'],
                         "estado_item": form.data['estado_item'],
-                        "codigo_centro":entidad["COD_ENTIDAD"],
-                        "centro":entidad["ENTIDAD"],
+                        "localizador":entidad["COD_ENTIDAD"],
+                        "tag1":entidad["ENTIDAD"],
                         }
             print item
             id_item=db.items.insert(item)
@@ -286,25 +312,26 @@ class ItemCreator(View):
     def post(self, request):
         form = ItemForm(request.POST)
         if form.is_valid():
-            entidad=db.entidades.find_one({"ENTIDAD":form.data["entidad"]})
+            #entidad=db.entidades.find_one({"VALOR1":form.data["entidad"]})
+            #tag1=gestorClasificacion.database.tag1.find_one({"VALOR1":form.data["tag1"]})
             #entidad=
-            #print entidad
+            #print tag1
             item =Item.build_from_json({"nombre_item": form.data['nombre_item'],
                         "fecha_alta_item": time.strftime("%c"),
                         "descripcion_item": form.data['descripcion_item'],
                         "tag_item": form.data['tag_item'],
-                        "tipo_item": form.data['tipo_item'],
-                        "estado_item": form.data['estado_item'],
-                        "codigo_centro":entidad["COD_ENTIDAD"],
-                        "centro":entidad["ENTIDAD"],
+                        "tag1": form.data['tag1'],
+                        "tag2": form.data['tag2'],
+                        "tag3": form.data['tag3'],
+                        "localizador":" ",
                         "qr_data":" ",
                         })
-            gestorItems.create(item)
+            gestorItems.create(item,gestorClasificacion)
             lista_items=gestorItems.read()
             contexto = {"lista_items":lista_items}
             return redirect('/noinventory/items',contexto)
         else:
-            print form.errors
+            return render(request, 'noinventory/nuevoItem.html', {'form': form})
 
 
 class ItemUpdater(View):
@@ -318,7 +345,7 @@ class ItemUpdater(View):
         print aux
         form = ItemForm(aux)
         form.data["descripcion_item"]=str(form.data["descripcion_item"])+"\nUltima modificacion: "+time.strftime("%c")
-        form.data["entidad"]=aux["centro"]
+        form.data["tag1"]=aux["tag1"]
         return render(request, 'noinventory/modificarItem.html', {'form': form,'id_item':currentItem._id})
 
     def post(self, request,id_item):
@@ -327,25 +354,28 @@ class ItemUpdater(View):
             c = Item.build_from_json(i)
         form = ItemForm(request.POST)
         if form.is_valid():
-            entidad=db.entidades.find_one({"ENTIDAD":form.data["entidad"]})
+            #entidad=db.entidades.find_one({"ENTIDAD":form.data["entidad"]})
+            tag1=gestorClasificacion.database.tag1.find_one({"VALOR1":form.data["tag1"]})
+            #entidad=gestorClasificacion.database.tag1.find_one({"VALOR1":form.data["entidad"]})
             #print entidad
             itemUpdated =Item.build_from_json({"_id":c._id,
                         "nombre_item": form.data['nombre_item'],
                         "fecha_alta_item": c.fecha_alta_item,
                         "descripcion_item": form.data['descripcion_item'],
                         "tag_item": form.data['tag_item'],
-                        "tipo_item": form.data['tipo_item'],
-                        "estado_item": form.data['estado_item'],
-                        "codigo_centro":entidad["COD_ENTIDAD"],
-                        "centro":entidad["ENTIDAD"],
+                        "tag1":form.data["tag1"],
+                        "tag2": form.data['tag2'],
+                        "tag3": form.data['tag3'],
+                        "localizador":c.localizador,
                         "qr_data":c.qr_data,
                         })
-            gestorItems.update(itemUpdated)
+            gestorItems.update(itemUpdated,gestorClasificacion)
             lista_items=gestorItems.read()
             contexto = {"lista_items":lista_items}
             return redirect('/noinventory/items',contexto)
         else:
             print form.errors
+            return render(request, 'noinventory/modificarItem.html', {'form': form,'id_item':id_item})
 
 class InventoryCreator(View):
 
@@ -369,6 +399,8 @@ class InventoryCreator(View):
             return redirect('/noinventory/inventarios',contexto)
         else:
             print form.errors
+            return render(request, 'noinventory/nuevoInventario.html', {'form': form})
+
 
 class InventoryUpdater(View):
 
@@ -401,4 +433,4 @@ class InventoryUpdater(View):
             contexto = {"lista_inventarios":lista_inventarios}
             return redirect('/noinventory/inventario/'+str(c._id),contexto)
         else:
-            print form.errors
+            return render(request, 'noinventory/modificarInventario.html', {'form': form,'id_inventario':id_inventario})

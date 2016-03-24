@@ -22,32 +22,20 @@ db = client['noinventory-database']
 manejadorClasificacion=ClasificacionDriver()
 
 
-class ItemForm(forms.ModelForm):
-    TIPO = (
-    ('funcional', 'funcional'),
-    ('obsoleto', 'obsoleto'),
-    ('perecedero', 'perecedero'),)
-    ESTADO=(
-    ('presente', 'presente'),
-    ('no presente', 'no presente'),
-    ('pendiente','pendiente'),)
-    nombre_item = forms.CharField(max_length=150, help_text="Introduce el nombre del objeto")
-    descripcion_item  = forms.CharField(max_length=300, help_text="Breve descripcion sobre el objeto")
-    tag_item = forms.CharField(max_length=150, help_text="Tag para ayudar a clasificar el objeto")
-    tipo_item=forms.CharField(max_length=150,widget=forms.Select(choices=TIPO))
-    estado_item =forms.CharField(max_length=150,widget=forms.Select(choices=ESTADO))
-    #lista_entidades=manejadorClasificacion.database.tag1.find()
-    lista_entidades=db.entidades.find()
-    #lista_entidades=db.entidades.find()
-    #for i in lista_entidades:
-        #print i
-    #entidad = forms.ChoiceField(label="Entidad", choices=[(x["VALOR1"], x["VALOR1"]) for x in lista_entidades])
-    entidad = forms.ChoiceField(label="TAG 1", choices=[(x["ENTIDAD"], x["ENTIDAD"]) for x in lista_entidades])
+class ItemForm(forms.Form):
+    lista_tag1=manejadorClasificacion.database.tag1.find()
+    lista_tag2=manejadorClasificacion.database.tag2.find()
+    lista_tag3=manejadorClasificacion.readTag3()
 
 
-    class Meta:
-        model = Item
-        fields = ('nombre_item','descripcion_item','tag_item','tipo_item','estado_item')
+    nombre_item = forms.CharField(required=True,max_length=150, help_text="Introduce el nombre del objeto")
+    descripcion_item  = forms.CharField(required=True,max_length=300, help_text="Breve descripcion sobre el objeto")
+    tag_item = forms.CharField(required=True, max_length=150, help_text="Tag para ayudar a clasificar el objeto")
+    tag1 = forms.ChoiceField(label="TAG 1", choices=[(x["VALOR1"], x["VALOR1"]) for x in lista_tag1])
+    tag2 = forms.ChoiceField(label="TAG 2", choices=[(x["VALOR2"], x["VALOR2"]) for x in lista_tag2])
+    tag3 = forms.ChoiceField(label="TAG 3", choices=[(x["VALOR3"], x["VALOR3"]) for x in lista_tag3])
+
+
 
 class InventarioForm(forms.ModelForm):
     nombre_inventario = forms.CharField(max_length=150, help_text="Introduce el nombre del inventario")
@@ -65,3 +53,6 @@ class SelectItem(forms.Form):
         super(SelectItem, self).__init__(*args,**kwargs)
         lista_items=db.items.find()
         self.fields['items'] = forms.ChoiceField(label="items", choices=[(x["nombre_item"], x["nombre_item"]) for x in lista_items])
+
+class DocumentForm(forms.Form):
+    archivo = forms.FileField(label='Selecciona fichero csv',help_text='max. 42 megabytes')

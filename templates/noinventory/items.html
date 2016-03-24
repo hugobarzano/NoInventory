@@ -31,12 +31,12 @@
                   Descripcion: {{ i.descripcion_item }}
                 </p>
                 Tags: {{i.tag_item}}
+                TAG1: {{i.tag1}}
                 <br>
-                Estado: {{i.estado_item}}
-                Tipo: {{ i.tipo_item }}
+                TAG2: {{ i.tag2 }}
+                TAG3: {{ i.tag3 }}
                 <br>
-                Centro: {{i.centro}}
-                Codigo Centro: {{ i.codigo_centro }}
+                localizador: {{ i.localizador }}
                 <br>
                 {{ i.qr_data|qrcode:"qr_data" }}
               <button class="btn btn-default btn-xs borrarBoton" data-item="{{ i|documento_id}}">Borrar</button>

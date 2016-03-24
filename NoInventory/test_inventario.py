@@ -69,10 +69,10 @@ def main():
         "fecha_alta_item":time.strftime("%c"),
         "descripcion_item":"Ordenador portatil super potentorro",
         "tag_item":"Ultrabook, Notebook",
-        "tipo_item":"funcional",
-        "estado_item":"presente",
+        "tag1":"Administracion de  Servicios Centrales",
+        "tag2":"funcional",
+        "tag3":"presente",
         "codigo_centro":"06UG02",
-        "centro":"Administracion de  Servicios Centrales",
         "qr_data":" "})
     manejadorItem.create(new_item)
 

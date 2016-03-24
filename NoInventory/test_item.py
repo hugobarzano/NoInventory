@@ -1,9 +1,14 @@
+# coding=utf8
+# -*- coding: utf8 -*-
+# vim: set fileencoding=utf8 :
 from bson.objectid import ObjectId
 #from pymongo.objectid import ObjectId
 from pymongo import *
 import time
 from item import *
+from clasificacion import *
 import os
+
 
 def load_all_items_from_database(manejador):
     print("Cargando todos los items de la base de datos:")
@@ -57,7 +62,8 @@ def test_delete(manejador, new_item):
 
 def main():
     manejador = ItemsDriver()
-    #manejador.destroyDriver()
+    manejador2 = ClasificacionDriver()
+    manejador.destroyDriver()
     print "\n#######################################################"
     print "LANZANDO BATERIA DE TEST - OPERACIONES CRUD PARA ITEMS"
     print "#######################################################\n"
@@ -73,17 +79,25 @@ def main():
         "fecha_alta_item":time.strftime("%c"),
         "descripcion_item":"Ordenador portatil super potentorro",
         "tag_item":"Ultrabook, Notebook",
-        "tipo_item":"funcional",
-        "estado_item":"presente",
-        "codigo_centro":"06UG02",
-        "centro":"Administracion de  Servicios Centrales",
+        "tag1":"Administración de  Servicios Centrales",
+        "tag2":"MONITOR  CRT",
+        "tag3":"DEFAULT",
+        "localizador":" ",
         "qr_data":" "})
     manejador.create(new_item)
-    salida=manejador.read(item_id=new_item._id)
-    for i in salida:
-        it = Item.build_from_json(i)
-    print "informacion qr:\n"
-    print it.qr_data
+    #aux=manejador.database.items.find({"nombre_item":new_item.nombre_item})
+    aux=manejador.database.items.find()
+    for i in aux:
+        print i
+    manejador.generateLocalizador(new_item,manejador2)
+    #manejador.create(new_item)
+    #salida=manejador.read(item_id=new_item._id)
+    #for i in salida:
+    #    print i
+    #    it = Item.build_from_json(i)
+
+    #print "informacion qr:\n"
+    #print it.qr_data
     #test_create(manejador, new_item)
     #manejador.generateQR(new_item)
     #salida=manejador.read(new_item._id)
@@ -94,7 +108,7 @@ def main():
     #update new_item
     #new_item.descripcion_item = "Ordenador portatil nada pontente"
     #test_update(manejador, new_item)
-    #load_all_items_from_database(manejador)
+    load_all_items_from_database(manejador)
 
     #delete new_project and try to read back from database
     #test_delete(manejador, new_item)

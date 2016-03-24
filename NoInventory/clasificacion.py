@@ -4,6 +4,9 @@ import time
 import os
 import csv
 import json
+from item import *
+from bson.json_util import dumps
+
 
 
 
@@ -48,6 +51,8 @@ class ClasificacionDriver(object):
         #reader = csv.reader(open(fichero, 'rb'), delimiter=',')
         reader = csv.DictReader( csvfile, fieldnames)
         for row in reader:
+            print "create 3"
+            print row
             self.database.tag3.insert(row)
 
 
@@ -55,10 +60,12 @@ class ClasificacionDriver(object):
         return self.database.tag1.find()
 
     def readTag2(self):
-        return self.database.tag1.find()
+        return self.database.tag2.find()
 
     def readTag3(self):
-        return self.database.tag1.find()
+        return self.database.tag3.find()
+
+
 
 
 

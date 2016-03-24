@@ -2,16 +2,19 @@ from bson.objectid import ObjectId
 from pymongo import *
 import time
 import os
+from clasificacion import *
+
+
 
 def jsonTOstring(elemento):
     #d=json.dumps(elemento)
-    texto="Nombre Item:" + elemento["nombre_item"] + "\nIdentificador:"+str(elemento["_id"]) + "\nFecha de Alta:"+elemento["fecha_alta_item"]+"\nDescripcion:"+elemento["descripcion_item"]+"\nEstado:"+elemento["estado_item"]+"\nTipo:"+elemento["tipo_item"]+"\nTags:"+elemento["tag_item"]
+    texto="Nombre Item:" + elemento["nombre_item"] + "\nIdentificador:"+str(elemento["_id"]) + "\nFecha de Alta:"+elemento["fecha_alta_item"]
     return texto
 
 class Item(object):
     """Clase para almacenar informacion de los items"""
 
-    def __init__(self, item_id=None,nombre_item=None,fecha_alta_item=None, descripcion_item=None,tag_item=None,tipo_item=None,estado_item=None,codigo_centro=None,centro=None,qr_data=None):
+    def __init__(self, item_id=None,nombre_item=None,fecha_alta_item=None, descripcion_item=None,tag_item=None,tag1=None,tag2=None,tag3=None,localizador=None,qr_data=None):
 
         if item_id is None:
             self._id = ObjectId()
@@ -22,10 +25,10 @@ class Item(object):
         self.fecha_alta_item = time.strftime("%c")
         self.descripcion_item = descripcion_item
         self.tag_item=tag_item
-        self.tipo_item=tipo_item
-        self.estado_item=estado_item
-        self.codigo_centro=codigo_centro
-        self.centro=centro
+        self.tag1=tag1
+        self.tag2=tag2
+        self.tag3=tag3
+        self.localizador=localizador
         self.qr_data=qr_data
 
     def get_as_json(self):
@@ -45,10 +48,11 @@ class Item(object):
                     json_data['fecha_alta_item'],
                     json_data['descripcion_item'],
                     json_data['tag_item'],
-                    json_data['tipo_item'],
-                    json_data['estado_item'],
-                    json_data['codigo_centro'],
-                    json_data['centro'],
+                    json_data['tag1'],
+                    json_data['tag2'],
+                    json_data['tag3'],
+                    json_data['localizador'],
+
                     json_data['qr_data'])
             except KeyError as e:
                 raise Exception("Clave no encontrada en json: {}".format(e.message))
@@ -75,9 +79,10 @@ class ItemsDriver(object):
         self.database = self.client['items']
 
 
-    def create(self, item):
+    def create(self, item,clasificador):
         if item is not None:
             self.database.items.insert(item.get_as_json())
+            self.generateLocalizador(item,clasificador)
             self.generateQR(item)
         else:
             raise Exception("Imposible crear Item")
@@ -85,11 +90,30 @@ class ItemsDriver(object):
     def generateQR(self,item):
         if item is not None:
             qr_data_generated=jsonTOstring(item.get_as_json())
-            print "qr_data_generated:\n"
-            print qr_data_generated
+            #print "qr_data_generated:\n"
+            #print qr_data_generated
             self.database.items.update({"_id":item._id},{"$set": {"qr_data": qr_data_generated}})
         else:
             raise Exception("Imposible generar QR para el item")
+
+    def generateLocalizador(self,item,manejador_clasificacion):
+        if item is not None:
+            get1 = list(manejador_clasificacion.database.tag1.find({'VALOR1':item.tag1}))
+            get2 = list(manejador_clasificacion.database.tag2.find({'VALOR2':item.tag2}))
+            get3 = list(manejador_clasificacion.database.tag3.find({'VALOR3':item.tag3}))
+
+            if len(get1) is 0 or len(get2) is 0 or len(get3) is 0:
+                raise Exception("imposible generar localizador")
+            else:
+                localizador=get1[0]["CLAVE1"]+get2[0]["CLAVE2"]+get3[0]["CLAVE3"]
+                print "localizador generado:"
+                print localizador
+                self.database.items.update({"_id":item._id},{"$set": {"localizador": localizador}})
+                aux=self.database.items.find()
+                for i in aux:
+                    print i
+        else:
+            raise Exception("Imposible generar localizador para el item")
 
 
     def read(self, item_id=None):
@@ -99,12 +123,13 @@ class ItemsDriver(object):
             return self.database.items.find({"_id":ObjectId(item_id)})
 
 
-    def update(self, item):
+    def update(self, item,clasificador):
         if item is not None:
             # the save() method updates the document if this has an _id property
             # which appears in the collection, otherwise it saves the data
             # as a new document in the collection
             self.database.items.save(item.get_as_json())
+            self.generateLocalizador(item,clasificador)
             self.generateQR(item)
         else:
             raise Exception("Imposible actualizar Item")

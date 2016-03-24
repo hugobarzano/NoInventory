@@ -18,7 +18,9 @@
 
       <br>
 </div>
-
-
-
+<form id="tagsForm" method="post" action="/noinventory/preferencias/">
+  {% csrf_token %}
+  {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
   {% endblock %}
