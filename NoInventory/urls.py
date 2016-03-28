@@ -22,4 +22,6 @@ urlpatterns = patterns('',
         url(r'^itemsJson/$',views.itemsJson,name='itemsJson'),
         url(r'^deleteItems/$',views.deleteItems,name='deleteItems'),
         url(r'^deleteInventorys/$',views.deleteInventorys,name='deleteInventorys'),
+        url(r'^addItemFromQr/$',views.addItemFromQr,name='addItemFromQr'),
+
         )

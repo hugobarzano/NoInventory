@@ -9,7 +9,7 @@ from bson.json_util import dumps
 from bson.json_util import loads
 import json
 import os
-
+from django.forms import ClearableFileInput
 from pymongo import MongoClient
 
 ON_COMPOSE = os.environ.get('COMPOSE')
@@ -56,3 +56,11 @@ class SelectItem(forms.Form):
 
 class DocumentForm(forms.Form):
     archivo = forms.FileField(label='Selecciona fichero csv',help_text='max. 42 megabytes')
+
+class CustomClearableFileInput(ClearableFileInput):
+    template_with_clear = '<br>  <label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label> %(clear)s'
+
+class FormEntrada(forms.Form):
+        widgets = {
+            'archivo': CustomClearableFileInput
+        }

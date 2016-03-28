@@ -63,14 +63,16 @@ def inventarios(request):
 
 def preferencias(request):
     if request.method == 'POST':
-        form = DocumentForm(request.POST, request.FILES)
+        #form = DocumentForm(request.POST, request.FILES)
+        form = FormEntrada(request.POST, request.FILES)
         if form.is_valid():
             print "formulario valido"
             newfile = Document(docfile = request.FILES['archivo'])
             gestorClasificacion.createTag1(newfile)
             return redirect('/noinventory/preferencias')
     else:
-        form = DocumentForm() # A empty, unbound form
+        form=FormEntrada()
+        #form = DocumentForm() # A empty, unbound form
     return render(request, 'noinventory/preferencias.html', {'form': form})
 
     #return render(request, 'noinventory/preferencias.html')
@@ -95,14 +97,18 @@ def inicialiceTags(request):
     return render(request, 'noinventory/preferencias.html', {'form': form})
 
 def inventariosJson(request):
-    aux2 = []
     lista_inventarios=gestorInventarios.read()
+    aux=[]
+    aux3=[]
     for i in lista_inventarios:
         aux = Inventario.build_from_json(i)
         aux2=aux.get_as_json()
-        print aux2
-    contexto = {"lista_inventarios":aux2}
-    return JsonResponse(contexto)
+        aux2["_id"]=str(aux2["_id"])
+        aux4={"_id":aux2["_id"],"nombre":aux2["nombre_inventario"],"descripcion":aux2["descripcion_inventario"]}
+        aux3.append(aux4)
+
+    print aux3
+    return JsonResponse(aux3,safe=False)
 
 def itemsJson(request):
     lista_items=gestorItems.read()
@@ -122,6 +128,9 @@ def itemsJson(request):
     print aux3
     #contexto = {"lista_items":aux}
     return JsonResponse(aux3,safe=False)
+
+def addItemFromQr(request):
+    print request.GET['contenido_scaneo']
 
 
 
