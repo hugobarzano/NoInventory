@@ -36,6 +36,11 @@ class ClasificacionDriver(object):
         for row in reader:
             self.database.tag1.insert(row)
 
+    def createTag1_prueba(self, reader):
+        self.database.tag1.remove()
+        for row in reader:
+            self.database.tag1.insert(row)
+
 
     def createTag2(self, fichero):
         csvfile = open(fichero, 'rb')

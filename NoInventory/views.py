@@ -4,7 +4,11 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
+import csv
 # Create your views here.
+
+
+import StringIO
 import time
 from bson import ObjectId
 from django.http import HttpResponse
@@ -61,18 +65,64 @@ def inventarios(request):
     contexto = {"lista_inventarios":lista_inventarios}
     return render(request, 'noinventory/inventarios.html',contexto)
 
+
+class Preferencias(View):
+
+    def get(self, request):
+        print "Entrando por el get"
+        form=FormEntrada()
+        return render(request, 'noinventory/preferencias.html', {'form': form})
+
+    def post(self, request):
+        print "Entrando por el post"
+        reader_tag1=None
+        form = FormEntrada(request.POST, request.FILES)
+        if not form.is_valid():
+        #print "formulario valido"
+            #if request.FILES['file_tag1'] is empty:
+            fieldnames = ("CLAVE1","VALOR1")
+            #reader_tag1 = csv.DictReader(form.cleaned_data['file_tag1'], fieldnames)
+            reader_tag1 = csv.DictReader(request.FILES['file_tag1'], fieldnames)
+
+            if reader_tag1 is None:
+                print "default"
+            else:
+                gestorClasificacion.createTag1_prueba(reader_tag1)
+                return redirect('/noinventory/preferencias',{'form':form})
+        else:
+            print "formulario invalido"
+            #form = FormEntrada()
+            return render(request, 'noinventory/preferencias.html', {'form': form})
+
+
 def preferencias(request):
     if request.method == 'POST':
         #form = DocumentForm(request.POST, request.FILES)
+        reader_tag1=None
         form = FormEntrada(request.POST, request.FILES)
-        if form.is_valid():
+        print "entrando por el post de vista"
+        if not form.is_valid():
             print "formulario valido"
-            newfile = Document(docfile = request.FILES['archivo'])
-            gestorClasificacion.createTag1(newfile)
+            reader_tag1 = csv.reader(form.cleaned_data['file_tag1'])
+            if reader_tag1 is not None:
+                for row in reader:
+                    print row
+            else:
+                print "default"
+            #fichero=request.FILES['docfile'].read()
+            #nombre_fichero=re
+            #fichero = StringIO(form.data["docfile"])
+            #fichero=open(request.FILES['docfile'], 'r')
+            ##fichero=request.getPart("docfile")
+            #filecontent=fichero.getInputStream();
+            #newdoc = Document(filename = request.POST['filename'],docfile = request.FILES['docfile'])
+            #gestorClasificacion.createTag1(fichero)
             return redirect('/noinventory/preferencias')
+        else:
+            print "Formulario invalido"
     else:
+        print "Entrando por get de vista"
         form=FormEntrada()
-        #form = DocumentForm() # A empty, unbound form
     return render(request, 'noinventory/preferencias.html', {'form': form})
 
     #return render(request, 'noinventory/preferencias.html')
@@ -129,9 +179,16 @@ def itemsJson(request):
     #contexto = {"lista_items":aux}
     return JsonResponse(aux3,safe=False)
 
+@csrf_exempt
 def addItemFromQr(request):
-    print request.GET['contenido_scaneo']
-
+    if request.method == 'POST':
+        print request.POST['contenido_scaneo']
+        print request.POST['inventario']
+        print "recibido post"
+    else:
+        print "recibido get"
+    #    print request.GET['contenido_scaner']
+    return HttpResponse()
 
 
 @csrf_exempt

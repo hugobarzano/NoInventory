@@ -18,9 +18,11 @@
 
       <br>
 </div>
-<form id="tagsForm" method="post" action="/noinventory/preferencias/">
-  {% csrf_token %}
-  {{ form.archivo}}
-        <input type="submit" value="Submit">
-    </form>
+  <form action="/noinventory/preferencias/" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% load bootstrap %}
+    {{ form.file_tag1|bootstrap }}
+
+      <input type="submit" value="Submit">
+  </form>
   {% endblock %}
