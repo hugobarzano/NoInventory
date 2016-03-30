@@ -62,5 +62,21 @@ class CustomClearableFileInput(ClearableFileInput):
 
 class FormEntrada(forms.Form):
     file_tag1 = forms.FileField(label='Selecciona un archivo para tag 1')
-    file_tag2 = forms.FileField(label='Selecciona un archivo para tag 2')
-    file_tag3 = forms.FileField(label='Selecciona un archivo para tag 3')
+    #file_tag2 = forms.FileField(label='Selecciona un archivo para tag 2')
+    #file_tag3 = forms.FileField(label='Selecciona un archivo para tag 3')
+
+
+
+
+############### REGISTRO DE USUARIOS #################
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('organizacion',)

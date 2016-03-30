@@ -7,6 +7,21 @@ import json
 from item import *
 from bson.json_util import dumps
 
+class ClasificacionPruebas(object):
+    """ ItemsDriver implemeta las funcionalidades CRUD para administrar items """
+
+    def __init__(self,organizacion):
+
+        self.organizacion=organizacion
+        self.client = MongoClient(host='localhost', port=27017)
+        self.database = self.client[organizacion]
+
+
+
+    def prueba(self):
+        cosa={"prueba":"pruebaaaaa","organizacion":"osl"}
+        self.database[self.organizacion].insert(cosa)
+
 
 
 
@@ -43,11 +58,13 @@ class ClasificacionDriver(object):
 
 
     def createTag2(self, fichero):
+        self.database.tag2.remove()
         csvfile = open(fichero, 'rb')
         fieldnames = ("CLAVE2","VALOR2")
         #reader = csv.reader(open(fichero, 'rb'), delimiter=',')
         reader = csv.DictReader( csvfile, fieldnames)
         for row in reader:
+            row["organizacion"]="osl"
             self.database.tag2.insert(row)
 
     def createTag3(self, fichero):
