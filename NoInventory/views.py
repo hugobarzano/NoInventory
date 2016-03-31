@@ -6,6 +6,7 @@ from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
 import csv
 # Create your views here.
+from django.shortcuts import render_to_response
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 import StringIO
@@ -14,6 +15,7 @@ from bson import ObjectId
 from django.http import HttpResponse
 from django.http import HttpResponseServerError
 from NoInventory.forms import *
+from NoInventory.models import *
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic.base import View
@@ -45,6 +47,7 @@ inventarios=db.inventarios
 entidades=db.entidades
 
 
+########################### VISTAS PRINCIPALES #################################
 def index(request):
     #print "variable entorno:"
     #print VAR
@@ -67,152 +70,6 @@ def inventarios(request):
     lista_inventarios=gestorInventarios.read()
     contexto = {"lista_inventarios":lista_inventarios}
     return render(request, 'noinventory/inventarios.html',contexto)
-
-
-class Preferencias(View):
-
-    def get(self, request):
-        print "Entrando por el get"
-        form=FormEntrada()
-        return render(request, 'noinventory/preferencias.html', {'form': form})
-
-    def post(self, request):
-        print "Entrando por el post"
-        reader_tag1=None
-        form = FormEntrada(request.POST, request.FILES)
-        if not form.is_valid():
-        #print "formulario valido"
-            #if request.FILES['file_tag1'] is empty:
-            fieldnames = ("CLAVE1","VALOR1")
-            #reader_tag1 = csv.DictReader(form.cleaned_data['file_tag1'], fieldnames)
-            reader_tag1 = csv.DictReader(request.FILES['file_tag1'], fieldnames)
-
-            if reader_tag1 is None:
-                print "default"
-            else:
-                gestorClasificacion.createTag1_prueba(reader_tag1)
-                return redirect('/noinventory/preferencias',{'form':form})
-        else:
-            print "formulario invalido"
-            #form = FormEntrada()
-            return render(request, 'noinventory/preferencias.html', {'form': form})
-
-
-def preferencias(request):
-    if request.method == 'POST':
-        #form = DocumentForm(request.POST, request.FILES)
-        reader_tag1=None
-        form = FormEntrada(request.POST, request.FILES)
-        print "entrando por el post de vista"
-        if not form.is_valid():
-            print "formulario valido"
-            reader_tag1 = csv.reader(form.cleaned_data['file_tag1'])
-            if reader_tag1 is not None:
-                for row in reader:
-                    print row
-            else:
-                print "default"
-            #fichero=request.FILES['docfile'].read()
-            #nombre_fichero=re
-            #fichero = StringIO(form.data["docfile"])
-            #fichero=open(request.FILES['docfile'], 'r')
-            ##fichero=request.getPart("docfile")
-            #filecontent=fichero.getInputStream();
-            #newdoc = Document(filename = request.POST['filename'],docfile = request.FILES['docfile'])
-            #gestorClasificacion.createTag1(fichero)
-            return redirect('/noinventory/preferencias')
-        else:
-            print "Formulario invalido"
-    else:
-        print "Entrando por get de vista"
-        form=FormEntrada()
-    return render(request, 'noinventory/preferencias.html', {'form': form})
-
-    #return render(request, 'noinventory/preferencias.html')
-
-def deleteItems(request):
-    gestorItems.destroyDriver()
-    return redirect('/noinventory/preferencias')
-
-def deleteInventorys(request):
-    gestorInventarios.destroyDriver()
-    return redirect('/noinventory/preferencias')
-
-def inicialiceTags(request):
-    if request.method == 'POST':
-        form = DocumentForm(request.POST, request.FILES)
-        if form.is_valid():
-            newfile = Document(docfile = request.FILES['archivo'])
-            gestorClasificacion.createTag1(newfile)
-            return redirect('/noinventory/preferencias')
-    else:
-        form = DocumentForm() # A empty, unbound form
-    return render(request, 'noinventory/preferencias.html', {'form': form})
-
-def inventariosJson(request):
-    lista_inventarios=gestorInventarios.read()
-    aux=[]
-    aux3=[]
-    for i in lista_inventarios:
-        aux = Inventario.build_from_json(i)
-        aux2=aux.get_as_json()
-        aux2["_id"]=str(aux2["_id"])
-        aux4={"_id":aux2["_id"],"nombre":aux2["nombre_inventario"],"descripcion":aux2["descripcion_inventario"]}
-        aux3.append(aux4)
-
-    print aux3
-    return JsonResponse(aux3,safe=False)
-
-def itemsJson(request):
-    lista_items=gestorItems.read()
-    aux=[]
-    aux3=[]
-    for i in lista_items:
-        #aux.append(i)
-        aux = Item.build_from_json(i)
-        aux2=aux.get_as_json()
-        aux2["_id"]=str(aux2["_id"])
-        aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"]}
-        aux3.append(aux4)
-        #aux2=aux.get_as_json()
-    #print aux.get_as_json()
-    #aux2=aux.get_as_json()
-    #aux2["_id"]=str(aux2["_id"])
-    print aux3
-    #contexto = {"lista_items":aux}
-    return JsonResponse(aux3,safe=False)
-
-@csrf_exempt
-def addItemFromQr(request):
-    if request.method == 'POST':
-        print request.POST['contenido_scaneo']
-        print request.POST['inventario']
-        print "recibido post"
-    else:
-        print "recibido get"
-    #    print request.GET['contenido_scaner']
-    return HttpResponse()
-
-
-@csrf_exempt
-def inventario2(request,id_inventario):
-    nombre_items=[]
-    inventario=db.inventarios.find_one({"_id": ObjectId(id_inventario)})
-    print "inventario Despues de insertar:"
-    print inventario["items_inventario"]
-    for i in inventario["items_inventario"]:
-        item=db.items.find_one({"_id": i})
-        nombre_items.append(item["nombre_item"])
-    print nombre_items
-
-    inventario=db.inventarios.find_one({"_id": ObjectId(id_inventario)})
-    lista_items=db.items.find()
-    form = SelectItem()
-    contexto = {"inventario":inventario,"lista_items":lista_items,"form": form}
-    return render(request, 'noinventory/inventario.html', contexto)
-
-
-
 
 @csrf_exempt
 def inventario(request,id_inventario):
@@ -242,80 +99,112 @@ def addToInventario(request,id_inventario,id_item):
         contexto = {"inventario":inventario_object,"inventario_id":id_inventario,"lista_items":lista_items}
         return redirect('/noinventory/inventario/'+id_inventario,contexto)
 
-@csrf_exempt
-def nuevoItem(request):
-    form = ItemForm()
-    return render(request, 'noinventory/nuevoItem.html', {'form': form})
 
-@csrf_exempt
-def nuevoItem2(request):
-    if request.method == 'POST':
-        form = ItemForm(request.POST)
+
+
+############################ ADMINISTRACION DE PREFERENCIAS ##########################
+
+class Preferencias(View):
+
+    def get(self, request):
+        print "Entrando por el get"
+        form=FormEntrada()
+        return render(request, 'noinventory/preferencias.html', {'form': form})
+
+    def post(self, request):
+        print "Entrando por el post"
+        reader_tag1=None
+        form = FormEntrada(request.POST, request.FILES)
         if form.is_valid():
-            entidad=db.entidades.find_one({"ENTIDAD":form.data["entidad"]})
-            print entidad
-            item = {    "nombre_item": form.data['nombre_item'],
-                        "fecha_alta_item": time.strftime("%c"),
-                        "descripcion_item": form.data['descripcion_item'],
-                        "tag_item": form.data['tag_item'],
-                        "tipo_item": form.data['tipo_item'],
-                        "estado_item": form.data['estado_item'],
-                        "localizador":entidad["COD_ENTIDAD"],
-                        "tag1":entidad["ENTIDAD"],
-                        }
-            print item
-            id_item=db.items.insert(item)
-            #print id_item
-            qr_data_generated=jsonTOstring(db.items.find_one({"_id": id_item}))
-            #print qr_data_generated
-            db.items.update_one({"_id":id_item},{"$set": {"qr_data": qr_data_generated}})
-            lista_items=db.items.find()
-            #print lista_items
-            #for i in lista_items:
-                #print i
-            contexto = {"lista_items":lista_items}
-            return render(request, 'noinventory/items.html',contexto)
+        #print "formulario valido"
+            fichero1=request.FILES.get('file_tag1',None)
+            if fichero1 is not None:
+                fieldnames = ("CLAVE1","VALOR1")
+                reader_tag1 = csv.DictReader(request.FILES['file_tag1'], fieldnames)
+                if reader_tag1 is None:
+                    gestorClasificacion.createDefaultTag1(request.session['organizacion'])
+                else:
+                    gestorClasificacion.createTag1FromReader(reader_tag1,request.session['organizacion'])
+            else:
+                gestorClasificacion.createDefaultTag1(request.session['organizacion'])
+            return redirect('/noinventory/preferencias',{'form':form})
         else:
-            print form.errors
-    else:
-        form = ItemForm()
-    return render(request, 'noinventory/nuevoItem.html', {'form': form})
+            print "formulario invalido"
+            #form = FormEntrada()
+            return render(request, 'noinventory/preferencias.html', {'form': form})
 
+
+def deleteItems(request):
+    gestorItems.destroyDriver()
+    return redirect('/noinventory/preferencias')
+
+def deleteInventorys(request):
+    gestorInventarios.destroyDriver()
+    return redirect('/noinventory/preferencias')
+
+def inicialiceTags(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            newfile = Document(docfile = request.FILES['archivo'])
+            gestorClasificacion.createTag1(newfile)
+            return redirect('/noinventory/preferencias')
+    else:
+        form = DocumentForm() # A empty, unbound form
+    return render(request, 'noinventory/preferencias.html', {'form': form})
+
+
+
+########################### VISTAS JSON PARA ANDROID ################################
+def inventariosJson(request):
+    lista_inventarios=gestorInventarios.read()
+    aux=[]
+    aux3=[]
+    for i in lista_inventarios:
+        aux = Inventario.build_from_json(i)
+        aux2=aux.get_as_json()
+        aux2["_id"]=str(aux2["_id"])
+        aux4={"_id":aux2["_id"],"nombre":aux2["nombre_inventario"],"descripcion":aux2["descripcion_inventario"]}
+        aux3.append(aux4)
+
+    print aux3
+    return JsonResponse(aux3,safe=False)
+
+def itemsJson(request):
+    lista_items=gestorItems.read()
+    aux=[]
+    aux3=[]
+    for i in lista_items:
+        #aux.append(i)
+        aux = Item.build_from_json(i)
+        aux2=aux.get_as_json()
+        aux2["_id"]=str(aux2["_id"])
+        aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"]}
+        aux3.append(aux4)
+    print aux3
+    return JsonResponse(aux3,safe=False)
+
+@csrf_exempt
+def addItemFromQr(request):
+    if request.method == 'POST':
+        print request.POST['contenido_scaneo']
+        print request.POST['inventario']
+        d = json.loads(request.POST['contenido_scaneo'])
+        print d["nombre_item"]
+        print "recibido post"
+    else:
+        print "recibido get"
+    #    print request.GET['contenido_scaner']
+    return HttpResponse()
+
+
+
+
+################################## COSAS VARIAS ########################################
 def jsonTOstring(elemento):
     #d=json.dumps(elemento)
-    texto="Nombre Item:" + elemento["nombre_item"] + "\nIdentificador:"+str(elemento["_id"]) + "\nFecha de Alta:"+elemento["fecha_alta_item"]+"\nDescripcion:"+elemento["descripcion_item"]+"\nEstado:"+elemento["estado_item"]+"\nTipo:"+elemento["tipo_item"]+"\nTags:"+elemento["tag_item"]
+    texto="Nombre Item:" + elemento["nombre_item"] + "\nIdentificador:"+str(elemento["_id"]) + "\nFecha de Alta:"+elemento["fecha_alta_item"]+"\nDescripcion:"+elemento["descripcion_item"]+"\nEstado:"+elemento["estado_item"]+"\nTipo:"+elemento["tipo_item"]+"\nTags:"+elemento["organizacion"]
     return texto
-
-
-@csrf_exempt
-@login_required
-def nuevoInventario(request):
-    if request.method == 'POST':
-        form = InventarioForm(request.POST)
-        if form.is_valid():
-            inventario = {    "nombre_inventario": form.data['nombre_inventario'],
-                        "fecha_alta_inventario": time.strftime("%c"),
-                        "descripcion_inventario": form.data['descripcion_inventario'],
-                        "tag_inventario": form.data['tag_inventario'],
-                        "caracteristicas_inventario":form.data['caracteristicas_inventario'],
-                        "items_inventario": []
-                        }
-            id_inventario=db.inventarios.insert(inventario)
-            #print id_item
-            qr_data_generated=jsonTOstringInventario(db.inventarios.find_one({"_id": id_inventario}))
-            #print qr_data_generated
-            db.inventarios.update_one({"_id":id_inventario},{"$set": {"qr_data": qr_data_generated}})
-            lista_inventarios=db.inventarios.find()
-            #print lista_items
-            #for i in lista_items:
-                #print i
-            contexto = {"lista_inventarios":lista_inventarios}
-            return render(request, 'noinventory/inventarios.html',contexto)
-        else:
-            print form.errors
-    else:
-        form = InventarioForm()
-    return render(request, 'noinventory/nuevoInventario.html', {'form': form})
 
 
 def jsonTOstringInventario(elemento):
@@ -360,6 +249,8 @@ def desplegable():
     print SEL2
     return SEL2
 
+
+######################### GESTION DE ITEMS E INVENTARIOS #######################
 @csrf_exempt
 def borrarItem(request):
     i_id = None
@@ -375,27 +266,24 @@ def borrarItem(request):
 class ItemCreator(View):
 
     def get(self, request):
-        form = ItemForm()
+        form = ItemForm3(organizacion=request.session['organizacion'])
         return render(request, 'noinventory/nuevoItem.html', {'form': form})
 
     def post(self, request):
-        form = ItemForm(request.POST)
+        form = ItemForm3(request.POST,organizacion=request.session['organizacion'])
         if form.is_valid():
-            #entidad=db.entidades.find_one({"VALOR1":form.data["entidad"]})
-            #tag1=gestorClasificacion.database.tag1.find_one({"VALOR1":form.data["tag1"]})
-            #entidad=
-            #print tag1
             item =Item.build_from_json({"nombre_item": form.data['nombre_item'],
                         "fecha_alta_item": time.strftime("%c"),
                         "descripcion_item": form.data['descripcion_item'],
-                        "tag_item": form.data['tag_item'],
+                        "organizacion": request.session["organizacion"],
+                        "usuario":request.session['username'],
                         "tag1": form.data['tag1'],
                         "tag2": form.data['tag2'],
                         "tag3": form.data['tag3'],
                         "localizador":" ",
                         "qr_data":" ",
                         })
-            gestorItems.create(item,gestorClasificacion)
+            gestorItems.create(item,gestorClasificacion,request.session['organizacion'])
             lista_items=gestorItems.read()
             contexto = {"lista_items":lista_items}
             return redirect('/noinventory/items',contexto)
@@ -412,26 +300,24 @@ class ItemUpdater(View):
 
         aux=currentItem.get_as_json()
         print aux
-        form = ItemForm(aux)
+        form = ItemForm3(aux,organizacion=request.session['organizacion'])
         form.data["descripcion_item"]=str(form.data["descripcion_item"])+"\nUltima modificacion: "+time.strftime("%c")
-        form.data["tag1"]=aux["tag1"]
+        #form.data["tag1"]=aux["tag1"]
         return render(request, 'noinventory/modificarItem.html', {'form': form,'id_item':currentItem._id})
 
     def post(self, request,id_item):
         cursor=gestorItems.read(item_id=id_item)
         for i in cursor:
             c = Item.build_from_json(i)
-        form = ItemForm(request.POST)
+        form = ItemForm3(request.POST,organizacion=request.session['organizacion'])
         if form.is_valid():
-            #entidad=db.entidades.find_one({"ENTIDAD":form.data["entidad"]})
             tag1=gestorClasificacion.database.tag1.find_one({"VALOR1":form.data["tag1"]})
-            #entidad=gestorClasificacion.database.tag1.find_one({"VALOR1":form.data["entidad"]})
-            #print entidad
             itemUpdated =Item.build_from_json({"_id":c._id,
                         "nombre_item": form.data['nombre_item'],
                         "fecha_alta_item": c.fecha_alta_item,
                         "descripcion_item": form.data['descripcion_item'],
-                        "tag_item": form.data['tag_item'],
+                        "organizacion": c.organizacion,
+                        "usuario":c.usuario,
                         "tag1":form.data["tag1"],
                         "tag2": form.data['tag2'],
                         "tag3": form.data['tag3'],
@@ -538,16 +424,12 @@ def register(request):
             profile = profile_form.save(commit=False)
             profile.user = user
 
-            # Did the user provide a profile picture?
-            # If so, we need to get it from the input form and put it in the UserProfile model.
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-
             # Now we save the UserProfile model instance.
             profile.save()
 
             # Update our variable to tell the template registration was successful.
             registered = True
+            return HttpResponseRedirect('/noinventory/')
         # Invalid form or forms - mistakes or something else?
         # Print problems to the terminal.
         # They'll also be shown to the user.
@@ -588,8 +470,11 @@ def user_login(request):
         if user:
             # Is the account active? It could have been disabled.
             if user.is_active:
-                # If the account is valid and active, we can log the user in.
-                # We'll send the user back to the homepage.
+                u=User.objects.get(username=user.username)
+                request.session['username'] = u.username
+                user_profile = UserProfile.objects.get(user=user)
+                #print user_profile.__organizacion__()
+                request.session['organizacion'] = user_profile.__organizacion__()
                 login(request, user)
                 return HttpResponseRedirect('/noinventory/')
             else:
@@ -611,6 +496,8 @@ def user_login(request):
 @login_required
 def user_logout(request):
     # Since we know the user is logged in, we can now just log them out.
+    del request.session['username']
+    del request.session['organizacion']
     logout(request)
 
     # Take the user back to the homepage.

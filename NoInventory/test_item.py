@@ -78,18 +78,20 @@ def main():
     new_item = Item.build_from_json({"nombre_item":"HP pavilion",
         "fecha_alta_item":time.strftime("%c"),
         "descripcion_item":"Ordenador portatil super potentorro",
-        "tag_item":"Ultrabook, Notebook",
+        "organizacion":"organizacion",
+        "usuario":"usuario",
         "tag1":"Administración de  Servicios Centrales",
         "tag2":"MONITOR  CRT",
         "tag3":"DEFAULT",
         "localizador":" ",
         "qr_data":" "})
-    manejador.create(new_item)
-    #aux=manejador.database.items.find({"nombre_item":new_item.nombre_item})
-    aux=manejador.database.items.find()
+
+    manejador.create(new_item,manejador2)
+    aux=manejador.database.items.find({"nombre_item":new_item.nombre_item})
+    #aux=manejador.database.items.find()
     for i in aux:
         print i
-    manejador.generateLocalizador(new_item,manejador2)
+    #manejador.generateLocalizador(new_item,manejador2)
     #manejador.create(new_item)
     #salida=manejador.read(item_id=new_item._id)
     #for i in salida:

@@ -20,18 +20,21 @@ def main():
     print "LANZANDO BATERIA DE TEST - OPERACIONES CRUD PARA INVENTARIOS"
     print "#######################################################\n"
 
-    #manejadorClasificacion.destroyDriver()
-    #manejadorClasificacion.createTag1("Codigo_Centro.csv")
+    manejadorClasificacion.destroyDriver("osl")
+    manejadorClasificacion.createTag1("Codigo_Centro.csv","osl")
     #manejadorClasificacion.database.tag2.remove()
-    manejadorClasificacion.createTag2("Tipo_Dispositivo.csv")
+    manejadorClasificacion.createTag2("Tipo_Dispositivo.csv","osl")
     #manejadorClasificacion.database.tag3.remove()
-    #manejadorClasificacion.createTag3("default.csv")
+    manejadorClasificacion.createTag3("default.csv","osl")
     #salida=manejadorClasificacion.read()
-    manejadorPruebas.prueba();
-    #aux=manejadorPruebas.database[manejadorPruebas.organizacion].find({'organizacion':'osl'})
+    #manejadorPruebas.prueba();
+    #manejadorPruebas.destroyPrueba()
+    #aux=manejadorPruebas.database[manejadorPruebas.organizacion].find()
+
     #for i in aux:
     #    print i
-    salida=manejadorClasificacion.database.tag2.find({'organizacion':'osl','VALOR2':'CONSUMIBLE'})
+    salida=manejadorClasificacion.database.tag1.find()
+    #salida=manejadorClasificacion.database.tag2.find({'organizacion':'osl','VALOR2':'CONSUMIBLE'})
 
     for s in salida:
         print s

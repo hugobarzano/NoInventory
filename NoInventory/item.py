@@ -8,23 +8,23 @@ from clasificacion import *
 
 def jsonTOstring(elemento):
     #d=json.dumps(elemento)
-    texto="Nombre Item:" + elemento["nombre_item"] + "\nIdentificador:"+str(elemento["_id"]) + "\nFecha de Alta:"+elemento["fecha_alta_item"]
+    texto="id_item:"+str(elemento["_id"])+", nombre_item:" + elemento["nombre_item"] + ",fecha_alta_item :"+elemento["fecha_alta_item"] + ",localizador:"+ elemento["localizador"]
     return texto
 
 class Item(object):
     """Clase para almacenar informacion de los items"""
 
-    def __init__(self, item_id=None,nombre_item=None,fecha_alta_item=None, descripcion_item=None,tag_item=None,tag1=None,tag2=None,tag3=None,localizador=None,qr_data=None):
+    def __init__(self, item_id=None,nombre_item=None,fecha_alta_item=None, descripcion_item=None,organizacion=None,usuario=None,tag1=None,tag2=None,tag3=None,localizador=None,qr_data=None):
 
         if item_id is None:
             self._id = ObjectId()
         else:
             self._id = item_id
-
         self.nombre_item=nombre_item
         self.fecha_alta_item = time.strftime("%c")
         self.descripcion_item = descripcion_item
-        self.tag_item=tag_item
+        self.organizacion=organizacion
+        self.usuario=usuario
         self.tag1=tag1
         self.tag2=tag2
         self.tag3=tag3
@@ -47,12 +47,12 @@ class Item(object):
                     json_data['nombre_item'],
                     json_data['fecha_alta_item'],
                     json_data['descripcion_item'],
-                    json_data['tag_item'],
+                    json_data['organizacion'],
+                    json_data['usuario'],
                     json_data['tag1'],
                     json_data['tag2'],
                     json_data['tag3'],
                     json_data['localizador'],
-
                     json_data['qr_data'])
             except KeyError as e:
                 raise Exception("Clave no encontrada en json: {}".format(e.message))
@@ -79,10 +79,11 @@ class ItemsDriver(object):
         self.database = self.client['items']
 
 
-    def create(self, item,clasificador):
+    def create(self, item,clasificador,organizacion):
         if item is not None:
             self.database.items.insert(item.get_as_json())
-            self.generateLocalizador(item,clasificador)
+            self.generateLocalizador(item,clasificador,organizacion)
+            time.sleep(50)
             self.generateQR(item)
         else:
             raise Exception("Imposible crear Item")
@@ -90,17 +91,17 @@ class ItemsDriver(object):
     def generateQR(self,item):
         if item is not None:
             qr_data_generated=jsonTOstring(item.get_as_json())
-            #print "qr_data_generated:\n"
-            #print qr_data_generated
+            print "qr_data_generated:\n"
+            print qr_data_generated
             self.database.items.update({"_id":item._id},{"$set": {"qr_data": qr_data_generated}})
         else:
             raise Exception("Imposible generar QR para el item")
 
-    def generateLocalizador(self,item,manejador_clasificacion):
+    def generateLocalizador(self,item,manejador_clasificacion,organizacion):
         if item is not None:
-            get1 = list(manejador_clasificacion.database.tag1.find({'VALOR1':item.tag1}))
-            get2 = list(manejador_clasificacion.database.tag2.find({'VALOR2':item.tag2}))
-            get3 = list(manejador_clasificacion.database.tag3.find({'VALOR3':item.tag3}))
+            get1 = list(manejador_clasificacion.database.tag1.find({'VALOR1':item.tag1,'organizacion':organizacion}))
+            get2 = list(manejador_clasificacion.database.tag2.find({'VALOR2':item.tag2,'organizacion':organizacion}))
+            get3 = list(manejador_clasificacion.database.tag3.find({'VALOR3':item.tag3,'organizacion':organizacion}))
 
             if len(get1) is 0 or len(get2) is 0 or len(get3) is 0:
                 raise Exception("imposible generar localizador")
@@ -109,9 +110,7 @@ class ItemsDriver(object):
                 print "localizador generado:"
                 print localizador
                 self.database.items.update({"_id":item._id},{"$set": {"localizador": localizador}})
-                aux=self.database.items.find()
-                for i in aux:
-                    print i
+
         else:
             raise Exception("Imposible generar localizador para el item")
 

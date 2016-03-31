@@ -9,6 +9,10 @@ from bson.json_util import dumps
 from bson.json_util import loads
 import json
 import os
+from NoInventory.views import *
+
+
+from django.template import RequestContext
 from django.forms import ClearableFileInput
 from pymongo import MongoClient
 
@@ -19,21 +23,47 @@ else:
     client = MongoClient('mongodb://localhost:27017/')
 db = client['noinventory-database']
 
+
+
 manejadorClasificacion=ClasificacionDriver()
 
 
-class ItemForm(forms.Form):
-    lista_tag1=manejadorClasificacion.database.tag1.find()
-    lista_tag2=manejadorClasificacion.database.tag2.find()
-    lista_tag3=manejadorClasificacion.readTag3()
+class ItemForm3(forms.Form):
+    """Form for adding and editing backups."""
+
+    def __init__(self, *args, **kwargs):
+        organizacion = kwargs.pop('organizacion')
+        super(ItemForm3, self).__init__(*args, **kwargs)
+        self.fields['nombre_item'] = forms.CharField(required=True,max_length=150, help_text="Introduce el nombre del objeto")
+        self.fields['descripcion_item']  = forms.CharField(required=True,max_length=300, help_text="Breve descripcion sobre el objeto")
+        lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":organizacion})
+        lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":organizacion})
+        lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":organizacion})
+
+        self.fields['tag1'] = forms.ChoiceField(label="TAG 1", choices=[(x["VALOR1"], x["VALOR1"]) for x in lista_tag1])
+        self.fields['tag2'] = forms.ChoiceField(label="TAG 2", choices=[(x["VALOR2"], x["VALOR2"]) for x in lista_tag2])
+        self.fields['tag3'] = forms.ChoiceField(label="TAG 3", choices=[(x["VALOR3"], x["VALOR3"]) for x in lista_tag3])
 
 
-    nombre_item = forms.CharField(required=True,max_length=150, help_text="Introduce el nombre del objeto")
-    descripcion_item  = forms.CharField(required=True,max_length=300, help_text="Breve descripcion sobre el objeto")
-    tag_item = forms.CharField(required=True, max_length=150, help_text="Tag para ayudar a clasificar el objeto")
-    tag1 = forms.ChoiceField(label="TAG 1", choices=[(x["VALOR1"], x["VALOR1"]) for x in lista_tag1])
-    tag2 = forms.ChoiceField(label="TAG 2", choices=[(x["VALOR2"], x["VALOR2"]) for x in lista_tag2])
-    tag3 = forms.ChoiceField(label="TAG 3", choices=[(x["VALOR3"], x["VALOR3"]) for x in lista_tag3])
+
+
+def ItemForm(organizacion):
+    print organizacion
+
+    class form_base(forms.Form):
+
+        lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":organizacion})
+        lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":organizacion})
+        lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":organizacion})
+
+        nombre_item = forms.CharField(required=True,max_length=150, help_text="Introduce el nombre del objeto")
+        descripcion_item  = forms.CharField(required=True,max_length=300, help_text="Breve descripcion sobre el objeto")
+        tag_item = forms.CharField(required=True, max_length=150, help_text="Tag para ayudar a clasificar el objeto")
+        tag1 = forms.ChoiceField(label="TAG 1", choices=[(x["VALOR1"], x["VALOR1"]) for x in lista_tag1])
+        tag2 = forms.ChoiceField(label="TAG 2", choices=[(x["VALOR2"], x["VALOR2"]) for x in lista_tag2])
+        tag3 = forms.ChoiceField(label="TAG 3", choices=[(x["VALOR3"], x["VALOR3"]) for x in lista_tag3])
+
+    return form_base
 
 
 
@@ -61,7 +91,7 @@ class CustomClearableFileInput(ClearableFileInput):
     template_with_clear = '<br>  <label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label> %(clear)s'
 
 class FormEntrada(forms.Form):
-    file_tag1 = forms.FileField(label='Selecciona un archivo para tag 1')
+    file_tag1 = forms.FileField(label='Selecciona un archivo para tag 1',required=False)
     #file_tag2 = forms.FileField(label='Selecciona un archivo para tag 2')
     #file_tag3 = forms.FileField(label='Selecciona un archivo para tag 3')
 
