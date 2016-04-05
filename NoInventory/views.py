@@ -24,6 +24,7 @@ import os
 from item import *
 from inventario import *
 from clasificacion import *
+from io import StringIO
 
 
 
@@ -187,10 +188,41 @@ def itemsJson(request):
 @csrf_exempt
 def addItemFromQr(request):
     if request.method == 'POST':
-        print request.POST['contenido_scaneo']
-        print request.POST['inventario']
-        d = json.loads(request.POST['contenido_scaneo'])
-        print d["nombre_item"]
+        print request.POST
+        ##print r0equest.POST['contenido_scaneo']
+        ##print request.POST['inventario']
+        ##d = json.loads(request.POST['contenido_scaneo'])
+        ##print d["nombre_item"]
+        #print request.POST["QueryDict"]
+        mydic=dict(request.POST)
+        #cursor=None
+        #cursor=gestorInventarios.database.inventarios.find({"_id":ObjectId(inventario_id)})
+        #if cursor is not None:
+        #    for i in cursor:
+        #        inventory_object = Inventario.build_from_json(i)
+        #    gestorInventarios.addToInventario(inventario_object,id_item,gestorItems)
+        #else:
+        #    raise Exception("Item no valido para add desde aplicacion")
+
+        #print "inventario"
+        #print mydic["inventario"]
+        #print "contenido_scaner:\n"
+        print "contenido escaneo\n"
+        print mydic["contenido_scaneo"]
+        d = json.loads(mydic['contenido_scaneo'])
+        indice=mydic["contenido_scaneo"].find('{')
+        indice2=mydic["contenido_scaneo"].find('}')
+        for i in range(indice, indice2):
+            aux.append(mydic["contenido_scaneo"][i]
+            )
+        print "aux\n"
+        print aux
+#        print d["id_item"]
+        #print d
+        print "Dicionario completo"
+        print mydic
+
+
         print "recibido post"
     else:
         print "recibido get"
@@ -394,6 +426,63 @@ class InventoryUpdater(View):
 
 
 ######################### REGISTRO DE USUARIOS ############################################
+
+@csrf_exempt
+def androidLogin(request):
+    if request.method=='POST':
+
+        username = request.POST["username"]
+        password = request.POST["password"]
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            # Is the account active? It could have been disabled.
+            if user.is_active:
+                u=User.objects.get(username=user.username)
+                user_profile = UserProfile.objects.get(user=user)
+                login(request, user)
+                #data="nombre_usuario :"+username
+                return HttpResponse(user_profile.__organizacion__())
+            else:
+                return HttpResponse("Your No-Inventory account is disabled.")
+        else:
+            print "Invalid login details: {0}, {1}".format(username, password)
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        print "entrando por get"
+    return HttpResponse()
+
+
+@csrf_exempt
+def androidRegister(request):
+    if request.method=='POST':
+        #print request.POST["username"]
+        #print request.POST["email"]
+         #print request.POST["password"]
+        #print request.POST["organizacion"]
+
+        user_form = UserForm(data=request.POST)
+        profile_form = UserProfileForm(data=request.POST)
+
+        if user_form.is_valid():
+            if profile_form.is_valid():
+                user = user_form.save()
+                user.set_password(user.password)
+                user.save()
+
+                profile = profile_form.save(commit=False)
+                profile.user = user
+                profile.save()
+                return HttpResponse("success")
+            else:
+                return HttpResponse("Invalid User or Organizacion")
+        else:
+            return HttpResponse("Username exist or Invalid Email")
+    else:
+        print "entrando por get"
+    return HttpResponse()
+
 
 def register(request):
 

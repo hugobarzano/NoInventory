@@ -83,19 +83,26 @@ class ItemsDriver(object):
         if item is not None:
             self.database.items.insert(item.get_as_json())
             self.generateLocalizador(item,clasificador,organizacion)
-            time.sleep(50)
             self.generateQR(item)
         else:
             raise Exception("Imposible crear Item")
 
     def generateQR(self,item):
         if item is not None:
-            qr_data_generated=jsonTOstring(item.get_as_json())
+            #qr_data_generated=jsonTOstring(item.get_as_json())
+            qr_data_generated=self.getStringData(item)
             print "qr_data_generated:\n"
             print qr_data_generated
             self.database.items.update({"_id":item._id},{"$set": {"qr_data": qr_data_generated}})
         else:
             raise Exception("Imposible generar QR para el item")
+
+    def getStringData(self,item):
+        if item is not None:
+            texto="{\"id_item\":\""+str(item._id)+"\",\"nombre_item\":\"" +item.nombre_item+"\"}"
+            return texto
+        else:
+            raise Exception("Imposible generar los datos en String")
 
     def generateLocalizador(self,item,manejador_clasificacion,organizacion):
         if item is not None:

@@ -66,6 +66,7 @@ La aplicación Android del proyecto se encuentra alojada en el repositorio [NoIn
 [NFC5](http://www.survivingwithandroid.com/2016/01/how-to-write-nfc-tag-in-android-2.html)
 [Tutoriales android](http://www.survivingwithandroid.com/category/android-tutorial/page/6)
 [boostrap](http://librosweb.es/libro/bootstrap_3/)
+[conexion http](https://danielme.com/tip-android-8-obtener-recursos-web/)
 
 ###Presentación Concurso Software libre
 
