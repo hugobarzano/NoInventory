@@ -3,7 +3,7 @@
 ##Objetivos portal web
 ###Portal web de administración
 
-El portal web de administracion ha de ser capaz de gestionar todo lo relativo a los item del inventario
+El portal web de administracion ha de ser capaz de gestionar todo lo relativo a los item del catalogo
 
 	-Crear
 	-Eliminar
@@ -27,7 +27,7 @@ Para conseguir estos objetivos será necesario utilizar una api de serializació
 Entiendase portal web de clientes para posibles aplicaciones de compra-venta sobre catalogo o para empleaos
 con menor rango de privilegios.
 
-	-Busqueda en el inventario
+	-Busqueda en el catalogo
 	-Reserva
 	-Solicitud
 	-Compra
@@ -36,13 +36,13 @@ con menor rango de privilegios.
 
 Consideraciones de cara a producto comercial
 
-	-Inventario público (de cara a compartir con tu lista de amigos que cosas tienes disponibles para prestarles)
-	-Inventario público para empresas que trabajen en sectores relacionados. 
+	-Catalogo público (de cara a compartir con tu lista de amigos que cosas tienes disponibles para prestarles)
+	-Catalogo público para empresas que trabajen en sectores relacionados. 
 	-Control material mediante identificador QR (De cara a poder detectar facilmente items en zonas de trabajo)
 	-Detecion de objetos 	
 
 Seria interesante generalizar todo lo posible los modelos a utilziar para la base de datos, dando la posibilidad a cada negocio de crear
-las caracteristicas de los items del inventario basandose en las caracteristicas de los objetos que van a manufacturar, de esta manera el abanico
+las caracteristicas de los items del catalogo basandose en las caracteristicas de los objetos que van a manufacturar, de esta manera el abanico
 de sectores que puedan interesarse por la aplicación será mayo ya que no estaría centrada en un tipo especifico. 
 
 A medida que avance con el proyecto, modificaré dichos objetivos. 
@@ -52,11 +52,11 @@ A medida que avance con el proyecto, modificaré dichos objetivos.
 
 Entiendase como aplicación de realidad aumentada una extension del portal web. La aplicación ha de ser capaz de 
 
-	-Detectar items del inventario de manera individual
+	-Detectar items del catalogo de manera individual
 	-Dar la posibilidad de gestionarlo de igual forma que en el protal web
-	-Facilitar la localización de un item especifico en el inventario
-	-Avisar al administrador cuando un item especifico ha abandonado el inventario
-	-Dar la posibilidad a empleados de registrar nuevos elementos en el inventario de manera sencilla.
+	-Facilitar la localización de un item especifico en el catalogo
+	-Avisar al administrador cuando un item especifico ha abandonado el catalogo
+	-Dar la posibilidad a empleados de registrar nuevos elementos en el catalogo de manera sencilla.
 	-Detectar items mediante actuadores 
 	-Ser capaz de genera pedidos mediante la camara del dispositivo
 

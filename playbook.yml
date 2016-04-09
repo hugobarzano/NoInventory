@@ -1,0 +1,34 @@
+- hosts: localhost
+  sudo: yes
+  remote_user: vagrant
+  tasks:
+  - name: Actualizar sistema base
+    apt: update_cache=yes upgrade=dist
+  - name: Instalar git
+    action: apt pkg=git state=installed
+  - name: Install Python
+    action: apt pkg=python-setuptools state=installed
+    action: apt pkg=python-dev state=installed
+    action: apt pkg=build-essential state=installed
+  - name: Install MongoDB
+    apt: pkg=mongodb state=present update_cache=yes
+  - name: Inicializar MongoDB
+    service: name=mongodb state=started
+  - name: Install Python Pip
+    action: apt pkg=python-pip state=installed
+  - name: Obtener aplicacion de git
+    git: repo=https://github.com/hugobarzano/NoInventory.git dest=~/Ansible clone=yes force=yes
+  - name: Dar permisos de ejecucion
+    command: chmod -R +x ~/Ansible
+  - name: Instalar requisitos de la aplicacion
+    pip: requirements=~/Ansible/requirements.txt
+  - name:
+    command: python ~/Ansible/manage.py makemigrations --noinput
+    command: python ~/Ansible/manage.py migrate --noinput
+    command: python ~/Ansible/manage.py syncdb --noinput
+    command: python ~/Ansible/manage.py collectstatic --noinput
+    command: python ~/Ansible/populate.py
+  - name: ejecutar
+    command: sudo fuser -k 80/tcp
+    command: sleep 10
+    command: nohup sudo python ~/Ansible/manage.py runserver 0.0.0.0:80

@@ -5,11 +5,11 @@
 
 
 {% block body_block %}
-        <h1>Añadir Inventario</h1>
+        <h1>Añadir Catalogo</h1>
 
-        <form id="inventarioform" method="post" action=".">
+        <form id="catalogoform" method="post" action=".">
           {% load bootstrap %}
           {{ form.items|bootstrap_horizontal:'col-lg-6' }}
-            <input type="submit" name="submit" value="Crear Inventario" />
+            <input type="submit" name="submit" value="Crear Catalogo" />
         </form>
   {% endblock %}

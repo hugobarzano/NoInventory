@@ -90,7 +90,8 @@ class ItemsDriver(object):
     def generateQR(self,item):
         if item is not None:
             #qr_data_generated=jsonTOstring(item.get_as_json())
-            qr_data_generated=self.getStringData(item)
+            #qr_data_generated=self.getStringData(item)
+            qr_data_generated=str(item.get_as_json())
             print "qr_data_generated:\n"
             print qr_data_generated
             self.database.items.update({"_id":item._id},{"$set": {"qr_data": qr_data_generated}})

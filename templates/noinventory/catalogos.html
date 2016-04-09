@@ -9,39 +9,39 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<a href="/noinventory/nuevoInventario"> <button id='nuevoInventario'>Nuevo Inventario</button></a>
+<a href="/noinventory/nuevoCatalogo"> <button id='nuevoCatalogo'>Nuevo Catalogo</button></a>
 {% endblock %}
 
 
         {% block body_block %}
 
     <div class="page-header">
-                <h1>¡Bienvenido a Gestion de Inventario!</h1>
+                <h1>¡Bienvenido a Gestion de Catalogo!</h1>
     </div>
 
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <h3 class="panel-title">Inventarios Destacados</h3>
+          <h3 class="panel-title">Catalogos Destacados</h3>
         </div>
       </div>
       <div id="accordion">
-        {% if lista_inventarios %}
-          {% for i in lista_inventarios %}
-              <h3>Nombre: {{i.nombre_inventario}} Fecha: {{i.fecha_alta_inventario}} </h3>
+        {% if lista_catalogos %}
+          {% for i in lista_catalogos %}
+              <h3>Nombre: {{i.nombre_catalogo}} Fecha: {{i.fecha_alta_catalogo}} </h3>
               <div id="{{ i|documento_id }}">
                 <p>
-                  Descripcion: {{ i.descripcion_inventario }}
+                  Descripcion: {{ i.descripcion_catalogo }}
                 </p>
-                Tags: {{i.tag_inventario}}
+                Tags: {{i.tag_catalogo}}
                 <br>
                 {{ i.qr_data|qrcode:"my alt" }}
                 <button class="btn btn-default btn-xs borrarBoton" data-inventory="{{i.id}}">Borrar</button>
-                 <a href="/noinventory/inventario/{{ i|documento_id }}"> <button class="btn btn-default btn-xs">Items</button></a>
-                 <a href="/noinventory/modificarInventario/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Modificar</button> </a>
+                 <a href="/noinventory/catalogo/{{ i|documento_id }}"> <button class="btn btn-default btn-xs">Items</button></a>
+                 <a href="/noinventory/modificarCatalogo/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Modificar</button> </a>
               </div>
           {% endfor %}
         {% else %}
-             <strong>No hay Inventarios.</strong>
+             <strong>No hay Catalogos.</strong>
         {% endif %}
         </div>
         <br>
@@ -50,7 +50,7 @@
 
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <h3 class="panel-title">Inventario dinamico </h3>
+          <h3 class="panel-title">Catalogo dinamico </h3>
         </div>
       </div>
 
@@ -60,7 +60,7 @@
       </div>
 
       <div id="droppable" class="ui-widget-header">
-        <p>Inventario de prueba</p>
+        <p>Catalogo de prueba</p>
       </div>
 
 

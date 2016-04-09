@@ -67,6 +67,8 @@ La aplicación Android del proyecto se encuentra alojada en el repositorio [NoIn
 [Tutoriales android](http://www.survivingwithandroid.com/category/android-tutorial/page/6)
 [boostrap](http://librosweb.es/libro/bootstrap_3/)
 [conexion http](https://danielme.com/tip-android-8-obtener-recursos-web/)
+[webview](http://www.desarrollolibre.net/blog/tema/152/android/como-mostrar-paginas-web-con-webview-en-android#.VwPR6UKlilM)
+[JsonCustonRequest](http://stackoverflow.com/questions/25948191/send-post-request-using-volley-and-receive-in-php)
 
 ###Presentación Concurso Software libre
 

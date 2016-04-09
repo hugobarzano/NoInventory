@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Gestion de Inventario">
+    <meta name="description" content="Gestion de Catalogo">
     <meta name="author" content="Hugo Barzano Cruz">
     <link rel="icon" href="http://getbootstrap.com/favicon.ico">
 
@@ -62,7 +62,7 @@
         <ul class="nav navbar-nav navbar-right">
               <li><a href="{% url 'index' %}">Home</a></li>
               {% if user.is_authenticated %}
-                     <li><a href="{% url 'inventarios' %}">Inventarios</a></li>
+                     <li><a href="{% url 'catalogos' %}">Catalogos</a></li>
                      <li><a href="{% url 'items' %}">Items</a></li>
                      <li><a href="/noinventory/prueba">Prueba </a></li>
               {% else %}

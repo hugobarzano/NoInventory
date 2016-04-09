@@ -17,26 +17,26 @@
         {% block body_block %}
 
     <div class="page-header">
-                <h1>¡Bienvenido a Gestion de Inventario!</h1>
+                <h1>¡Bienvenido a Gestion de Catalogo!</h1>
     </div>
 
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title">{{inventario.nombre_inventario}}</h3>
+        <h3 class="panel-title">{{catalogo.nombre_catalogo}}</h3>
       </div>
     </div>
     <ul class="list-group">
        <li class="list-group-item">
-    {% if inventario %}
-          Fecha: {{inventario.fecha_alta_inventario}} </h3>
+    {% if catalogo %}
+          Fecha: {{catalogo.fecha_alta_catalogo}} </h3>
             <p>
-              Descripcion: {{ inventario.descripcion_inventario }}
+              Descripcion: {{ catalogo.descripcion_catalogo }}
             </p>
-            Tags: {{inventario.tag_inventario}}
+            Tags: {{catalogo.tag_catalogo}}
             <br>
-            {{ inventario.qr_data|qrcode:"my alt" }}
+            {{ catalogo.qr_data|qrcode:"my alt" }}
     {% else %}
-         <strong>No hay Inventario</strong>
+         <strong>No hay Catalogo</strong>
     {% endif %}
   </li>
   </ul>
@@ -46,14 +46,14 @@
       <div class="col-xs-12 col-sm-6 placeholder">
          <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Items del inventario </h3>
+            <h3 class="panel-title">Items del catalogo </h3>
           </div>
         </div>
         <ul class="list-group">
            <li class="list-group-item">
-        {% if inventario %}
-          {% if inventario.items_inventario  %}
-            {% for n in inventario.items_inventario %}
+        {% if catalogo %}
+          {% if catalogo.items_catalogo  %}
+            {% for n in catalogo.items_catalogo %}
             <br>
             <h> {{ n }}  </h>
             <br>
@@ -62,7 +62,7 @@
             <strong> No hay Items asociados </strong>
           {% endif %}
         {% else %}
-             <strong>No hay Inventario</strong>
+             <strong>No hay Catalogo</strong>
         {% endif %}
       </li>
       </ul>
@@ -90,7 +90,7 @@
                <br>
                Tipo: {{ i.tag3 }}
                <br>
-               <a href="/noinventory/addToInventario/{{ inventario_id }}/{{ i|documento_id}}"> <button class="btn btn-default btn-xs">Añadir</button></a>
+               <a href="/noinventory/addToCatalogo/{{ catalogo_id }}/{{ i|documento_id}}"> <button class="btn btn-default btn-xs">Añadir</button></a>
              </div>
          {% endfor %}
        {% else %}

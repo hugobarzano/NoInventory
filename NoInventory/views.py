@@ -22,14 +22,14 @@ from django.views.generic.base import View
 from bson.json_util import dumps
 import os
 from item import *
-from inventario import *
+from catalogo import *
 from clasificacion import *
 from io import StringIO
 
 
 
 gestorItems = ItemsDriver()
-gestorInventarios = InventariosDriver()
+gestorCatalogos = CatalogosDriver()
 gestorClasificacion=ClasificacionDriver()
 
 
@@ -44,7 +44,7 @@ else:
 db = client['noinventory-database']
 #os.environ['DB_PORT_27017_TCP_ADDR']
 items=db.items
-inventarios=db.inventarios
+catalogos=db.catalogos
 entidades=db.entidades
 
 
@@ -67,38 +67,38 @@ def prueba(request):
     return render(request, 'noinventory/prueba.html', {'form': form})
 
 @csrf_exempt
-def inventarios(request):
-    lista_inventarios=gestorInventarios.read()
-    contexto = {"lista_inventarios":lista_inventarios}
-    return render(request, 'noinventory/inventarios.html',contexto)
+def catalogos(request):
+    lista_catalogos=gestorCatalogos.read()
+    contexto = {"lista_catalogos":lista_catalogos}
+    return render(request, 'noinventory/catalogos.html',contexto)
 
 @csrf_exempt
-def inventario(request,id_inventario):
-    inventario_object=Inventario()
+def catalogo(request,id_catalogo):
+    catalogo_object=Catalogo()
 
     lista_items=gestorItems.read()
-    inventario=gestorInventarios.read(inventario_id=id_inventario)
-    for i in inventario:
-        inventario_object = Inventario.build_from_json(i)
+    catalogo=gestorCatalogos.read(catalogo_id=id_catalogo)
+    for i in catalogo:
+        catalogo_object = Catalogo.build_from_json(i)
 
-    for j in inventario_object.items_inventario:
+    for j in catalogo_object.items_catalogo:
         print j
 
-    contexto = {"inventario":inventario_object,"inventario_id":id_inventario,"lista_items":lista_items}
-    return render(request, 'noinventory/inventario.html',contexto)
+    contexto = {"catalogo":catalogo_object,"catalogo_id":id_catalogo,"lista_items":lista_items}
+    return render(request, 'noinventory/catalogo.html',contexto)
 
 
 
 @csrf_exempt
-def addToInventario(request,id_inventario,id_item):
-        gestorInventarios.addToInventario(id_inventario,id_item,gestorItems)
+def addToCatalogo(request,id_catalogo,id_item):
+        gestorCatalogos.addToCatalogo(id_catalogo,id_item,gestorItems)
         lista_items=gestorItems.read()
-        inventario=gestorInventarios.read(inventario_id=id_inventario)
-        inventario_object=Inventario()
-        for i in inventario:
-            inventario_object = Inventario.build_from_json(i)
-        contexto = {"inventario":inventario_object,"inventario_id":id_inventario,"lista_items":lista_items}
-        return redirect('/noinventory/inventario/'+id_inventario,contexto)
+        catalogo=gestorCatalogos.read(catalogo_id=id_catalogo)
+        catalogo_object=Catalogo()
+        for i in catalogo:
+            catalogo_object = Catalogo.build_from_json(i)
+        contexto = {"catalogo":catalogo_object,"catalogo_id":id_catalogo,"lista_items":lista_items}
+        return redirect('/noinventory/catalogo/'+id_catalogo,contexto)
 
 
 
@@ -140,7 +140,7 @@ def deleteItems(request):
     return redirect('/noinventory/preferencias')
 
 def deleteInventorys(request):
-    gestorInventarios.destroyDriver()
+    gestorCatalogos.destroyDriver()
     return redirect('/noinventory/preferencias')
 
 def inicialiceTags(request):
@@ -157,66 +157,93 @@ def inicialiceTags(request):
 
 
 ########################### VISTAS JSON PARA ANDROID ################################
-def inventariosJson(request):
-    lista_inventarios=gestorInventarios.read()
+def catalogosJson(request):
+    lista_catalogos=gestorCatalogos.read()
     aux=[]
     aux3=[]
-    for i in lista_inventarios:
-        aux = Inventario.build_from_json(i)
+    for i in lista_catalogos:
+        aux = Catalogo.build_from_json(i)
         aux2=aux.get_as_json()
         aux2["_id"]=str(aux2["_id"])
-        aux4={"_id":aux2["_id"],"nombre":aux2["nombre_inventario"],"descripcion":aux2["descripcion_inventario"]}
+        aux4={"_id":aux2["_id"],"nombre":aux2["nombre_catalogo"],"descripcion":aux2["descripcion_catalogo"]}
         aux3.append(aux4)
 
     print aux3
     return JsonResponse(aux3,safe=False)
 
+@csrf_exempt
 def itemsJson(request):
-    lista_items=gestorItems.read()
-    aux=[]
-    aux3=[]
-    for i in lista_items:
-        #aux.append(i)
-        aux = Item.build_from_json(i)
-        aux2=aux.get_as_json()
-        aux2["_id"]=str(aux2["_id"])
-        aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"]}
-        aux3.append(aux4)
-    print aux3
-    return JsonResponse(aux3,safe=False)
+    if request.method == 'GET':
+
+        return HttpResponse()
+    else:
+        default={"_id":"ID","nombre":"Nombre","descripcion":"Descripcion"}
+        aux7=[]
+        aux7.append(default)
+        respuesta={"items":aux7}
+        aux=[]
+        aux3=[]
+        if request.POST["flag"] == "True":
+
+            try:
+                lista_items=gestorItems.database.items.find({"usuario":request.POST["username"]})
+                for i in lista_items:
+                    aux = Item.build_from_json(i)
+                    aux2=aux.get_as_json()
+                    aux2["_id"]=str(aux2["_id"])
+                    aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"]}
+                    aux3.append(aux4)
+                    respuesta={"items":aux3}
+            except KeyError as e:
+                raise Exception("No tienes objetos asociados : {}".format(e.message))
+            return JsonResponse(respuesta,safe=False)
+        else:
+
+            try:
+                lista_items=gestorItems.database.items.find({"organizacion":request.POST["organizacion"]})
+                for i in lista_items:
+                    aux = Item.build_from_json(i)
+                    aux2=aux.get_as_json()
+                    aux2["_id"]=str(aux2["_id"])
+                    aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"]}
+                    aux3.append(aux4)
+                    respuesta={"items":aux3}
+            except KeyError as e:
+                raise Exception("Organizacion sin  objetos asociados : {}".format(e.message))
+            return JsonResponse(respuesta,safe=False)
 
 @csrf_exempt
 def addItemFromQr(request):
     if request.method == 'POST':
         print request.POST
         ##print r0equest.POST['contenido_scaneo']
-        ##print request.POST['inventario']
+        ##print request.POST['catalogo']
         ##d = json.loads(request.POST['contenido_scaneo'])
         ##print d["nombre_item"]
         #print request.POST["QueryDict"]
         mydic=dict(request.POST)
         #cursor=None
-        #cursor=gestorInventarios.database.inventarios.find({"_id":ObjectId(inventario_id)})
+        #cursor=gestorCatalogos.database.catalogos.find({"_id":ObjectId(catalogo_id)})
         #if cursor is not None:
         #    for i in cursor:
-        #        inventory_object = Inventario.build_from_json(i)
-        #    gestorInventarios.addToInventario(inventario_object,id_item,gestorItems)
+        #        inventory_object = Catalogo.build_from_json(i)
+        #    gestorCatalogos.addToCatalogo(catalogo_object,id_item,gestorItems)
         #else:
         #    raise Exception("Item no valido para add desde aplicacion")
 
-        #print "inventario"
-        #print mydic["inventario"]
+        #print "catalogo"
+        #print mydic["catalogo"]
         #print "contenido_scaner:\n"
         print "contenido escaneo\n"
-        print mydic["contenido_scaneo"]
-        d = json.loads(mydic['contenido_scaneo'])
-        indice=mydic["contenido_scaneo"].find('{')
-        indice2=mydic["contenido_scaneo"].find('}')
-        for i in range(indice, indice2):
-            aux.append(mydic["contenido_scaneo"][i]
-            )
-        print "aux\n"
-        print aux
+        #print mydic["contenido_scaneo"]
+        #d = json.loads(mydic['contenido_scaneo'])
+        #indice=mydic["contenido_scaneo"].find('{')
+        #indice2=mydic["contenido_scaneo"].find('}')
+        #for i in range(indice, indice2):
+        #    aux.append(mydic["contenido_scaneo"][i]
+        #    )
+    ##    print "aux\n"
+        #print aux
 #        print d["id_item"]
         #print d
         print "Dicionario completo"
@@ -232,6 +259,40 @@ def addItemFromQr(request):
 
 
 
+class AndroidItemCreator(View):
+    organizacion=None
+    def get(self, request):
+        form = ItemForm3(organizacion=request.GET['organizacion'])
+        #print request.GET['organizacion']
+        #form = ItemForm3(organizacion=request.GET['organizacion'])
+        return render(request, 'noinventory/nuevoItem.html', {'form': form})
+
+    def post(self, request):
+        form = ItemForm3(request.POST,organizacion=request.GET['organizacion'])
+        if form.is_valid():
+            item =Item.build_from_json({"nombre_item": form.data['nombre_item'],
+                        "fecha_alta_item": time.strftime("%c"),
+                        "descripcion_item": form.data['descripcion_item'],
+                        "organizacion":request.GET['organizacion'],
+                        "usuario":request.GET['organizacion'],
+                        "tag1": form.data['tag1'],
+                        "tag2": form.data['tag2'],
+                        "tag3": form.data['tag3'],
+                        "localizador":" ",
+                        "qr_data":" ",
+                        })
+            gestorItems.create(item,gestorClasificacion,request.GET['organizacion'])
+            lista_items=gestorItems.read()
+            contexto = {"lista_items":lista_items}
+            return redirect('/noinventory/items',contexto)
+        else:
+            return render(request, 'noinventory/nuevoItem.html', {'form': form})
+
+
+
+
+
+
 ################################## COSAS VARIAS ########################################
 def jsonTOstring(elemento):
     #d=json.dumps(elemento)
@@ -239,9 +300,9 @@ def jsonTOstring(elemento):
     return texto
 
 
-def jsonTOstringInventario(elemento):
+def jsonTOstringCatalogo(elemento):
     #d=json.dumps(elemento)
-    texto="Nombre Inventario:" + elemento["nombre_inventario"] + "\nIdentificador:"+str(elemento["_id"]) + "\nFecha de Alta:"+elemento["fecha_alta_inventario"]+"\nDescripcion:"+elemento["descripcion_inventario"]+"\nTags:"+elemento["tag_inventario"]
+    texto="Nombre Catalogo:" + elemento["nombre_catalogo"] + "\nIdentificador:"+str(elemento["_id"]) + "\nFecha de Alta:"+elemento["fecha_alta_catalogo"]+"\nDescripcion:"+elemento["descripcion_catalogo"]+"\nTags:"+elemento["tag_catalogo"]
     return texto
 
 def desplegable():
@@ -282,7 +343,7 @@ def desplegable():
     return SEL2
 
 
-######################### GESTION DE ITEMS E INVENTARIOS #######################
+######################### GESTION DE ITEMS E CATALOGOS #######################
 @csrf_exempt
 def borrarItem(request):
     i_id = None
@@ -294,11 +355,12 @@ def borrarItem(request):
         return HttpResponse(contexto)
 
 
-
 class ItemCreator(View):
 
     def get(self, request):
         form = ItemForm3(organizacion=request.session['organizacion'])
+        #print request.GET['organizacion']
+        #form = ItemForm3(organizacion=request.GET['organizacion'])
         return render(request, 'noinventory/nuevoItem.html', {'form': form})
 
     def post(self, request):
@@ -364,63 +426,63 @@ class ItemUpdater(View):
             print form.errors
             return render(request, 'noinventory/modificarItem.html', {'form': form,'id_item':id_item})
 
-class InventoryCreator(View):
+class CatalogoCreator(View):
 
     def get(self, request):
-        form = InventarioForm()
-        return render(request, 'noinventory/nuevoInventario.html', {'form': form})
+        form = CatalogoForm()
+        return render(request, 'noinventory/nuevoCatalogo.html', {'form': form})
 
     def post(self, request):
-        form = InventarioForm(request.POST)
+        form = CatalogoForm(request.POST)
         if form.is_valid():
-            inventario =Inventario.build_from_json({"nombre_inventario": form.data['nombre_inventario'],
-                        "fecha_alta_inventario": time.strftime("%c"),
-                        "descripcion_inventario": form.data['descripcion_inventario'],
-                        "tag_inventario": form.data['tag_inventario'],
-                        "caracteristicas_inventario":form.data['caracteristicas_inventario'],
-                        "items_inventario": []
+            catalogo =Catalogo.build_from_json({"nombre_catalogo": form.data['nombre_catalogo'],
+                        "fecha_alta_catalogo": time.strftime("%c"),
+                        "descripcion_catalogo": form.data['descripcion_catalogo'],
+                        "tag_catalogo": form.data['tag_catalogo'],
+                        "caracteristicas_catalogo":form.data['caracteristicas_catalogo'],
+                        "items_catalogo": []
                         })
-            gestorInventarios.create(inventario)
-            lista_inventarios=gestorInventarios.read()
-            contexto = {"lista_inventarios":lista_inventarios}
-            return redirect('/noinventory/inventarios',contexto)
+            gestorCatalogos.create(catalogo)
+            lista_catalogos=gestorCatalogos.read()
+            contexto = {"lista_catalogos":lista_catalogos}
+            return redirect('/noinventory/catalogos',contexto)
         else:
             print form.errors
-            return render(request, 'noinventory/nuevoInventario.html', {'form': form})
+            return render(request, 'noinventory/nuevoCatalogo.html', {'form': form})
 
 
-class InventoryUpdater(View):
+class CatalogoUpdater(View):
 
-    def get(self, request,id_inventario):
-        cursor=gestorInventarios.read(inventario_id=id_inventario)
-        currentInventory=Inventario()
+    def get(self, request,id_catalogo):
+        cursor=gestorCatalogos.read(catalogo_id=id_catalogo)
+        currentcatalogo=Catalogo()
         for i in cursor:
-            currentInventory = Inventario.build_from_json(i)
-        aux=currentInventory.get_as_json()
-        form = InventarioForm(aux)
-        form.data["descripcion_inventario"]=str(form.data["descripcion_inventario"])+"\nUltima modificacion: "+time.strftime("%c")
-        return render(request, 'noinventory/modificarInventario.html', {'form': form,'id_inventario':currentInventory._id})
+            currentcatalogo = Catalogo.build_from_json(i)
+        aux=currentcatalogo.get_as_json()
+        form = CatalogoForm(aux)
+        form.data["descripcion_catalogo"]=str(form.data["descripcion_catalogo"])+"\nUltima modificacion: "+time.strftime("%c")
+        return render(request, 'noinventory/modificarCatalogo.html', {'form': form,'id_catalogo':currentcatalogo._id})
 
-    def post(self, request,id_inventario):
-        cursor=gestorInventarios.read(inventario_id=id_inventario)
+    def post(self, request,id_catalogo):
+        cursor=gestorCatalogos.read(catalogo_id=id_catalogo)
         for i in cursor:
-            c = Inventario.build_from_json(i)
-        form = InventarioForm(request.POST)
+            c = Catalogo.build_from_json(i)
+        form = CatalogoForm(request.POST)
         if form.is_valid():
-            inventarioUpdated =Inventario.build_from_json({"_id":c._id,
-                        "nombre_inventario": form.data['nombre_inventario'],
-                        "fecha_alta_inventario": c.fecha_alta_inventario,
-                        "descripcion_inventario": form.data['descripcion_inventario'],
-                        "tag_inventario": form.data['tag_inventario'],
-                        "caracteristicas_inventario": form.data['caracteristicas_inventario'],
-                        "items_inventario": c.items_inventario,
+            catalogoUpdated =Catalogo.build_from_json({"_id":c._id,
+                        "nombre_catalogo": form.data['nombre_catalogo'],
+                        "fecha_alta_catalogo": c.fecha_alta_catalogo,
+                        "descripcion_catalogo": form.data['descripcion_catalogo'],
+                        "tag_catalogo": form.data['tag_catalogo'],
+                        "caracteristicas_catalogo": form.data['caracteristicas_catalogo'],
+                        "items_catalogo": c.items_catalogo,
                         })
-            gestorInventarios.update(inventarioUpdated)
-            lista_inventarios=gestorInventarios.read()
-            contexto = {"lista_inventarios":lista_inventarios}
-            return redirect('/noinventory/inventario/'+str(c._id),contexto)
+            gestorCatalogos.update(catalogoUpdated)
+            lista_catalogos=gestorCatalogos.read()
+            contexto = {"lista_catalogos":lista_catalogos}
+            return redirect('/noinventory/catalogo/'+str(c._id),contexto)
         else:
-            return render(request, 'noinventory/modificarInventario.html', {'form': form,'id_inventario':id_inventario})
+            return render(request, 'noinventory/modificarCatalogo.html', {'form': form,'id_catalogo':id_catalogo})
 
 
 

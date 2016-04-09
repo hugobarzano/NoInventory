@@ -10,11 +10,11 @@ if ON_COMPOSE:
 else:
     client = MongoClient('mongodb://localhost:27017/')
 db = client['noinventory-database']
-db2 = client['inventarios-database']
+db2 = client['catalogos-database']
 
 def clearDatabase():
     print "Borrando colecciones"
-    db.inventarios.remove()
+    db.catalogos.remove()
     db.items.remove()
     print "Colecciones Borradas"
 

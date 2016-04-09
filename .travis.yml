@@ -10,7 +10,7 @@ install:
 
 script:
  - python NoInventory/test_item.py
- - python NoInventory/test_inventario.py
+ - python NoInventory/test_catalogo.py
 
 
 after_deploy:

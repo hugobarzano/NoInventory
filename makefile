@@ -20,7 +20,7 @@ test_item:
 	python NoInventory/test_item.py
 
 test_inventory:
-	python NoInventory/test_inventario.py
+	python NoInventory/test_catalogo.py
 
 test_clasificacion:
 		python NoInventory/test_clasificacion.py

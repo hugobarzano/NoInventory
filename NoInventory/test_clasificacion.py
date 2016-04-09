@@ -3,7 +3,7 @@ from bson.objectid import ObjectId
 #from pymongo.objectid import ObjectId
 from pymongo import *
 import time
-from inventario import *
+from catalogo import *
 from item import *
 from clasificacion import *
 import os
@@ -11,13 +11,13 @@ import os
 
 
 def main():
-    manejador = InventariosDriver()
+    manejador = CatalogosDriver()
     manejadorItem = ItemsDriver()
     manejadorClasificacion=ClasificacionDriver()
     manejadorPruebas=ClasificacionPruebas(organizacion="nombre_prueba")
 
     print "\n#######################################################"
-    print "LANZANDO BATERIA DE TEST - OPERACIONES CRUD PARA INVENTARIOS"
+    print "LANZANDO BATERIA DE TEST - OPERACIONES CRUD PARA CATALOGOS"
     print "#######################################################\n"
 
     manejadorClasificacion.destroyDriver("osl")
@@ -42,7 +42,7 @@ def main():
 
 
     print "\n##########################################################"
-    print "FINALIZANDO BATERIA DE TEST - OPERACIONES CRUD PARA INVENTARIOS"
+    print "FINALIZANDO BATERIA DE TEST - OPERACIONES CRUD PARA CATALOGOS"
     print "#########################################################\n"
 
 if __name__ == '__main__':

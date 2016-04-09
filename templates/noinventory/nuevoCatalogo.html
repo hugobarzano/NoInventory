@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block body_block %}
+        <h1>Añadir Catalogo</h1>
+
+        <form id="catalogoformCreator" method="post" action="/noinventory/nuevoCatalogo/">
+          {% csrf_token %}
+          {% load bootstrap %}
+          {{ form.nombre_catalogo|bootstrap }}
+          {{ form.descripcion_catalogo|bootstrap }}
+          {{ form.tag_catalogo|bootstrap }}
+          {{ form.caracteristicas_catalogo|bootstrap }}
+
+
+            <input type="submit" name="submit" value="Crear Catalogo" />
+        </form>
+  {% endblock %}
