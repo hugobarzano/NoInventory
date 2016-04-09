@@ -42,7 +42,7 @@
                 Creado por: {{ i.usuario }}
                 Para la Organizacion: {{i.organizacion}}
                 <br>
-              <button class="btn btn-default btn-xs borrarBoton" data-item="{{ i|documento_id}}">Borrar</button>
+              <button class="borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}">Borrar</button>
               <a href="/noinventory/modificarItem/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Modificar</button> </a>
               </div>
           {% endfor %}
@@ -52,16 +52,22 @@
         </div>
         <!--pruebas -->
 
+
+
+
+
         <!--Funcionalidad de borrado asincrono -->
         <script>
                    $(".borrarBoton").click(function(){
                      var itemid;
-                     itemid = $(".borrarBoton").attr("data-item");
+                     itemid = $(".borrarBoton").attr("id");
+                     console.log("has pulsado el boton")
                       console.log(itemid);
-                     $.get('/borrarItem?dato='+itemid, function(data){
+                     $.get('/noinventory/borrarItem/?d_item='+itemid, function(data){
+                            console.log("ejecutando get")
                             console.log(data);
                             console.log(itemid);
-                            $("#"+itemid).html(data.nombre);
+                            $("#"+itemid).html("borraarrrr");
                           });
                         });
         </script>
@@ -73,5 +79,37 @@
           <h3 class="panel-title">Por contruir</h3>
         </div>
       </div>
+      <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Item</th>
+          <th>Descripcion</th>
+          <th>Fecha</th>
+          <th>Tag1</th>
+          <th>TAG2</th>
+          <th>TAG3</th>
+          <th>Localizador</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if lista_items2 %}
+          {% for i in lista_items2 %}
+            <tr>
+              <td>lalala</td>
+              <td>{{ i.descripcion_item }}</td>
+              <td>{{ i.fecha_alta_item }}</td>
+              <td>{{ i.tag1 }}</td>
+              <td>{{ i.tag2 }}</td>
+              <td>{{ i.tag3 }}</td>
+              <td>{{ i.localizador }}</td>
+            </tr>
+          {% endfor %}
+          {% else %}
+               <strong>No hay Objetos.</strong>
+          {% endif %}
+        </tr>
+      </tbody>
+      </table>
 
         {% endblock %}

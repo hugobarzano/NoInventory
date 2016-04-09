@@ -92,6 +92,9 @@ class CustomClearableFileInput(ClearableFileInput):
 
 class FormEntrada(forms.Form):
     file_tag1 = forms.FileField(label='Selecciona un archivo para tag 1',required=False)
+    file_tag2 = forms.FileField(label='Selecciona un archivo para tag 2',required=False)
+    file_tag3 = forms.FileField(label='Selecciona un archivo para tag 3',required=False)
+
     #file_tag2 = forms.FileField(label='Selecciona un archivo para tag 2')
     #file_tag3 = forms.FileField(label='Selecciona un archivo para tag 3')
 

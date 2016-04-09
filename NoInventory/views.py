@@ -43,9 +43,6 @@ else:
     client = MongoClient('mongodb://localhost:27017/')
 db = client['noinventory-database']
 #os.environ['DB_PORT_27017_TCP_ADDR']
-items=db.items
-catalogos=db.catalogos
-entidades=db.entidades
 
 
 ########################### VISTAS PRINCIPALES #################################
@@ -58,13 +55,14 @@ def index(request):
 @csrf_exempt
 def items(request):
 
-        lista_items=gestorItems.read()
-        contexto = {"lista_items":lista_items}
+        lista_items=gestorItems.database.items.find({"usuario":request.session['username']})
+        contexto = {"lista_items":lista_items, "lista_items2":lista_items}
         return render(request, 'noinventory/items.html',contexto)
 
 def prueba(request):
+    lista_items=gestorItems.database.items.find({"usuario":request.session['username']})
     form = SelectItem()
-    return render(request, 'noinventory/prueba.html', {'form': form})
+    return render(request, 'noinventory/prueba.html', {'form': form,"lista_items":lista_items})
 
 @csrf_exempt
 def catalogos(request):
@@ -115,9 +113,12 @@ class Preferencias(View):
     def post(self, request):
         print "Entrando por el post"
         reader_tag1=None
+        reader_tag2=None
+        reader_tag3=None
         form = FormEntrada(request.POST, request.FILES)
         if form.is_valid():
         #print "formulario valido"
+            ##Frichero 1
             fichero1=request.FILES.get('file_tag1',None)
             if fichero1 is not None:
                 fieldnames = ("CLAVE1","VALOR1")
@@ -128,6 +129,29 @@ class Preferencias(View):
                     gestorClasificacion.createTag1FromReader(reader_tag1,request.session['organizacion'])
             else:
                 gestorClasificacion.createDefaultTag1(request.session['organizacion'])
+
+            ##Fichero 2
+            fichero2=request.FILES.get('file_tag2',None)
+            if fichero2 is not None:
+                fieldnames = ("CLAVE2","VALOR2")
+                reader_tag2 = csv.DictReader(request.FILES['file_tag2'], fieldnames)
+                if reader_tag2 is None:
+                    gestorClasificacion.createDefaultTag2(request.session['organizacion'])
+                else:
+                    gestorClasificacion.createTag2FromReader(reader_tag2,request.session['organizacion'])
+            else:
+                gestorClasificacion.createDefaultTag2(request.session['organizacion'])
+            #Fichero 3
+            fichero3=request.FILES.get('file_tag3',None)
+            if fichero3 is not None:
+                fieldnames = ("CLAVE3","VALOR3")
+                reader_tag3 = csv.DictReader(request.FILES['file_tag3'], fieldnames)
+                if reader_tag3 is None:
+                    gestorClasificacion.createDefaultTag3(request.session['organizacion'])
+                else:
+                    gestorClasificacion.createTag3FromReader(reader_tag3,request.session['organizacion'])
+            else:
+                gestorClasificacion.createDefaultTag3(request.session['organizacion'])
             return redirect('/noinventory/preferencias',{'form':form})
         else:
             print "formulario invalido"
@@ -349,9 +373,11 @@ def borrarItem(request):
     i_id = None
     print "Borrado"
     if request.method == 'GET':
-        i_id = request.GET['dato']
-        db.items.remove( {"_id" : ObjectId(i_id) } )
-        contexto = {'items': items}
+        i_id = request.GET['id_item']
+        print i_id
+        gestorItems.database.items.remove( {"_id" : ObjectId(i_id) } )
+        lista_items=gestorItems.database.items.find({"usuario":request.session['username']})
+        contexto = {"lista_items":lista_items}
         return HttpResponse(contexto)
 
 
