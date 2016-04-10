@@ -17,7 +17,7 @@
   - name: Install Python Pip
     action: apt pkg=python-pip state=installed
   - name: Obtener aplicacion de git
-    git: repo=https://github.com/hugobarzano/NoInventory.git dest=~/Ansible clone=yes 
+    git: repo=https://github.com/hugobarzano/NoInventory.git dest=~/Ansible force=yes
   - name: Dar permisos de ejecucion
     command: chmod -R +x ~/Ansible
   - name: Instalar requisitos de la aplicacion
@@ -26,8 +26,6 @@
     command: python ~/Ansible/manage.py makemigrations --noinput
     command: python ~/Ansible/manage.py migrate --noinput
     command: python ~/Ansible/manage.py syncdb --noinput
-    command: python ~/Ansible/manage.py collectstatic --noinput
-    command: python ~/Ansible/populate.py
   - name: ejecutar
     command: sudo fuser -k 80/tcp
     command: sleep 10

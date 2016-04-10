@@ -81,7 +81,7 @@ class ItemsDriver(object):
 
     def create(self, item,clasificador,organizacion):
         if item is not None:
-            self.database.items.insert(item.get_as_json())
+            self.database.items.save(item.get_as_json())
             self.generateLocalizador(item,clasificador,organizacion)
             self.generateQR(item)
         else:

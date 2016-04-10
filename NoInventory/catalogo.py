@@ -70,7 +70,7 @@ class CatalogosDriver(object):
 
     def create(self, catalogo):
         if catalogo is not None:
-            self.database.catalogos.insert(catalogo.get_as_json())
+            self.database.catalogos.save(catalogo.get_as_json())
             self.generateQR(catalogo)
         else:
             raise Exception("Imposible crear catalogo")
