@@ -68,11 +68,11 @@ def ItemForm(organizacion):
 
 
 class CatalogoForm(forms.ModelForm):
+    TIPO = (('Publico', 'Publico'),('Privado', 'Privado'),)
     nombre_catalogo = forms.CharField(max_length=150, help_text="Introduce el nombre del catalogo")
     descripcion_catalogo  = forms.CharField(widget = forms.Textarea, help_text="Breve descripcion sobre el catalogo")
     tag_catalogo = forms.CharField(max_length=150, help_text="Tag para ayudar a clasificar el catalogo")
-    tipo_catalogo = forms.CharField(widget = forms.Textarea, help_text="Caracteristicas del catalogo para clasificar los objetos")
-
+    tipo_catalogo = forms.CharField(max_length=150,widget=forms.Select(choices=TIPO))
 
     class Meta:
         model = Catalogo

@@ -286,13 +286,13 @@ def itemJson(request):
 @csrf_exempt
 def addItemFromQr(request):
     if request.method == 'POST':
-        print request.POST
-        ##print r0equest.POST['contenido_scaneo']
-        ##print request.POST['catalogo']
-        ##d = json.loads(request.POST['contenido_scaneo'])
-        ##print d["nombre_item"]
-        #print request.POST["QueryDict"]
-        mydic=dict(request.POST)
+        print
+        #mydic=dict(request.POST)
+        #print mydic["scaner"]
+        #aux=json.dumps(request.POST["scaner"])
+        print "axu"
+        print(request.POST["scaner"].descripcion_item)
+        #print aux["descripcion_item"]
         #cursor=None
         #cursor=gestorCatalogos.database.catalogos.find({"_id":ObjectId(catalogo_id)})
         #if cursor is not None:
@@ -318,14 +318,14 @@ def addItemFromQr(request):
 #        print d["id_item"]
         #print d
         print "Dicionario completo"
-        print mydic
+        #print mydic
 
 
         print "recibido post"
     else:
         print "recibido get"
     #    print request.GET['contenido_scaner']
-    return HttpResponse()
+    return HttpResponse("gettttttt")
 
 
 
