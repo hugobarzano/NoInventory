@@ -33,7 +33,7 @@ def main():
 
     #for i in aux:
     #    print i
-    salida=manejadorClasificacion.database.tag1.find()
+    salida=manejadorClasificacion.database.tag3.find()
     #salida=manejadorClasificacion.database.tag2.find({'organizacion':'osl','VALOR2':'CONSUMIBLE'})
 
     for s in salida:

@@ -1,9 +1,13 @@
+# coding=utf8
+# -*- coding: utf8 -*-
+# vim: set fileencoding=utf8 :
 from bson.objectid import ObjectId
 #from pymongo.objectid import ObjectId
 from pymongo import *
 import time
 from catalogo import *
 from item import *
+from clasificacion import *
 import os
 
 def cargar_todos_catalogos(manejador):
@@ -58,7 +62,11 @@ def test_delete(manejador, new_catalogo):
 
 def main():
     manejador = CatalogosDriver()
+
     manejadorItem = ItemsDriver()
+    manejadorClasificacion = ClasificacionDriver()
+
+
     print "\n#######################################################"
     print "LANZANDO BATERIA DE TEST - OPERACIONES CRUD PARA CATALOGOS"
     print "#######################################################\n"
@@ -68,35 +76,40 @@ def main():
     new_item = Item.build_from_json({"nombre_item":"HP pavilion",
         "fecha_alta_item":time.strftime("%c"),
         "descripcion_item":"Ordenador portatil super potentorro",
-        "tag_item":"Ultrabook, Notebook",
-        "tag1":"Administracion de  Servicios Centrales",
-        "tag2":"funcional",
-        "tag3":"presente",
-        "codigo_centro":"06UG02",
+        "organizacion":"organizacion",
+        "usuario":"usuario",
+        "tag1":"Administración de  Servicios Centrales",
+        "tag2":"MONITOR  CRT",
+        "tag3":"DEFAULT",
+        "localizador":" ",
         "qr_data":" "})
-    manejadorItem.create(new_item)
+
+    manejadorItem.create(new_item,manejadorClasificacion,"osl")
 
     #display all items from DB
     #create new_project and read back from database
     new_catalogo = Catalogo.build_from_json({"nombre_catalogo":"Catalogo Elementos A Reciclar",
         "fecha_alta_catalogo":time.strftime("%c"),
         "descripcion_catalogo":"Catalogo con items imposibles de manufacturar. Para reciclaje",
+        "organizacion":"organizacion",
+        "usuario":"usuario",
         "tag_catalogo":"Reciclar",
-        "caracteristicas_catalogo":"chatarra perjudial para reciclar",
-        "items_catalogo":[]})
+        "tipo_catalogo":"publico",
+        "items_catalogo":[],
+        "qr_data":" "})
     test_create(manejador, new_catalogo)
 
     manejador.addToCatalogo(new_catalogo._id,new_item._id,manejadorItem)
 
-    inven=manejador.read(catalogo_id=new_catalogo._id)
-    for i in inven:
+    cat=manejador.read(catalogo_id=new_catalogo._id)
+    for i in cat:
         res = Catalogo.build_from_json(i)
 
     print "items del catalogo"
     print res.items_catalogo
     #cargar_todos_catalogos(manejador)
     #update new_item
-    #new_catalogo.caracteristicas_catalogo = "Cambiando caracteristicas para actualizar"
+    #new_catalogo.tipo_catalogo = "Cambiando caracteristicas para actualizar"
     #test_update(manejador, new_catalogo)
     #cargar_todos_catalogos(manejador)
 

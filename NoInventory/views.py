@@ -181,19 +181,45 @@ def inicialiceTags(request):
 
 
 ########################### VISTAS JSON PARA ANDROID ################################
+@csrf_exempt
 def catalogosJson(request):
-    lista_catalogos=gestorCatalogos.read()
-    aux=[]
-    aux3=[]
-    for i in lista_catalogos:
-        aux = Catalogo.build_from_json(i)
-        aux2=aux.get_as_json()
-        aux2["_id"]=str(aux2["_id"])
-        aux4={"_id":aux2["_id"],"nombre":aux2["nombre_catalogo"],"descripcion":aux2["descripcion_catalogo"]}
-        aux3.append(aux4)
+    if request.method == 'GET':
 
-    print aux3
-    return JsonResponse(aux3,safe=False)
+        return HttpResponse("catalogos json")
+    else:
+        default={"_id":"ID","nombre":"Nombre","descripcion":"Descripcion"}
+        aux7=[]
+        aux7.append(default)
+        respuesta={"items":aux7}
+        aux=[]
+        aux3=[]
+        if request.POST["flag"] == "True":
+            try:
+                lista_catalogos=gestorCatalogos.database.catalogos.find()
+                for i in lista_catalogos:
+                    aux = Catalogo.build_from_json(i)
+                    aux2=aux.get_as_json()
+                    aux2["_id"]=str(aux2["_id"])
+                    aux4={"_id":aux2["_id"],"nombre":aux2["nombre_catalogo"],"descripcion":aux2["descripcion_catalogo"]}
+                    aux3.append(aux4)
+                    respuesta={"catalogos":aux3}
+            except KeyError as e:
+                raise Exception("No tienes catalogos asociados : {}".format(e.message))
+            return JsonResponse(respuesta,safe=False)
+        else:
+
+            try:
+                lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.POST["organizacion"]})
+                for i in lista_items:
+                    aux = Catalogo.build_from_json(i)
+                    aux2=aux.get_as_json()
+                    aux2["_id"]=str(aux2["_id"])
+                    aux4={"_id":aux2["_id"],"nombre":aux2["nombre_catalogo"],"descripcion":aux2["descripcion_catalogo"]}
+                    aux3.append(aux4)
+                    respuesta={"catalogos":aux3}
+            except KeyError as e:
+                raise Exception("Organizacion sin  objetos asociados : {}".format(e.message))
+            return JsonResponse(respuesta,safe=False)
 
 @csrf_exempt
 def itemsJson(request):
@@ -235,6 +261,27 @@ def itemsJson(request):
             except KeyError as e:
                 raise Exception("Organizacion sin  objetos asociados : {}".format(e.message))
             return JsonResponse(respuesta,safe=False)
+
+
+@csrf_exempt
+def itemJson(request):
+    if request.method == 'GET':
+        return HttpResponse("get response")
+    else:
+        respuesta={""}
+        print request.POST["item_id"]
+        try:
+            lista_items=gestorItems.database.items.find({"_id":ObjectId(request.POST["item_id"])})
+            for i in lista_items:
+                aux = Item.build_from_json(i)
+                aux2=aux.get_as_json()
+                aux2["_id"]=str(aux2["_id"])
+                respuesta={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"],"localizador":aux2["localizador"]}
+                #aux2=str(respuesta)
+                print respuesta
+        except KeyError as e:
+            raise Exception("No existe objeto : {}".format(e.message))
+        return JsonResponse(respuesta,safe=False)
 
 @csrf_exempt
 def addItemFromQr(request):
@@ -367,7 +414,7 @@ def desplegable():
     return SEL2
 
 
-######################### GESTION DE ITEMS E CATALOGOS #######################
+######################### GESTION DE ITEMS y CATALOGOS #######################
 @csrf_exempt
 def borrarItem(request):
     i_id = None
@@ -464,9 +511,12 @@ class CatalogoCreator(View):
             catalogo =Catalogo.build_from_json({"nombre_catalogo": form.data['nombre_catalogo'],
                         "fecha_alta_catalogo": time.strftime("%c"),
                         "descripcion_catalogo": form.data['descripcion_catalogo'],
+                        "organizacion": request.session["organizacion"],
+                        "usuario":request.session['username'],
                         "tag_catalogo": form.data['tag_catalogo'],
-                        "caracteristicas_catalogo":form.data['caracteristicas_catalogo'],
-                        "items_catalogo": []
+                        "tipo_catalogo":form.data['tipo_catalogo'],
+                        "items_catalogo": [],
+                        "qr_data":" ",
                         })
             gestorCatalogos.create(catalogo)
             lista_catalogos=gestorCatalogos.read()
@@ -499,9 +549,12 @@ class CatalogoUpdater(View):
                         "nombre_catalogo": form.data['nombre_catalogo'],
                         "fecha_alta_catalogo": c.fecha_alta_catalogo,
                         "descripcion_catalogo": form.data['descripcion_catalogo'],
+                        "organizacion": c.organizacion,
+                        "usuario":c.usuario,
                         "tag_catalogo": form.data['tag_catalogo'],
-                        "caracteristicas_catalogo": form.data['caracteristicas_catalogo'],
+                        "tipo_catalogo": form.data['tipo_catalogo'],
                         "items_catalogo": c.items_catalogo,
+                        "qr_data":c.qr_data,
                         })
             gestorCatalogos.update(catalogoUpdated)
             lista_catalogos=gestorCatalogos.read()

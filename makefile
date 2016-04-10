@@ -19,7 +19,7 @@ run:
 test_item:
 	python NoInventory/test_item.py
 
-test_inventory:
+test_catalogo:
 	python NoInventory/test_catalogo.py
 
 test_clasificacion:

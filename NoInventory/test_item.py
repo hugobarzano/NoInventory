@@ -86,7 +86,7 @@ def main():
         "localizador":" ",
         "qr_data":" "})
 
-    manejador.create(new_item,manejador2)
+    manejador.create(new_item,manejador2,"osl")
     aux=manejador.database.items.find({"nombre_item":new_item.nombre_item})
     #aux=manejador.database.items.find()
     for i in aux:

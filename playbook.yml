@@ -17,7 +17,7 @@
   - name: Install Python Pip
     action: apt pkg=python-pip state=installed
   - name: Obtener aplicacion de git
-    git: repo=https://github.com/hugobarzano/NoInventory.git dest=~/Ansible clone=yes force=yes
+    git: repo=https://github.com/hugobarzano/NoInventory.git dest=~/Ansible clone=yes 
   - name: Dar permisos de ejecucion
     command: chmod -R +x ~/Ansible
   - name: Instalar requisitos de la aplicacion

@@ -32,7 +32,12 @@
             <p>
               Descripcion: {{ catalogo.descripcion_catalogo }}
             </p>
-            Tags: {{catalogo.tag_catalogo}}
+            Tag: {{catalogo.tag_catalogo}}
+            Tipo: {{catalogo.tipo_catalogo}}
+            <br>
+            <br>
+            Creado por: {{ i.usuario }}
+            Para la Organizacion: {{i.organizacion}}
             <br>
             {{ catalogo.qr_data|qrcode:"my alt" }}
     {% else %}

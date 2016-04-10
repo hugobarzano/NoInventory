@@ -56,4 +56,4 @@ class Catalogo(models.Model):
     fecha_alta_catalogo = models.DateField(null=True, blank=False, auto_now_add=True)
     descripcion_catalogo = models.TextField(max_length=300, blank=True)
     tag_catalogo = models.CharField(max_length=150, blank=True)
-    caracteristicas_catalogo = models.CharField(max_length=300, blank=True)
+    tipo_catalogo = models.CharField(max_length=300, blank=True)

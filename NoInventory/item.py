@@ -112,7 +112,7 @@ class ItemsDriver(object):
             get3 = list(manejador_clasificacion.database.tag3.find({'VALOR3':item.tag3,'organizacion':organizacion}))
 
             if len(get1) is 0 or len(get2) is 0 or len(get3) is 0:
-                raise Exception("imposible generar localizador")
+                raise Exception("imposible generar localizador, faltan tags")
             else:
                 localizador=get1[0]["CLAVE1"]+get2[0]["CLAVE2"]+get3[0]["CLAVE3"]
                 print "localizador generado:"

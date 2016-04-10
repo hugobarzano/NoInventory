@@ -71,12 +71,12 @@ class CatalogoForm(forms.ModelForm):
     nombre_catalogo = forms.CharField(max_length=150, help_text="Introduce el nombre del catalogo")
     descripcion_catalogo  = forms.CharField(widget = forms.Textarea, help_text="Breve descripcion sobre el catalogo")
     tag_catalogo = forms.CharField(max_length=150, help_text="Tag para ayudar a clasificar el catalogo")
-    caracteristicas_catalogo = forms.CharField(widget = forms.Textarea, help_text="Caracteristicas del catalogo para clasificar los objetos")
+    tipo_catalogo = forms.CharField(widget = forms.Textarea, help_text="Caracteristicas del catalogo para clasificar los objetos")
 
 
     class Meta:
         model = Catalogo
-        fields = ('nombre_catalogo','descripcion_catalogo','tag_catalogo','caracteristicas_catalogo')
+        fields = ('nombre_catalogo','descripcion_catalogo','tag_catalogo','tipo_catalogo')
 
 class SelectItem(forms.Form):
     def __init__(self,*args,**kwargs):

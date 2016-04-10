@@ -6,7 +6,7 @@ from item import *
 class Catalogo(object):
     """Clase para almacenar informacion de los catalogos"""
 
-    def __init__(self, catalogo_id=None,nombre_catalogo=None,fecha_alta_catalogo=None, descripcion_catalogo=None,tag_catalogo=None,caracteristicas_catalogo=None,items_catalogo=[]):
+    def __init__(self, catalogo_id=None,nombre_catalogo=None,fecha_alta_catalogo=None, descripcion_catalogo=None,organizacion=None,usuario=None,tag_catalogo=None,tipo_catalogo=None,items_catalogo=[],qr_data=None):
 
         if catalogo_id is None:
             self._id = ObjectId()
@@ -16,9 +16,12 @@ class Catalogo(object):
         self.nombre_catalogo=nombre_catalogo
         self.fecha_alta_catalogo = time.strftime("%c")
         self.descripcion_catalogo = descripcion_catalogo
+        self.organizacion=organizacion
+        self.usuario=usuario
         self.tag_catalogo=tag_catalogo
-        self.caracteristicas_catalogo=caracteristicas_catalogo
+        self.tipo_catalogo=tipo_catalogo
         self.items_catalogo=items_catalogo
+        self.qr_data=qr_data
 
 
     def get_as_json(self):
@@ -37,9 +40,12 @@ class Catalogo(object):
                     json_data['nombre_catalogo'],
                     json_data['fecha_alta_catalogo'],
                     json_data['descripcion_catalogo'],
+                    json_data['organizacion'],
+                    json_data['usuario'],
                     json_data['tag_catalogo'],
-                    json_data['caracteristicas_catalogo'],
-                    json_data['items_catalogo'])
+                    json_data['tipo_catalogo'],
+                    json_data['items_catalogo'],
+                    json_data['qr_data'])
             except KeyError as e:
                 raise Exception("Clave no encontrada en json: {}".format(e.message))
         else:
@@ -65,8 +71,16 @@ class CatalogosDriver(object):
     def create(self, catalogo):
         if catalogo is not None:
             self.database.catalogos.insert(catalogo.get_as_json())
+            self.generateQR(catalogo)
         else:
             raise Exception("Imposible crear catalogo")
+
+    def generateQR(self,catalogo):
+        if catalogo is not None:
+            qr_data_generated=str(catalogo.get_as_json())
+            self.database.catalogos.update({"_id":catalogo._id},{"$set": {"qr_data": qr_data_generated}})
+        else:
+            raise Exception("Imposible generar QR para el catalogo")
 
 
     def read(self, catalogo_id=None):
