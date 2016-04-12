@@ -70,7 +70,7 @@ def prueba(request):
 
 @csrf_exempt
 def catalogos(request):
-    lista_catalogos=gestorCatalogos.read()
+    lista_catalogos=gestorCatalogos.database.catalogos.find({"usuario":request.session['username']})
     contexto = {"lista_catalogos":lista_catalogos}
     return render(request, 'noinventory/catalogos.html',contexto)
 
@@ -78,7 +78,7 @@ def catalogos(request):
 def catalogo(request,id_catalogo):
     catalogo_object=Catalogo()
 
-    lista_items=gestorItems.read()
+    lista_items=gestorItems.database.items.find({"usuario":request.session['username']})
     catalogo=gestorCatalogos.read(catalogo_id=id_catalogo)
     for i in catalogo:
         catalogo_object = Catalogo.build_from_json(i)
@@ -199,7 +199,7 @@ def catalogosJson(request):
         aux3=[]
         if request.POST["flag"] == "True":
             try:
-                lista_catalogos=gestorCatalogos.database.catalogos.find()
+                lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.POST["username"]})
                 for i in lista_catalogos:
                     aux = Catalogo.build_from_json(i)
                     aux2=aux.get_as_json()
