@@ -1,3 +1,6 @@
+# coding=utf8
+# -*- coding: utf8 -*-
+# vim: set fileencoding=utf8 :
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -20,6 +23,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic.base import View
 from bson.json_util import dumps
+import json
 import os
 from item import *
 from catalogo import *
@@ -286,46 +290,51 @@ def itemJson(request):
 @csrf_exempt
 def addItemFromQr(request):
     if request.method == 'POST':
-        print
-        #mydic=dict(request.POST)
-        #print mydic["scaner"]
-        #aux=json.dumps(request.POST["scaner"])
-        print "axu"
-        print(request.POST["scaner"].descripcion_item)
-        #print aux["descripcion_item"]
-        #cursor=None
-        #cursor=gestorCatalogos.database.catalogos.find({"_id":ObjectId(catalogo_id)})
-        #if cursor is not None:
-        #    for i in cursor:
-        #        inventory_object = Catalogo.build_from_json(i)
-        #    gestorCatalogos.addToCatalogo(catalogo_object,id_item,gestorItems)
-        #else:
-        #    raise Exception("Item no valido para add desde aplicacion")
+        #print "Dicionario completo"
 
-        #print "catalogo"
-        #print mydic["catalogo"]
-        #print "contenido_scaner:\n"
-        print "contenido escaneo\n"
-        #print mydic["contenido_scaneo"]
-        #d = json.loads(mydic['contenido_scaneo'])
-        #indice=mydic["contenido_scaneo"].find('{')
-        #indice2=mydic["contenido_scaneo"].find('}')
-        #for i in range(indice, indice2):
-        #    aux.append(mydic["contenido_scaneo"][i]
-        #    )
-    ##    print "aux\n"
+        mydic=dict(request.POST)
+
+        catalogo=mydic["catalogo"]
+        #print "catalogo:"
+        #print catalogo[0]
+        aux=mydic["scaner"][0]
         #print aux
-#        print d["id_item"]
-        #print d
-        print "Dicionario completo"
-        #print mydic
+        buscar = "\'"
+        reemplazar_por = "\""
+        b=aux.replace(buscar, reemplazar_por)
+        #print b
+        data_aux=json.loads(b)
+        #print data_aux["_id"]
+        #print data_aux["fecha_alta_item"]
+        #gestorCatalogos.addToCatalogo(mydic["catalogo"],ObjectId(data_aux["_id"]),gestorItems)
+        item=gestorItems.read(item_id=data_aux["_id"])
+        if item is not None:
+            for i in item:
+                #print "entra forrrr"
+                item_object = Item.build_from_json(i)
+        else:
+            raise Exception("Item no valido para add")
+        #print "Item\n"
+        #print item_object.nombre_item
 
+        catalogo=gestorCatalogos.read(catalogo_id=catalogo[0])
+        if catalogo is not None:
+            for i in catalogo:
+                #print "entra forrrr 2"
+                catalogo_object = Catalogo.build_from_json(i)
+        else:
+            raise Exception("Catalogo no valido para add")
+        #print "Catalogo\n"
+        #print catalogo_object.nombre_catalogo
 
-        print "recibido post"
+        #gestorCatalogos.addToCatalogo(catalogo[0],data_aux["_id"],gestorItems)
+        gestorCatalogos.database.catalogos.update({"_id": catalogo_object._id},{"$addToSet": {"items_catalogo" : item_object.nombre_item,}})
+        return HttpResponse("OK")
+
     else:
         print "recibido get"
     #    print request.GET['contenido_scaner']
-    return HttpResponse("gettttttt")
+        return HttpResponse("gettttttt")
 
 
 

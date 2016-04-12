@@ -8,9 +8,40 @@ from item import *
 from clasificacion import *
 import os
 
-
-
 def main():
+    python_object = {'scaner':["{'clave':'valor'}"]}
+    dic=dict(python_object)
+    print dic
+    aux3=json.JSONEncoder().encode(python_object)
+    print aux3
+    aux = json.loads(aux3)
+    print aux
+    #aux2=json.loads(str(aux["scaner"][0]))
+    #print aux["scaner"][0]
+    #print aux2
+    #print dic
+    #print
+    #aux=dic["scaner"][0]
+    #print aux["clave"]
+    #aux = json.loads(str(dic["scaner"]))
+    #print aux[0]
+    #aux2=json.loads(str(aux[0]))
+    #print aux2
+    #data = json.loads(aux)
+    #do = data['scaner'][0]
+    #print do['clave']
+    #print do['description']
+    #aux = json.loads(str(dic["scaner"]))
+    #aux2 = json.dumps(dic["scaner"])
+    #print "claveee"
+    #print aux2
+    #print aux[0]
+    #dic2=dict(aux[0])
+    #print dic2
+
+
+
+def main2():
     manejador = CatalogosDriver()
     manejadorItem = ItemsDriver()
     manejadorClasificacion=ClasificacionDriver()

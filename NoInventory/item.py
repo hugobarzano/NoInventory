@@ -1,3 +1,6 @@
+# coding=utf8
+# -*- coding: utf8 -*-
+# vim: set fileencoding=utf8 :
 from bson.objectid import ObjectId
 from pymongo import *
 import time
@@ -91,10 +94,21 @@ class ItemsDriver(object):
         if item is not None:
             #qr_data_generated=jsonTOstring(item.get_as_json())
             #qr_data_generated=self.getStringData(item)
-            qr_data_generated=str(item.get_as_json())
+            #item._id=str(item._id)
+
+            aux=item.get_as_json()
+            aux["_id"]=str(aux["_id"])
+            #data={}
+            #data["_id"]=str(aux["_id"])
+            #data["fecha_alta_item"]=str(aux["fecha_alta_item"])
+            #data["localizador"]=str(aux["localizador"])
+            data={"_id":str(aux["_id"]),"fecha_alta_item":str(aux["fecha_alta_item"])}
+            #data = {"fecha_alta_item": "Mon Apr 11 19:12:31 2016"}
+
+            qr_data_generated=str(data)
             print "qr_data_generated:\n"
             print qr_data_generated
-            self.database.items.update({"_id":item._id},{"$set": {"qr_data": qr_data_generated}})
+            self.database.items.update({"_id":ObjectId(item._id)},{"$set": {"qr_data": qr_data_generated}})
         else:
             raise Exception("Imposible generar QR para el item")
 
