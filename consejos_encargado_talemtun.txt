@@ -1,0 +1,22 @@
+AHORRAR TIEMPO Y DINERO
+COMPARAR CON SERVICIOS TRADICIONALES (por que los servicios de no-inventory marcan la direncia, por k mejora las actividades de inventariado)
+
+	-expresarlo mediante graficos
+	-comparar lo que se tarda en hacer inventario con lo que el servicio de no-inventory
+	-ahorrar dinero y tiempo
+	-vender el producto como un paquete completo de servicios
+	-Utilizar la web como plataforma total
+	-Enfocar la aplicación como extensión de la web(complemento)
+	
+-Mejorar interfaz
+-Utilizar ajax
+-Personalizar pagina de items
+	- estadisticas
+	- mapas
+	- pensar en servicios web externos
+
+-Personalizar perfil de usuario
+-Personalizar pagina de organizacion(publica y privada)
+  
+
+ Ahorrar tiempo y dinero

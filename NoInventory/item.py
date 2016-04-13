@@ -144,13 +144,13 @@ class ItemsDriver(object):
             return self.database.items.find({"_id":ObjectId(item_id)})
 
 
-    def update(self, item,clasificador):
+    def update(self, item,clasificador,organizacion):
         if item is not None:
             # the save() method updates the document if this has an _id property
             # which appears in the collection, otherwise it saves the data
             # as a new document in the collection
             self.database.items.save(item.get_as_json())
-            self.generateLocalizador(item,clasificador)
+            self.generateLocalizador(item,clasificador,organizacion)
             self.generateQR(item)
         else:
             raise Exception("Imposible actualizar Item")

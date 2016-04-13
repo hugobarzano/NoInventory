@@ -171,18 +171,6 @@ def deleteInventorys(request):
     gestorCatalogos.destroyDriver()
     return redirect('/noinventory/preferencias')
 
-def inicialiceTags(request):
-    if request.method == 'POST':
-        form = DocumentForm(request.POST, request.FILES)
-        if form.is_valid():
-            newfile = Document(docfile = request.FILES['archivo'])
-            gestorClasificacion.createTag1(newfile)
-            return redirect('/noinventory/preferencias')
-    else:
-        form = DocumentForm() # A empty, unbound form
-    return render(request, 'noinventory/preferencias.html', {'form': form})
-
-
 
 ########################### VISTAS JSON PARA ANDROID ################################
 @csrf_exempt
@@ -194,12 +182,12 @@ def catalogosJson(request):
         default={"_id":"ID","nombre":"Nombre","descripcion":"Descripcion"}
         aux7=[]
         aux7.append(default)
-        respuesta={"items":aux7}
+        respuesta={"catalogos":aux7}
         aux=[]
         aux3=[]
         if request.POST["flag"] == "True":
             try:
-                lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.POST["username"]})
+                lista_catalogos=gestorCatalogos.database.catalogos.find({"usuario":request.POST["username"]})
                 for i in lista_catalogos:
                     aux = Catalogo.build_from_json(i)
                     aux2=aux.get_as_json()
@@ -460,7 +448,7 @@ class ItemCreator(View):
                         "qr_data":" ",
                         })
             gestorItems.create(item,gestorClasificacion,request.session['organizacion'])
-            lista_items=gestorItems.read()
+            lista_items=gestorItems.database.items.find({"usuario":request.session["username"]})
             contexto = {"lista_items":lista_items}
             return redirect('/noinventory/items',contexto)
         else:
@@ -500,8 +488,8 @@ class ItemUpdater(View):
                         "localizador":c.localizador,
                         "qr_data":c.qr_data,
                         })
-            gestorItems.update(itemUpdated,gestorClasificacion)
-            lista_items=gestorItems.read()
+            gestorItems.update(itemUpdated,gestorClasificacion,request.session['organizacion'])
+            lista_items=gestorItems.database.items.find({"usuario":request.session["username"]})
             contexto = {"lista_items":lista_items}
             return redirect('/noinventory/items',contexto)
         else:
@@ -528,7 +516,7 @@ class CatalogoCreator(View):
                         "qr_data":" ",
                         })
             gestorCatalogos.create(catalogo)
-            lista_catalogos=gestorCatalogos.read()
+            lista_catalogos=gestorCatalogos.database.catalogos.find({"usuario":request.session["username"]})
             contexto = {"lista_catalogos":lista_catalogos}
             return redirect('/noinventory/catalogos',contexto)
         else:
@@ -566,7 +554,7 @@ class CatalogoUpdater(View):
                         "qr_data":c.qr_data,
                         })
             gestorCatalogos.update(catalogoUpdated)
-            lista_catalogos=gestorCatalogos.read()
+            lista_catalogos=gestorCatalogos.database.catalogos.find({"usuario":request.session["username"]})
             contexto = {"lista_catalogos":lista_catalogos}
             return redirect('/noinventory/catalogo/'+str(c._id),contexto)
         else:
