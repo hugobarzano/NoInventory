@@ -60,7 +60,7 @@ def index(request):
 def items(request):
 
         lista_items=gestorItems.database.items.find({"usuario":request.session['username']})
-        contexto = {"lista_items":lista_items, "lista_items2":lista_items}
+        contexto = {"lista_items":lista_items}
         return render(request, 'noinventory/items.html',contexto)
 
 def prueba(request):
@@ -415,14 +415,34 @@ def desplegable():
 @csrf_exempt
 def borrarItem(request):
     i_id = None
-    print "Borrado"
+    print "vamos a borrar"
     if request.method == 'GET':
+        default={"_id":"ID","nombre":"Nombre","descripcion":"Descripcion"}
+        aux7=[]
+        aux7.append(default)
+        respuesta={"items":aux7}
+        aux=[]
+        aux3=[]
         i_id = request.GET['id_item']
         print i_id
         gestorItems.database.items.remove( {"_id" : ObjectId(i_id) } )
-        lista_items=gestorItems.database.items.find({"usuario":request.session['username']})
-        contexto = {"lista_items":lista_items}
-        return HttpResponse(contexto)
+        print "Borrado completado"
+        try:
+            #lista_items=gestorItems.database.items.find({"usuario":request.session["username"]})
+            lista_items=gestorItems.database.items.find({"usuario":request.session["username"]})
+            for i in lista_items:
+                aux = Item.build_from_json(i)
+                aux2=aux.get_as_json()
+                aux2["_id"]=str(aux2["_id"])
+                #aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"]}
+                aux3.append(aux2)
+                respuesta={"items":aux3}
+        except KeyError as e:
+            raise Exception("No tienes objetos asociados : {}".format(e.message))
+        print "Respuestad del servidor"
+        print respuesta
+        return JsonResponse(respuesta,safe=False)
+
 
 
 class ItemCreator(View):

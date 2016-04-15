@@ -13,41 +13,88 @@
 
         {% block body_block %}
 
-        <article class="module width_3_quarter">
-    		<header><h3 class="tabs_involved">Content Manager</h3>
-    		<ul class="tabs">
-       			<li><a href="#tab1">Posts</a></li>
-        		<li><a href="#tab2">Comments</a></li>
-    		</ul>
-    		</header>
+        <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Descripcion</th>
+            <th>Fecha</th>
+            <th>Tag1</th>
+            <th>TAG2</th>
+            <th>TAG3</th>
+            <th>Localizador</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if lista_items %}
+            {% for i in lista_items %}
+              <tr>
+                <td>{{i.nombre_item}}</td>
+                <td>{{ i.descripcion_item }}</td>
+                <td>{{ i.fecha_alta_item }}</td>
+                <td>{{ i.tag1 }}</td>
+                <td>{{ i.tag2 }}</td>
+                <td>{{ i.tag3 }}</td>
+                <td>{{ i.localizador }}</td>
+                <td><a href="/noinventory/modificarItem/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Update</button> </a>
+                <input class="buttonDelete"  type="button" name="Delete" value="Delete" data-item="{{ i|documento_id}}"></input>
+                <button class="buttonDelete2" data-item="{{ i|documento_id}}" > Delete2</button>
+                <td>
+              </tr>
+            {% endfor %}
+            {% else %}
+                 <strong>No hay Objetos.</strong>
+            {% endif %}
+          </tr>
+        </tbody>
+        </table>
 
-    		<div class="tab_container">
-    			<div id="tab1" class="tab_content">
-    			<table class="tablesorter" cellspacing="0">
-    			<thead>
-    				<tr>
-       					<th></th>
-        				<th>Entry Name</th>
-        				<th>Category</th>
-        				<th>Created On</th>
-        				<th>Actions</th>
-    				</tr>
-    			</thead>
-    			<tbody>
-    				<tr>
-       					<td><input type="checkbox"></td>
-        				<td>Lorem Ipsum Dolor Sit Amet</td>
-        				<td>Articles</td>
-        				<td>5th April 2011</td>
-        				<td><input type="image" src="images/icn_edit.png" title="Edit"><input type="image" src="images/icn_trash.png" title="Trash"></td>
-    				</tr>
+        <!--Funcionalidad de borrado asincrono -->
+        <script>
 
-            	</tbody>
-    			</table>
 
-    			</div><!-- end of #tab2 -->
+$().ready(function(){
+    $(".buttonDelete2").click(function() {
+        var button = this;
+        var catid = $(button).attr("data-item")
+        console.log("has pulsado el boton")
+        console.log($(button).attr("data-item"))
+        $.ajax({
+            url:  '/noinventory/borrarItem/?id_item='+catid,
+            type: 'GET',
+            result: $(this).serialize(),
+            dataType: 'json',
+            success: function(result) {
+              console.log("ejecutando get")
+              //console.log(result["items"][0]["descripcion"]);
+              $('.table').html(
+			             function(){
+                         var content = '<table class="table table-hover"><thead><tr><th>Item</th><th>Descripcion</th><th>Fecha</th><th>Tag1</th><th>TAG2</th><th>TAG3</th> <th>Localizador</th><th>Acciones</th></tr></thead><tbody>';
+                         for(var i = 0; i < result["items"].length; i++){
+                              content = content + '<tr><td>' + result["items"][i]["nombre_item"]+'</td>';
+                 				      content = content + '<td>' + result["items"][i]["descripcion_item"] + '</td>';
+                              content = content + '<td>' + result["items"][i]["fecha_alta_item"]+'</td>';
+                              content = content + '<td>' + result["items"][i]["tag1"]+'</td>';
+                              content = content + '<td>' + result["items"][i]["tag2"]+'</td>';
+                              content = content + '<td>' + result["items"][i]["tag3"]+'</td>';
+                              content = content + '<td>' + result["items"][i]["localizador"]+'</td>';
+                              content = content + '<td><a href="/noinventory/modificarItem/'+result["items"][i]["_id"]+'"><button class="btn btn-default btn-xs"> Update</button> </a>'
+                              content = content + '<input class="buttonDelete"  type="button" name="Delete" value="Delete" data-item="'+result["items"][i]["_id"]+'"></input>'
+                              content = content + '<button class="buttonDelete2" data-item="'+result["items"][i]["_id"]+'"> Delete2</button> </td></tr>'
+                 				}
+				                     content = content + '</tbody></table>';
+				                     return content;
+			            }
+			        )
+            }
+        });
+    });
+});
 
-    		</div><!-- end of .tab_container -->
 
-      </article>
+
+        </script>
+
+
 {% endblock %}
