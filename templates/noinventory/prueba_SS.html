@@ -13,14 +13,48 @@
 
         {% block body_block %}
 
-        <script src="http://code.highcharts.com/highcharts.js"></script>
-                  <div id="container" style="height: 300px"></div>
+        <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Descripcion</th>
+            <th>Fecha</th>
+            <th>Tag1</th>
+            <th>TAG2</th>
+            <th>TAG3</th>
+            <th>Localizador</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if lista_items %}
+            {% for i in lista_items %}
+              <tr>
+                <td>{{i.nombre_item}}</td>
+                <td>{{ i.descripcion_item }}</td>
+                <td>{{ i.fecha_alta_item }}</td>
+                <td>{{ i.tag1 }}</td>
+                <td>{{ i.tag2 }}</td>
+                <td>{{ i.tag3 }}</td>
+                <td>{{ i.localizador }}</td>
+                <td><a href="/noinventory/modificarItem/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Update</button> </a>
+                <input class="buttonDelete"  type="button" name="Delete" value="Delete" data-item="{{ i|documento_id}}"></input>
+                <button class="buttonDelete2" data-item="{{ i|documento_id}}" > Delete2</button>
+                <td>
+              </tr>
+            {% endfor %}
+            {% else %}
+                 <strong>No hay Objetos.</strong>
+            {% endif %}
+          </tr>
+        </tbody>
+        </table>
 
         <!--Funcionalidad de borrado asincrono -->
         <script>
 
 
-
+$().ready(function(){
     $(".buttonDelete2").click(function() {
         var button = this;
         var catid = $(button).attr("data-item")
@@ -56,55 +90,11 @@
             }
         });
     });
-
+});
 
 
 
         </script>
 
-        <script>
-           $(function(){
-             $.ajax({
-               url:  '/noinventory/datosTag1/?tag1=Hospital%20Real',
-               type: 'get',
-               success: function(datos) {
-                 Visualiza_datos(datos);
-               },
-               failure: function(datos) {
-                 alert('esto no vá');
-               }
-             });
-
-
-             function Visualiza_datos(datos) {
-                 var claveTag2=datos['claveTag2'];
-                 var valorTag2=datos['valorTag2'];
-
-                 console.debug('voy a mostrar el nombre de los bares')
-                 console.log(claveTag2);
-                 console.log(valorTag2);
-             $('#container').highcharts({
-                 chart: {
-                     type: 'bar'
-                 },
-                 title: {
-                     text: 'Top'
-                 },
-                 xAxis: {
-                     categories: claveTag2
-                 },
-                 yAxis: {
-                     title: {
-                         text: 'Veces Visitado'
-                     }
-                 },
-                 series: [{
-                     name: 'Visitas',
-                     data: valorTag2
-                 }],
-             });
-         };
-         });
-             </script>
 
 {% endblock %}

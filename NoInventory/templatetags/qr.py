@@ -26,10 +26,10 @@ def qrcode(value, alt=None):
     """
 
     url = conditional_escape("http://chart.apis.google.com/chart?%s" % \
-            urllib.urlencode({'chs':'150x150', 'cht':'qr', 'chl':value, 'choe':'UTF-8'}))
+            urllib.urlencode({'chs':'200x200', 'cht':'qr', 'chl':value, 'choe':'UTF-8'}))
     alt = conditional_escape(alt or value)
 
-    return mark_safe(u"""<img class="qrcode" src="%s" width="150" height="150" alt="%s" />""" % (url, alt))
+    return mark_safe(u"""<img class="qrcode" src="%s" width="200" height="200" alt="%s" />""" % (url, alt))
 
 @register.filter("documento_id")
 def documento_id(value):

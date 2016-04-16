@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load qr %}
+{% block title %}Index{% endblock %}
+
+
+{% block lateral_izquierda %}
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Acciones</h3>
+  </div>
+</div>
+<a href="/noinventory/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
+
+{% endblock %}
+
+
+        {% block body_block %}
+
+    <div class="page-header">
+                <h1> Item</h1>
+    </div>
+    {% if item %}
+    <div class="panel panel-primary">
+     <div class="panel-heading" >
+       <h3 class="panel-title">{{item.nombre_item}} </h3>
+     </div>
+   </div>
+    <div class="col-xs-12 col-sm-6 placeholder">
+       <div class="panel panel-primary">
+        <div class="panel-heading">
+        </div>
+      </div>
+
+      <br>
+      <div id="qr">
+      {{ item.qr_data|qrcode:"qr_data" }}
+    </div>
+      <br>
+      <hr>
+      Identificador: {{ id_item }}<br>
+      Localizador: {{item.localizador}}
+    </div>
+
+    <div class="col-xs-12 col-sm-6 placeholder">
+       <div class="panel panel-primary">
+        <div class="panel-heading">
+        </div>
+      </div>
+      Fecha: {{item.fecha_alta_item}} </h3>
+        <p>
+          Descripcion: {{ item.descripcion_item }}
+        </p>
+        Tags:
+        <hr>
+          {{item.tag1}}
+        <hr>
+          {{item.tag2}}
+        <hr>
+          {{item.tag3}}
+
+        <br>
+        <br>
+        Creado por: {{ item.usuario }}
+        Para la Organizacion: {{item.organizacion}}
+        <br>
+    </div>
+    {% if item.organizacion == "osl" %}
+            <div class="col-xs-12 col-sm-6 placeholder">
+               <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title">{{map}} </h3>
+                </div>
+              </div>
+              {% load easy_maps_tags %}
+              <!-- Default map with 300x400 dimensions -->
+              {% easy_map  map   465 300 %}
+              {% load easy_maps_tags cache %}
+              {% cache 600 my_map firm.address %}
+              {% easy_map firm.address 300 400 %}
+              {% endcache %}
+            </div>
+        {% endif %}
+    {% else %}
+         <strong>No hay Item</strong>
+    {% endif %}
+
+
+
+
+
+
+
+        {% endblock %}

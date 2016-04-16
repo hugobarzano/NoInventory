@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'NoInventory',
     'bootstrapform',
+    'easy_maps',
 )
 
 

@@ -44,6 +44,8 @@
                 <br>
               <button class="borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}">Borrar</button>
               <a href="/noinventory/modificarItem/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Modificar</button> </a>
+              <a href="/noinventory/item/{{ i|documento_id}}" > <button id='item_details'>Detalles</button></a>
+
               </div>
           {% endfor %}
         {% else %}
@@ -53,25 +55,6 @@
         <!--pruebas -->
 
 
-
-
-
-        <!--Funcionalidad de borrado asincrono -->
-        <script>
-                   $(".borrarBoton").click(function(){
-                     var itemid;
-                     itemid = $(".borrarBoton").attr("id");
-                     console.log("has pulsado el boton")
-                      console.log(itemid);
-                     $.get('/noinventory/borrarItem/?d_item='+itemid, function(data){
-                            console.log("ejecutando get")
-                            console.log(data);
-                            console.log(itemid);
-                            $("#"+itemid).html("borraarrrr");
-                          });
-                        });
-        </script>
-
                 <script src="http://code.highcharts.com/highcharts.js"></script>
                 <div id="container" style="height: 300px"></div>
       <div class="panel panel-primary">
@@ -79,37 +62,6 @@
           <h3 class="panel-title">Por contruir</h3>
         </div>
       </div>
-      <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Item</th>
-          <th>Descripcion</th>
-          <th>Fecha</th>
-          <th>Tag1</th>
-          <th>TAG2</th>
-          <th>TAG3</th>
-          <th>Localizador</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% if lista_items2 %}
-          {% for i in lista_items2 %}
-            <tr>
-              <td>lalala</td>
-              <td>{{ i.descripcion_item }}</td>
-              <td>{{ i.fecha_alta_item }}</td>
-              <td>{{ i.tag1 }}</td>
-              <td>{{ i.tag2 }}</td>
-              <td>{{ i.tag3 }}</td>
-              <td>{{ i.localizador }}</td>
-            </tr>
-          {% endfor %}
-          {% else %}
-               <strong>No hay Objetos.</strong>
-          {% endif %}
-        </tr>
-      </tbody>
-      </table>
+
 
         {% endblock %}

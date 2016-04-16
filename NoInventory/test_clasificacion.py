@@ -8,7 +8,39 @@ from item import *
 from clasificacion import *
 import os
 
+
+
 def main():
+    manejador = CatalogosDriver()
+    manejadorItem = ItemsDriver()
+    manejadorClasificacion=ClasificacionDriver()
+    dicTag2=dict()
+
+    lista_items=manejadorItem.database.items.find({"tag1":"Hospital Real"})
+    #lista_items2=lista_items
+    for item in lista_items:
+        item_object = Item.build_from_json(item)
+        print item_object.nombre_item + " -- "+ item_object.tag1+ " -- "+ item_object.tag2
+        dicTag2[item_object.tag2]=0
+    print dicTag2
+
+    lista_items=manejadorItem.database.items.find({"tag1":"Hospital Real"})
+    for item in lista_items:
+        item_object=Item.build_from_json(item)
+        #print "tag2:"+item_object.tag2
+        dicTag2[item_object.tag2]=dicTag2[item_object.tag2]+1
+
+    datos={'claveTag2':[],'valorTag2':[]}
+
+
+    for tag in dicTag2:
+        datos['claveTag2'].append(tag)
+        datos['valorTag2'].append(dicTag2[tag])
+
+    print datos
+
+
+def main3():
     python_object = {'scaner':["{'clave':'valor'}"]}
     dic=dict(python_object)
     print dic

@@ -63,6 +63,17 @@ def items(request):
         contexto = {"lista_items":lista_items}
         return render(request, 'noinventory/items.html',contexto)
 
+@csrf_exempt
+def item(request,id_item):
+    item_object=Item()
+
+    item=gestorItems.read(item_id=id_item)
+    for i in item:
+        item_object = Item.build_from_json(i)
+
+    contexto = {"item":item_object,"map":item_object.tag1+', Granada',"id_item":item_object._id}
+    return render(request, 'noinventory/item.html',contexto)
+
 def prueba(request):
     lista_items=gestorItems.database.items.find({"usuario":request.session['username']})
     form = SelectItem()
@@ -103,6 +114,34 @@ def addToCatalogo(request,id_catalogo,id_item):
         return redirect('/noinventory/catalogo/'+id_catalogo,contexto)
 
 
+############################ GRAFICOS ################################################
+def datosTag1 (request):
+    if request.method == 'GET':
+        dicTag2=dict()
+        lista_items=gestorItems.database.items.find({"tag1":request.GET['tag1']})
+        for item in lista_items:
+            item_object = Item.build_from_json(item)
+            #print item_object.nombre_item + " -- "+ item_object.tag1+ " -- "+ item_object.tag2
+            dicTag2[item_object.tag2]=0
+        #print dicTag2
+
+        lista_items=gestorItems.database.items.find({"tag1":request.GET['tag1']})
+        for item in lista_items:
+            item_object=Item.build_from_json(item)
+            #print "tag2:"+item_object.tag2
+            dicTag2[item_object.tag2]=dicTag2[item_object.tag2]+1
+
+        datos={'claveTag2':[],'valorTag2':[]}
+
+
+        for tag in dicTag2:
+            datos['claveTag2'].append(tag)
+            datos['valorTag2'].append(dicTag2[tag])
+
+        print datos
+    	return JsonResponse(datos, safe=False)
+    else:
+        return HttpResponse("datosTag1")
 
 
 ############################ ADMINISTRACION DE PREFERENCIAS ##########################
