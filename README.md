@@ -69,6 +69,7 @@ La aplicación Android del proyecto se encuentra alojada en el repositorio [NoIn
 [conexion http](https://danielme.com/tip-android-8-obtener-recursos-web/)
 [webview](http://www.desarrollolibre.net/blog/tema/152/android/como-mostrar-paginas-web-con-webview-en-android#.VwPR6UKlilM)
 [JsonCustonRequest](http://stackoverflow.com/questions/25948191/send-post-request-using-volley-and-receive-in-php)
+[draggable and droppable](http://www.desarrolloweb.com/articulos/ejemplo-drag-drop-jquery.html)
 
 ###Presentación Concurso Software libre
 
