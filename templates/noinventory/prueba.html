@@ -2,85 +2,99 @@
 {% load qr %}
 {% block title %}Index{% endblock %}
 
-
 {% block lateral_izquierda %}
 <div class="panel panel-primary">
   <div class="panel-heading">
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<a href="/noinventory/nuevoCatalogo"> <button id='nuevoCatalogo'>Nuevo Catalogo</button></a>
+<a href="/noinventory/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
 {% endblock %}
-
 
         {% block body_block %}
 
-    <div class="page-header">
-                <h1>¡Bienvenido a Gestion de Catalogo!</h1>
-    </div>
-
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Catalogos Destacados</h3>
-        </div>
-      </div>
-
-
-      <div>
-        {% if lista_catalogos %}
-          {% for i in lista_catalogos %}
-          <div id="droppable" class="ui-widget-header" data-cata="{{ i|documento_id }}">
-            <p>Catalogo i.nombre_catalogo </p>
-            <p>Catalogo {{ i|documento_id }} </p>
-
-          </div>
-          {% endfor %}
-        {% else %}
-             <strong>No hay Catalogos.</strong>
-        {% endif %}
-      </div>
-        <br>
-        <br>
-        <br>
-
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">ITEMS</h3>
-          </div>
-        </div>
-        <div>
+        <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Descripcion</th>
+            <th>Fecha</th>
+            <th>Tag1</th>
+            <th>TAG2</th>
+            <th>TAG3</th>
+            <th>Localizador</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
           {% if lista_items %}
-            {% for j in lista_items %}
-            <div id="draggable" class="ui-widget-content" data-item="{{ j|documento_id }}">
-  j          <p> {{j.nombre_item}} </p>
-  j          <p>{{ j|documento_id }} </p>
-            </div>
-
+            {% for i in lista_items %}
+              <tr>
+                <td>{{i.nombre_item}}</td>
+                <td>{{ i.descripcion_item }}</td>
+                <td>{{ i.fecha_alta_item }}</td>
+                <td>{{ i.tag1 }}</td>
+                <td>{{ i.tag2 }}</td>
+                <td>{{ i.tag3 }}</td>
+                <td>{{ i.localizador }}</td>
+                <td><a href="/noinventory/modificarItem/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Update</button> </a>
+                <input class="buttonDelete"  type="button" name="Delete" value="Delete" data-item="{{ i|documento_id}}"></input>
+                <button class="buttonDelete2" data-item="{{ i|documento_id}}" > Delete2</button>
+                <td>
+              </tr>
             {% endfor %}
-          {% else %}
-               <strong>No hay items.</strong>
-          {% endif %}
-        </div>
-          <br>
-          <br>
-          <br>
+            {% else %}
+                 <strong>No hay Objetos.</strong>
+            {% endif %}
+          </tr>
+        </tbody>
+        </table>
+
+        <!--Funcionalidad de borrado asincrono -->
+        <script>
+
+
+$().ready(function(){
+    $(".buttonDelete2").click(function() {
+        var button = this;
+        var catid = $(button).attr("data-item")
+        console.log("has pulsado el boton")
+        console.log($(button).attr("data-item"))
+        $.ajax({
+            url:  '/noinventory/borrarItem/?id_item='+catid,
+            type: 'GET',
+            result: $(this).serialize(),
+            dataType: 'json',
+            success: function(result) {
+              console.log("ejecutando get")
+              //console.log(result["items"][0]["descripcion"]);
+              $('.table').html(
+			             function(){
+                         var content = '<table class="table table-hover"><thead><tr><th>Item</th><th>Descripcion</th><th>Fecha</th><th>Tag1</th><th>TAG2</th><th>TAG3</th> <th>Localizador</th><th>Acciones</th></tr></thead><tbody>';
+                         for(var i = 0; i < result["items"].length; i++){
+                              content = content + '<tr><td>' + result["items"][i]["nombre_item"]+'</td>';
+                 				      content = content + '<td>' + result["items"][i]["descripcion_item"] + '</td>';
+                              content = content + '<td>' + result["items"][i]["fecha_alta_item"]+'</td>';
+                              content = content + '<td>' + result["items"][i]["tag1"]+'</td>';
+                              content = content + '<td>' + result["items"][i]["tag2"]+'</td>';
+                              content = content + '<td>' + result["items"][i]["tag3"]+'</td>';
+                              content = content + '<td>' + result["items"][i]["localizador"]+'</td>';
+                              content = content + '<td><a href="/noinventory/modificarItem/'+result["items"][i]["_id"]+'"><button class="btn btn-default btn-xs"> Update</button> </a>'
+                              content = content + '<input class="buttonDelete"  type="button" name="Delete" value="Delete" data-item="'+result["items"][i]["_id"]+'"></input>'
+                              content = content + '<button class="buttonDelete2" data-item="'+result["items"][i]["_id"]+'"> Delete2</button> </td></tr>'
+                 				}
+				                     content = content + '</tbody></table>';
+				                     return content;
+			            }
+			        )
+            }
+        });
+    });
+});
 
 
 
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Catalogo dinamico </h3>
-        </div>
-      </div>
+        </script>
 
 
-        <p>Item de prueba</p>
-        <div id="draggable" class="ui-widget-content">
-      </div>
-
-      <div id="droppable" class="ui-widget-header">
-        <p>Catalogo de prueba</p>
-      </div>
-
-
-        {% endblock %}
+{% endblock %}

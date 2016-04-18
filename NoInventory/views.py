@@ -115,7 +115,15 @@ def addToCatalogo(request,id_catalogo,id_item):
 
 
 ############################ GRAFICOS ################################################
-def datosTag1 (request):
+def graficos(request):
+    lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":request.session['organizacion']})
+    lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":request.session['organizacion']})
+    lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":request.session['organizacion']})
+    return render(request, 'noinventory/graficos.html', {'lista_tag1': lista_tag1,"lista_tag2":lista_tag2,"lista_tag3":lista_tag3})
+
+
+
+def datosTag1_prueba (request):
     if request.method == 'GET':
         dicTag2=dict()
         lista_items=gestorItems.database.items.find({"tag1":request.GET['tag1']})
@@ -142,6 +150,167 @@ def datosTag1 (request):
     	return JsonResponse(datos, safe=False)
     else:
         return HttpResponse("datosTag1")
+
+
+def datosTag1 (request):
+    if request.method == 'GET':
+        dicTag2=dict()
+        lista_items=gestorItems.database.items.find({"tag1":request.GET['tag1']})
+        for item in lista_items:
+            item_object = Item.build_from_json(item)
+            #print item_object.nombre_item + " -- "+ item_object.tag1+ " -- "+ item_object.tag2
+            dicTag2[item_object.tag2]=0
+        #print dicTag2
+
+        lista_items=gestorItems.database.items.find({"tag1":request.GET['tag1']})
+        for item in lista_items:
+            item_object=Item.build_from_json(item)
+            #print "tag2:"+item_object.tag2
+            dicTag2[item_object.tag2]=dicTag2[item_object.tag2]+1
+
+        datos1={'clave':[],'valor':[]}
+
+
+        for tag in dicTag2:
+            datos1['clave'].append(tag)
+            datos1['valor'].append(dicTag2[tag])
+        #############Segundos datos
+        dicTag3=dict()
+        lista_items=gestorItems.database.items.find({"tag1":request.GET['tag1']})
+        for item in lista_items:
+            item_object = Item.build_from_json(item)
+            #print item_object.nombre_item + " -- "+ item_object.tag1+ " -- "+ item_object.tag2
+            dicTag3[item_object.tag3]=0
+        #print dicTag2
+
+        lista_items=gestorItems.database.items.find({"tag1":request.GET['tag1']})
+        for item in lista_items:
+            item_object=Item.build_from_json(item)
+            #print "tag2:"+item_object.tag2
+            dicTag3[item_object.tag3]=dicTag3[item_object.tag3]+1
+
+        datos2={'clave':[],'valor':[]}
+
+
+        for tag in dicTag3:
+            datos2['clave'].append(tag)
+            datos2['valor'].append(dicTag3[tag])
+
+        print datos2
+
+        datos={'datos1':datos1,'datos2':datos2}
+
+        print datos
+    	return JsonResponse(datos, safe=False)
+    else:
+        return HttpResponse("datosTag1")
+
+
+
+
+def datosTag2 (request):
+    if request.method == 'GET':
+        dicTag1=dict()
+        lista_items=gestorItems.database.items.find({"tag2":request.GET['tag2']})
+        for item in lista_items:
+            item_object = Item.build_from_json(item)
+            #print item_object.nombre_item + " -- "+ item_object.tag1+ " -- "+ item_object.tag2
+            dicTag1[item_object.tag1]=0
+        #print dicTag2
+
+        lista_items=gestorItems.database.items.find({"tag2":request.GET['tag2']})
+        for item in lista_items:
+            item_object=Item.build_from_json(item)
+            #print "tag2:"+item_object.tag2
+            dicTag1[item_object.tag1]=dicTag1[item_object.tag1]+1
+
+        datos1={'clave':[],'valor':[]}
+
+
+        for tag in dicTag1:
+            datos1['clave'].append(tag)
+            datos1['valor'].append(dicTag1[tag])
+
+
+        ##################Segundos datos
+        dicTag3=dict()
+        lista_items=gestorItems.database.items.find({"tag2":request.GET['tag2']})
+        for item in lista_items:
+            item_object = Item.build_from_json(item)
+            #print item_object.nombre_item + " -- "+ item_object.tag1+ " -- "+ item_object.tag2
+            dicTag3[item_object.tag3]=0
+        #print dicTag2
+
+        lista_items=gestorItems.database.items.find({"tag2":request.GET['tag2']})
+        for item in lista_items:
+            item_object=Item.build_from_json(item)
+            #print "tag2:"+item_object.tag2
+            dicTag3[item_object.tag3]=dicTag3[item_object.tag3]+1
+
+        datos2={'clave':[],'valor':[]}
+
+
+        for tag in dicTag3:
+            datos2['clave'].append(tag)
+            datos2['valor'].append(dicTag3[tag])
+
+        datos={'datos1':datos1,'datos2':datos2}
+        print datos
+    	return JsonResponse(datos, safe=False)
+    else:
+        return HttpResponse("datosTag2")
+
+
+def datosTag3 (request):
+    if request.method == 'GET':
+        dicTag1=dict()
+        lista_items=gestorItems.database.items.find({"tag3":request.GET['tag3']})
+        for item in lista_items:
+            item_object = Item.build_from_json(item)
+            #print item_object.nombre_item + " -- "+ item_object.tag1+ " -- "+ item_object.tag2
+            dicTag1[item_object.tag1]=0
+        #print dicTag2
+
+        lista_items=gestorItems.database.items.find({"tag3":request.GET['tag3']})
+        for item in lista_items:
+            item_object=Item.build_from_json(item)
+            #print "tag2:"+item_object.tag2
+            dicTag1[item_object.tag1]=dicTag1[item_object.tag1]+1
+
+        datos1={'clave':[],'valor':[]}
+
+
+        for tag in dicTag1:
+            datos1['clave'].append(tag)
+            datos1['valor'].append(dicTag1[tag])
+
+
+        dicTag2=dict()
+        lista_items=gestorItems.database.items.find({"tag3":request.GET['tag3']})
+        for item in lista_items:
+            item_object = Item.build_from_json(item)
+            #print item_object.nombre_item + " -- "+ item_object.tag1+ " -- "+ item_object.tag2
+            dicTag2[item_object.tag2]=0
+        #print dicTag2
+
+        lista_items=gestorItems.database.items.find({"tag3":request.GET['tag3']})
+        for item in lista_items:
+            item_object=Item.build_from_json(item)
+            #print "tag2:"+item_object.tag2
+            dicTag2[item_object.tag2]=dicTag2[item_object.tag2]+1
+
+        datos2={'clave':[],'valor':[]}
+
+
+        for tag in dicTag2:
+            datos2['clave'].append(tag)
+            datos2['valor'].append(dicTag2[tag])
+
+        datos={'datos1':datos1,'datos2':datos2}
+        print datos
+    	return JsonResponse(datos, safe=False)
+    else:
+        return HttpResponse("datosTag3")
 
 
 ############################ ADMINISTRACION DE PREFERENCIAS ##########################
@@ -534,7 +703,6 @@ class ItemUpdater(View):
             c = Item.build_from_json(i)
         form = ItemForm3(request.POST,organizacion=request.session['organizacion'])
         if form.is_valid():
-            tag1=gestorClasificacion.database.tag1.find_one({"VALOR1":form.data["tag1"]})
             itemUpdated =Item.build_from_json({"_id":c._id,
                         "nombre_item": form.data['nombre_item'],
                         "fecha_alta_item": c.fecha_alta_item,
