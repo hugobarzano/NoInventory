@@ -207,7 +207,7 @@ def busqueda(request):
         return HttpResponse("post")
 
 
-############################ GRAFICOS ################################################
+############################ GRAFICOS e informes ################################################
 def graficos(request):
     lista_tag1=gestorClasificacion.database.tag1.find({"organizacion":request.session['organizacion']})
     lista_tag2=gestorClasificacion.database.tag2.find({"organizacion":request.session['organizacion']})
@@ -404,6 +404,13 @@ def datosTag3 (request):
     	return JsonResponse(datos, safe=False)
     else:
         return HttpResponse("datosTag3")
+
+
+
+def informes(request):
+    numeroItems=gestorItems.database.items.find({"usuario":request.session['username']}).count()
+    form = SelectItem()
+    return render(request, 'noinventory/informes.html', {'form': form,"numeroItems":numeroItems, 'indice':5})
 
 
 ############################ ADMINISTRACION DE PREFERENCIAS ##########################

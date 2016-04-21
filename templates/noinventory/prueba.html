@@ -12,91 +12,34 @@
 {% endblock %}
 
         {% block body_block %}
-        <button type="button" class="sustituto btn-default">ajax</button>
+        <div id="content">
+     <h3>Hello, this is a H3 tag</h3>
 
-        <div id="accordion">
-            {% for i in lista_items %}
-                <h3>Nombre: {{i.nombre_item}} </h3>
-                <div id="{{ i|documento_id }}">
-                  <p> Descripcion: {{ i.descripcion_item }} </p>
+    <p>a pararaph</p>
+</div>
+<div id="editor"></div>
+<button id="cmd">generate PDF</button>
 
-                </div>
-            {% endfor %}
+<script>
+var doc = new jsPDF();
+var specialElementHandlers = {
+    '#editor': function (element, renderer) {
+        return true;
+    }
+};
 
-          </div>
-
-
-
-
-          <script type="text/javascript">
-     $(function() {
-          $( "#accordion" ).accordion({
-               collapsible: true,
-               active: false
-          });
-     });
-     </script>
-
-    <script>
-
-                $(".sustituto").click(function() {
-                  console.log("boton ajax")
-                  $.ajax({
-                    url: "/noinventory/prueba",
-                    type: "get", //send it through get method
-                    success: function(response) {
-                      //console.log(response);
-                      $('#accordion').html(
-                           function(){
-                             var content = ''
-                             for(var i = 0; i < 3; i++){
-                                  content = content + '<h3> Nombre</h3>';
-                                  content = content + '<div id="'+i+'">';
-                                  content = content + '<p> Descripcion </p>';
-                                  content = content + '</div>';
-
-                            }
-
-                                 //content = content + '</div>';
-                                 return content;
-                               }
-                      )
-                      if ( typeof $("#accordion").accordion('instance') != 'undefined') {
-                        $("#accordion").accordion('destroy');
-                      }
-                      $("#accordion").accordion({
-                        collapsible: true
-                      });
+$('#cmd').click(function () {
+    doc.fromHTML($('#content').html(), 15, 15, {
+        'width': 170,
+            'elementHandlers': specialElementHandlers
+    });
+    doc.save('sample-file.pdf');
+});
 
 
+    </script>
 
 
-                      //Do Something
-                    },
-                    error: function(xhr) {
-                //Do Something to handle error
-                    }
-                });
-
-
-              });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              </script>
 
 
 {% endblock %}
