@@ -412,6 +412,13 @@ def informes(request):
     form = SelectItem()
     return render(request, 'noinventory/informes.html', {'form': form,"numeroItems":numeroItems, 'indice':5})
 
+@csrf_exempt
+def guardarInforme(request):
+    if request.method == 'GET':
+        print request.GET["datos_informe"]
+        return HttpResponse("informe get")
+    else:
+        return HttpResponse("informe post")
 
 ############################ ADMINISTRACION DE PREFERENCIAS ##########################
 

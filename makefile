@@ -25,6 +25,9 @@ test_catalogo:
 test_clasificacion:
 		python NoInventory/test_clasificacion.py
 
+test_informe:
+	python NoInventory/test_informe.py
+
 docker_manual:
 	sudo docker-compose run db /bin/bash
 	#ejecutar dentro sudo service mongodb restart y esperar

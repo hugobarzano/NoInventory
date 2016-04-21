@@ -10,12 +10,15 @@
 </div>
 <a href="/noinventory/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
 <button id="cmd">generate PDF</button>
+<button id="save">guardar Informe</button>
+
 {% endblock %}
 
         {% block body_block %}
 
 
 <textarea class="col-md-6 full-height" rows="30" id="pad">
+![Imagen] (https://www.dropbox.com/s/c279jmzvbd4t1ld/noInventory.png?dl=1) 
 #Informe OSL para la Unidad de Calidad
 
 
@@ -29,7 +32,28 @@
 
 
 
+    <script>
+    $('#save').click(function () {
+        console.log("Boton guardar")
+        var datos = document.getElementById('pad');
+        console.log(datos.value)
 
+        $.ajax({
+          url: "/noinventory/guardarInforme/",
+          type: "get", //send it through get method
+          data:{datos_informe:String(datos.value)},
+          success: function(response) {
+            console.log(response);
+
+            //Do Something
+          },
+          error: function(xhr) {
+      //Do Something to handle error
+          }
+      });
+
+    });
+  </script>
 
 
     <script src="https://cdn.rawgit.com/showdownjs/showdown/1.0.2/dist/showdown.min.js"></script>

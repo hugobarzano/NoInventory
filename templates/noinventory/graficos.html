@@ -152,6 +152,8 @@
 
 
         <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
         <div id="container" style="height: 300px"></div>
         <hr>
         <hr>
@@ -208,6 +210,11 @@
                      viewDistance: 25
                    }
                  },
+                 navigation: {
+                   buttonOptions: {
+                     enabled: true
+                   }
+                 },
                  scrollbar: { enabled: true },
                  title: {
                      text: tag1
@@ -237,6 +244,11 @@
                    beta: 0,
                    depth: 50,
                    viewDistance: 25
+                 }
+               },
+               navigation: {
+                 buttonOptions: {
+                   enabled: true
                  }
                },
                scrollbar: { enabled: true },
@@ -336,6 +348,7 @@
                 viewDistance: 25
               }
             },
+
             scrollbar: { enabled: true },
               title: {
                   text: tag2
