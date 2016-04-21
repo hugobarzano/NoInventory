@@ -58,9 +58,11 @@ def index(request):
 
 @csrf_exempt
 def items(request):
-
+        lista_tag1=gestorClasificacion.database.tag1.find({"organizacion":request.session['organizacion']})
+        lista_tag2=gestorClasificacion.database.tag2.find({"organizacion":request.session['organizacion']})
+        lista_tag3=gestorClasificacion.database.tag3.find({"organizacion":request.session['organizacion']})
         lista_items=gestorItems.database.items.find({"usuario":request.session['username']})
-        contexto = {"lista_items":lista_items}
+        contexto = {'lista_items':lista_items,'lista_tag1': lista_tag1,'lista_tag2':lista_tag2,'lista_tag3':lista_tag3}
         return render(request, 'noinventory/items.html',contexto)
 
 @csrf_exempt
@@ -77,7 +79,7 @@ def item(request,id_item):
 def prueba(request):
     lista_items=gestorItems.database.items.find({"usuario":request.session['username']})
     form = SelectItem()
-    return render(request, 'noinventory/prueba.html', {'form': form,"lista_items":lista_items})
+    return render(request, 'noinventory/prueba.html', {'form': form,"lista_items":lista_items, 'indice':5})
 
 @csrf_exempt
 def catalogos(request):
@@ -114,11 +116,40 @@ def addToCatalogo(request,id_catalogo,id_item):
         return redirect('/noinventory/catalogo/'+id_catalogo,contexto)
 
 
+#############################busqueda################################################
+@csrf_exempt
+def busqueda(request):
+    aux=[]
+    aux3=[]
+    respuesta={}
+    if request.method == 'GET':
+        print request.GET["modo_busqueda"]
+
+        if  request.GET["modo_busqueda"] == str(1):
+            ##print "TAG1:"
+            ##print request.GET["tag1"]
+            lista_items=gestorItems.database.items.find({"usuario":request.session['username'], "tag1":request.GET["tag1"]})
+            print lista_items
+            for i in lista_items:
+                aux = Item.build_from_json(i)
+                aux2 = aux.get_as_json()
+                aux2["_id"]=str(aux2["_id"])
+                #aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"]}
+                aux3.append(aux2)
+                respuesta={"items":aux3}
+        return JsonResponse(respuesta, safe=False)
+        #return HttpResponse("gettttt")
+
+    else:
+        print "Entrando por post"
+        return HttpResponse("post")
+
+
 ############################ GRAFICOS ################################################
 def graficos(request):
-    lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":request.session['organizacion']})
-    lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":request.session['organizacion']})
-    lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":request.session['organizacion']})
+    lista_tag1=gestorClasificacion.database.tag1.find({"organizacion":request.session['organizacion']})
+    lista_tag2=gestorClasificacion.database.tag2.find({"organizacion":request.session['organizacion']})
+    lista_tag3=gestorClasificacion .database.tag3.find({"organizacion":request.session['organizacion']})
     return render(request, 'noinventory/graficos.html', {'lista_tag1': lista_tag1,"lista_tag2":lista_tag2,"lista_tag3":lista_tag3})
 
 

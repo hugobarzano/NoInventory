@@ -12,89 +12,91 @@
 {% endblock %}
 
         {% block body_block %}
+        <button type="button" class="sustituto btn-default">ajax</button>
 
-        <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Descripcion</th>
-            <th>Fecha</th>
-            <th>Tag1</th>
-            <th>TAG2</th>
-            <th>TAG3</th>
-            <th>Localizador</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% if lista_items %}
+        <div id="accordion">
             {% for i in lista_items %}
-              <tr>
-                <td>{{i.nombre_item}}</td>
-                <td>{{ i.descripcion_item }}</td>
-                <td>{{ i.fecha_alta_item }}</td>
-                <td>{{ i.tag1 }}</td>
-                <td>{{ i.tag2 }}</td>
-                <td>{{ i.tag3 }}</td>
-                <td>{{ i.localizador }}</td>
-                <td><a href="/noinventory/modificarItem/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Update</button> </a>
-                <input class="buttonDelete"  type="button" name="Delete" value="Delete" data-item="{{ i|documento_id}}"></input>
-                <button class="buttonDelete2" data-item="{{ i|documento_id}}" > Delete2</button>
-                <td>
-              </tr>
+                <h3>Nombre: {{i.nombre_item}} </h3>
+                <div id="{{ i|documento_id }}">
+                  <p> Descripcion: {{ i.descripcion_item }} </p>
+
+                </div>
             {% endfor %}
-            {% else %}
-                 <strong>No hay Objetos.</strong>
-            {% endif %}
-          </tr>
-        </tbody>
-        </table>
 
-        <!--Funcionalidad de borrado asincrono -->
-        <script>
-
-
-$().ready(function(){
-    $(".buttonDelete2").click(function() {
-        var button = this;
-        var catid = $(button).attr("data-item")
-        console.log("has pulsado el boton")
-        console.log($(button).attr("data-item"))
-        $.ajax({
-            url:  '/noinventory/borrarItem/?id_item='+catid,
-            type: 'GET',
-            result: $(this).serialize(),
-            dataType: 'json',
-            success: function(result) {
-              console.log("ejecutando get")
-              //console.log(result["items"][0]["descripcion"]);
-              $('.table').html(
-			             function(){
-                         var content = '<table class="table table-hover"><thead><tr><th>Item</th><th>Descripcion</th><th>Fecha</th><th>Tag1</th><th>TAG2</th><th>TAG3</th> <th>Localizador</th><th>Acciones</th></tr></thead><tbody>';
-                         for(var i = 0; i < result["items"].length; i++){
-                              content = content + '<tr><td>' + result["items"][i]["nombre_item"]+'</td>';
-                 				      content = content + '<td>' + result["items"][i]["descripcion_item"] + '</td>';
-                              content = content + '<td>' + result["items"][i]["fecha_alta_item"]+'</td>';
-                              content = content + '<td>' + result["items"][i]["tag1"]+'</td>';
-                              content = content + '<td>' + result["items"][i]["tag2"]+'</td>';
-                              content = content + '<td>' + result["items"][i]["tag3"]+'</td>';
-                              content = content + '<td>' + result["items"][i]["localizador"]+'</td>';
-                              content = content + '<td><a href="/noinventory/modificarItem/'+result["items"][i]["_id"]+'"><button class="btn btn-default btn-xs"> Update</button> </a>'
-                              content = content + '<input class="buttonDelete"  type="button" name="Delete" value="Delete" data-item="'+result["items"][i]["_id"]+'"></input>'
-                              content = content + '<button class="buttonDelete2" data-item="'+result["items"][i]["_id"]+'"> Delete2</button> </td></tr>'
-                 				}
-				                     content = content + '</tbody></table>';
-				                     return content;
-			            }
-			        )
-            }
-        });
-    });
-});
+          </div>
 
 
 
-        </script>
+
+          <script type="text/javascript">
+     $(function() {
+          $( "#accordion" ).accordion({
+               collapsible: true,
+               active: false
+          });
+     });
+     </script>
+
+    <script>
+
+                $(".sustituto").click(function() {
+                  console.log("boton ajax")
+                  $.ajax({
+                    url: "/noinventory/prueba",
+                    type: "get", //send it through get method
+                    success: function(response) {
+                      //console.log(response);
+                      $('#accordion').html(
+                           function(){
+                             var content = ''
+                             for(var i = 0; i < 3; i++){
+                                  content = content + '<h3> Nombre</h3>';
+                                  content = content + '<div id="'+i+'">';
+                                  content = content + '<p> Descripcion </p>';
+                                  content = content + '</div>';
+
+                            }
+
+                                 //content = content + '</div>';
+                                 return content;
+                               }
+                      )
+                      if ( typeof $("#accordion").accordion('instance') != 'undefined') {
+                        $("#accordion").accordion('destroy');
+                      }
+                      $("#accordion").accordion({
+                        collapsible: true
+                      });
+
+
+
+
+                      //Do Something
+                    },
+                    error: function(xhr) {
+                //Do Something to handle error
+                    }
+                });
+
+
+              });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </script>
 
 
 {% endblock %}

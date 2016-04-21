@@ -9,6 +9,140 @@
   </div>
 </div>
 <a href="/noinventory/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
+<hr>
+
+<div class="btn-group col-xs-12" data-toggle="buttons" >
+    <label class="btn btn-default  active ">
+    <input name="bt_tag1" id="bt_tag1" value="tag1"  type="checkbox"  checked="checked">TAG1</label>
+      <hr>
+      <br>
+
+    <label class="btn btn-default active">
+    <input name="bt_tag2" id="bt_tag2" value="tag2"  type="checkbox"  checked="checked" >TAG2</label>
+    <hr>
+    <br>
+    <label class="btn btn-default active">
+    <input name="bt_tag3" id="bt_tag3" value="tag3"  type="checkbox"  checked"checked" >TAG3</label>
+    <hr>
+    <br>
+</div>
+
+
+<script>
+$(document).ready(function(){
+  $("#bt_tag1").checked="checked";
+  $("#bt_tag2").checked="checked";
+  $("#bt_tag3").checked="checked";
+
+  //$("#tag1").show();
+  //$("#tag2").hide();
+  //$("#tag3").hide();
+  //var dato_l1 = document.getElementById('tag1').value;
+  //Graficos_TAG1(dato_l1)
+  console.log("Entrando a la funcion")
+  var busqueda_1=true;
+  var busqueda_2=true;
+  var busqueda_3=true;
+    $("#bt_tag1").change(function() {
+      if($(this).is(":checked")) {
+        //$(this).checked=""
+        console.log("selecionado")
+        busqueda_1=true;
+        $("#tag1").show();
+
+       } else {
+         //$(this).checked="checked"
+         console.log("No selecionado")
+         busqueda_1=false;
+         $("#tag1").hide();
+       }
+    });
+    $("#bt_tag2").change(function() {
+      if($(this).is(":checked")) {
+        console.log("selecionado")
+        busqueda_2=true;
+        $("#tag2").show();
+
+       } else {
+         console.log("No selecionado")
+         busqueda_2=false;
+         $("#tag2").hide();
+       }
+
+    });
+    $("#bt_tag3").change(function() {
+      if($(this).is(":checked")) {
+        console.log("selecionado")
+        busqueda_3=true;
+        $("#tag3").show();
+
+       } else {
+         console.log("No selecionado")
+         busqueda_3=false;
+         $("#tag3").hide();
+       }
+    });
+
+    $("#busqueda").click(function() {
+      var modo_busqueda=0;
+      var tag_1=document.getElementById('tag1').value;
+      var tag_2=document.getElementById('tag2').value;
+      var tag_3=document.getElementById('tag3').value;
+
+      console.log("Realizando busquedaaaaa")
+      if (busqueda_1==true && busqueda_2==false && busqueda_3==false) {
+        modo_busqueda=1;
+      }
+      console.log(modo_busqueda)
+
+      $.ajax({
+        url: "/noinventory/busqueda/",
+        type: "get", //send it through get method
+        data:{modo_busqueda:modo_busqueda,tag1:tag_1,tag2:tag_2,tag3:tag_3},
+        success: function(response) {
+          console.log(response["items"][0]);
+          $('#accordion').html(
+               function(){
+                    // var content = '<div id="accordion" class="ui-accordion ui-widget ui-helper-reset">';
+                    var content=""
+                     for(var i = 0; i < response["items"].length; i++){
+                       content = content + '<h3>Nombre: ' + response["items"][i]["nombre_item"]+' Fecha: '+response["items"][i]["fecha_alta_item"]+'</h3>';
+                       content = content + '<div id="'+response["items"][i]["_id"]+'">';
+                       content = content + '<p>'+response["items"][i]["descripcion_item"]+'</p></div></div>'
+                   }
+                        // content = content + '</tbody></table>';
+                         return content;
+              }
+          )
+          if ( typeof $("#accordion").accordion('instance') != 'undefined') {
+            $("#accordion").accordion('destroy');
+          }
+          $("#accordion").accordion({
+            collapsible: true
+          });
+
+
+
+
+          //Do Something
+        },
+        error: function(xhr) {
+    //Do Something to handle error
+        }
+    });
+
+
+    });
+
+  });
+
+</script>
+
+
+
+
+
+
 {% endblock %}
 
         {% block body_block %}
@@ -22,6 +156,50 @@
           <h3 class="panel-title">Items Destacados</h3>
         </div>
       </div>
+
+                  <hr>
+                  {% if lista_tag1 %}
+                  <select name="tag1" id="tag1" >
+                    {% for i in lista_tag1 %}
+                      <option value="{{i.VALOR1}}">{{i.VALOR1}}</option>
+                      {% endfor %}
+                   </select>
+                  {% else %}
+                       <strong>No hay TAG 1.</strong>
+                  {% endif %}
+
+
+
+                  {% if lista_tag2 %}
+                  <select name="tag2" id="tag2">
+                    {% for i in lista_tag2 %}
+                      <option value="{{i.VALOR2}}">{{i.VALOR2}}</option>
+                      {% endfor %}
+                   </select>
+                  {% else %}
+                       <strong>No hay TAG2</strong>
+                  {% endif %}
+
+
+
+
+          {% if lista_tag3 %}
+          <select name="tag3" id="tag3">
+            {% for i in lista_tag3 %}
+              <option value="{{i.VALOR3}}">{{i.VALOR3}}</option>
+              {% endfor %}
+           </select>
+          {% else %}
+               <strong>No hay Objetos.</strong>
+          {% endif %}
+
+          <button id='busqueda'>Buscar</button>
+          <hr>
+
+
+
+
+
       <div id="accordion">
         {% if lista_items %}
           {% for i in lista_items %}

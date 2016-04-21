@@ -8,7 +8,7 @@
     <meta name="author" content="Hugo Barzano Cruz">
     <link rel="icon" href="http://getbootstrap.com/favicon.ico">
 
-    <title>NO-INVETORY - {% block title %} {% endblock %}</title>
+    <title>NO-INVENTORY - {% block title %} {% endblock %}</title>
 
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
@@ -104,12 +104,14 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <!--barra lateral izquida-->
 
-              <script>
-              $(function() {
-                $( "#accordion" ).accordion();
-              });
-              </script>
-
+            <script type="text/javascript">
+       $(function() {
+            $( "#accordion" ).accordion({
+                 collapsible: true,
+                 active: false
+            });
+       });
+       </script>
                 {% block lateral_izquierda %}{% endblock %}
 
         </div>
