@@ -30,6 +30,13 @@ from catalogo import *
 from clasificacion import *
 from io import StringIO
 
+from django.utils.html import conditional_escape
+from django.utils.safestring import mark_safe
+import urllib
+
+
+
+
 
 
 gestorItems = ItemsDriver()
@@ -50,6 +57,30 @@ db = client['noinventory-database']
 
 
 ########################### VISTAS PRINCIPALES #################################
+
+
+def qrcode(value, alt=None):
+    """
+    Generate QR Code image from a string with the Google charts API
+
+    http://code.google.com/intl/fr-FR/apis/chart/types.html#qrcodes
+
+    Exemple usage --
+    {{ my_string|qrcode:"my alt" }}
+
+    <img src="http://chart.apis.google.com/chart?chs=150x150&amp;cht=qr&amp;chl=my_string&amp;choe=UTF-8" alt="my alt" />
+    """
+
+    url = conditional_escape("http://chart.apis.google.com/chart?%s" % \
+            urllib.urlencode({'chs':'200x200', 'cht':'qr', 'chl':value, 'choe':'UTF-8'}))
+    alt = conditional_escape(alt or value)
+
+    return mark_safe(u"""<img class="qrcode" src="%s" width="200" height="200" alt="%s" />""" % (url, alt))
+
+
+
+
+
 def index(request):
     #print "variable entorno:"
     #print VAR
@@ -120,6 +151,7 @@ def addToCatalogo(request,id_catalogo,id_item):
 @csrf_exempt
 def busqueda(request):
     aux=[]
+    aux2=[]
     aux3=[]
     respuesta={}
     if request.method == 'GET':
@@ -128,7 +160,7 @@ def busqueda(request):
         if  request.GET["modo_busqueda"] == str(1):
             ##print "TAG1:"
             ##print request.GET["tag1"]
-            lista_items=gestorItems.database.items.find({"usuario":request.session['username'], "tag1":request.GET["tag1"]})
+            '''lista_items=gestorItems.database.items.find({"usuario":request.session['username'], "tag1":request.GET["tag1"]})
             print lista_items
             for i in lista_items:
                 aux = Item.build_from_json(i)
@@ -136,8 +168,38 @@ def busqueda(request):
                 aux2["_id"]=str(aux2["_id"])
                 #aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"]}
                 aux3.append(aux2)
-                respuesta={"items":aux3}
-        return JsonResponse(respuesta, safe=False)
+                respuesta={"items":aux3}'''
+
+            lista_items=gestorItems.database.items.find({"usuario":request.session['username'], "tag1":request.GET["tag1"]})
+            print lista_items
+            print "contenido"
+            contenido=""
+            for i in lista_items:
+                aux = Item.build_from_json(i)
+                aux2 = aux.get_as_json()
+                aux2["_id"]=str(aux2["_id"])
+                print aux2["nombre_item"]
+                contenido = contenido + '<h3>Nombre: ' + aux2["nombre_item"]+' Fecha: '+aux2["fecha_alta_item"]+'</h3>'
+                contenido = contenido + '<div id="'+aux2["_id"]+'">'
+                contenido = contenido + '<p>'+aux2["descripcion_item"]+'</p>'
+                contenido = contenido + '<strong>TAGS</strong><br>'+aux2["tag1"]+'<br>'+aux2["tag2"]+'<br>'+aux2["tag3"]+'<br>'
+                contenido = contenido + qrcode(aux2["qr_data"], alt="qr")
+                contenido = contenido + '<hr> Localizador: '+aux2["localizador"]+'<hr> Identificador: '+aux2['_id']+'<hr>'
+                contenido = contenido + '<hr> Creado por: ' +aux2["usuario"]+ '<hr>Organizacion: '+aux2["organizacion"]+'<hr>'
+                contenido = contenido + '<a href="/noinventory/modificarItem/'+aux2["_id"]+'"><button class="btn btn-default btn-xs">Modificar</button> </a>'
+                contenido = contenido + '<a href="/noinventory/item/'+aux2["_id"]+'"><button class="btn btn-default btn-xs">Detalles</button> </a>'
+                contenido = contenido + '<button class="borrarBoton" data-item="'+aux2["_id"]+'">Borrar</button>'
+                contenido = contenido + '</div>'
+
+
+            contenido = contenido + '</div>'
+            print "contendio"
+            print contenido
+            return HttpResponse(contenido)
+            #return content;
+
+
+        #return JsonResponse(respuesta, safe=False)
         #return HttpResponse("gettttt")
 
     else:

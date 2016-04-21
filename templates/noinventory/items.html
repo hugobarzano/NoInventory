@@ -13,7 +13,7 @@
 
 <div class="btn-group col-xs-12" data-toggle="buttons" >
     <label class="btn btn-default  active ">
-    <input name="bt_tag1" id="bt_tag1" value="tag1"  type="checkbox"  checked="checked">TAG1</label>
+    <input name="bt_tag1" id="bt_tag1" value="tag1"  type="checkbox"  checked="checke">TAG1</label>
       <hr>
       <br>
 
@@ -22,13 +22,22 @@
     <hr>
     <br>
     <label class="btn btn-default active">
-    <input name="bt_tag3" id="bt_tag3" value="tag3"  type="checkbox"  checked"checked" >TAG3</label>
+    <input name="bt_tag3" id="bt_tag3" value="tag3"  type="checkbox"  checked="checked" >TAG3</label>
     <hr>
     <br>
 </div>
 
 
 <script>
+
+$(document).on('click', ".borrarBoton", function () {
+  console.log("boton para borrar")
+  var catid = $(this).attr("data-item")
+  console.log("has pulsado el boton")
+  console.log(catid)
+});
+
+
 $(document).ready(function(){
   $("#bt_tag1").checked="checked";
   $("#bt_tag2").checked="checked";
@@ -100,20 +109,8 @@ $(document).ready(function(){
         type: "get", //send it through get method
         data:{modo_busqueda:modo_busqueda,tag1:tag_1,tag2:tag_2,tag3:tag_3},
         success: function(response) {
-          console.log(response["items"][0]);
-          $('#accordion').html(
-               function(){
-                    // var content = '<div id="accordion" class="ui-accordion ui-widget ui-helper-reset">';
-                    var content=""
-                     for(var i = 0; i < response["items"].length; i++){
-                       content = content + '<h3>Nombre: ' + response["items"][i]["nombre_item"]+' Fecha: '+response["items"][i]["fecha_alta_item"]+'</h3>';
-                       content = content + '<div id="'+response["items"][i]["_id"]+'">';
-                       content = content + '<p>'+response["items"][i]["descripcion_item"]+'</p></div></div>'
-                   }
-                        // content = content + '</tbody></table>';
-                         return content;
-              }
-          )
+          console.log(response);
+          $('#accordion').html(response)
           if ( typeof $("#accordion").accordion('instance') != 'undefined') {
             $("#accordion").accordion('destroy');
           }
@@ -230,16 +227,7 @@ $(document).ready(function(){
              <strong>No hay Objetos.</strong>
         {% endif %}
         </div>
-        <!--pruebas -->
-
-
-                <script src="http://code.highcharts.com/highcharts.js"></script>
-                <div id="container" style="height: 300px"></div>
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Por contruir</h3>
-        </div>
-      </div>
+      
 
 
         {% endblock %}
