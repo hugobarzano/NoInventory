@@ -8,12 +8,8 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<a href="/noinventory/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
-<button id="cmd">generate PDF</button>
 <button id="save">guardar Informe</button>
-<a href="javascript:demoFromHTML()" class="button">Run Code</a>
-<a href="/noinventory/generaPDF/?nombre_informe=informe22" class="button">generaPDF</a>
-<a href='http://pdfmyurl.com/api?license=yourlicensekey&html=mimimimimimimimimim<br><b>negritaaa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="http://i.imgur.com/n3jCdCr.jpg" height="124" width="149"><br><font size="6">grandeeee</font><br></b>' class="button"> Descarga</a>
+ <a href="#" target="_blank" class="button" id="generaPDF"><button> generaPDF</button></a>
 
 
 
@@ -21,12 +17,11 @@
   {% for i in lista_informes %}
     <option value="{{i.nombre_informe}}">{{i.nombre_informe}}</option>
     {% endfor %}
- </select><button id="visualizar">Visualizar</button>
+ </select>
 
 {% endblock %}
 
         {% block body_block %}
-        <script src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
         <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
         <script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
 
@@ -39,39 +34,6 @@
 
         </textarea>
 
-      <div id="prueba">
-        pruebaaaaaa
-      </div>
-        <script>
-
-
-    function demoFromHTML() {
-
-        var pdf = new jsPDF('p', 'pt', 'letter');
-        // source can be HTML-formatted string, or a reference
-        // to an actual DOM element from which the text will be scraped.
-        source = $('#prueba')[0];
-
-        // we support special element handlers. Register them with jQuery-style
-        // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-        // There is no support for any other type of selectors
-        // (class, of compound) at this time.
-        specialElementHandlers = {
-            // element with id of "bypass" - jQuery style selector
-            '#bypassme': function (element, renderer) {
-                // true = "handled elsewhere, bypass text extraction"
-                return true
-            }
-        };
-
-        function (dispose) {
-            // dispose: object with X, Y of the last line add to the PDF
-            //          this allow the insertion of new lines after html
-            pdf.save('Test.pdf');
-        }, margins);
-    }
-</script>
-
 
 
 
@@ -81,7 +43,6 @@
         console.log("Boton guardar")
         var nombre_informe=document.getElementById('nombre_informe');
         var contenido=nicEditors.findEditor('editor').getContent();
-        $('#prueba').html(String(contenido));
 
         console.log(nombre_informe.value);
         console.log(contenido);
@@ -90,19 +51,35 @@
           type: "get", //send it through get method
           data:{nombre_informe:nombre_informe.value,datos_informe:String(contenido)},
           success: function(response) {
-            console.log(response);
-
-            //Do Something
+            console.log(response["informes"][0]);
+            $('#lista_informes').html(
+              function(){
+                    var content = '<select name="lista_informes" id="lista_informes">';
+                    for(var i = 0; i < response["informes"].length; i++){
+                         content = content + '<option value="'+response["informes"][i]["nombre_informe"]+'">'+response["informes"][i]["nombre_informe"]+'</option>';
+                   }
+                        content = content + '</select>';
+                        return content;
+             }
+            )
           },
           error: function(xhr) {
       //Do Something to handle error
           }
       });
 
+
+
+
     });
 
-    $('#visualizar').click(function () {
+    $().ready(function GetInforme(){
+      $('#lista_informes').click(function () {
+        $('#generaPDF').attr('href','/noinventory/generaPDF/?nombre_informe='+document.getElementById('lista_informes').value);
+      });
+      $('#lista_informes').change(function () {
         console.log("Boton visualiziar")
+        $('#generaPDF').attr('href','/noinventory/generaPDF/?nombre_informe='+document.getElementById('lista_informes').value);
         var nombre_informe=document.getElementById('lista_informes').value;
         console.log(nombre_informe)
         $.ajax({
@@ -121,7 +98,10 @@
           }
       });
 
-    });
+  });
+  });
+
+
   </script>
 
 

@@ -38,7 +38,8 @@ import urllib
 from io import BytesIO
 from reportlab.pdfgen import canvas
 from django.http import HttpResponse
-from xhtml2pdf import pisa 
+from xhtml2pdf import pisa
+from cStringIO import StringIO
 
 
 
@@ -416,9 +417,8 @@ def datosTag3 (request):
 
 def informes(request):
     numeroItems=gestorItems.database.items.find({"usuario":request.session['username']}).count()
-    lista_informes=gestorInformes.read()
-    form = SelectItem()
-    return render(request, 'noinventory/informes.html', {'form': form,"numeroItems":numeroItems,"lista_informes":lista_informes, 'indice':5})
+    lista_informes=gestorInformes.database.informes.find({"organizacion":request.session['organizacion']})
+    return render(request, 'noinventory/informes.html', {"numeroItems":numeroItems,"lista_informes":lista_informes, 'indice':5})
 
 
 
@@ -426,51 +426,23 @@ def informes(request):
 
 @csrf_exempt
 def generaPDF(request):
-    informe=gestorInformes.database.informes.find({"usuario":request.session['username'],"nombre_informe":request.GET["nombre_informe"]})
+    objeto_informe=Informe()
+    informe=gestorInformes.database.informes.find({"organizacion":request.session['organizacion'],"nombre_informe":request.GET["nombre_informe"]})
     for i in informe:
         objeto_informe = Informe.build_from_json(i)
 
-    html = objeto_informe.datos_informe
-    result = StringIO()
-    pdf = pisa.CreatePDF(src=html,dest=result)
-    return HttpResponse(result.getvalue(),content_type='application/pdf')
 
-@csrf_exempt
-def generaPDF2(request):
-    # Create the HttpResponse object with the appropriate PDF headers.
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+    pdf = StringIO()
+    pisa.CreatePDF(StringIO(objeto_informe.datos_informe.encode('utf-8')), pdf)
 
-    informe=gestorInformes.database.informes.find({"usuario":request.session['username'],"nombre_informe":request.GET["nombre_informe"]})
-    for i in informe:
-        objeto_informe = Informe.build_from_json(i)
+    return HttpResponse(pdf.getvalue(),content_type='application/pdf')
 
-    buffer = BytesIO()
 
-    # Create the PDF object, using the BytesIO object as its "file."
-    p = canvas.Canvas(buffer)
-
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
-
-    p.drawHtml(100, 100, objeto_informe.datos_informe)
-
-    # Close the PDF object cleanly.
-    p.showPage()
-    p.save()
-
-    # Get the value of the BytesIO buffer and write it to the response.
-    pdf = buffer.getvalue()
-    buffer.close()
-    response.write(pdf)
-    return response
 
 
 @csrf_exempt
 def guardarInforme(request):
     if request.method == 'GET':
-        print request.GET["nombre_informe"]
-        print request.GET["datos_informe"]
 
         informe = Informe.build_from_json({"nombre_informe":request.GET["nombre_informe"],
             "fecha_informe":str(datetime.now()),
@@ -480,8 +452,17 @@ def guardarInforme(request):
         })
 
         gestorInformes.create(informe)
+        informes=[]
+        informe_aux=gestorInformes.database.informes.find({"organizacion":request.session['organizacion']})
+        for i in informe_aux:
+            objeto_informe = Informe.build_from_json(i)
+            objeto_informe._id=str(objeto_informe._id)
+            informes.append(objeto_informe.get_as_json())
 
-        return HttpResponse("OK")
+        datos={'informes':informes}
+        print datos
+    	return JsonResponse(datos, safe=False)
+
     else:
         return HttpResponse("informe post")
 
@@ -493,7 +474,7 @@ def visualizarInforme(request):
     if request.method == 'GET':
         objeto_informe={}
         print request.GET["nombre_informe"]
-        informe=gestorInformes.database.informes.find({"usuario":request.session['username'],"nombre_informe":request.GET["nombre_informe"]})
+        informe=gestorInformes.database.informes.find({"organizacion":request.session['organizacion'],"nombre_informe":request.GET["nombre_informe"]})
         for i in informe:
             objeto_informe = Informe.build_from_json(i)
         objeto_informe._id=str(objeto_informe._id)
@@ -570,6 +551,10 @@ def deleteItems(request):
 
 def deleteInventorys(request):
     gestorCatalogos.destroyDriver()
+    return redirect('/noinventory/preferencias')
+
+def deleteInformes(request):
+    gestorInformes.destroyDriver()
     return redirect('/noinventory/preferencias')
 
 
