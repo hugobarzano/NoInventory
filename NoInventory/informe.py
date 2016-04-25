@@ -7,13 +7,13 @@ from item import *
 class Informe(object):
     """Clase para almacenar informacion de los catalogos"""
 
-    def __init__(self, informe_id=None,fecha_informe=None,organizacion=None,usuario=None,datos_informe=None):
+    def __init__(self, informe_id=None,nombre_informe=None,fecha_informe=None,organizacion=None,usuario=None,datos_informe=None):
 
         if informe_id is None:
             self._id = ObjectId()
         else:
             self._id = informe_id
-
+        self.nombre_informe = nombre_informe
         self.fecha_informe = str(datetime.now())
         self.organizacion=organizacion
         self.usuario=usuario
@@ -33,6 +33,7 @@ class Informe(object):
                 #print"Jsonnnn"
                 #print json_data
                 return Informe(json_data.get('_id', None),
+                    json_data['nombre_informe'],
                     json_data['fecha_informe'],
                     json_data['organizacion'],
                     json_data['usuario'],

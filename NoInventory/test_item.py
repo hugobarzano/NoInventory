@@ -53,7 +53,7 @@ def test_delete(manejador, new_item):
     coincidencia = False
     for i in db_items:
         coincidencia = True
-        items_from_db = Item.build_from_json(i)
+        item_from_db = Item.build_from_json(i)
         print("new_item = {}".format(item_from_db.get_as_json()))
 
     if not coincidencia:

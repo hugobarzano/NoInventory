@@ -75,7 +75,8 @@ def main():
 
 
     cargar_todos_informes(manejadorInformes)
-    new_informe = Informe.build_from_json({"fecha_informe":str(datetime.now()),
+    new_informe = Informe.build_from_json({"nombre_informe":"nombre del informe",
+        "fecha_informe":str(datetime.now()),
         "organizacion":"organizacion",
         "usuario":"usuario",
         "datos_informe":"datos del informe"

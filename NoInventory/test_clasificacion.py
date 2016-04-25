@@ -10,7 +10,7 @@ import os
 
 
 
-def main():
+def mainGraficos():
     manejador = CatalogosDriver()
     manejadorItem = ItemsDriver()
     manejadorClasificacion=ClasificacionDriver()
@@ -73,22 +73,22 @@ def main3():
 
 
 
-def main2():
+def main():
     manejador = CatalogosDriver()
     manejadorItem = ItemsDriver()
     manejadorClasificacion=ClasificacionDriver()
     manejadorPruebas=ClasificacionPruebas(organizacion="nombre_prueba")
 
     print "\n#######################################################"
-    print "LANZANDO BATERIA DE TEST - OPERACIONES CRUD PARA CATALOGOS"
+    print "LANZANDO BATERIA DE TEST - CLASIFICACION POR TAGS"
     print "#######################################################\n"
 
     manejadorClasificacion.destroyDriver("osl")
-    manejadorClasificacion.createTag1("Codigo_Centro.csv","osl")
+    manejadorClasificacion.createTag1("NoInventory/Codigo_Centro.csv","osl")
     #manejadorClasificacion.database.tag2.remove()
-    manejadorClasificacion.createTag2("Tipo_Dispositivo.csv","osl")
+    manejadorClasificacion.createTag2("NoInventory/Tipo_Dispositivo.csv","osl")
     #manejadorClasificacion.database.tag3.remove()
-    manejadorClasificacion.createTag3("default.csv","osl")
+    manejadorClasificacion.createTag3("NoInventory/default.csv","osl")
     #salida=manejadorClasificacion.read()
     #manejadorPruebas.prueba();
     #manejadorPruebas.destroyPrueba()
@@ -96,8 +96,8 @@ def main2():
 
     #for i in aux:
     #    print i
-    salida=manejadorClasificacion.database.tag3.find()
-    #salida=manejadorClasificacion.database.tag2.find({'organizacion':'osl','VALOR2':'CONSUMIBLE'})
+    #salida=manejadorClasificacion.database.tag3.find()
+    salida=manejadorClasificacion.database.tag2.find({'organizacion':'osl','VALOR2':'CONSUMIBLE'})
 
     for s in salida:
         print s

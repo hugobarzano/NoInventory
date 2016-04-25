@@ -28,11 +28,17 @@ import os
 from item import *
 from catalogo import *
 from clasificacion import *
+from informe import *
 from io import StringIO
 
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 import urllib
+
+from io import BytesIO
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+from xhtml2pdf import pisa 
 
 
 
@@ -42,6 +48,7 @@ import urllib
 gestorItems = ItemsDriver()
 gestorCatalogos = CatalogosDriver()
 gestorClasificacion=ClasificacionDriver()
+gestorInformes = InformesDriver()
 
 
 
@@ -409,14 +416,93 @@ def datosTag3 (request):
 
 def informes(request):
     numeroItems=gestorItems.database.items.find({"usuario":request.session['username']}).count()
+    lista_informes=gestorInformes.read()
     form = SelectItem()
-    return render(request, 'noinventory/informes.html', {'form': form,"numeroItems":numeroItems, 'indice':5})
+    return render(request, 'noinventory/informes.html', {'form': form,"numeroItems":numeroItems,"lista_informes":lista_informes, 'indice':5})
+
+
+
+
+
+@csrf_exempt
+def generaPDF(request):
+    informe=gestorInformes.database.informes.find({"usuario":request.session['username'],"nombre_informe":request.GET["nombre_informe"]})
+    for i in informe:
+        objeto_informe = Informe.build_from_json(i)
+
+    html = objeto_informe.datos_informe
+    result = StringIO()
+    pdf = pisa.CreatePDF(src=html,dest=result)
+    return HttpResponse(result.getvalue(),content_type='application/pdf')
+
+@csrf_exempt
+def generaPDF2(request):
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+
+    informe=gestorInformes.database.informes.find({"usuario":request.session['username'],"nombre_informe":request.GET["nombre_informe"]})
+    for i in informe:
+        objeto_informe = Informe.build_from_json(i)
+
+    buffer = BytesIO()
+
+    # Create the PDF object, using the BytesIO object as its "file."
+    p = canvas.Canvas(buffer)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+
+    p.drawHtml(100, 100, objeto_informe.datos_informe)
+
+    # Close the PDF object cleanly.
+    p.showPage()
+    p.save()
+
+    # Get the value of the BytesIO buffer and write it to the response.
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    return response
+
 
 @csrf_exempt
 def guardarInforme(request):
     if request.method == 'GET':
+        print request.GET["nombre_informe"]
         print request.GET["datos_informe"]
-        return HttpResponse("informe get")
+
+        informe = Informe.build_from_json({"nombre_informe":request.GET["nombre_informe"],
+            "fecha_informe":str(datetime.now()),
+            "organizacion":request.session["organizacion"],
+            "usuario":request.session['username'],
+            "datos_informe":request.GET["datos_informe"]
+        })
+
+        gestorInformes.create(informe)
+
+        return HttpResponse("OK")
+    else:
+        return HttpResponse("informe post")
+
+
+
+
+@csrf_exempt
+def visualizarInforme(request):
+    if request.method == 'GET':
+        objeto_informe={}
+        print request.GET["nombre_informe"]
+        informe=gestorInformes.database.informes.find({"usuario":request.session['username'],"nombre_informe":request.GET["nombre_informe"]})
+        for i in informe:
+            objeto_informe = Informe.build_from_json(i)
+        objeto_informe._id=str(objeto_informe._id)
+
+        datos={'informe':objeto_informe.get_as_json()}
+
+        print datos
+    	return JsonResponse(datos, safe=False)
+
     else:
         return HttpResponse("informe post")
 

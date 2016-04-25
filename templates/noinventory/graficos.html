@@ -9,6 +9,7 @@
   </div>
 </div>
 <a href="/noinventory/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
+<button type="button" class="saveGrafic btn-default">Guardar Gráfico</button>
 {% endblock %}
 
         {% block body_block %}
@@ -22,6 +23,8 @@
           <button type="button" class="btn3 btn-default">TAG3</button>
         </div>
 
+
+      
 
 
         <script>
@@ -89,6 +92,13 @@
               Graficos_TAG2(dato_l2)
 
             });
+            $(".saveGrafic").click(function() {
+              console.log("guardar grafico")
+              var canvas = document.getElementById("canvas");
+              var img    = canvas.toDataURL("image/png");
+              document.write('<img src="'+img+'"/>');
+            });
+
             $(".btn3").click(function() {
               console.log("boton3")
               $("#tag1").hide();
@@ -154,7 +164,9 @@
         <script src="http://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
+          <canvas id="canvas" width="200" height="200">
         <div id="container" style="height: 300px"></div>
+      </canvas>
         <hr>
         <hr>
         <br>
