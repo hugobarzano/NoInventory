@@ -25,10 +25,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
-    <script src="http://code.highcharts.com/modules/exporting.js"></script>
 <!-- optional -->
-<script src="http://code.highcharts.com/modules/offline-exporting.js"></script>
     <style>
     #draggable { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; }
     #droppable { width: 150px; height: 150px; padding: 0.5em; float: left; margin: 10px; }
@@ -67,16 +64,25 @@
 
   <body>
 
+
+
+
+
+
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
+
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+
+
           <div class="navbar-collapse collapse">
+
         <ul class="nav navbar-nav navbar-right">
               <li><a href="{% url 'index' %}">Home</a></li>
               {% if user.is_authenticated %}

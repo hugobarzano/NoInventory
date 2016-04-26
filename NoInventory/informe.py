@@ -14,7 +14,7 @@ class Informe(object):
         else:
             self._id = informe_id
         self.nombre_informe = nombre_informe
-        self.fecha_informe = str(datetime.now())
+        self.fecha_informe = str(datetime.now()) 
         self.organizacion=organizacion
         self.usuario=usuario
         self.datos_informe=datos_informe

@@ -6,6 +6,8 @@ from pymongo import *
 import time
 import os
 from clasificacion import *
+from datetime import datetime
+
 
 
 
@@ -24,7 +26,7 @@ class Item(object):
         else:
             self._id = item_id
         self.nombre_item=nombre_item
-        self.fecha_alta_item = time.strftime("%c")
+        self.fecha_alta_item = str(datetime.now())
         self.descripcion_item = descripcion_item
         self.organizacion=organizacion
         self.usuario=usuario

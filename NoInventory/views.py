@@ -165,50 +165,36 @@ def busqueda(request):
     if request.method == 'GET':
         print request.GET["modo_busqueda"]
 
-        if  request.GET["modo_busqueda"] == str(1):
-            ##print "TAG1:"
-            ##print request.GET["tag1"]
-            '''lista_items=gestorItems.database.items.find({"usuario":request.session['username'], "tag1":request.GET["tag1"]})
-            print lista_items
-            for i in lista_items:
-                aux = Item.build_from_json(i)
-                aux2 = aux.get_as_json()
-                aux2["_id"]=str(aux2["_id"])
-                #aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"]}
-                aux3.append(aux2)
-                respuesta={"items":aux3}'''
+        if request.GET["modo_busqueda"] == str(0):
+            lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion']})
+        if request.GET["modo_busqueda"] == str(1):
+            lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion'], "tag1":request.GET["tag1"]})
+        if request.GET["modo_busqueda"] == str(4):
+            lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion'], "fecha_alta_item": { "$regex": request.GET["fecha"] } })
+        if request.GET["modo_busqueda"] == str(5):
+            lista_items=gestorItems.database.items.find({ "organizacion":request.session['organizacion'],"$or": [ {"nombre_item":{ "$regex": request.GET["texto"] }}, {"descripcion_item":{ "$regex": request.GET["texto"] }} ] })
 
-            lista_items=gestorItems.database.items.find({"usuario":request.session['username'], "tag1":request.GET["tag1"]})
-            print lista_items
-            print "contenido"
-            contenido=""
-            for i in lista_items:
-                aux = Item.build_from_json(i)
-                aux2 = aux.get_as_json()
-                aux2["_id"]=str(aux2["_id"])
-                print aux2["nombre_item"]
-                contenido = contenido + '<h3>Nombre: ' + aux2["nombre_item"]+' Fecha: '+aux2["fecha_alta_item"]+'</h3>'
-                contenido = contenido + '<div id="'+aux2["_id"]+'">'
-                contenido = contenido + '<p>'+aux2["descripcion_item"]+'</p>'
-                contenido = contenido + '<strong>TAGS</strong><br>'+aux2["tag1"]+'<br>'+aux2["tag2"]+'<br>'+aux2["tag3"]+'<br>'
-                contenido = contenido + qrcode(aux2["qr_data"], alt="qr")
-                contenido = contenido + '<hr> Localizador: '+aux2["localizador"]+'<hr> Identificador: '+aux2['_id']+'<hr>'
-                contenido = contenido + '<hr> Creado por: ' +aux2["usuario"]+ '<hr>Organizacion: '+aux2["organizacion"]+'<hr>'
-                contenido = contenido + '<a href="/noinventory/modificarItem/'+aux2["_id"]+'"><button class="btn btn-default btn-xs">Modificar</button> </a>'
-                contenido = contenido + '<a href="/noinventory/item/'+aux2["_id"]+'"><button class="btn btn-default btn-xs">Detalles</button> </a>'
-                contenido = contenido + '<button class="borrarBoton" data-item="'+aux2["_id"]+'">Borrar</button>'
-                contenido = contenido + '</div>'
-
-
+        contenido=""
+        for i in lista_items:
+            aux = Item.build_from_json(i)
+            aux2 = aux.get_as_json()
+            aux2["_id"]=str(aux2["_id"])
+            print aux2["nombre_item"]
+            contenido = contenido + '<h3>Nombre: ' + aux2["nombre_item"]+' Fecha: '+aux2["fecha_alta_item"]+'</h3>'
+            contenido = contenido + '<div id="'+aux2["_id"]+'">'
+            contenido = contenido + '<p>'+aux2["descripcion_item"]+'</p>'
+            contenido = contenido + '<strong>TAGS</strong><br>'+aux2["tag1"]+'<br>'+aux2["tag2"]+'<br>'+aux2["tag3"]+'<br>'
+            contenido = contenido + qrcode(aux2["qr_data"], alt="qr")
+            contenido = contenido + '<hr> Localizador: '+aux2["localizador"]+'<hr> Identificador: '+aux2['_id']+'<hr>'
+            contenido = contenido + '<hr> Creado por: ' +aux2["usuario"]+ '<hr>Organizacion: '+aux2["organizacion"]+'<hr>'
+            contenido = contenido + '<a href="/noinventory/modificarItem/'+aux2["_id"]+'"><button class="btn btn-default btn-xs">Modificar</button> </a>'
+            contenido = contenido + '<a href="/noinventory/item/'+aux2["_id"]+'"><button class="btn btn-default btn-xs">Detalles</button> </a>'
+            contenido = contenido + '<button class="borrarBoton" data-item="'+aux2["_id"]+'">Borrar</button>'
             contenido = contenido + '</div>'
-            print "contendio"
-            print contenido
-            return HttpResponse(contenido)
-            #return content;
 
 
-        #return JsonResponse(respuesta, safe=False)
-        #return HttpResponse("gettttt")
+        contenido = contenido + '</div>'
+        return HttpResponse(contenido)
 
     else:
         print "Entrando por post"

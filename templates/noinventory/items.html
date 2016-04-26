@@ -25,10 +25,34 @@
     <input name="bt_tag3" id="bt_tag3" value="tag3"  type="checkbox"  checked="checked" >TAG3</label>
     <hr>
     <br>
+    <label class="btn btn-default active">
+    <input name="bt_fecha" id="bt_fecha" value="fecha"  type="checkbox"  checked="checked" >Fecha</label>
+    <hr>
+    <br>
+    <label class="btn btn-default active">
+    <input name="bt_texto" id="bt_texto" value="texto"  type="checkbox"  checked="checked" >Texto</label>
 </div>
 
 
 <script>
+
+$(document).ready(				//Lanza la selección de fecha
+	function () {
+	    $( "#datepicker" ).datepicker({
+	      dateFormat: "yy-mm-dd",
+	      changeMonth: true,
+	      changeYear: true
+
+	    }).datepicker("setDate",new Date());
+
+	}
+);
+
+$('#datepicker').change(function () {		//Actualiza los datos al cambiar de fecha,sin recargar la página, utilizando AJAX
+
+  var fecha = document.getElementById('datepicker').value;
+  console.log(fecha)
+});
 
 $(document).on('click', ".borrarBoton", function () {
   console.log("boton para borrar")
@@ -42,6 +66,8 @@ $(document).ready(function(){
   $("#bt_tag1").checked="checked";
   $("#bt_tag2").checked="checked";
   $("#bt_tag3").checked="checked";
+  $("#bt_fecha").checked="checked";
+
 
   //$("#tag1").show();
   //$("#tag2").hide();
@@ -52,6 +78,8 @@ $(document).ready(function(){
   var busqueda_1=true;
   var busqueda_2=true;
   var busqueda_3=true;
+  var busqueda_4=true;
+  var busqueda_5=true;
     $("#bt_tag1").change(function() {
       if($(this).is(":checked")) {
         //$(this).checked=""
@@ -91,23 +119,59 @@ $(document).ready(function(){
          $("#tag3").hide();
        }
     });
+    $("#bt_fecha").change(function() {
+      if($(this).is(":checked")) {
+        console.log("selecionado")
+        busqueda_4=true;
+        $("#datepicker").show();
+
+       } else {
+         console.log("No selecionado")
+         busqueda_4=false;
+         $("#datepicker").hide();
+       }
+    });
+    $("#bt_texto").change(function() {
+      if($(this).is(":checked")) {
+        console.log("selecionado")
+        busqueda_5=true;
+        $("#texto").show();
+
+       } else {
+         console.log("No selecionado")
+         busqueda_5=false;
+         $("#texto").hide();
+       }
+    });
+
 
     $("#busqueda").click(function() {
-      var modo_busqueda=0;
+      var modo_busqueda=6;
       var tag_1=document.getElementById('tag1').value;
       var tag_2=document.getElementById('tag2').value;
       var tag_3=document.getElementById('tag3').value;
+      var fecha=document.getElementById('datepicker').value;
+      var texto=document.getElementById('texto').value;
 
       console.log("Realizando busquedaaaaa")
-      if (busqueda_1==true && busqueda_2==false && busqueda_3==false) {
+      if (busqueda_1==false && busqueda_2==false && busqueda_3==false&&busqueda_4==false&&busqueda_5==false) {
+        modo_busqueda=0;
+      }
+      if (busqueda_1==true && busqueda_2==false && busqueda_3==false&&busqueda_4==false&&busqueda_5==false) {
         modo_busqueda=1;
+      }
+      if (busqueda_1==false && busqueda_2==false && busqueda_3==false&&busqueda_4==true&&busqueda_5==false) {
+        modo_busqueda=4;
+      }
+      if (busqueda_1==false && busqueda_2==false && busqueda_3==false&&busqueda_4==false&&busqueda_5==true) {
+        modo_busqueda=5;
       }
       console.log(modo_busqueda)
 
       $.ajax({
         url: "/noinventory/busqueda/",
         type: "get", //send it through get method
-        data:{modo_busqueda:modo_busqueda,tag1:tag_1,tag2:tag_2,tag3:tag_3},
+        data:{modo_busqueda:modo_busqueda,tag1:tag_1,tag2:tag_2,tag3:tag_3,fecha:fecha,texto:texto},
         success: function(response) {
           console.log(response);
           $('#accordion').html(response)
@@ -117,10 +181,6 @@ $(document).ready(function(){
           $("#accordion").accordion({
             collapsible: true
           });
-
-
-
-
           //Do Something
         },
         error: function(xhr) {
@@ -156,7 +216,7 @@ $(document).ready(function(){
 
                   <hr>
                   {% if lista_tag1 %}
-                  <select name="tag1" id="tag1" >
+                  <select name="tag1" id="tag1" class="form-control">
                     {% for i in lista_tag1 %}
                       <option value="{{i.VALOR1}}">{{i.VALOR1}}</option>
                       {% endfor %}
@@ -168,7 +228,7 @@ $(document).ready(function(){
 
 
                   {% if lista_tag2 %}
-                  <select name="tag2" id="tag2">
+                  <select name="tag2" id="tag2" class="form-control" >
                     {% for i in lista_tag2 %}
                       <option value="{{i.VALOR2}}">{{i.VALOR2}}</option>
                       {% endfor %}
@@ -181,7 +241,7 @@ $(document).ready(function(){
 
 
           {% if lista_tag3 %}
-          <select name="tag3" id="tag3">
+          <select name="tag3" id="tag3" class="form-control">
             {% for i in lista_tag3 %}
               <option value="{{i.VALOR3}}">{{i.VALOR3}}</option>
               {% endfor %}
@@ -189,8 +249,10 @@ $(document).ready(function(){
           {% else %}
                <strong>No hay Objetos.</strong>
           {% endif %}
+          <input type="text" id="datepicker" class="form-control" />
+          <input type="text" id="texto" class="form-control" placeholder="Texto a buscar" />
 
-          <button id='busqueda'>Buscar</button>
+          <button id='busqueda' >Buscar</button>
           <hr>
 
 
@@ -227,7 +289,7 @@ $(document).ready(function(){
              <strong>No hay Objetos.</strong>
         {% endif %}
         </div>
-      
+
 
 
         {% endblock %}
