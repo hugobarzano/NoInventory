@@ -130,7 +130,7 @@ def catalogos(request):
 def catalogo(request,id_catalogo):
     catalogo_object=Catalogo()
 
-    lista_items=gestorItems.database.items.find({"usuario":request.session['username']})
+    lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion']})
     catalogo=gestorCatalogos.read(catalogo_id=id_catalogo)
     for i in catalogo:
         catalogo_object = Catalogo.build_from_json(i)
@@ -141,10 +141,34 @@ def catalogo(request,id_catalogo):
     contexto = {"catalogo":catalogo_object,"catalogo_id":id_catalogo,"lista_items":lista_items}
     return render(request, 'noinventory/catalogo.html',contexto)
 
+@csrf_exempt
+def catalogoToInforme(request):
+    if request.method == 'GET':
+        catalogo_object=Catalogo()
+        item_object=Item()
+        items=[]
+        lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion']})
+        catalogo=gestorCatalogos.read(catalogo_id=request.GET["catalogo_id"])
+        for i in catalogo:
+            catalogo_object = Catalogo.build_from_json(i)
+        catalogo_object._id=str(catalogo_object._id)
+
+        for i in catalogo_object.id_items_catalogo:
+            item_aux=gestorItems.database.items.find({"organizacion":request.session['organizacion'],"_id":ObjectId(i)})
+            for j in item_aux:
+                item_object=Item.build_from_json(j)
+            item_object._id=str(item_object._id)
+            item=item_object.get_as_json()
+            items.append(item)
+
+        respuesta={"catalogo":catalogo_object.get_as_json(),"items":items}
+        print respuesta
+        return JsonResponse(respuesta,safe=False)
+
 
 
 @csrf_exempt
-def addToCatalogo(request,id_catalogo,id_item):
+def addToCatalogo2(request,id_catalogo,id_item):
         gestorCatalogos.addToCatalogo(id_catalogo,id_item,gestorItems)
         lista_items=gestorItems.read()
         catalogo=gestorCatalogos.read(catalogo_id=id_catalogo)
@@ -153,6 +177,31 @@ def addToCatalogo(request,id_catalogo,id_item):
             catalogo_object = Catalogo.build_from_json(i)
         contexto = {"catalogo":catalogo_object,"catalogo_id":id_catalogo,"lista_items":lista_items}
         return redirect('/noinventory/catalogo/'+id_catalogo,contexto)
+
+
+
+
+@csrf_exempt
+def addToCatalogo(request):
+    if request.method == 'GET':
+        item_id=request.GET["item_id"]
+        catalogo_id=request.GET["catalogo_id"]
+        aux3=[]
+        gestorCatalogos.addToCatalogo(catalogo_id,item_id,gestorItems)
+        lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion']})
+        catalogo=gestorCatalogos.read(catalogo_id=catalogo_id)
+        catalogo_object=Catalogo()
+        for i in catalogo:
+            catalogo_object = Catalogo.build_from_json(i)
+
+
+        for i in catalogo_object.items_catalogo:
+            aux3.append(i)
+            respuesta={"nombre_items":aux3}
+
+        print "Respuestad del servidor"
+        print respuesta
+        return JsonResponse(respuesta,safe=False)
 
 
 #############################busqueda################################################
@@ -404,8 +453,26 @@ def datosTag3 (request):
 def informes(request):
     numeroItems=gestorItems.database.items.find({"usuario":request.session['username']}).count()
     lista_informes=gestorInformes.database.informes.find({"organizacion":request.session['organizacion']})
-    return render(request, 'noinventory/informes.html', {"numeroItems":numeroItems,"lista_informes":lista_informes, 'indice':5})
+    lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']})
+    return render(request, 'noinventory/informes.html', {"lista_catalogos":lista_catalogos,"numeroItems":numeroItems,"lista_informes":lista_informes, 'indice':5})
 
+
+def generateInformeFromCatalogo(request,catalogo_id):
+    numeroItems=gestorItems.database.items.find({"usuario":request.session['username']}).count()
+    lista_informes=gestorInformes.database.informes.find({"organizacion":request.session['organizacion']})
+    catalogo=gestorCatalogos.read(catalogo_id=catalogo_id)
+    catalogo_object=Catalogo()
+    for i in catalogo:
+        catalogo_object = Catalogo.build_from_json(i)
+
+
+    datos_catalogo='<h3>Catalogo:'+catalogo_object.nombre_catalogo+"</h3><br>"
+    datos_catalogo=datos_catalogo+'<h3>Fecha: '+ catalogo_object.fecha_alta_catalogo+"</h3><br>"
+    datos_catalogo=datos_catalogo+'<h3>Lo que sea:</h3><br><p> '+ catalogo_object.descripcion_catalogo+"</p><br>"
+
+
+
+    return render(request, 'noinventory/informes.html', {"datos_catalogo":datos_catalogo,"numeroItems":numeroItems,"lista_informes":lista_informes,"catalogo":catalogo_object,"catalogo_id":catalogo_id})
 
 
 
@@ -429,15 +496,25 @@ def generaPDF(request):
 @csrf_exempt
 def guardarInforme(request):
     if request.method == 'GET':
+        informe_flag=False
+        informe_aux1=gestorInformes.database.informes.find({"organizacion":request.GET["nombre_informe"]})
+        for i in informe_aux1:
+            informe_flag=True
+            objeto_informe = Informe.build_from_json(i)
 
-        informe = Informe.build_from_json({"nombre_informe":request.GET["nombre_informe"],
-            "fecha_informe":str(datetime.now()),
-            "organizacion":request.session["organizacion"],
-            "usuario":request.session['username'],
-            "datos_informe":request.GET["datos_informe"]
-        })
+        if informe_flag == True:
+            objeto_informe.datos_informe=request.GET["datos_informe"]
+            gestorInformes.update(objeto_informe)
 
-        gestorInformes.create(informe)
+        else:
+            informe = Informe.build_from_json({"nombre_informe":request.GET["nombre_informe"],
+                "fecha_informe":str(datetime.now()),
+                "organizacion":request.session["organizacion"],
+                "usuario":request.session['username'],
+                "datos_informe":request.GET["datos_informe"]
+            })
+            gestorInformes.update(informe)
+
         informes=[]
         informe_aux=gestorInformes.database.informes.find({"organizacion":request.session['organizacion']})
         for i in informe_aux:
@@ -446,7 +523,6 @@ def guardarInforme(request):
             informes.append(objeto_informe.get_as_json())
 
         datos={'informes':informes}
-        print datos
     	return JsonResponse(datos, safe=False)
 
     else:
@@ -904,6 +980,7 @@ class CatalogoCreator(View):
                         "tag_catalogo": form.data['tag_catalogo'],
                         "tipo_catalogo":form.data['tipo_catalogo'],
                         "items_catalogo": [],
+                        "id_items_catalogo": [],
                         "qr_data":" ",
                         })
             gestorCatalogos.create(catalogo)
@@ -942,6 +1019,7 @@ class CatalogoUpdater(View):
                         "tag_catalogo": form.data['tag_catalogo'],
                         "tipo_catalogo": form.data['tipo_catalogo'],
                         "items_catalogo": c.items_catalogo,
+                        "id_items_catalogo": c.id_items_catalogo,
                         "qr_data":c.qr_data,
                         })
             gestorCatalogos.update(catalogoUpdated)

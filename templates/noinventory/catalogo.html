@@ -10,6 +10,8 @@
   </div>
 </div>
 <a href="/noinventory/nuevoCatalogo"> <button id='nuevoCatalogo'>Nuevo Catalogo</button></a>
+<a href="/noinventory/generateInformeFromCatalogo/{{ catalogo_id }}"> <button class="btn btn-default btn-xs">Generar Informe</button></a>
+
 {% endblock %}
 
 
@@ -24,7 +26,7 @@
         <h3 class="panel-title">{{catalogo.nombre_catalogo}}</h3>
       </div>
     </div>
-    <ul class="list-group">
+    <ul class="list-group" id="catalogo" data-catalogo = "{{ catalogo_id }}">
        <li class="list-group-item">
     {% if catalogo %}
           Fecha: {{catalogo.fecha_alta_catalogo}} </h3>
@@ -35,10 +37,12 @@
             Tipo: {{catalogo.tipo_catalogo}}
             <br>
             <br>
-            Creado por: {{ i.usuario }}
-            Para la Organizacion: {{i.organizacion}}
+            Creado por: {{ catalogo.usuario }}
+            Para la Organizacion: {{catalogo.organizacion}}
             <br>
             {{ catalogo.qr_data|qrcode:"my alt" }}
+            <br>
+
     {% else %}
          <strong>No hay Catalogo</strong>
     {% endif %}
@@ -53,7 +57,7 @@
             <h3 class="panel-title">Items del catalogo </h3>
           </div>
         </div>
-        <ul class="list-group">
+        <ul class="list-group" id="lista_items">
            <li class="list-group-item">
         {% if catalogo %}
           {% if catalogo.items_catalogo  %}
@@ -95,6 +99,8 @@
                Tipo: {{ i.tag3 }}
                <br>
                <a href="/noinventory/addToCatalogo/{{ catalogo_id }}/{{ i|documento_id}}"> <button class="btn btn-default btn-xs">Añadir</button></a>
+               <button class="addBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}">ADD</button>
+
              </div>
          {% endfor %}
        {% else %}
@@ -103,6 +109,37 @@
        </div>
     </div>
 
+  <script>
+    $(document).on('click', ".addBoton", function () {
+      console.log("boton para añadir")
+      var item_id = $(this).attr("data-item")
+      var catalogo_id = $("#catalogo").attr("data-catalogo")
+      console.log("has pulsado el boton")
+      console.log(item_id)
+      console.log("Del catalogo")
+      console.log(catalogo_id)
+      $.ajax({
+        url: "/noinventory/addToCatalogo/",
+        type: "get", //send it through get method
+        data:{item_id:item_id,catalogo_id:catalogo_id},
+        success: function(response) {
+          console.log(response);
+          $('#lista_items').html(function(){
+              var content = '<ul class="list-group" id="lista_items">  <li class="list-group-item"> ';
+              for(var i = 0; i < response["nombre_items"].length; i++){
+                content = content + '<br><h>' + response["nombre_items"][i]+'</h><br>';
+              }
+                content = content + '</li></ul>';
+                return content;
+          }
+        )},
+        error: function(xhr) {
+    //Do Something to handle error
+        }
+    });
+
+    });
+  </script>
 
 
 

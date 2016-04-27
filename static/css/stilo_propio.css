@@ -1,14 +1,8 @@
 
 
-.panel panel-primary{
-  background-color:#800080;
-  border-color:#800080;
-}
-.panel-primary{
-  background-color:#800080;
-  border-color:#800080;
-}
-.panel {
-  background-color:#800080;
-  border-color:#800080;
+
+
+.panel-primary > .panel-heading {
+  background-color: 	#BA55D3;
+  border-color: 	#BA55D3;
 }

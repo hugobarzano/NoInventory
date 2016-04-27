@@ -6,7 +6,7 @@ from item import *
 class Catalogo(object):
     """Clase para almacenar informacion de los catalogos"""
 
-    def __init__(self, catalogo_id=None,nombre_catalogo=None,fecha_alta_catalogo=None, descripcion_catalogo=None,organizacion=None,usuario=None,tag_catalogo=None,tipo_catalogo=None,items_catalogo=[],qr_data=None):
+    def __init__(self, catalogo_id=None,nombre_catalogo=None,fecha_alta_catalogo=None, descripcion_catalogo=None,organizacion=None,usuario=None,tag_catalogo=None,tipo_catalogo=None,items_catalogo=[],id_items_catalogo=[],qr_data=None):
 
         if catalogo_id is None:
             self._id = ObjectId()
@@ -21,6 +21,7 @@ class Catalogo(object):
         self.tag_catalogo=tag_catalogo
         self.tipo_catalogo=tipo_catalogo
         self.items_catalogo=items_catalogo
+        self.id_items_catalogo=id_items_catalogo
         self.qr_data=qr_data
 
 
@@ -45,6 +46,7 @@ class Catalogo(object):
                     json_data['tag_catalogo'],
                     json_data['tipo_catalogo'],
                     json_data['items_catalogo'],
+                    json_data['id_items_catalogo'],
                     json_data['qr_data'])
             except KeyError as e:
                 raise Exception("Clave no encontrada en json: {}".format(e.message))
@@ -110,6 +112,8 @@ class CatalogosDriver(object):
                 item_object = Item.build_from_json(i)
                 print item_object.nombre_item
             self.database.catalogos.update({"_id": ObjectId(catalogo_id)},{"$addToSet": {"items_catalogo" : item_object.nombre_item,}})
+            self.database.catalogos.update({"_id": ObjectId(catalogo_id)},{"$addToSet": {"id_items_catalogo" : str(item_object._id),}})
+
         else:
             raise Exception("Item no valido para add")
 

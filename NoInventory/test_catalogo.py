@@ -96,6 +96,7 @@ def main():
         "tag_catalogo":"Reciclar",
         "tipo_catalogo":"publico",
         "items_catalogo":[],
+        "id_items_catalogo":[],
         "qr_data":" "})
     test_create(manejador, new_catalogo)
 
@@ -107,6 +108,7 @@ def main():
 
     print "items del catalogo"
     print res.items_catalogo
+    print res.id_items_catalogo
     #cargar_todos_catalogos(manejador)
     #update new_item
     #new_catalogo.tipo_catalogo = "Cambiando caracteristicas para actualizar"

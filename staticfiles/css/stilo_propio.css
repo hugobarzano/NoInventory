@@ -1,14 +1,8 @@
 
 
-.panel-heading {
-  background-color: #ff0000;
-  color: #ff0000;
-}
-.panel {
-  background-color: #ff0000;
-  color: #ff0000;
-}
-.panel-primary{
-  background-color: #ff0000;
-  color: #ff0000;
+
+
+.panel-primary > .panel-heading {
+  background-color: 	#BA55D3;
+  border-color: 	#BA55D3;
 }

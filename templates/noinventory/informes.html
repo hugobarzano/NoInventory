@@ -8,8 +8,10 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<button id="save">guardar Informe</button>
- <a href="#" target="_blank" class="button" id="generaPDF"><button> generaPDF</button></a>
+
+<button id="new">Nuevo Informe</button>
+<button id="save">Guardar Informe</button>
+ <a href="#" target="_blank" class="button" id="generaPDF"><button> Generar PDF</button></a>
 
 
 
@@ -18,6 +20,14 @@
     <option value="{{i.nombre_informe}}">{{i.nombre_informe}}</option>
     {% endfor %}
  </select>
+
+ <select name="lista_catalogos" id="lista_catalogos" >
+   {% for i in lista_catalogos %}
+     <option value="{{ i|documento_id}}">{{i.nombre_catalogo}}</option>
+     {% endfor %}
+  </select><button id="addToInforme">Add</button>
+
+
 
 {% endblock %}
 
@@ -29,7 +39,7 @@
         <input type="text" class="form-control" id="nombre_informe" placeholder="Escribe el nombre del informe">
 
         <textarea name="editor" id="editor" class="col-md-12 full-height" rows="10">
-
+            {{ datos_catalogo }}
 
 
         </textarea>
@@ -38,6 +48,16 @@
 
 
     <script>
+
+
+        $('#new').click(function () {
+            console.log("Boton nuevo")
+            var plantilla_informe='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="http://i.imgur.com/mT7EhAo.png" height="194" width="800"><br><br><br><ul><li><font size="6"><u><b>INTRODUCCIÓN</b></u></font></li></ul><font size="6"><font size="5"><font size="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hablar un poco de las actividades que realiza tu organización</font></font><br><br></font><ul><li><font size="6"><u><b>DETALLES</b></u></font>&nbsp; &nbsp; &nbsp;&nbsp; <br></li></ul>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ¿Qué quieres reflejar en este informe? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="6"><br></font><ul><li><font size="6"><u><b>GRÁFICOS</b></u></font></li></ul>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Espacio para insertar los gráficos que se han generado<br><br><br><ul><li><font size="6"><b><u>CATÁLOGO</u></b></font></li></ul><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Espacio para añadir los tados de un catalogo, así como la lista de items asociada a él <br>'
+            nicEditors.findEditor('editor').setContent(plantilla_informe)
+
+        });
+
+
 
     $('#save').click(function () {
         console.log("Boton guardar")
@@ -64,30 +84,21 @@
             )
           },
           error: function(xhr) {
-      //Do Something to handle error
           }
       });
-
-
-
-
     });
-
     $().ready(function GetInforme(){
       $('#lista_informes').click(function () {
         $('#generaPDF').attr('href','/noinventory/generaPDF/?nombre_informe='+document.getElementById('lista_informes').value);
       });
       $('#lista_informes').change(function () {
-        console.log("Boton visualiziar")
         $('#generaPDF').attr('href','/noinventory/generaPDF/?nombre_informe='+document.getElementById('lista_informes').value);
         var nombre_informe=document.getElementById('lista_informes').value;
-        console.log(nombre_informe)
         $.ajax({
           url: "/noinventory/visualizarInforme/",
           type: "get", //send it through get method
           data:{nombre_informe:nombre_informe},
           success: function(response) {
-            console.log(response["informe"]);
             $('#nombre_informe').val(response["informe"]["nombre_informe"]);
             nicEditors.findEditor('editor').setContent(response["informe"]["datos_informe"])
 
@@ -100,6 +111,47 @@
 
   });
   });
+
+
+
+  $('#addToInforme').click(function () {
+      console.log("Boton add")
+      var nombre_informe=document.getElementById('nombre_informe');
+      var catalogo_id=document.getElementById('lista_catalogos').value;
+      var contenido=nicEditors.findEditor('editor').getContent();
+
+      console.log(nombre_informe.value);
+      console.log(catalogo_id);
+      $.ajax({
+        url: "/noinventory/catalogoToInforme/",
+        type: "get", //send it through get method
+        data:{catalogo_id:catalogo_id},
+        success: function(result) {
+          console.log(result["catalogo"]);
+
+          var cata='<h3>'+result["catalogo"]["nombre_catalogo"]+"</h3>"
+          cata=cata+'<p>'+result["catalogo"]["descripcion_catalogo"]+"</p>"
+
+          var content = '<table class="table table-hover"><thead><tr><th>Item</th><th>Fecha</th><th>Tag1</th><th>TAG2</th><th>TAG3</th> <th>Localizador</th></tr></thead><tbody>';
+          for(var i = 0; i < result["items"].length; i++){
+               content = content + '<tr><td>' + result["items"][i]["nombre_item"]+'</td>';
+               content = content + '<td>' + result["items"][i]["fecha_alta_item"]+'</td>';
+               content = content + '<td>' + result["items"][i]["tag1"]+'</td>';
+               content = content + '<td>' + result["items"][i]["tag2"]+'</td>';
+               content = content + '<td>' + result["items"][i]["tag3"]+'</td>';
+               content = content + '<td>' + result["items"][i]["localizador"]+'</td>';
+          }
+          content = content + '</tbody></table>';
+          nicEditors.findEditor('editor').setContent(contenido+"<hr>"+cata+"<hr>"+content)
+
+
+        },
+        error: function(xhr) {
+    //Do Something to handle error
+        }
+    });
+  });
+
 
 
   </script>
