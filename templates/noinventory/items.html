@@ -9,6 +9,7 @@
   </div>
 </div>
 <a href="/noinventory/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
+<button id="deleteSearch">Eliminar Items</button>
 <hr>
 
 <div class="btn-group col-xs-12" data-toggle="buttons" >
@@ -36,6 +37,63 @@
 
 <script>
 
+
+$(function () {
+    $("#deleteSearch").click(function ()
+    {
+      var lista_borrar=[]
+        $("#accordion div").each(function (index)
+        {
+            lista_borrar.push($(this).attr("id"));
+
+        })
+        var lista_json = JSON.stringify(lista_borrar);
+        $.ajax({
+          url: "/noinventory/borrarItems/",
+          type: "get", //send it through get method
+          data:{lista_items:lista_json},
+          cache: false,
+          success: function(response) {
+            console.log(response);
+            $('#accordion').html(response)
+            if ( typeof $("#accordion").accordion('instance') != 'undefined') {
+              $("#accordion").accordion('destroy');
+            }
+            $("#accordion").accordion({
+              collapsible: true
+            });
+          },
+          error: function(xhr) {
+          }
+      });
+    })
+})
+
+$(document).on('click', ".borrarBoton", function () {
+  console.log("boton para borrar")
+  var catid = $(this).attr("data-item")
+  console.log("has pulsado el boton")
+  console.log(catid)
+  $.ajax({
+    url: "/noinventory/borrarItem/",
+    type: "get", //send it through get method
+    data:{item_id:catid},
+    success: function(response) {
+      console.log(response);
+      $('#accordion').html(response)
+      if ( typeof $("#accordion").accordion('instance') != 'undefined') {
+        $("#accordion").accordion('destroy');
+      }
+      $("#accordion").accordion({
+        collapsible: true
+      });
+    },
+    error: function(xhr) {
+    }
+  });
+});
+
+
 $(document).ready(				//Lanza la selección de fecha
 	function () {
 	    $( "#datepicker" ).datepicker({
@@ -54,12 +112,7 @@ $('#datepicker').change(function () {		//Actualiza los datos al cambiar de fecha
   console.log(fecha)
 });
 
-$(document).on('click', ".borrarBoton", function () {
-  console.log("boton para borrar")
-  var catid = $(this).attr("data-item")
-  console.log("has pulsado el boton")
-  console.log(catid)
-});
+
 
 
 $(document).ready(function(){
@@ -204,56 +257,60 @@ $(document).ready(function(){
 
         {% block body_block %}
 
-    <div class="page-header">
-                <h1>¡Bienvenido a Gestion de Catalogo!</h1>
-    </div>
-
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Items Destacados</h3>
-        </div>
-      </div>
-
-                  <hr>
-                  {% if lista_tag1 %}
-                  <select name="tag1" id="tag1" class="form-control">
-                    {% for i in lista_tag1 %}
-                      <option value="{{i.VALOR1}}">{{i.VALOR1}}</option>
-                      {% endfor %}
-                   </select>
-                  {% else %}
-                       <strong>No hay TAG 1.</strong>
-                  {% endif %}
-
-
-
-                  {% if lista_tag2 %}
-                  <select name="tag2" id="tag2" class="form-control" >
-                    {% for i in lista_tag2 %}
-                      <option value="{{i.VALOR2}}">{{i.VALOR2}}</option>
-                      {% endfor %}
-                   </select>
-                  {% else %}
-                       <strong>No hay TAG2</strong>
-                  {% endif %}
-
-
-
-
-          {% if lista_tag3 %}
-          <select name="tag3" id="tag3" class="form-control">
-            {% for i in lista_tag3 %}
-              <option value="{{i.VALOR3}}">{{i.VALOR3}}</option>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Busqueda</h3>
+              <hr>
+              Utiliza las tags o expresiones regulares para realizar tu <button type="button" class="btn btn-success" id='busqueda' >Busqueda</button>
+          </div>
+          {% if lista_tag1 %}
+          <select name="tag1" id="tag1" class="form-control">
+            {% for i in lista_tag1 %}
+              <option value="{{i.VALOR1}}">{{i.VALOR1}}</option>
               {% endfor %}
            </select>
           {% else %}
-               <strong>No hay Objetos.</strong>
+               <strong>No hay TAG 1.</strong>
           {% endif %}
-          <input type="text" id="datepicker" class="form-control" />
-          <input type="text" id="texto" class="form-control" placeholder="Texto a buscar" />
 
-          <button id='busqueda' >Buscar</button>
-          <hr>
+          {% if lista_tag2 %}
+          <select name="tag2" id="tag2" class="form-control" >
+            {% for i in lista_tag2 %}
+              <option value="{{i.VALOR2}}">{{i.VALOR2}}</option>
+              {% endfor %}
+           </select>
+          {% else %}
+               <strong>No hay TAG2</strong>
+          {% endif %}
+
+            {% if lista_tag3 %}
+            <select name="tag3" id="tag3" class="form-control">
+            {% for i in lista_tag3 %}
+              <option value="{{i.VALOR3}}">{{i.VALOR3}}</option>
+              {% endfor %}
+            </select>
+            {% else %}
+               <strong>No hay Objetos.</strong>
+            {% endif %}
+            <input type="text" id="datepicker" class="form-control" />
+            <input type="text" id="texto" class="form-control" placeholder="Texto a buscar" />
+
+        </div>
+
+
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Catálogo</h3>
+              <hr>
+              Utiliza el resultado de tu busqueda para <button type="button" class="btn btn-info" id="addToInforme">Añadir contenido a tu Catalogo</button>
+          </div>
+          <select name="lista_catalogos" id="lista_catalogos" class="form-control">
+            {% for i in lista_catalogos %}
+              <option value="{{ i|documento_id}}">{{i.nombre_catalogo}}</option>
+              {% endfor %}
+           </select>
+         </div>
+
 
 
 

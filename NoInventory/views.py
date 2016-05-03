@@ -877,19 +877,37 @@ def borrarItem(request):
         print "Borrado completado"
         try:
             #lista_items=gestorItems.database.items.find({"usuario":request.session["username"]})
-            lista_items=gestorItems.database.items.find({"usuario":request.session["username"]})
+            lista_items=gestorItems.database.items.find({"usuario":request.session["username"],"organizacion":request.session['organizacion']})
+            contenido=""
             for i in lista_items:
                 aux = Item.build_from_json(i)
-                aux2=aux.get_as_json()
+                aux2 = aux.get_as_json()
                 aux2["_id"]=str(aux2["_id"])
-                #aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"]}
-                aux3.append(aux2)
-                respuesta={"items":aux3}
+                print aux2["nombre_item"]
+                contenido = contenido + '<h3>Nombre: ' + aux2["nombre_item"]+' Fecha: '+aux2["fecha_alta_item"]+'</h3>'
+                contenido = contenido + '<div id="'+aux2["_id"]+'">'
+                contenido = contenido + '<p>'+aux2["descripcion_item"]+'</p>'
+                contenido = contenido + '<strong>TAGS</strong><br>'+aux2["tag1"]+'<br>'+aux2["tag2"]+'<br>'+aux2["tag3"]+'<br>'
+                contenido = contenido + qrcode(aux2["qr_data"], alt="qr")
+                contenido = contenido + '<hr> Localizador: '+aux2["localizador"]+'<hr> Identificador: '+aux2['_id']+'<hr>'
+                contenido = contenido + '<hr> Creado por: ' +aux2["usuario"]+ '<hr>Organizacion: '+aux2["organizacion"]+'<hr>'
+                contenido = contenido + '<a href="/noinventory/modificarItem/'+aux2["_id"]+'"><button class="btn btn-default btn-xs">Modificar</button> </a>'
+                contenido = contenido + '<a href="/noinventory/item/'+aux2["_id"]+'"><button class="btn btn-default btn-xs">Detalles</button> </a>'
+                contenido = contenido + '<button class="borrarBoton" data-item="'+aux2["_id"]+'">Borrar</button>'
+                contenido = contenido + '</div>'
+            contenido = contenido + '</div>'
         except KeyError as e:
             raise Exception("No tienes objetos asociados : {}".format(e.message))
-        print "Respuestad del servidor"
-        print respuesta
-        return JsonResponse(respuesta,safe=False)
+        return HttpResponse(contenido)
+
+@csrf_exempt
+def borrarItems(request):
+    if request.method == 'GET':
+        data_aux=json.loads(request.GET['lista_items'])
+        for i in data_aux:
+            gestorItems.database.items.remove( {"_id" : ObjectId(i) } )
+        return HttpResponse("<strong>Los elementos han sido eliminados</strong>")
+
 
 
 
