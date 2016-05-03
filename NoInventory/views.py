@@ -100,8 +100,10 @@ def items(request):
         lista_tag1=gestorClasificacion.database.tag1.find({"organizacion":request.session['organizacion']})
         lista_tag2=gestorClasificacion.database.tag2.find({"organizacion":request.session['organizacion']})
         lista_tag3=gestorClasificacion.database.tag3.find({"organizacion":request.session['organizacion']})
-        lista_items=gestorItems.database.items.find({"usuario":request.session['username']})
-        contexto = {'lista_items':lista_items,'lista_tag1': lista_tag1,'lista_tag2':lista_tag2,'lista_tag3':lista_tag3}
+        lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion']})
+        lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']})
+
+        contexto = {'lista_items':lista_items,'lista_catalogos':lista_catalogos,'lista_tag1': lista_tag1,'lista_tag2':lista_tag2,'lista_tag3':lista_tag3}
         return render(request, 'noinventory/items.html',contexto)
 
 @csrf_exempt
@@ -116,7 +118,7 @@ def item(request,id_item):
     return render(request, 'noinventory/item.html',contexto)
 
 def prueba(request):
-    lista_items=gestorItems.database.items.find({"usuario":request.session['username']})
+    lista_items=gestorItems.database.items.find()
     form = SelectItem()
     return render(request, 'noinventory/prueba.html', {'form': form,"lista_items":lista_items, 'indice':5})
 
@@ -178,7 +180,21 @@ def addToCatalogo2(request,id_catalogo,id_item):
         contexto = {"catalogo":catalogo_object,"catalogo_id":id_catalogo,"lista_items":lista_items}
         return redirect('/noinventory/catalogo/'+id_catalogo,contexto)
 
-
+@csrf_exempt
+def addSearchToCatalogo(request):
+    if request.method == 'GET':
+        data_aux=json.loads(request.GET['lista_items'])
+        print data_aux
+        data=[]
+        for i in data_aux:
+            if i !=None:
+                data.append(i)
+        mydic=dict(request.GET)
+        print mydic["catalogo_id"][0]
+        for i in data:
+            print i
+            gestorCatalogos.addToCatalogo( str(mydic["catalogo_id"][0]),i,gestorItems)
+        return HttpResponse("<strong>Los elementos han sido eliminados</strong>")
 
 
 @csrf_exempt
