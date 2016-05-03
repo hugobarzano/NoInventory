@@ -11,6 +11,8 @@
 
 <button id="new">Nuevo Informe</button>
 <button id="save">Guardar Informe</button>
+<button id="delete">Eliminar Informe</button>
+
  <a href="#" target="_blank" class="button" id="generaPDF"><button> Generar PDF</button></a>
 
 
@@ -21,11 +23,7 @@
     {% endfor %}
  </select>
 
- <select name="lista_catalogos" id="lista_catalogos" >
-   {% for i in lista_catalogos %}
-     <option value="{{ i|documento_id}}">{{i.nombre_catalogo}}</option>
-     {% endfor %}
-  </select><button id="addToInforme">Add</button>
+
 
 
 
@@ -34,6 +32,18 @@
         {% block body_block %}
         <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
         <script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <select name="lista_catalogos" id="lista_catalogos" class="form-control">
+              {% for i in lista_catalogos %}
+               <h3 class="panel-title"> <option value="{{ i|documento_id}}">{{i.nombre_catalogo}}</option></h3>
+                {% endfor %}
+             </select>
+              <hr>
+              Utiliza tus catálogos para <button type="button" class="btn btn-info" id="addToInforme">Añadir datos a tu informe</button>
+          </div>
+         </div>
+
 
 
         <input type="text" class="form-control" id="nombre_informe" placeholder="Escribe el nombre del informe">
@@ -52,22 +62,28 @@
 
         $('#new').click(function () {
             console.log("Boton nuevo")
+            $('#nombre_informe').val("Nuevo Informe");
             var plantilla_informe='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="http://i.imgur.com/mT7EhAo.png" height="194" width="800"><br><br><br><ul><li><font size="6"><u><b>INTRODUCCIÓN</b></u></font></li></ul><font size="6"><font size="5"><font size="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hablar un poco de las actividades que realiza tu organización</font></font><br><br></font><ul><li><font size="6"><u><b>DETALLES</b></u></font>&nbsp; &nbsp; &nbsp;&nbsp; <br></li></ul>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ¿Qué quieres reflejar en este informe? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="6"><br></font><ul><li><font size="6"><u><b>GRÁFICOS</b></u></font></li></ul>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Espacio para insertar los gráficos que se han generado<br><br><br><ul><li><font size="6"><b><u>CATÁLOGO</u></b></font></li></ul><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Espacio para añadir los tados de un catalogo, así como la lista de items asociada a él <br>'
             nicEditors.findEditor('editor').setContent(plantilla_informe)
 
         });
 
-
+    function selectItemByValue(elmnt, value){
+       for(var i=0; i < elmnt.options.length; i++)
+       {
+         if(elmnt.options[i].value == value)
+           elmnt.selectedIndex = i;
+       }
+     }
 
     $('#save').click(function () {
-        console.log("Boton guardar")
         var nombre_informe=document.getElementById('nombre_informe');
         var contenido=nicEditors.findEditor('editor').getContent();
 
         console.log(nombre_informe.value);
         console.log(contenido);
         $.ajax({
-          url: "/noinventory/guardarInforme/",
+          url: "/guardarInforme/",
           type: "get", //send it through get method
           data:{nombre_informe:nombre_informe.value,datos_informe:String(contenido)},
           success: function(response) {
@@ -82,20 +98,57 @@
                         return content;
              }
             )
+            $('#nombre_informe').val(nombre_informe.value);
+            nicEditors.findEditor('editor').setContent(contenido)
+            var lista=document.getElementById('lista_informes')
+            selectItemByValue(lista, nombre_informe.value);
+            //lista.val(nombre_informe.value)
+            $('#generaPDF').attr('href','/generaPDF/?nombre_informe='+document.getElementById('lista_informes').value);
+
+
           },
           error: function(xhr) {
           }
       });
     });
-    $().ready(function GetInforme(){
+    $('#delete').click(function () {
+        var nombre_informe=document.getElementById('nombre_informe');
+        var contenido=nicEditors.findEditor('editor').getContent();
+
+        $.ajax({
+          url: "/borrarInforme/",
+          type: "get", //send it through get method
+          data:{nombre_informe:nombre_informe.value},
+          success: function(response) {
+            $('#lista_informes').html(
+              function(){
+                    var content = '<select name="lista_informes" id="lista_informes">';
+                    for(var i = 0; i < response["informes"].length; i++){
+                         content = content + '<option value="'+response["informes"][i]["nombre_informe"]+'">'+response["informes"][i]["nombre_informe"]+'</option>';
+                   }
+                        content = content + '</select>';
+                        return content;
+             }
+            )
+            $('#nombre_informe').val(" ");
+            var plantilla_informe = " "
+            nicEditors.findEditor('editor').setContent(plantilla_informe)
+
+          },
+          error: function(xhr) {
+          }
+      });
+    });
+
+    $().ready( function GetInforme(){
       $('#lista_informes').click(function () {
-        $('#generaPDF').attr('href','/noinventory/generaPDF/?nombre_informe='+document.getElementById('lista_informes').value);
+        $('#generaPDF').attr('href','/generaPDF/?nombre_informe='+document.getElementById('lista_informes').value);
       });
       $('#lista_informes').change(function () {
-        $('#generaPDF').attr('href','/noinventory/generaPDF/?nombre_informe='+document.getElementById('lista_informes').value);
+        $('#generaPDF').attr('href','/generaPDF/?nombre_informe='+document.getElementById('lista_informes').value);
         var nombre_informe=document.getElementById('lista_informes').value;
         $.ajax({
-          url: "/noinventory/visualizarInforme/",
+          url: "/visualizarInforme/",
           type: "get", //send it through get method
           data:{nombre_informe:nombre_informe},
           success: function(response) {
@@ -114,6 +167,7 @@
 
 
 
+
   $('#addToInforme').click(function () {
       console.log("Boton add")
       var nombre_informe=document.getElementById('nombre_informe');
@@ -123,7 +177,7 @@
       console.log(nombre_informe.value);
       console.log(catalogo_id);
       $.ajax({
-        url: "/noinventory/catalogoToInforme/",
+        url: "/catalogoToInforme/",
         type: "get", //send it through get method
         data:{catalogo_id:catalogo_id},
         success: function(result) {

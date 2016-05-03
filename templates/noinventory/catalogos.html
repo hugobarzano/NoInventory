@@ -9,7 +9,7 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<a href="/noinventory/nuevoCatalogo"> <button id='nuevoCatalogo'>Nuevo Catalogo</button></a>
+<a href="/nuevoCatalogo"> <button id='nuevoCatalogo'>Nuevo Catalogo</button></a>
 {% endblock %}
 
 
@@ -36,8 +36,8 @@
                 <br>
                 {{ i.qr_data|qrcode:"my alt" }}
                 <button class="btn btn-default btn-xs borrarBoton" data-inventory="{{i.id}}">Borrar</button>
-                 <a href="/noinventory/catalogo/{{ i|documento_id }}"> <button class="btn btn-default btn-xs">Items</button></a>
-                 <a href="/noinventory/modificarCatalogo/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Modificar</button> </a>
+                 <a href="/catalogo/{{ i|documento_id }}"> <button class="btn btn-default btn-xs">Items</button></a>
+                 <a href="/modificarCatalogo/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Modificar</button> </a>
               </div>
           {% endfor %}
         {% else %}
@@ -46,22 +46,5 @@
         </div>
         <br>
         <br>
-        <br>
-
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">Catalogo dinamico </h3>
-        </div>
-      </div>
-
-
-      <div id="draggable" class="ui-widget-content">
-        <p>Item de prueba</p>
-      </div>
-
-      <div id="droppable" class="ui-widget-header">
-        <p>Catalogo de prueba</p>
-      </div>
-
 
         {% endblock %}

@@ -8,7 +8,7 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<a href="/noinventory/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
+<a href="/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
 {% endblock %}
 
         {% block body_block %}
@@ -27,7 +27,7 @@
         console.log("has pulsado el boton")
         console.log($(button).attr("data-item"))
         $.ajax({
-            url:  '/noinventory/borrarItem/?id_item='+catid,
+            url:  '/borrarItem/?id_item='+catid,
             type: 'GET',
             result: $(this).serialize(),
             dataType: 'json',
@@ -45,7 +45,7 @@
                               content = content + '<td>' + result["items"][i]["tag2"]+'</td>';
                               content = content + '<td>' + result["items"][i]["tag3"]+'</td>';
                               content = content + '<td>' + result["items"][i]["localizador"]+'</td>';
-                              content = content + '<td><a href="/noinventory/modificarItem/'+result["items"][i]["_id"]+'"><button class="btn btn-default btn-xs"> Update</button> </a>'
+                              content = content + '<td><a href="/modificarItem/'+result["items"][i]["_id"]+'"><button class="btn btn-default btn-xs"> Update</button> </a>'
                               content = content + '<input class="buttonDelete"  type="button" name="Delete" value="Delete" data-item="'+result["items"][i]["_id"]+'"></input>'
                               content = content + '<button class="buttonDelete2" data-item="'+result["items"][i]["_id"]+'"> Delete2</button> </td></tr>'
                  				}
@@ -65,7 +65,7 @@
         <script>
            $(function(){
              $.ajax({
-               url:  '/noinventory/datosTag1/?tag1=Hospital%20Real',
+               url:  '/datosTag1/?tag1=Hospital%20Real',
                type: 'get',
                success: function(datos) {
                  Visualiza_datos(datos);

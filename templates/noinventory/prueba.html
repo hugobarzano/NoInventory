@@ -8,7 +8,7 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<a href="/noinventory/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
+<a href="/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
 {% endblock %}
 
         {% block body_block %}
@@ -45,8 +45,8 @@
                   Para la Organizacion: {{i.organizacion}}
                   <br>
                 <button class="borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}">Borrar</button>
-                <a href="/noinventory/modificarItem/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Modificar</button> </a>
-                <a href="/noinventory/item/{{ i|documento_id}}" > <button id='item_details'>Detalles</button></a>
+                <a href="/modificarItem/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Modificar</button> </a>
+                <a href="/item/{{ i|documento_id}}" > <button id='item_details'>Detalles</button></a>
 
                 </div>
             {% endfor %}

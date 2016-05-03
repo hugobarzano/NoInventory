@@ -14,7 +14,7 @@ class Catalogo(object):
             self._id = catalogo_id
 
         self.nombre_catalogo=nombre_catalogo
-        self.fecha_alta_catalogo = time.strftime("%c")
+        self.fecha_alta_catalogo = fecha_alta_catalogo
         self.descripcion_catalogo = descripcion_catalogo
         self.organizacion=organizacion
         self.usuario=usuario

@@ -19,20 +19,21 @@ def jsonTOstring(elemento):
 class Item(object):
     """Clase para almacenar informacion de los items"""
 
-    def __init__(self, item_id=None,nombre_item=None,fecha_alta_item=None, descripcion_item=None,organizacion=None,usuario=None,tag1=None,tag2=None,tag3=None,localizador=None,qr_data=None):
+    def __init__(self, item_id=None,nombre_item=None,fecha_alta_item=None, descripcion_item=None,organizacion=None,usuario=None,tag1=None,tag2=None,tag3=None,cantidad=None,localizador=None,qr_data=None):
 
         if item_id is None:
             self._id = ObjectId()
         else:
             self._id = item_id
         self.nombre_item=nombre_item
-        self.fecha_alta_item = str(datetime.now())
+        self.fecha_alta_item = fecha_alta_item
         self.descripcion_item = descripcion_item
         self.organizacion=organizacion
         self.usuario=usuario
         self.tag1=tag1
         self.tag2=tag2
         self.tag3=tag3
+        self.cantidad=cantidad
         self.localizador=localizador
         self.qr_data=qr_data
 
@@ -57,6 +58,7 @@ class Item(object):
                     json_data['tag1'],
                     json_data['tag2'],
                     json_data['tag3'],
+                    json_data['cantidad'],
                     json_data['localizador'],
                     json_data['qr_data'])
             except KeyError as e:

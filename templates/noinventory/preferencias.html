@@ -11,16 +11,16 @@
   <div class="panel-heading">
     <h3 class="panel-title">Administracion</h3>
   </div>
-      <a href="/noinventory/deleteItems"> <button id='deleteItems'>Eliminar Todos los Items</button></a>
+      <a href="/deleteItems"> <button id='deleteItems'>Eliminar Todos los Items</button></a>
 
       <br>
-      <a href="/noinventory/deleteInventorys"> <button id='deleteInventorys'>Eliminar Todos los Catalogos</button></a>
+      <a href="/deleteInventorys"> <button id='deleteInventorys'>Eliminar Todos los Catalogos</button></a>
 
       <br>
-      <a href="/noinventory/deleteInformes"> <button id='deleteInformes'>Eliminar Todos los informes</button></a>
+      <a href="/deleteInformes"> <button id='deleteInformes'>Eliminar Todos los informes</button></a>
 
 </div>
-  <form action="/noinventory/preferencias/" method="post" enctype="multipart/form-data">
+  <form action="/preferencias/" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% load bootstrap %}
     {{ form.file_tag1|bootstrap }}

@@ -8,7 +8,7 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<a href="/noinventory/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
+<a href="/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
 <button id="deleteSearch">Eliminar Items</button>
 <hr>
 
@@ -50,10 +50,8 @@ $(function () {
         })
         var lista_json = JSON.stringify(lista_add);
         var catalogo_id=JSON.stringify(document.getElementById('lista_catalogos').value);
-        console.log(catalogo_id)
-        "Catalogo"
         $.ajax({
-          url: "/noinventory/addSearchToCatalogo/",
+          url: "/addSearchToCatalogo/",
           type: "get", //send it through get method
           data:{lista_items:lista_json,catalogo_id:document.getElementById('lista_catalogos').value},
           cache: false,
@@ -75,14 +73,14 @@ $(function () {
     $("#deleteSearch").click(function ()
     {
       var lista_borrar=[]
-        $("#accordion div").each(function (index)
-        {
-            lista_borrar.push($(this).attr("id"));
+      $("#accordion div").each(function (index)
+      {
+          lista_borrar.push($(this).attr("data-item"));
 
-        })
+      })
         var lista_json = JSON.stringify(lista_borrar);
         $.ajax({
-          url: "/noinventory/borrarItems/",
+          url: "/borrarItems/",
           type: "get", //send it through get method
           data:{lista_items:lista_json},
           cache: false,
@@ -108,12 +106,13 @@ $(document).on('click', ".borrarBoton", function () {
   console.log("has pulsado el boton")
   console.log(catid)
   $.ajax({
-    url: "/noinventory/borrarItem/",
+    url: "/borrarItem/",
     type: "get", //send it through get method
     data:{item_id:catid},
     success: function(response) {
-      console.log(response);
-      $('#accordion').html(response)
+      $('#paginas').html(response)
+      $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:6});
+
       if ( typeof $("#accordion").accordion('instance') != 'undefined') {
         $("#accordion").accordion('destroy');
       }
@@ -255,19 +254,20 @@ $(document).ready(function(){
       console.log(modo_busqueda)
 
       $.ajax({
-        url: "/noinventory/busqueda/",
+        url: "/busqueda/",
         type: "get", //send it through get method
         data:{modo_busqueda:modo_busqueda,tag1:tag_1,tag2:tag_2,tag3:tag_3,fecha:fecha,texto:texto},
         success: function(response) {
           console.log(response);
-          $('#accordion').html(response)
+          $('#paginas').html(response)
+          $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:6});
+
           if ( typeof $("#accordion").accordion('instance') != 'undefined') {
             $("#accordion").accordion('destroy');
           }
           $("#accordion").accordion({
             collapsible: true
           });
-          //Do Something
         },
         error: function(xhr) {
     //Do Something to handle error
@@ -337,28 +337,29 @@ $(document).ready(function(){
              {% for i in lista_items %}
              <div class="panel panel-default">
 
-                 <h5>Nombre: {{i.nombre_item}} Fecha: {{i.fecha_alta_item}} </h5>
+                 <h5><strong>Item:</strong> {{i.nombre_item}} <strong>Fecha:</strong> {{i.fecha_alta_item}} </h5>
                </div>
 
                  <div id="{{ i|documento_id}}" data-item="{{ i|documento_id}}" >
-                   <p>
-                     Descripcion: {{ i.descripcion_item }}
-                   </p>
-                   TAG1: {{i.tag1}}
-                   <br>
-                   TAG2: {{ i.tag2 }}
-                   TAG3: {{ i.tag3 }}
-                   <br>
-                   localizador: {{ i.localizador }}
-                   <br>
+
+                  <p><strong>Detalles: </strong>{{ i.descripcion_item }}</p>
+                  <p><strong>Cantidad: </strong>{{ i.cantidad }}</p>
+
+                   <hr>
+                   <p> <strong>TAG1: </strong>{{i.tag1}}</p>
+                   <p> <strong>TAG2: </strong> {{ i.tag2 }}</p>
+                   <p> <strong>TAG3: </strong> {{ i.tag3 }}</p>
+                  <hr>
+                   <p> <strong>Creado por: </strong> {{ i.usuario }}</p>
+                   <p><strong>Organizacion: </strong> {{i.organizacion}}</p>
+                  <hr>
+                  <p><strong>Localizador: </strong> {{ i.localizador }}</p>
                    {{ i.qr_data|qrcode:"qr_data" }}
-                   <br>
-                   Creado por: {{ i.usuario }}
-                   Para la Organizacion: {{i.organizacion}}
+
                    <br>
                  <button class="borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}">Borrar</button>
-                 <a href="/noinventory/modificarItem/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Modificar</button> </a>
-                 <a href="/noinventory/item/{{ i|documento_id}}" > <button id='item_details'>Detalles</button></a>
+                 <a href="/modificarItem/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Modificar</button> </a>
+                 <a href="/item/{{ i|documento_id}}" > <button id='item_details'>Detalles</button></a>
 
                  </div>
              {% endfor %}

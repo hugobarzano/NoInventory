@@ -8,7 +8,7 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<a href="/noinventory/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
+<a href="/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
 {% endblock %}
 
         {% block body_block %}
@@ -37,7 +37,7 @@
                 <td>{{ i.tag2 }}</td>
                 <td>{{ i.tag3 }}</td>
                 <td>{{ i.localizador }}</td>
-                <td><a href="/noinventory/modificarItem/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Update</button> </a>
+                <td><a href="/modificarItem/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Update</button> </a>
                 <input class="buttonDelete"  type="button" name="Delete" value="Delete" data-item="{{ i|documento_id}}"></input>
                 <button class="buttonDelete2" data-item="{{ i|documento_id}}" > Delete2</button>
                 <td>
@@ -61,7 +61,7 @@ $(document).ready(function(){
         console.log("has pulsado el boton")
         console.log($(button).attr("data-item"))
         $.ajax({
-            url:  '/noinventory/borrarItem/?id_item='+catid,
+            url:  '/borrarItem/?id_item='+catid,
             type: 'GET',
             result: $(this).serialize(),
             dataType: 'json',
@@ -79,7 +79,7 @@ $(document).ready(function(){
                               content = content + '<td>' + result["items"][i]["tag2"]+'</td>';
                               content = content + '<td>' + result["items"][i]["tag3"]+'</td>';
                               content = content + '<td>' + result["items"][i]["localizador"]+'</td>';
-                              content = content + '<td><a href="/noinventory/modificarItem/'+result["items"][i]["_id"]+'"><button class="btn btn-default btn-xs"> Update</button> </a>'
+                              content = content + '<td><a href="/modificarItem/'+result["items"][i]["_id"]+'"><button class="btn btn-default btn-xs"> Update</button> </a>'
                               content = content + '<input class="buttonDelete"  type="button" name="Delete" value="Delete" data-item="'+result["items"][i]["_id"]+'"></input>'
                               content = content + '<button class="buttonDelete2" data-item="'+result["items"][i]["_id"]+'"> Delete2</button> </td></tr>'
                  				}

@@ -83,6 +83,7 @@ def main():
         "tag1":"Administración de  Servicios Centrales",
         "tag2":"MONITOR  CRT",
         "tag3":"DEFAULT",
+        "cantidad":5.2,
         "localizador":" ",
         "qr_data":" "})
 

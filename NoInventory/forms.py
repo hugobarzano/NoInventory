@@ -35,15 +35,16 @@ class ItemForm3(forms.Form):
         organizacion = kwargs.pop('organizacion')
         super(ItemForm3, self).__init__(*args, **kwargs)
         self.fields['nombre_item'] = forms.CharField(required=True,max_length=150, help_text="Introduce el nombre del objeto")
-        self.fields['descripcion_item']  = forms.CharField(required=True,max_length=300, help_text="Breve descripcion sobre el objeto")
+        self.fields['descripcion_item']  = forms.CharField(widget = forms.Textarea, help_text="Breve descripcion sobre el objeto")
         lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":organizacion})
         lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":organizacion})
         lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":organizacion})
-
+        #print "formulario"
+        #print lista_tag2[0]["VALOR2"]
         self.fields['tag1'] = forms.ChoiceField(label="TAG 1", choices=[(x["VALOR1"], x["VALOR1"]) for x in lista_tag1])
-        self.fields['tag2'] = forms.ChoiceField(label="TAG 2", choices=[(x["VALOR2"], x["VALOR2"]) for x in lista_tag2])
+        self.fields['tag2'] = forms.ChoiceField(label=lista_tag2[0]["VALOR2"], choices=[(x["VALOR2"], x["VALOR2"]) for x in lista_tag2])
         self.fields['tag3'] = forms.ChoiceField(label="TAG 3", choices=[(x["VALOR3"], x["VALOR3"]) for x in lista_tag3])
-
+        self.fields['cantidad'] = forms.FloatField(required=False, label='cantidad')
 
 
 
@@ -57,7 +58,7 @@ def ItemForm(organizacion):
         lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":organizacion})
 
         nombre_item = forms.CharField(required=True,max_length=150, help_text="Introduce el nombre del objeto")
-        descripcion_item  = forms.CharField(required=True,max_length=300, help_text="Breve descripcion sobre el objeto")
+        descripcion_item  = forms.CharField(widget = forms.Textarea, help_text="Breve descripcion sobre el objeto")
         tag_item = forms.CharField(required=True, max_length=150, help_text="Tag para ayudar a clasificar el objeto")
         tag1 = forms.ChoiceField(label="TAG 1", choices=[(x["VALOR1"], x["VALOR1"]) for x in lista_tag1])
         tag2 = forms.ChoiceField(label="TAG 2", choices=[(x["VALOR2"], x["VALOR2"]) for x in lista_tag2])

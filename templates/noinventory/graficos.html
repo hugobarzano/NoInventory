@@ -8,7 +8,7 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<a href="/noinventory/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
+<a href="/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
 <button type="button" class="saveGrafic btn-default">Guardar Gráfico</button>
 {% endblock %}
 
@@ -183,7 +183,7 @@
           function Graficos_TAG1(tag1){
            $(function(){
              $.ajax({
-               url:  '/noinventory/datosTag1/?tag1='+tag1,
+               url:  '/datosTag1/?tag1='+tag1,
                type: 'get',
                success: function(datos) {
                  Visualiza_datos(datos);
@@ -290,7 +290,7 @@
        function Graficos_TAG2(tag2){
         $(function(){
           $.ajax({
-            url:  '/noinventory/datosTag2/?tag2='+tag2,
+            url:  '/datosTag2/?tag2='+tag2,
             type: 'get',
             success: function(datos) {
               Visualiza_datos2(datos);
@@ -385,7 +385,7 @@
     function Graficos_TAG3(tag3){
      $(function(){
        $.ajax({
-         url:  '/noinventory/datosTag3/?tag3='+tag3,
+         url:  '/datosTag3/?tag3='+tag3,
          type: 'get',
          success: function(datos) {
            Visualiza_datos3(datos);

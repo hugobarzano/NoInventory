@@ -9,7 +9,7 @@ Repositorio para el proyecto de gestión y administración de inventariado
 ############################################################################
 
 [![Build Status](https://travis-ci.org/hugobarzano/NoInventory.svg?branch=master)](https://travis-ci.org/hugobarzano/NoInventory)
-[![DockerHub](https://www.dropbox.com/s/fl5hrbbjm4g2jec/docker_l.png?dl=1)](https://hub.docker.com/r/hugobarzano/noinventory/)
+[![DockerHub](https://www.dropbox.com/s/fl5hrbbjm4g2jec/docker_l.png?dl=1)](https://hub.docker.com/r/hugobarzano/)
 
 ############################################################################
 
@@ -71,6 +71,7 @@ La aplicación Android del proyecto se encuentra alojada en el repositorio [NoIn
 [JsonCustonRequest](http://stackoverflow.com/questions/25948191/send-post-request-using-volley-and-receive-in-php)
 [draggable and droppable](http://www.desarrolloweb.com/articulos/ejemplo-drag-drop-jquery.html)
 [paginacion](http://www.bootply.com/zT2ZU9DSDM#)
+[mongo](http://rafinguer.blogspot.com.es/2014/10/fechas-en-mongodb.html)
 
 ###Presentación Concurso Software libre
 

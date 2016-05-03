@@ -3,7 +3,7 @@
 {% block body_block %}
         <h1>Añadir Catalogo</h1>
 
-        <form id="catalogoformUpdater" method="post" action="/noinventory/modificarCatalogo/{{id_catalogo}}/">
+        <form id="catalogoformUpdater" method="post" action="/modificarCatalogo/{{id_catalogo}}/">
           {% csrf_token %}
           {% load bootstrap %}
           {{ form.nombre_catalogo|bootstrap }}

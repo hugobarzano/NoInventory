@@ -9,17 +9,15 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<a href="/noinventory/nuevoCatalogo"> <button id='nuevoCatalogo'>Nuevo Catalogo</button></a>
-<a href="/noinventory/generateInformeFromCatalogo/{{ catalogo_id }}"> <button class="btn btn-default btn-xs">Generar Informe</button></a>
+<a href="/nuevoCatalogo"> <button id='nuevoCatalogo'>Nuevo Catalogo</button></a>
+<button id="updateCatalogo">Actualizar</button>
 
 {% endblock %}
 
 
         {% block body_block %}
 
-    <div class="page-header">
-                <h1>¡Bienvenido a Gestion de Catalogo!</h1>
-    </div>
+
 
     <div class="panel panel-primary">
       <div class="panel-heading">
@@ -50,66 +48,102 @@
   </ul>
 
 
-      <div class="row placeholders">
-      <div class="col-xs-12 col-sm-6 placeholder">
+      <div class="col-xs-12 col-sm-12 placeholder">
          <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">Items del catalogo </h3>
           </div>
         </div>
-        <ul class="list-group" id="lista_items">
-           <li class="list-group-item">
-        {% if catalogo %}
-          {% if catalogo.items_catalogo  %}
-            {% for n in catalogo.items_catalogo %}
-            <br>
-            <h> {{ n }}  </h>
-            <br>
-             {% endfor %}
-          {%else %}
-            <strong> No hay Items asociados </strong>
-          {% endif %}
-        {% else %}
-             <strong>No hay Catalogo</strong>
-        {% endif %}
-      </li>
-      </ul>
+        <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Fecha</th>
+            <th>Tag1</th>
+            <th>TAG2</th>
+            <th>TAG3</th>
+            <th>Cantidad</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if lista_items %}
+            {% for i in lista_items %}
+              <tr>
+                <td>{{i.nombre_item}}</td>
+                <td>{{ i.fecha_alta_item }}</td>
+                <td>{{ i.tag1 }}</td>
+                <td>{{ i.tag2 }}</td>
+                <td>{{ i.tag3 }}</td>
+                <td>{{ i.cantidad }}</td>
+                <td><button class="borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}">Borrar</button></td>
+              </tr>
+            {% endfor %}
+            {% else %}
+                 <strong>No hay Objetos.</strong>
+            {% endif %}
+          </tr>
+        </tbody>
+        </table>
       </div>
 
 
-    <div class="col-xs-12 col-sm-6 placeholder">
-      <div class="panel panel-primary">
-       <div class="panel-heading">
-         <h3 class="panel-title">Items </h3>
-       </div>
-     </div>
 
-     <div id="accordion">
-       {% if lista_items %}
-         {% for i in lista_items %}
-             <h3>Nombre: {{i.nombre_item}} Fecha: {{i.fecha_alta_item}} </h3>
-             <div id="{{i.id}}">
-               <p>
-                 Descripcion: {{ i.descripcion_item }}
-               </p>
-               Tags: {{i.tag_item}}
-               <br>
-               Estado: {{i.tag2}}
-               <br>
-               Tipo: {{ i.tag3 }}
-               <br>
-               <a href="/noinventory/addToCatalogo/{{ catalogo_id }}/{{ i|documento_id}}"> <button class="btn btn-default btn-xs">Añadir</button></a>
-               <button class="addBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}">ADD</button>
 
-             </div>
-         {% endfor %}
-       {% else %}
-            <strong>No hay Objetos.</strong>
-       {% endif %}
-       </div>
-    </div>
+
 
   <script>
+
+  $(function () {
+      $("#updateCatalogo").click(function (){
+
+          $.ajax({
+            url: "/updateCatalogo/",
+            type: "get", //send it through get method
+            data:{catalogo_id:$("#catalogo").attr("data-catalogo")},
+            cache: false,
+            success: function(response) {
+                $('.table').html(response)
+
+            },
+            error: function(xhr) {
+            }
+        });
+      })
+  })
+
+
+  $(document).on('click', ".borrarBoton", function () {
+    console.log("boton para borrar")
+    var catid = $(this).attr("data-item")
+    var catalogo=$("#catalogo").attr("data-catalogo")
+    console.log("has pulsado el catalogo")
+    console.log(catalogo)
+
+    $.ajax({
+      url: "/borrarItemFromCatalogo/",
+      type: "get", //send it through get method
+      data:{item_id:catid,catalogo_id:catalogo},
+      success: function(response) {
+        $('.table').html(response)
+
+      },
+      error: function(xhr) {
+      }
+    });
+  });
+
+
+
+
+
+
+
+
+
+
+
+
     $(document).on('click', ".addBoton", function () {
       console.log("boton para añadir")
       var item_id = $(this).attr("data-item")
@@ -119,7 +153,7 @@
       console.log("Del catalogo")
       console.log(catalogo_id)
       $.ajax({
-        url: "/noinventory/addToCatalogo/",
+        url: "/addToCatalogo/",
         type: "get", //send it through get method
         data:{item_id:item_id,catalogo_id:catalogo_id},
         success: function(response) {

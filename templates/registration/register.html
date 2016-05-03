@@ -11,7 +11,7 @@
        <a href="/rango/">Return to the homepage.</a><br />
        {% else %}
           <h1>Register Here</h1>
-          <form id="user_form" method="post" action="/noinventory/register/"
+          <form id="user_form" method="post" action="/register/"
             enctype="multipart/form-data">
               {% csrf_token %}
               {{ user_form.as_p }}
