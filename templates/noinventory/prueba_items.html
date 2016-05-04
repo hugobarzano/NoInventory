@@ -128,23 +128,17 @@ $(document).on('click', ".borrarBoton", function () {
 
 $(document).ready(				//Lanza la selección de fecha
 	function () {
-	    $( "#datepicker_inicio" ).datepicker({
+	    $( "#datepicker" ).datepicker({
 	      dateFormat: "yy-mm-dd",
 	      changeMonth: true,
 	      changeYear: true
 
-	    })
-      $( "#datepicker_final" ).datepicker({
-	      dateFormat: "yy-mm-dd",
-	      changeMonth: true,
-	      changeYear: true
-
-	    })
+	    }).datepicker("setDate",new Date());
 
 	}
 );
 
-$('#datepicker_inicio').change(function () {		//Actualiza los datos al cambiar de fecha,sin recargar la página, utilizando AJAX
+$('#datepicker').change(function () {		//Actualiza los datos al cambiar de fecha,sin recargar la página, utilizando AJAX
 
   var fecha = document.getElementById('datepicker').value;
   console.log(fecha)
@@ -154,6 +148,86 @@ $('#datepicker_inicio').change(function () {		//Actualiza los datos al cambiar d
 
 
 $(document).ready(function(){
+  $("#bt_tag1").checked="checked";
+  $("#bt_tag2").checked="checked";
+  $("#bt_tag3").checked="checked";
+  $("#bt_fecha").checked="checked";
+
+
+  //$("#tag1").show();
+  //$("#tag2").hide();
+  //$("#tag3").hide();
+  //var dato_l1 = document.getElementById('tag1').value;
+  //Graficos_TAG1(dato_l1)
+  console.log("Entrando a la funcion")
+  var busqueda_1=true;
+  var busqueda_2=true;
+  var busqueda_3=true;
+  var busqueda_4=true;
+  var busqueda_5=true;
+    $("#bt_tag1").change(function() {
+      if($(this).is(":checked")) {
+        //$(this).checked=""
+        console.log("selecionado")
+        busqueda_1=true;
+        $("#tag1").show();
+
+       } else {
+         //$(this).checked="checked"
+         console.log("No selecionado")
+         busqueda_1=false;
+         $("#tag1").hide();
+       }
+    });
+    $("#bt_tag2").change(function() {
+      if($(this).is(":checked")) {
+        console.log("selecionado")
+        busqueda_2=true;
+        $("#tag2").show();
+
+       } else {
+         console.log("No selecionado")
+         busqueda_2=false;
+         $("#tag2").hide();
+       }
+
+    });
+    $("#bt_tag3").change(function() {
+      if($(this).is(":checked")) {
+        console.log("selecionado")
+        busqueda_3=true;
+        $("#tag3").show();
+
+       } else {
+         console.log("No selecionado")
+         busqueda_3=false;
+         $("#tag3").hide();
+       }
+    });
+    $("#bt_fecha").change(function() {
+      if($(this).is(":checked")) {
+        console.log("selecionado")
+        busqueda_4=true;
+        $("#datepicker").show();
+
+       } else {
+         console.log("No selecionado")
+         busqueda_4=false;
+         $("#datepicker").hide();
+       }
+    });
+    $("#bt_texto").change(function() {
+      if($(this).is(":checked")) {
+        console.log("selecionado")
+        busqueda_5=true;
+        $("#texto").show();
+
+       } else {
+         console.log("No selecionado")
+         busqueda_5=false;
+         $("#texto").hide();
+       }
+    });
 
 
     $("#busqueda").click(function() {
@@ -161,25 +235,28 @@ $(document).ready(function(){
       var tag_1=document.getElementById('tag1').value;
       var tag_2=document.getElementById('tag2').value;
       var tag_3=document.getElementById('tag3').value;
-      var fecha_inicio=document.getElementById('datepicker_inicio').value;
-      var fecha_final=document.getElementById('datepicker_final').value;
-
+      var fecha=document.getElementById('datepicker').value;
       var texto=document.getElementById('texto').value;
-      console.log(modo_busqueda)
-      console.log("vacia")
 
-      console.log(texto)
-      if (texto==""){
-        texto="vacio"
+      console.log("Realizando busquedaaaaa")
+      if (busqueda_1==false && busqueda_2==false && busqueda_3==false&&busqueda_4==false&&busqueda_5==false) {
+        modo_busqueda=0;
       }
-      console.log("llena")
-      console.log(texto)
-
+      if (busqueda_1==true && busqueda_2==false && busqueda_3==false&&busqueda_4==false&&busqueda_5==false) {
+        modo_busqueda=1;
+      }
+      if (busqueda_1==false && busqueda_2==false && busqueda_3==false&&busqueda_4==true&&busqueda_5==false) {
+        modo_busqueda=4;
+      }
+      if (busqueda_1==false && busqueda_2==false && busqueda_3==false&&busqueda_4==false&&busqueda_5==true) {
+        modo_busqueda=5;
+      }
+      console.log(modo_busqueda)
 
       $.ajax({
         url: "/busqueda/",
         type: "get", //send it through get method
-        data:{modo_busqueda:modo_busqueda,tag1:tag_1,tag2:tag_2,tag3:tag_3,fecha_inicio:fecha_inicio,fecha_final:fecha_final,texto:texto},
+        data:{modo_busqueda:modo_busqueda,tag1:tag_1,tag2:tag_2,tag3:tag_3,fecha:fecha,texto:texto},
         success: function(response) {
           console.log(response);
           $('#paginas').html(response)
@@ -219,15 +296,6 @@ $(document).ready(function(){
               <hr>
               Utiliza las tags o expresiones regulares para realizar tu <button type="button" class="btn btn-success" id='busqueda' >Busqueda</button>
           </div>
-          <input type="text" id="texto" class="form-control" placeholder="Texto a buscar" />
-          <div class="row">
-          <div class="col-xs-6">
-          <input type="text" id="datepicker_inicio" placeholder="Desde" class="form-control" />
-        </div>
-          <div class="col-xs-6">
-          <input type="text" id="datepicker_final" placeholder="Hasta"class="form-control" />
-        </div>
-      </div>
           {% if lista_tag1 %}
           <select name="tag1" id="tag1" class="form-control">
             {% for i in lista_tag1 %}
@@ -257,7 +325,8 @@ $(document).ready(function(){
             {% else %}
                <strong>No hay Objetos.</strong>
             {% endif %}
-
+            <input type="text" id="datepicker" class="form-control" />
+            <input type="text" id="texto" class="form-control" placeholder="Texto a buscar" />
         </div>
 
 

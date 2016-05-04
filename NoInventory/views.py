@@ -30,7 +30,7 @@ from catalogo import *
 from clasificacion import *
 from informe import *
 from io import StringIO
-
+from datetime import datetime
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 import urllib
@@ -255,7 +255,7 @@ def busqueda(request):
     respuesta={}
     if request.method == 'GET':
         #print request.GET["modo_busqueda"]
-
+        print request.GET["texto"]
         if request.GET["modo_busqueda"] == str(0):
             lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion']})
         if request.GET["modo_busqueda"] == str(1):
@@ -264,6 +264,10 @@ def busqueda(request):
             lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion'], "fecha_alta_item": { "$regex": request.GET["fecha"] } })
         if request.GET["modo_busqueda"] == str(5):
             lista_items=gestorItems.database.items.find({ "organizacion":request.session['organizacion'],"$or": [ {"nombre_item":{ "$regex": request.GET["texto"] }}, {"descripcion_item":{ "$regex": request.GET["texto"] }} ] })
+        if request.GET["modo_busqueda"] == str(6):
+            lista_items=gestorItems.database.items.find({"$or": [ {"nombre_item":{ "$regex": request.GET["texto"]}}, {"descripcion_item":{ "$regex": request.GET["texto"] }},{"fecha_alta_item" : {"$gte" :  request.GET["fecha_inicio"], "$lte" :  request.GET["fecha_final"]}},{"tag1":request.GET["tag1"]},{"tag2":request.GET["tag2"]},{'tag3':request.GET['tag3']} ]  })
+            #lista_items=gestorItems.database.items.find({ "organizacion":request.session['organizacion'],"$or": [ {"nombre_item":{ "$regex": request.GET["texto"]}}, {"descripcion_item":{ "$regex": request.GET["texto"] }},{"tag1":request.GET["tag1"]},{"tag2":request.GET["tag2"]},{"tag3":request.GET["tag3"]} ] })
+
 
         aux4={"lista_i":lista_items}
         #print aux4
@@ -818,7 +822,7 @@ class AndroidItemCreator(View):
         form = ItemForm3(request.POST,organizacion=request.GET['organizacion'])
         if form.is_valid():
             item =Item.build_from_json({"nombre_item": form.data['nombre_item'],
-                        "fecha_alta_item": time.strftime("%c"),
+                        "fecha_alta_item": str(datetime.now()),
                         "descripcion_item": form.data['descripcion_item'],
                         "organizacion":request.GET['organizacion'],
                         "usuario":request.GET['organizacion'],
@@ -987,7 +991,7 @@ class ItemCreator(View):
         form = ItemForm3(request.POST,organizacion=request.session['organizacion'])
         if form.is_valid():
             item =Item.build_from_json({"nombre_item": form.data['nombre_item'],
-                        "fecha_alta_item": time.strftime("%c"),
+                        "fecha_alta_item": datetime.now().strftime('%Y-%m-%d'),
                         "descripcion_item": form.data['descripcion_item'],
                         "organizacion": request.session["organizacion"],
                         "usuario":request.session['username'],
@@ -1057,7 +1061,7 @@ class CatalogoCreator(View):
         form = CatalogoForm(request.POST)
         if form.is_valid():
             catalogo =Catalogo.build_from_json({"nombre_catalogo": form.data['nombre_catalogo'],
-                        "fecha_alta_catalogo": time.strftime("%c"),
+                        "fecha_alta_catalogo": str(datetime.now()),
                         "descripcion_catalogo": form.data['descripcion_catalogo'],
                         "organizacion": request.session["organizacion"],
                         "usuario":request.session['username'],
