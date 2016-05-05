@@ -97,9 +97,9 @@ def index(request):
 
 @csrf_exempt
 def items(request):
-        lista_tag1=gestorClasificacion.database.tag1.find({"organizacion":request.session['organizacion']})
-        lista_tag2=gestorClasificacion.database.tag2.find({"organizacion":request.session['organizacion']})
-        lista_tag3=gestorClasificacion.database.tag3.find({"organizacion":request.session['organizacion']})
+        lista_tag1=gestorClasificacion.database.tag1.find({"organizacion":request.session['organizacion']}).sort([("CLAVE1", 1)])
+        lista_tag2=gestorClasificacion.database.tag2.find({"organizacion":request.session['organizacion']}).sort([("CLAVE2", 1)])
+        lista_tag3=gestorClasificacion.database.tag3.find({"organizacion":request.session['organizacion']}).sort([("CLAVE3", 1)])
         lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion']})
         lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']})
 
@@ -228,7 +228,7 @@ def updateCatalogo(request):
         lista_items=[]
         for i in catalog:
             catalogo_object=Catalogo.build_from_json(i)
-        print "Peso del catalogo"+catalogo_object.peso_total
+        print "Peso del catalogo"+str(catalogo_object.peso_total)
 
         for j in catalogo_object.id_items_catalogo:
             item=gestorItems.database.items.find({"_id":ObjectId(j)})
