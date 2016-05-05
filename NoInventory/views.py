@@ -187,16 +187,13 @@ def addSearchToCatalogo(request):
             if i !=None:
                 data.append(i)
         mydic=dict(request.GET)
-        print mydic["catalogo_id"][0]
         for i in data:
             print i
             gestorCatalogos.addToCatalogo( str(mydic["catalogo_id"][0]),i,gestorItems)
-        print "Catalogo:"
-        print ObjectId(mydic["catalogo_id"][0])
         catalogo=gestorCatalogos.database.catalogos.find({"_id":ObjectId(mydic["catalogo_id"][0])})
-        print "superada busqueda"
         for j in catalogo:
             catalogo_object=Catalogo.build_from_json(j)
+        print "Peso total del catalogo"+str(catalogo_object.peso_total)
         gestorCatalogos.calculatePeso(catalogo_object)
         return HttpResponse("<strong>Los elementos han sido añadidos</strong>")
 
@@ -231,6 +228,7 @@ def updateCatalogo(request):
         lista_items=[]
         for i in catalog:
             catalogo_object=Catalogo.build_from_json(i)
+        print "Peso del catalogo"+catalogo_object.peso_total
 
         for j in catalogo_object.id_items_catalogo:
             item=gestorItems.database.items.find({"_id":ObjectId(j)})
@@ -242,7 +240,6 @@ def updateCatalogo(request):
         contenido='<table class="table table-hover"> <thead> <tr> <th>Item</th> <th>Fecha</th> <th>Tag1</th> <th>TAG2</th><th>TAG3</th>'
         contenido=contenido+'<th>Peso</th> <th>Acciones</th></tr></thead><tbody>'
         for t in lista_items:
-            print t["nombre_item"]
             contenido=contenido+'<tr><td>'+t["nombre_item"]+'</td>'
             contenido=contenido+'<td>'+t["fecha_alta_item"]+'</td>'
             contenido=contenido+'<td>'+t["tag1"]+'</td>'
@@ -251,6 +248,7 @@ def updateCatalogo(request):
             contenido=contenido+'<td>'+t["peso"]+'</td>'
             contenido=contenido+'<td><button class="borrarBoton" data-item="'+t["_id"]+'"id="'+t["_id"]+'">Borrar</button></td></tr>'
         contenido=contenido+'</tr></tbody></table>'
+
         respuesta={"contenido":contenido,"peso_total":catalogo_object.peso_total}
         return JsonResponse(respuesta)
         #return HttpResponse(contenido)
@@ -315,37 +313,148 @@ def graficos(request):
     lista_tag1=gestorClasificacion.database.tag1.find({"organizacion":request.session['organizacion']})
     lista_tag2=gestorClasificacion.database.tag2.find({"organizacion":request.session['organizacion']})
     lista_tag3=gestorClasificacion .database.tag3.find({"organizacion":request.session['organizacion']})
-    return render(request, 'noinventory/graficos.html', {'lista_tag1': lista_tag1,"lista_tag2":lista_tag2,"lista_tag3":lista_tag3})
+    lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']})
+
+    return render(request, 'noinventory/graficos.html', {'lista_catalogos':lista_catalogos,'lista_tag1': lista_tag1,"lista_tag2":lista_tag2,"lista_tag3":lista_tag3})
 
 
-
-def datosTag1_prueba (request):
+def dataGraficos(request):
     if request.method == 'GET':
-        dicTag2=dict()
-        lista_items=gestorItems.database.items.find({"tag1":request.GET['tag1']})
-        for item in lista_items:
-            item_object = Item.build_from_json(item)
-            #print item_object.nombre_item + " -- "+ item_object.tag1+ " -- "+ item_object.tag2
-            dicTag2[item_object.tag2]=0
-        #print dicTag2
+        #Obtenemos el catalogo
+        catalogo_object=Catalogo()
+        catalogo=gestorCatalogos.database.catalogos.find({"_id":ObjectId(request.GET["catalogo"])})
+        for i in catalogo:
+            catalogo_object=Catalogo.build_from_json(i)
+        #Obtenemos su lista de items asociada
+        lista_items=[]
+        for j in catalogo_object.id_items_catalogo:
+            item=gestorItems.database.items.find({"_id":ObjectId(j)})
+            for z in item:
+                item_object=Item.build_from_json(z)
+                lista_items.append(item_object)
+                #lista_items.append(item_object.get_as_json())
+        #print lista_items[0]
+        if int(request.GET["modo"])==1:
+            print "unidades"
+            ##contar elementos tag1
+            dicTag1=dict()
+            for item in lista_items:
+                dicTag1[item.tag1]=0
+            for item in lista_items:
+                dicTag1[item.tag1]=dicTag1[item.tag1]+1
 
-        lista_items=gestorItems.database.items.find({"tag1":request.GET['tag1']})
-        for item in lista_items:
-            item_object=Item.build_from_json(item)
-            #print "tag2:"+item_object.tag2
-            dicTag2[item_object.tag2]=dicTag2[item_object.tag2]+1
+            datos1={'claveTag1':[],'valorTag1':[]}
+            for tag in dicTag1:
+                datos1['claveTag1'].append(tag)
+                datos1['valorTag1'].append(dicTag1[tag])
+            ##Pesar elementos tag1
+            dicPesoTag1=dict()
+            for item in lista_items:
+                dicPesoTag1[item.tag1]=0.0
+            for item in lista_items:
+                print item.peso
+                dicPesoTag1[item.tag1]=dicTag1[item.tag1]+float(item.peso)
 
-        datos={'claveTag2':[],'valorTag2':[]}
+            datosPeso1={'clavePesoTag1':[],'valorPesoTag1':[]}
+            for tag in dicPesoTag1:
+                datosPeso1['clavePesoTag1'].append(tag)
+                datosPeso1['valorPesoTag1'].append(dicPesoTag1[tag])
+
+            ##Contar elementos tag2
+            dicTag2=dict()
+            for item in lista_items:
+                dicTag2[item.tag2]=0
+            for item in lista_items:
+                dicTag2[item.tag2]=dicTag2[item.tag2]+1
+
+            datos2={'claveTag2':[],'valorTag2':[]}
+            for tag in dicTag2:
+                datos2['claveTag2'].append(tag)
+                datos2['valorTag2'].append(dicTag2[tag])
+
+            ##Pesar elementos tag2
+            dicPesoTag2=dict()
+            for item in lista_items:
+                dicPesoTag2[item.tag2]=0.0
+            for item in lista_items:
+                print item.peso
+                dicPesoTag2[item.tag2]=dicTag2[item.tag2]+float(item.peso)
+
+            datosPeso2={'clavePesoTag2':[],'valorPesoTag2':[]}
+            for tag in dicPesoTag2:
+                datosPeso2['clavePesoTag2'].append(tag)
+                datosPeso2['valorPesoTag2'].append(dicPesoTag2[tag])
 
 
-        for tag in dicTag2:
-            datos['claveTag2'].append(tag)
-            datos['valorTag2'].append(dicTag2[tag])
+            ##Contar elementos tag 3
 
-        print datos
+            dicTag3=dict()
+            for item in lista_items:
+                dicTag3[item.tag3]=0
+            for item in lista_items:
+                dicTag3[item.tag3]=dicTag3[item.tag3]+1
+
+            datos3={'claveTag3':[],'valorTag3':[]}
+            for tag in dicTag3:
+                datos3['claveTag3'].append(tag)
+                datos3['valorTag3'].append(dicTag3[tag])
+
+            ##Pesar elementos tag3
+            dicPesoTag3=dict()
+            for item in lista_items:
+                dicPesoTag3[item.tag3]=0.0
+            for item in lista_items:
+                print item.peso
+                dicPesoTag3[item.tag3]=dicTag3[item.tag3]+float(item.peso)
+
+            datosPeso3={'clavePesoTag3':[],'valorPesoTag3':[]}
+            for tag in dicPesoTag3:
+                datosPeso3['clavePesoTag3'].append(tag)
+                datosPeso3['valorPesoTag3'].append(dicPesoTag3[tag])
+
+            ##contar elementos por fecha
+            dicTagf=dict()
+            for item in lista_items:
+                dicTagf[item.fecha_alta_item]=0
+            for item in lista_items:
+                dicTagf[item.fecha_alta_item]=dicTagf[item.fecha_alta_item]+1
+
+            datosf={'claveFecha':[],'valorFecha':[]}
+            for tag in dicTagf:
+                datosf['claveFecha'].append(tag)
+                datosf['valorFecha'].append(dicTagf[tag])
+
+            ##pesar elementos por fecha
+            dicTagPesof=dict()
+            for item in lista_items:
+                dicTagPesof[item.fecha_alta_item]=0.0
+            for item in lista_items:
+                dicTagPesof[item.fecha_alta_item]=dicTagPesof[item.fecha_alta_item]+float(item.peso)
+
+            datosPesof={'clavePesoFecha':[],'valorPesoFecha':[]}
+            for tag in dicTagPesof:
+                datosPesof['clavePesoFecha'].append(tag)
+                datosPesof['valorPesoFecha'].append(dicTagPesof[tag])
+
+            datos={'datos1':datos1,'datosPeso1':datosPeso1,'datos2':datos2,'datosPeso2':datosPeso2,'datos3':datos3,'datosPeso3':datosPeso3,'datosf':datosf,'datosPesof':datosPesof}
+
+
+
+        else:
+            print "pesos"
+        #diferenciamos entre pesos y unidades
+
+
+
+
+
+
+
+
     	return JsonResponse(datos, safe=False)
-    else:
-        return HttpResponse("datosTag1")
+
+
+
 
 
 def datosTag1 (request):

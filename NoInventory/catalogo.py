@@ -95,7 +95,8 @@ class CatalogosDriver(object):
                 #print "item encontrado"+item_aux
                 for j in item_aux:
                     item_object=Item.build_from_json(j)
-                peso=peso+int(item_object.peso)
+                    print "peso objeto"+item_object.peso
+                peso=peso+float(item_object.peso)
             self.database.catalogos.update({"_id":catalogo._id},{"$set": {"peso_total": peso}})
         else:
             raise Exception("Imposible calcular peso el catalogo")

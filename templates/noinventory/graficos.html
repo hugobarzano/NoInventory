@@ -8,241 +8,73 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<a href="/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
-<button type="button" class="saveGrafic btn-default">Guardar Gráfico</button>
 {% endblock %}
 
         {% block body_block %}
 
-
-
-
-        <div class="btn-group">
-          <button type="button" class="btn1 btn-default">TAG1</button>
-          <button type="button" class="btn2 btn-default">TAG2</button>
-          <button type="button" class="btn3 btn-default">TAG3</button>
-        </div>
-
-
-
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <select name="lista_catalogos" id="lista_catalogos" class="form-control">
+              {% for i in lista_catalogos %}
+               <h3 class="panel-title"> <option value="{{ i|documento_id}}">{{i.nombre_catalogo}}</option></h3>
+                {% endfor %}
+             </select>
+              <hr>
+              Utiliza tus catálogos para generar gráficos
+          </div>
+         </div>
 
 
         <script>
 
-
-          $().ready(function GetValorTag1(){
-          $('#tag1').change(function () {
-          var dato_l1 = document.getElementById('tag1').value;
-          console.log("Cambiando valor 1")
-          console.log(dato_l1)
-           window.tag1=dato_l1;
-            Graficos_TAG1(dato_l1)
-          return dato_l1;
-        });
-        });
-
-        $().ready(function GetValorTag2(){
-        $('#tag2').change(function () {
-        var dato_l2 = document.getElementById('tag2').value;
-        console.log("Cambiando valor 2")
-        console.log(dato_l2)
-         window.tag1=dato_l2;
-        Graficos_TAG2(dato_l2);
-        return dato_l2;
-      });
-      });
-
-      $().ready(function GetValorTag3(){
-      $('#tag3').change(function () {
-      var dato_l3 = document.getElementById('tag3').value;
-      console.log("Cambiando valor 3")
-      console.log(dato_l3)
-       window.tag1=dato_l3;
-        Graficos_TAG3(dato_l3)
-      return dato_l3;
-    });
-    });
-
-
-
-
-        $().ready(function(){
-          $("#tag1").show();
-          $("#tag2").hide();
-          $("#tag3").hide();
-          var dato_l1 = document.getElementById('tag1').value;
-          Graficos_TAG1(dato_l1)
-
-            $(".btn1").click(function() {
-              console.log("boton1")
-              $("#tag1").show();
-              $("#tag2").hide();
-              $("#tag3").hide();
-              var dato_l1 = document.getElementById('tag1').value;
-              Graficos_TAG1(dato_l1)
-
-
-            });
-            $(".btn2").click(function() {
-              console.log("boton2")
-              $("#tag1").hide();
-              $("#tag2").show();
-              $("#tag3").hide();
-              var dato_l2 = document.getElementById('tag2').value;
-              Graficos_TAG2(dato_l2)
-
-            });
-            $(".saveGrafic").click(function() {
-              console.log("guardar grafico")
-              var canvas = document.getElementById("canvas");
-              var img    = canvas.toDataURL("image/png");
-              document.write('<img src="'+img+'"/>');
-            });
-
-            $(".btn3").click(function() {
-              console.log("boton3")
-              $("#tag1").hide();
-              $("#tag2").hide();
-              $("#tag3").show();
-              var dato_l3 = document.getElementById('tag3').value;
-              Graficos_TAG3(dato_l3)
-            });
+        $().ready(function GetValorCatalogo(){
+          Graficos(document.getElementById('lista_catalogos').value,1)
+          $('#lista_catalogos').change(function () {
+            Graficos(document.getElementById('lista_catalogos').value,1)
           });
+        });
+
+
+        function Graficos(catalogo,modo){
+         $(function(){
+           $.ajax({
+             url:  '/dataGraficos/',
+             type: 'get',
+             data:{catalogo:catalogo,modo:modo},
+             success: function(datos) {
+               console.log(datos["datos1"]["claveTag1"])
+               Visualiza_datos(datos);
+             },
+             failure: function(datos) {
+               alert('esto no vá');
+             }
+           });
+
+
+           function Visualiza_datos(datos) {
+               var claveTag1=datos["datos1"]["claveTag1"];
+               var valorTag1=datos["datos1"]["valorTag1"];
+               var clavePesoTag1=datos["datosPeso1"]["clavePesoTag1"]
+               var valorPesoTag1=datos["datosPeso1"]["valorPesoTag1"]
+
+               var claveTag2=datos["datos2"]["claveTag2"];
+               var valorTag2=datos["datos2"]["valorTag2"];
+               var clavePesoTag2=datos["datosPeso2"]["clavePesoTag2"]
+               var valorPesoTag2=datos["datosPeso2"]["valorPesoTag2"]
+
+               var claveTag3=datos["datos3"]["claveTag3"];
+               var valorTag3=datos["datos3"]["valorTag3"];
+               var clavePesoTag3=datos["datosPeso3"]["clavePesoTag3"]
+               var valorPesoTag3=datos["datosPeso3"]["valorPesoTag3"]
+
+               var claveFecha=datos["datosf"]["claveFecha"];
+               var valorFecha=datos["datosf"]["valorFecha"];
+               var clavePesoFecha=datos["datosPesof"]["clavePesoFecha"]
+               var valorPesoFecha=datos["datosPesof"]["valorPesoFecha"]
 
 
 
-
-</script>
-
-
-
-
-
-
-
-
-        {% if lista_tag1 %}
-        <select name="tag1" id="tag1" >
-          {% for i in lista_tag1 %}
-            <option value="{{i.VALOR1}}">{{i.VALOR1}}</option>
-            {% endfor %}
-         </select>
-        {% else %}
-             <strong>No hay Objetos.</strong>
-        {% endif %}
-
-        {% if lista_tag2 %}
-        <select name="tag2" id="tag2">
-          {% for i in lista_tag2 %}
-            <option value="{{i.VALOR2}}">{{i.VALOR2}}</option>
-            {% endfor %}
-         </select>
-        {% else %}
-             <strong>No hay Objetos.</strong>
-        {% endif %}
-
-        {% if lista_tag3 %}
-        <select name="tag3" id="tag3">
-          {% for i in lista_tag3 %}
-            <option value="{{i.VALOR3}}">{{i.VALOR3}}</option>
-            {% endfor %}
-         </select>
-        {% else %}
-             <strong>No hay Objetos.</strong>
-        {% endif %}
-
-
-
-
-
-
-
-
-
-
-
-        <script src="http://code.highcharts.com/highcharts.js"></script>
-        <script src="https://code.highcharts.com/modules/exporting.js"></script>
-
-        <div id="container" style="height: 300px"></div>
-        <hr>
-        <hr>
-        <br>
-        <br>
-        <div id="container2" style="height: 300px"></div>
-
-
-
-
-
-
-        <script>
-
-
-
-          function Graficos_TAG1(tag1){
-           $(function(){
-             $.ajax({
-               url:  '/datosTag1/?tag1='+tag1,
-               type: 'get',
-               success: function(datos) {
-                 Visualiza_datos(datos);
-               },
-               failure: function(datos) {
-                 alert('esto no vá');
-               }
-             });
-
-
-             function Visualiza_datos(datos) {
-                 var claveTag2=datos['datos1']['clave'];
-                 var valorTag2=datos['datos1']['valor'];
-
-                 var claveTag3=datos['datos2']['clave'];
-                 var valorTag3=datos['datos2']['valor'];
-
-
-
-                 console.debug('voy a mostrar el nombre de los bares')
-                 console.log(claveTag2);
-                 console.log(valorTag2);
-             $('#container').highcharts({
-                 chart: {
-                   renderTo: 'chart',
-                   type: 'column',
-                   margin: 75,
-                   marginTop:100,
-                   options3d: {
-                     enabled: true,
-                     alpha: 0,
-                     beta: 0,
-                     depth: 50,
-                     viewDistance: 25
-                   }
-                 },
-                 navigation: {
-                   buttonOptions: {
-                     enabled: true
-                   }
-                 },
-                 scrollbar: { enabled: true },
-                 title: {
-                     text: tag1
-                 },
-                 xAxis: {
-                     categories: claveTag2
-                 },
-                 yAxis: {
-                     title: {
-                         text: 'Numero de elementos'
-                     }
-                 },
-                 series: [{
-                     name: 'TAG2',
-                     data: valorTag2
-                 }],
-             });
-             $('#container2').highcharts({
+           $('#container').highcharts({
                chart: {
                  renderTo: 'chart',
                  type: 'column',
@@ -262,194 +94,194 @@
                  }
                },
                scrollbar: { enabled: true },
-                 title: {
-                     text: tag1
-                 },
-                 xAxis: {
-                     categories: claveTag3
-                 },
-                 yAxis: {
-                     title: {
-                         text: 'Numero de elementos'
-                     }
-                 },
-                 series: [{
-                     name: 'TAG3',
-                     data: valorTag3
-                 }],
-             });
-         };
-         });
+               title: {
+                   text: 'tag1'
+               },
+               xAxis: {
+                   categories: claveTag1
+               },
+               yAxis: {
+                   title: {
+                       text: 'Numero de elementos'
+                   }
+               },
+               series: [{
+                   name: 'uds',
+                   data: valorTag1
+               },{
+                   name: 'Kg',
+                   data: valorPesoTag1
+               }],
+           });
+           $('#container2').highcharts({
+               chart: {
+                 renderTo: 'chart',
+                 type: 'column',
+                 margin: 75,
+                 marginTop:100,
+                 options3d: {
+                   enabled: true,
+                   alpha: 0,
+                   beta: 0,
+                   depth: 50,
+                   viewDistance: 25
+                 }
+               },
+               navigation: {
+                 buttonOptions: {
+                   enabled: true
+                 }
+               },
+               scrollbar: { enabled: true },
+               title: {
+                   text: 'tag2'
+               },
+               xAxis: {
+                   categories: claveTag2
+               },
+               yAxis: {
+                   title: {
+                       text: 'Numero de elementos'
+                   }
+               },
+               series: [{
+                   name: 'uds',
+                   data: valorTag2
+               },{
+                   name: 'Kg',
+                   data: valorPesoTag2
+               }],
+           });
+           $('#container3').highcharts({
+               chart: {
+                 renderTo: 'chart',
+                 type: 'column',
+                 margin: 75,
+                 marginTop:100,
+                 options3d: {
+                   enabled: true,
+                   alpha: 0,
+                   beta: 0,
+                   depth: 50,
+                   viewDistance: 25
+                 }
+               },
+               navigation: {
+                 buttonOptions: {
+                   enabled: true
+                 }
+               },
+               scrollbar: { enabled: true },
+               title: {
+                   text: 'tag3'
+               },
+               xAxis: {
+                   categories: claveTag3
+               },
+               yAxis: {
+                   title: {
+                       text: 'Numero de elementos'
+                   }
+               },
+               series: [{
+                   name: 'uds',
+                   data: valorTag3
+               },{
+                   name: 'Kg',
+                   data: valorPesoTag3
+               }],
+           });
+           $('#container4').highcharts({
+               chart: {
+                 renderTo: 'chart',
+                 type: 'column',
+                 margin: 75,
+                 marginTop:100,
+                 options3d: {
+                   enabled: true,
+                   alpha: 0,
+                   beta: 0,
+                   depth: 50,
+                   viewDistance: 25
+                 }
+               },
+               navigation: {
+                 buttonOptions: {
+                   enabled: true
+                 }
+               },
+               scrollbar: { enabled: true },
+               title: {
+                   text: 'Fecha'
+               },
+               xAxis: {
+                   categories: claveFecha
+               },
+               yAxis: {
+                   title: {
+                       text: 'Numero de elementos'
+                   }
+               },
+               series: [{
+                   name: 'uds',
+                   data: valorFecha
+               },{
+                   name: 'kg',
+                   data: valorPesoFecha
+               }],
+           });
+
+
+
        };
-
-
-
-
-
-
-       function Graficos_TAG2(tag2){
-        $(function(){
-          $.ajax({
-            url:  '/datosTag2/?tag2='+tag2,
-            type: 'get',
-            success: function(datos) {
-              Visualiza_datos2(datos);
-            },
-            failure: function(datos) {
-              alert('esto no vá');
-            }
-          });
-
-
-          function Visualiza_datos2(datos) {
-              var claveTag1=datos['datos1']['clave'];
-              var valorTag1=datos['datos1']['valor'];
-
-              var claveTag3=datos['datos2']['clave'];
-              var valorTag3=datos['datos2']['valor'];
-
-
-
-              console.debug('voy a mostrar el nombre de los bares')
-              console.log(claveTag1);
-              console.log(valorTag1);
-          $('#container').highcharts({
-            chart: {
-              renderTo: 'chart',
-              type: 'column',
-              margin: 75,
-              marginTop:100,
-              options3d: {
-                enabled: true,
-                alpha: 0,
-                beta: 0,
-                depth: 50,
-                viewDistance: 25
-              }
-            },
-            scrollbar: { enabled: true },
-              title: {
-                  text: tag2
-              },
-              xAxis: {
-                  categories: claveTag1
-              },
-              yAxis: {
-                  title: {
-                      text: 'Numero de elementos'
-                  }
-              },
-              series: [{
-                  name: 'TAG1',
-                  data: valorTag1
-              }],
-          });
-          $('#container2').highcharts({
-            chart: {
-              renderTo: 'chart',
-              type: 'column',
-              margin: 75,
-              marginTop:100,
-              options3d: {
-                enabled: true,
-                alpha: 0,
-                beta: 0,
-                depth: 50,
-                viewDistance: 25
-              }
-            },
-
-            scrollbar: { enabled: true },
-              title: {
-                  text: tag2
-              },
-              xAxis: {
-                  categories: claveTag3
-              },
-              yAxis: {
-                  title: {
-                      text: 'Numero de elementos'
-                  }
-              },
-              series: [{
-                  name: 'TAG3',
-                  data: valorTag3
-              }],
-          });
-      };
-      });
-    };
-
-
-
-    function Graficos_TAG3(tag3){
-     $(function(){
-       $.ajax({
-         url:  '/datosTag3/?tag3='+tag3,
-         type: 'get',
-         success: function(datos) {
-           Visualiza_datos3(datos);
-         },
-         failure: function(datos) {
-           alert('esto no vá');
-         }
        });
+     };
 
 
-       function Visualiza_datos3(datos) {
-           var claveTag1=datos['datos1']['clave'];
-           var valorTag1=datos['datos1']['valor'];
-
-           var claveTag2=datos['datos2']['clave'];
-           var valorTag2=datos['datos2']['valor'];
 
 
-           console.debug('voy a mostrar el nombre de los bares')
-           console.log(claveTag1);
-           console.log(valorTag1);
-       $('#container').highcharts({
-           chart: {
-               type: 'bar'
-           },
-           title: {
-               text: tag3
-           },
-           xAxis: {
-               categories: claveTag1
-           },
-           yAxis: {
-               title: {
-                   text: 'Numero de elementos'
-               }
-           },
-           series: [{
-               name: 'TAG1',
-               data: valorTag1,
-           }],
-       });
-       $('#container2').highcharts({
-           chart: {
-               type: 'bar'
-           },
-           title: {
-               text: tag3
-           },
-           xAxis: {
-               categories: claveTag2
-           },
-           yAxis: {
-               title: {
-                   text: 'Numero de elementos'
-               }
-           },
-           series: [{
-               name: 'TAG2',
-               data: valorTag2
-           }],
-       });
-   };
-   });
- };
-             </script>
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+        <div id="container" style="height: 300px"></div>
+        <hr>
+        <hr>
+        <br>
+        <div id="container2" style="height: 300px"></div>
+        <hr>
+        <hr>
+        <br>
+        <div id="container3" style="height: 300px"></div>
+        <hr>
+        <hr>
+        <br>
+        <div id="container4" style="height: 300px"></div>
+
+
+
+
+
+
+
+
+
+
+
 
 {% endblock %}
