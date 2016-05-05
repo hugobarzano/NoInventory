@@ -33,6 +33,9 @@
             </p>
             Tag: {{catalogo.tag_catalogo}}
             Tipo: {{catalogo.tipo_catalogo}}
+            <hr>
+            <p id="peso">Peso Total: {{catalogo.peso_total}}</p>
+
             <br>
             <br>
             Creado por: {{ catalogo.usuario }}
@@ -62,7 +65,7 @@
             <th>Tag1</th>
             <th>TAG2</th>
             <th>TAG3</th>
-            <th>Cantidad</th>
+            <th>Peso</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -75,7 +78,7 @@
                 <td>{{ i.tag1 }}</td>
                 <td>{{ i.tag2 }}</td>
                 <td>{{ i.tag3 }}</td>
-                <td>{{ i.cantidad }}</td>
+                <td>{{ i.peso }}</td>
                 <td><button class="borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}">Borrar</button></td>
               </tr>
             {% endfor %}
@@ -103,7 +106,9 @@
             data:{catalogo_id:$("#catalogo").attr("data-catalogo")},
             cache: false,
             success: function(response) {
-                $('.table').html(response)
+              console.log(response)
+                $('.table').html(response["contenido"])
+                $('#peso').html('<p id="peso">Peso Total: '+response["peso_total"]+'</p>')
 
             },
             error: function(xhr) {
@@ -135,44 +140,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-    $(document).on('click', ".addBoton", function () {
-      console.log("boton para añadir")
-      var item_id = $(this).attr("data-item")
-      var catalogo_id = $("#catalogo").attr("data-catalogo")
-      console.log("has pulsado el boton")
-      console.log(item_id)
-      console.log("Del catalogo")
-      console.log(catalogo_id)
-      $.ajax({
-        url: "/addToCatalogo/",
-        type: "get", //send it through get method
-        data:{item_id:item_id,catalogo_id:catalogo_id},
-        success: function(response) {
-          console.log(response);
-          $('#lista_items').html(function(){
-              var content = '<ul class="list-group" id="lista_items">  <li class="list-group-item"> ';
-              for(var i = 0; i < response["nombre_items"].length; i++){
-                content = content + '<br><h>' + response["nombre_items"][i]+'</h><br>';
-              }
-                content = content + '</li></ul>';
-                return content;
-          }
-        )},
-        error: function(xhr) {
-    //Do Something to handle error
-        }
-    });
-
-    });
   </script>
 
 

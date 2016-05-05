@@ -6,6 +6,7 @@ from bson.objectid import ObjectId
 from pymongo import *
 import time
 from item import *
+from catalogo import *
 from clasificacion import *
 import os
 
@@ -63,6 +64,8 @@ def test_delete(manejador, new_item):
 def main():
     manejador = ItemsDriver()
     manejador2 = ClasificacionDriver()
+    #manejardor3= CatalogosDriver()
+    #manejardor3.database.catalogos.remove()
     manejador.destroyDriver()
     print "\n#######################################################"
     print "LANZANDO BATERIA DE TEST - OPERACIONES CRUD PARA ITEMS"
@@ -83,7 +86,7 @@ def main():
         "tag1":"Administración de  Servicios Centrales",
         "tag2":"MONITOR  CRT",
         "tag3":"DEFAULT",
-        "cantidad":5.2,
+        "peso":5.2,
         "localizador":" ",
         "qr_data":" "})
 

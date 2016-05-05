@@ -3,10 +3,11 @@ from pymongo import *
 import time
 import os
 from item import *
+gestorItems=ItemsDriver()
 class Catalogo(object):
     """Clase para almacenar informacion de los catalogos"""
 
-    def __init__(self, catalogo_id=None,nombre_catalogo=None,fecha_alta_catalogo=None, descripcion_catalogo=None,organizacion=None,usuario=None,tag_catalogo=None,tipo_catalogo=None,items_catalogo=[],id_items_catalogo=[],qr_data=None):
+    def __init__(self, catalogo_id=None,nombre_catalogo=None,fecha_alta_catalogo=None, descripcion_catalogo=None,organizacion=None,usuario=None,tag_catalogo=None,tipo_catalogo=None,peso_total=None,id_items_catalogo=[],qr_data=None):
 
         if catalogo_id is None:
             self._id = ObjectId()
@@ -20,7 +21,7 @@ class Catalogo(object):
         self.usuario=usuario
         self.tag_catalogo=tag_catalogo
         self.tipo_catalogo=tipo_catalogo
-        self.items_catalogo=items_catalogo
+        self.peso_total=peso_total
         self.id_items_catalogo=id_items_catalogo
         self.qr_data=qr_data
 
@@ -45,7 +46,7 @@ class Catalogo(object):
                     json_data['usuario'],
                     json_data['tag_catalogo'],
                     json_data['tipo_catalogo'],
-                    json_data['items_catalogo'],
+                    json_data['peso_total'],
                     json_data['id_items_catalogo'],
                     json_data['qr_data'])
             except KeyError as e:
@@ -84,6 +85,20 @@ class CatalogosDriver(object):
         else:
             raise Exception("Imposible generar QR para el catalogo")
 
+    def calculatePeso(self,catalogo):
+        if catalogo is not None:
+            peso=0
+            print "calculando peso"
+            print catalogo.id_items_catalogo
+            for i in catalogo.id_items_catalogo:
+                item_aux=gestorItems.database.items.find({"_id":ObjectId(i)})
+                #print "item encontrado"+item_aux
+                for j in item_aux:
+                    item_object=Item.build_from_json(j)
+                peso=peso+int(item_object.peso)
+            self.database.catalogos.update({"_id":catalogo._id},{"$set": {"peso_total": peso}})
+        else:
+            raise Exception("Imposible calcular peso el catalogo")
 
     def read(self, catalogo_id=None):
         if catalogo_id is None:
@@ -111,7 +126,6 @@ class CatalogosDriver(object):
             for i in item:
                 item_object = Item.build_from_json(i)
                 print item_object.nombre_item
-            self.database.catalogos.update({"_id": ObjectId(catalogo_id)},{"$addToSet": {"items_catalogo" : item_object.nombre_item,}})
             self.database.catalogos.update({"_id": ObjectId(catalogo_id)},{"$addToSet": {"id_items_catalogo" : str(item_object._id),}})
 
         else:

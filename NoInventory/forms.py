@@ -44,7 +44,8 @@ class ItemForm3(forms.Form):
         self.fields['tag1'] = forms.ChoiceField(label="TAG 1", choices=[(x["VALOR1"], x["VALOR1"]) for x in lista_tag1])
         self.fields['tag2'] = forms.ChoiceField(label=lista_tag2[0]["VALOR2"], choices=[(x["VALOR2"], x["VALOR2"]) for x in lista_tag2])
         self.fields['tag3'] = forms.ChoiceField(label="TAG 3", choices=[(x["VALOR3"], x["VALOR3"]) for x in lista_tag3])
-        self.fields['cantidad'] = forms.FloatField(required=False, label='cantidad')
+        self.fields['peso'] = forms.FloatField(required=False, label='Peso/Unidad')
+        self.fields['unidades']=forms.IntegerField(required=True,label='Unidades',initial=1)
 
 
 

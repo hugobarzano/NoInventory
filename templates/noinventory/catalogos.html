@@ -33,6 +33,7 @@
                   Descripcion: {{ i.descripcion_catalogo }}
                 </p>
                 Tags: {{i.tag_catalogo}}
+                Peso Total: {{i.peso_total}}
                 <br>
                 {{ i.qr_data|qrcode:"my alt" }}
                 <button class="btn btn-default btn-xs borrarBoton" data-inventory="{{i.id}}">Borrar</button>

@@ -161,7 +161,8 @@ def catalogoToInforme(request):
         catalogo_object._id=str(catalogo_object._id)
 
         for i in catalogo_object.id_items_catalogo:
-            item_aux=gestorItems.database.items.find({"organizacion":request.session['organizacion'],"_id":ObjectId(i)})
+            #item_aux=gestorItems.database.items.find({"organizacion":request.session['organizacion'],"_id":ObjectId(i)})
+            item_aux=gestorItems.database.items.find({"_id":ObjectId(i)})
             for j in item_aux:
                 item_object=Item.build_from_json(j)
             item_object._id=str(item_object._id)
@@ -190,7 +191,14 @@ def addSearchToCatalogo(request):
         for i in data:
             print i
             gestorCatalogos.addToCatalogo( str(mydic["catalogo_id"][0]),i,gestorItems)
-        return HttpResponse("<strong>Los elementos han sido eliminados</strong>")
+        print "Catalogo:"
+        print ObjectId(mydic["catalogo_id"][0])
+        catalogo=gestorCatalogos.database.catalogos.find({"_id":ObjectId(mydic["catalogo_id"][0])})
+        print "superada busqueda"
+        for j in catalogo:
+            catalogo_object=Catalogo.build_from_json(j)
+        gestorCatalogos.calculatePeso(catalogo_object)
+        return HttpResponse("<strong>Los elementos han sido añadidos</strong>")
 
 
 @csrf_exempt
@@ -207,9 +215,9 @@ def addToCatalogo(request):
             catalogo_object = Catalogo.build_from_json(i)
 
 
-        for i in catalogo_object.items_catalogo:
-            aux3.append(i)
-            respuesta={"nombre_items":aux3}
+        #for i in catalogo_object.items_catalogo:
+        #    aux3.append(i)
+        #    respuesta={"nombre_items":aux3}
 
         print "Respuestad del servidor"
         print respuesta
@@ -232,7 +240,7 @@ def updateCatalogo(request):
                 lista_items.append(item_object.get_as_json())
 
         contenido='<table class="table table-hover"> <thead> <tr> <th>Item</th> <th>Fecha</th> <th>Tag1</th> <th>TAG2</th><th>TAG3</th>'
-        contenido=contenido+'<th>Cantidad</th> <th>Acciones</th></tr></thead><tbody>'
+        contenido=contenido+'<th>Peso</th> <th>Acciones</th></tr></thead><tbody>'
         for t in lista_items:
             print t["nombre_item"]
             contenido=contenido+'<tr><td>'+t["nombre_item"]+'</td>'
@@ -240,10 +248,12 @@ def updateCatalogo(request):
             contenido=contenido+'<td>'+t["tag1"]+'</td>'
             contenido=contenido+'<td>'+t["tag2"]+'</td>'
             contenido=contenido+'<td>'+t["tag3"]+'</td>'
-            contenido=contenido+'<td>'+t["cantidad"]+'</td>'
+            contenido=contenido+'<td>'+t["peso"]+'</td>'
             contenido=contenido+'<td><button class="borrarBoton" data-item="'+t["_id"]+'"id="'+t["_id"]+'">Borrar</button></td></tr>'
         contenido=contenido+'</tr></tbody></table>'
-        return HttpResponse(contenido)
+        respuesta={"contenido":contenido,"peso_total":catalogo_object.peso_total}
+        return JsonResponse(respuesta)
+        #return HttpResponse(contenido)
 
 
 #############################busqueda################################################
@@ -281,7 +291,7 @@ def busqueda(request):
             contenido=contenido+'<h5><strong>Item:</strong>'  + aux2["nombre_item"]+ ' <strong>Fecha:</strong>'+aux2["fecha_alta_item"]+'</h5></div>'
             contenido=contenido+' <div id="'+aux2["_id"]+'" data-item="'+aux2["_id"]+'" >'
             contenido=contenido+ '<p><strong>Detalles:</strong>'+aux2["descripcion_item"]+'</p>'
-            contenido=contenido+ '<p><strong>Cantidad:</strong>'+aux2["cantidad"]+'</p><hr>'
+            contenido=contenido+ '<p><strong>Peso:</strong>'+aux2["peso"]+'</p><hr>'
             contenido=contenido+'<p> <strong>TAG1: </strong>'+aux2["tag1"]+'</p>'
             contenido=contenido+'<p> <strong>TAG2: </strong>'+aux2["tag2"]+'</p>'
             contenido=contenido+'<p> <strong>TAG3: </strong>'+aux2["tag3"]+'</p><hr>'
@@ -799,7 +809,7 @@ def addItemFromQr(request):
         #print catalogo_object.nombre_catalogo
 
         #gestorCatalogos.addToCatalogo(catalogo[0],data_aux["_id"],gestorItems)
-        gestorCatalogos.database.catalogos.update({"_id": catalogo_object._id},{"$addToSet": {"items_catalogo" : item_object.nombre_item,}})
+        gestorCatalogos.database.catalogos.update({"_id": catalogo_object._id},{"$addToSet": {"id_items_catalogo" : str(item_object._id),}})
         return HttpResponse("OK")
 
     else:
@@ -913,7 +923,7 @@ def borrarItem(request):
                 contenido=contenido+'<h5><strong>Item:</strong>'  + aux2["nombre_item"]+ ' <strong>Fecha:</strong>'+aux2["fecha_alta_item"]+'</h5></div>'
                 contenido=contenido+' <div id="'+aux2["_id"]+'" data-item="'+aux2["_id"]+'" >'
                 contenido=contenido+ '<p><strong>Detalles:</strong>'+aux2["descripcion_item"]+'</p>'
-                contenido=contenido+ '<p><strong>Cantidad:</strong>'+aux2["cantidad"]+'</p><hr>'
+                contenido=contenido+ '<p><strong>Peso:</strong>'+aux2["peso"]+'</p><hr>'
                 contenido=contenido+'<p> <strong>TAG1: </strong>'+aux2["tag1"]+'</p>'
                 contenido=contenido+'<p> <strong>TAG2: </strong>'+aux2["tag2"]+'</p>'
                 contenido=contenido+'<p> <strong>TAG3: </strong>'+aux2["tag3"]+'</p><hr>'
@@ -964,7 +974,7 @@ def borrarItemFromCatalogo(request):
                 lista_items.append(item_object.get_as_json())
 
         contenido='<table class="table table-hover"> <thead> <tr> <th>Item</th> <th>Fecha</th> <th>Tag1</th> <th>TAG2</th><th>TAG3</th>'
-        contenido=contenido+'<th>Cantidad</th> <th>Acciones</th></tr></thead><tbody>'
+        contenido=contenido+'<th>Peso</th> <th>Acciones</th></tr></thead><tbody>'
         for t in lista_items:
             print t["nombre_item"]
             contenido=contenido+'<tr><td>'+t["nombre_item"]+'</td>'
@@ -972,7 +982,7 @@ def borrarItemFromCatalogo(request):
             contenido=contenido+'<td>'+t["tag1"]+'</td>'
             contenido=contenido+'<td>'+t["tag2"]+'</td>'
             contenido=contenido+'<td>'+t["tag3"]+'</td>'
-            contenido=contenido+'<td>'+t["cantidad"]+'</td>'
+            contenido=contenido+'<td>'+t["peso"]+'</td>'
             contenido=contenido+'<td><button class="borrarBoton" data-item="'+t["_id"]+'"id="'+t["_id"]+'">Borrar</button></td></tr>'
         contenido=contenido+'</tr></tbody></table>'
         return HttpResponse(contenido)
@@ -990,19 +1000,24 @@ class ItemCreator(View):
     def post(self, request):
         form = ItemForm3(request.POST,organizacion=request.session['organizacion'])
         if form.is_valid():
-            item =Item.build_from_json({"nombre_item": form.data['nombre_item'],
-                        "fecha_alta_item": datetime.now().strftime('%Y-%m-%d'),
-                        "descripcion_item": form.data['descripcion_item'],
-                        "organizacion": request.session["organizacion"],
-                        "usuario":request.session['username'],
-                        "tag1": form.data['tag1'],
-                        "tag2": form.data['tag2'],
-                        "tag3": form.data['tag3'],
-                        "cantidad":form.data['cantidad'],
-                        "localizador":" ",
-                        "qr_data":" ",
-                        })
-            gestorItems.create(item,gestorClasificacion,request.session['organizacion'])
+            unidades=form.data['unidades']
+            print unidades
+            for i in range(int(unidades)):
+                item =Item.build_from_json({"nombre_item": form.data['nombre_item'],
+                            "fecha_alta_item": datetime.now().strftime('%Y-%m-%d'),
+                            "descripcion_item": form.data['descripcion_item'],
+                            "organizacion": request.session["organizacion"],
+                            "usuario":request.session['username'],
+                            "tag1": form.data['tag1'],
+                            "tag2": form.data['tag2'],
+                            "tag3": form.data['tag3'],
+                            "peso":form.data['peso'],
+                            "localizador":" ",
+                            "qr_data":" ",
+                            })
+                print "item creado"
+                print item._id
+                gestorItems.create(item,gestorClasificacion,request.session['organizacion'])
             lista_items=gestorItems.database.items.find({"usuario":request.session["username"]})
             contexto = {"lista_items":lista_items}
             return redirect('/items',contexto)
@@ -1039,7 +1054,7 @@ class ItemUpdater(View):
                         "tag1":form.data["tag1"],
                         "tag2": form.data['tag2'],
                         "tag3": form.data['tag3'],
-                        "cantidad":form.data['cantidad'],
+                        "peso":form.data['peso'],
                         "localizador":c.localizador,
                         "qr_data":c.qr_data,
                         })
@@ -1067,7 +1082,7 @@ class CatalogoCreator(View):
                         "usuario":request.session['username'],
                         "tag_catalogo": form.data['tag_catalogo'],
                         "tipo_catalogo":form.data['tipo_catalogo'],
-                        "items_catalogo": [],
+                        "peso_total":str(0),
                         "id_items_catalogo": [],
                         "qr_data":" ",
                         })
@@ -1106,7 +1121,7 @@ class CatalogoUpdater(View):
                         "usuario":c.usuario,
                         "tag_catalogo": form.data['tag_catalogo'],
                         "tipo_catalogo": form.data['tipo_catalogo'],
-                        "items_catalogo": c.items_catalogo,
+                        "peso_total": c.peso_total,
                         "id_items_catalogo": c.id_items_catalogo,
                         "qr_data":c.qr_data,
                         })

@@ -186,16 +186,17 @@
           var cata='<h3>'+result["catalogo"]["nombre_catalogo"]+"</h3>"
           cata=cata+'<p>'+result["catalogo"]["descripcion_catalogo"]+"</p>"
 
-          var content = '<table class="table table-hover"><thead><tr><th>Item</th><th>Fecha</th><th>Tag1</th><th>TAG2</th><th>TAG3</th> <th>Localizador</th></tr></thead><tbody>';
+          var content = '<table class="table table-hover"><thead><tr><th>Item</th><th>Fecha</th><th>Tag1</th><th>TAG2</th><th>TAG3</th> <th>Peso</th></tr></thead><tbody>';
           for(var i = 0; i < result["items"].length; i++){
                content = content + '<tr><td>' + result["items"][i]["nombre_item"]+'</td>';
                content = content + '<td>' + result["items"][i]["fecha_alta_item"]+'</td>';
                content = content + '<td>' + result["items"][i]["tag1"]+'</td>';
                content = content + '<td>' + result["items"][i]["tag2"]+'</td>';
                content = content + '<td>' + result["items"][i]["tag3"]+'</td>';
-               content = content + '<td>' + result["items"][i]["localizador"]+'</td>';
+               content = content + '<td>' + result["items"][i]["peso"]+'</td>';
           }
-          content = content + '</tbody></table>';
+          content = content + '</tbody></table><hr><br>';
+          content = content + '<strong>Peso total :</strong>'
           nicEditors.findEditor('editor').setContent(contenido+"<hr>"+cata+"<hr>"+content)
 
 
