@@ -85,11 +85,15 @@ class CatalogosDriver(object):
         else:
             raise Exception("Imposible generar QR para el catalogo")
 
+
+
     def calculatePeso(self,catalogo):
         if catalogo is not None:
-            peso=0
+            peso=0.0
             print "calculando peso"
             print catalogo.id_items_catalogo
+            item_object=Item()
+            item_object.peso=0
             for i in catalogo.id_items_catalogo:
                 item_aux=gestorItems.database.items.find({"_id":ObjectId(i)})
                 #print "item encontrado"+item_aux
@@ -98,6 +102,14 @@ class CatalogosDriver(object):
                     print "peso objeto"+item_object.peso
                 peso=peso+float(item_object.peso)
             self.database.catalogos.update({"_id":catalogo._id},{"$set": {"peso_total": peso}})
+        else:
+            raise Exception("Imposible calcular peso el catalogo")
+
+    def cleanCatalogo(self,catalogo):
+        if catalogo is not None:
+            self.database.catalogos.update({"_id":catalogo._id},{"$set": {"id_items_catalogo": []}})
+            self.database.catalogos.update({"_id":catalogo._id},{"$set": {"peso_total": 0}})
+
         else:
             raise Exception("Imposible calcular peso el catalogo")
 
