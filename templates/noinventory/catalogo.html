@@ -63,7 +63,9 @@
             <h3 class="panel-title">Items del catalogo </h3>
           </div>
         </div>
-        <table class="table table-hover">
+
+        <div class="table-responsive scrooll">
+        <table class="table table-hover table-striped  scrooll">
         <thead>
           <tr>
             <th>Item</th>
@@ -75,7 +77,7 @@
             <th>Acciones</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody >
           {% if lista_items %}
             {% for i in lista_items %}
               <tr>
@@ -95,6 +97,8 @@
         </tbody>
         </table>
       </div>
+
+    </div>
 
 
 

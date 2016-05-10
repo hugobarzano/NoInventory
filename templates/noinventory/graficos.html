@@ -71,7 +71,8 @@
                var valorFecha=datos["datosf"]["valorFecha"];
                var clavePesoFecha=datos["datosPesof"]["clavePesoFecha"]
                var valorPesoFecha=datos["datosPesof"]["valorPesoFecha"]
-
+               var valorTags=datos["datosTags"]["datosTags"]
+               console.log(valorTags);
 
 
            $('#container').highcharts({
@@ -95,14 +96,14 @@
                },
                scrollbar: { enabled: true },
                title: {
-                   text: 'tag1'
+                   text: valorTags[0]
                },
                xAxis: {
                    categories: claveTag1
                },
                yAxis: {
                    title: {
-                       text: 'Numero de elementos'
+                       text: 'Nº-elementos -- Peso'
                    }
                },
                series: [{
@@ -134,14 +135,14 @@
                },
                scrollbar: { enabled: true },
                title: {
-                   text: 'tag2'
+                   text: valorTags[1]
                },
                xAxis: {
                    categories: claveTag2
                },
                yAxis: {
                    title: {
-                       text: 'Numero de elementos'
+                       text:  'Nº-elementos -- Peso'
                    }
                },
                series: [{
@@ -173,14 +174,14 @@
                },
                scrollbar: { enabled: true },
                title: {
-                   text: 'tag3'
+                   text: valorTags[2]
                },
                xAxis: {
                    categories: claveTag3
                },
                yAxis: {
                    title: {
-                       text: 'Numero de elementos'
+                       text:  'Nº-elementos -- Peso'
                    }
                },
                series: [{
@@ -212,14 +213,14 @@
                },
                scrollbar: { enabled: true },
                title: {
-                   text: 'Fecha'
+                   text: 'FECHA'
                },
                xAxis: {
                    categories: claveFecha
                },
                yAxis: {
                    title: {
-                       text: 'Numero de elementos'
+                       text:  'Nº-elementos -- Peso'
                    }
                },
                series: [{

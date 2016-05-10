@@ -1,6 +1,13 @@
 
 
-
+table{
+    border-spacing: 0;
+    display: flex;/*Se ajuste dinamicamente al tamano del dispositivo**/
+    overflow-y: auto; /**El scroll verticalmente cuando sea necesario*/
+    overflow-x: hidden;/*Sin scroll horizontal*/
+    table-layout: fixed;/**Forzamos a que las filas tenga el mismo ancho**/
+    border:1px solid gray;  
+}
 
 .panel-primary > .panel-heading {
   background-color: 	#BA55D3;

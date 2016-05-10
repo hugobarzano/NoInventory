@@ -122,14 +122,6 @@ $(document).ready(				//Lanza la selección de fecha
 	}
 );
 
-$('#datepicker_inicio').change(function () {		//Actualiza los datos al cambiar de fecha,sin recargar la página, utilizando AJAX
-
-  var fecha = document.getElementById('datepicker').value;
-  console.log(fecha)
-});
-
-
-
 
 $(document).ready(function(){
 
@@ -250,7 +242,11 @@ $(document).ready(function(){
                </div>
 
                  <div id="{{ i|documento_id}}" data-item="{{ i|documento_id}}" >
-
+                   <button class=" btn-danger btn-xs pull-right borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}"><span class="glyphicon glyphicon-remove"></span></button>
+                   <a href="/modificarItem/{{ i|documento_id}}"><button class=" btn-warning btn-xs pull-right"> <span class="glyphicon glyphicon-pencil"></span></button></a>
+                   <a href="/item/{{ i|documento_id}}" > <button id='item_details' class=' btn-info btn-xs pull-right'><span class="glyphicon glyphicon-search"></span>Detalles</button></a>
+                   <br>
+                   <hr>
                   <p><strong>Detalles: </strong>{{ i.descripcion_item }}</p>
                   <p><strong>Peso: </strong>{{ i.peso }}</p>
 
@@ -266,9 +262,7 @@ $(document).ready(function(){
                    {{ i.qr_data|qrcode:"qr_data" }}
 
                    <br>
-                 <button class="borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}">Borrar</button>
-                 <a href="/modificarItem/{{ i|documento_id}}"><button class="btn btn-default btn-xs"> Modificar</button> </a>
-                 <a href="/item/{{ i|documento_id}}" > <button id='item_details'>Detalles</button></a>
+
 
                  </div>
              {% endfor %}

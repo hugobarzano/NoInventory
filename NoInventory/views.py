@@ -114,7 +114,7 @@ def item(request,id_item):
     for i in item:
         item_object = Item.build_from_json(i)
 
-    contexto = {"item":item_object,"map":item_object.tag1+', Granada',"id_item":item_object._id}
+    contexto = {"item":item_object,"map":str(item_object.tag1)+', Granada',"id_item":item_object._id}
     return render(request, 'noinventory/item.html',contexto)
 
 def prueba(request):
@@ -299,6 +299,9 @@ def busqueda(request):
             contenido=contenido+'<div class="panel panel-default">'
             contenido=contenido+'<h5><strong>Item:</strong>'  + aux2["nombre_item"]+ ' <strong>Fecha:</strong>'+aux2["fecha_alta_item"]+'</h5></div>'
             contenido=contenido+' <div id="'+aux2["_id"]+'" data-item="'+aux2["_id"]+'" >'
+            contenido = contenido + '<button class="btn-danger btn-xs pull-right borrarBoton" data-item="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
+            contenido = contenido + '<a href="/modificarItem/'+aux2["_id"]+'"><button class="btn-warning btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
+            contenido = contenido + '<a href="/item/'+aux2["_id"]+'"><button class="btn-info btn-xs pull-right"><span class="glyphicon glyphicon-search"></span>Detalles</button> </a><br><hr>'
             contenido=contenido+ '<p><strong>Detalles:</strong>'+aux2["descripcion_item"]+'</p>'
             contenido=contenido+ '<p><strong>Peso:</strong>'+aux2["peso"]+'</p><hr>'
             contenido=contenido+'<p> <strong>TAG1: </strong>'+aux2["tag1"]+'</p>'
@@ -306,10 +309,7 @@ def busqueda(request):
             contenido=contenido+'<p> <strong>TAG3: </strong>'+aux2["tag3"]+'</p><hr>'
             contenido=contenido+'<p> <strong>Creado por: </strong>' +aux2["usuario"]+'</p><p><strong>Organizacion: </strong>' +aux2["organizacion"]+'</p><hr>'
             contenido=contenido+'<p><strong>Localizador: </strong>' +aux2["localizador"]+'</p>'
-            contenido = contenido + qrcode(aux2["qr_data"], alt="qr")+'<br>'
-            contenido = contenido + '<a href="/modificarItem/'+aux2["_id"]+'"><button class="btn btn-default btn-xs">Modificar</button> </a>'
-            contenido = contenido + '<a href="/item/'+aux2["_id"]+'"><button class="btn btn-default btn-xs">Detalles</button> </a>'
-            contenido = contenido + '<button class="borrarBoton" data-item="'+aux2["_id"]+'">Borrar</button></div>'
+            contenido = contenido + qrcode(aux2["qr_data"], alt="qr")+'<br></div>'
         contenido=contenido+'</div> <div class="col-md-12 text-center"><ul id="myPager" class="pagination"></ul></div></div>'
 
         return HttpResponse(contenido)
@@ -494,7 +494,16 @@ def dataGraficos(request):
                 datosPesof['clavePesoFecha'].append(tag)
                 datosPesof['valorPesoFecha'].append(dicTagPesof[tag])
 
-            datos={'datos1':datos1,'datosPeso1':datosPeso1,'datos2':datos2,'datosPeso2':datosPeso2,'datos3':datos3,'datosPeso3':datosPeso3,'datosf':datosf,'datosPesof':datosPesof}
+            datosTags={'datosTags':[]}
+            lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":request.session["organizacion"]}).sort([("CLAVE1", 1)])
+            lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":request.session["organizacion"]}).sort([("CLAVE2", 1)])
+            lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":request.session["organizacion"]}).sort([("CLAVE3", 1)])
+            datosTags["datosTags"].append( lista_tag1[0]["VALOR1"])
+            datosTags["datosTags"].append( lista_tag2[0]["VALOR2"])
+            datosTags["datosTags"].append( lista_tag3[0]["VALOR3"])
+
+
+            datos={'datos1':datos1,'datosPeso1':datosPeso1,'datos2':datos2,'datosPeso2':datosPeso2,'datos3':datos3,'datosPeso3':datosPeso3,'datosf':datosf,'datosPesof':datosPesof,'datosTags':datosTags}
 
 
 
@@ -911,7 +920,7 @@ def itemsJson(request):
         if request.POST["flag"] == "True":
 
             try:
-                lista_items=gestorItems.database.items.find({"usuario":request.POST["username"]})
+                lista_items=gestorItems.database.items.find({"usuario":request.POST["username"],"organizacion":request.POST["organizacion"]}).sort([("fecha_alta_item", -1)]).limit(50)
                 for i in lista_items:
                     aux = Item.build_from_json(i)
                     aux2=aux.get_as_json()
@@ -925,7 +934,7 @@ def itemsJson(request):
         else:
 
             try:
-                lista_items=gestorItems.database.items.find({"organizacion":request.POST["organizacion"]})
+                lista_items=gestorItems.database.items.find({"organizacion":request.POST["organizacion"]}).sort([("fecha_alta_item", -1)]).limit(50)
                 for i in lista_items:
                     aux = Item.build_from_json(i)
                     aux2=aux.get_as_json()
@@ -1112,6 +1121,9 @@ def borrarItem(request):
                 contenido=contenido+'<div class="panel panel-default">'
                 contenido=contenido+'<h5><strong>Item:</strong>'  + aux2["nombre_item"]+ ' <strong>Fecha:</strong>'+aux2["fecha_alta_item"]+'</h5></div>'
                 contenido=contenido+' <div id="'+aux2["_id"]+'" data-item="'+aux2["_id"]+'" >'
+                contenido = contenido + '<button class="btn-danger btn-xs pull-right borrarBoton" data-item="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
+                contenido = contenido + '<a href="/modificarItem/'+aux2["_id"]+'"><button class="btn-warning btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
+                contenido = contenido + '<a href="/item/'+aux2["_id"]+'"><button class="btn-info btn-xs pull-right"><span class="glyphicon glyphicon-search"></span>Detalles</button> </a><br><hr>'
                 contenido=contenido+ '<p><strong>Detalles:</strong>'+aux2["descripcion_item"]+'</p>'
                 contenido=contenido+ '<p><strong>Peso:</strong>'+aux2["peso"]+'</p><hr>'
                 contenido=contenido+'<p> <strong>TAG1: </strong>'+aux2["tag1"]+'</p>'
@@ -1119,10 +1131,7 @@ def borrarItem(request):
                 contenido=contenido+'<p> <strong>TAG3: </strong>'+aux2["tag3"]+'</p><hr>'
                 contenido=contenido+'<p> <strong>Creado por: </strong>' +aux2["usuario"]+'</p><p><strong>Organizacion: </strong>' +aux2["organizacion"]+'</p><hr>'
                 contenido=contenido+'<p><strong>Localizador: </strong>' +aux2["localizador"]+'</p>'
-                contenido = contenido + qrcode(aux2["qr_data"], alt="qr")+'<br>'
-                contenido = contenido + '<button class="borrarBoton" data-item="'+aux2["_id"]+'">Borrar</button>'
-                contenido = contenido + '<a href="/modificarItem/'+aux2["_id"]+'"><button class="btn btn-default btn-xs">Modificar</button> </a>'
-                contenido = contenido + '<a href="/item/'+aux2["_id"]+'"><button class="btn btn-default btn-xs">Detalles</button> </a></div>'
+                contenido = contenido + qrcode(aux2["qr_data"], alt="qr")+'<br></div>'
             contenido=contenido+'</div> <div class="col-md-12 text-center"><ul id="myPager" class="pagination"></ul></div></div>'
         except KeyError as e:
             raise Exception("No tienes objetos asociados : {}".format(e.message))
