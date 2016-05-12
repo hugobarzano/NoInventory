@@ -1,3 +1,6 @@
+# coding=utf8
+# -*- coding: utf8 -*-
+# vim: set fileencoding=utf8 :
 #!/usr/bin/env python
 
 
@@ -34,3 +37,10 @@ def qrcode(value, alt=None):
 @register.filter("documento_id")
 def documento_id(value):
     return str(value['_id'])
+
+@register.filter("direccion")
+def direccion(value):
+    aux=value.encode('utf-8')
+    aux=aux+', Granada, España'
+    print aux
+    return aux

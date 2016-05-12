@@ -116,7 +116,7 @@ def item(request,id_item):
         item_object = Item.build_from_json(i)
 
     #contexto = {"item":item_object,"map":str(item_object.tag1)+', Granada',"id_item":item_object._id}
-    contexto = {"item":item_object,"map":item_object.tag1,"ciudad":',Granada',"id_item":item_object._id}
+    contexto = {"item":item_object,"map":item_object.tag1,"ciudad":' ,Granada, Spain,',"id_item":item_object._id}
     return render(request, 'noinventory/item.html',contexto)
 
 def prueba(request):
@@ -923,7 +923,7 @@ def itemsJson(request):
 
         return HttpResponse()
     else:
-        default={"_id":"ID","nombre":"Nombre","descripcion":"Descripcion"}
+        default={"_id":"ID","nombre":"Nombre","descripcion":"Descripcion","localizador":"Localizador","fecha":"Fecha"}
         aux7=[]
         aux7.append(default)
         respuesta={"items":aux7}
@@ -957,6 +957,98 @@ def itemsJson(request):
             except KeyError as e:
                 raise Exception("Organizacion sin  objetos asociados : {}".format(e.message))
             return JsonResponse(respuesta,safe=False)
+
+@csrf_exempt
+def detectarItemJson(request):
+    if request.method == 'GET':
+        default={"_id":"ID","nombre":"Nombre","descripcion":"Descripcion","localizador":"Localizador","fecha":"Fecha"}
+        aux7=[]
+        aux7.append(default)
+        respuesta=default
+        aux=[]
+        aux3=[]
+        if request.GET["flag"] == "True":
+
+            try:
+                numero=lista_items=gestorItems.database.items.find({"$or": [ {"nombre_item":{ "$regex": request.GET["consulta"]}},{"localizador":{ "$regex": request.GET["consulta"]}} ]}).count()
+                if numero > 0:
+                    lista_items=gestorItems.database.items.find({"$or": [ {"nombre_item":{ "$regex": request.GET["consulta"]}},{"localizador":{ "$regex": request.GET["consulta"]}} ]})
+                    lista_items2=[]
+                    for i in lista_items:
+                        item_object=Item.build_from_json(i)
+                        if item_object.organizacion==request.GET['organizacion']:
+                            lista_items2.append(item_object.get_as_json())
+
+                    aux4={"lista_i":lista_items2}
+                    print "aux4"
+                    #print aux4
+                    print aux4["lista_i"][0]["nombre_item"]
+                    aux5={"_id":str(aux4["lista_i"][0]["_id"]),"nombre":aux4["lista_i"][0]["nombre_item"],"descripcion":aux4["lista_i"][0]["descripcion_item"],"localizador":aux4["lista_i"][0]["localizador"],"fecha":aux4["lista_i"][0]["fecha_alta_item"]}
+                    print aux5
+                    respuesta=aux5
+                else:
+                    respuesta=default
+            except KeyError as e:
+                raise Exception("No tienes objetos asociados : {}".format(e.message))
+            return JsonResponse(respuesta,safe=False)
+        else:
+            try:
+                numero=gestorItems.database.items.find({"organizacion":request.GET["organizacion"],"localizador":request.GET["consulta"]}).count()
+                if numero > 0:
+                    lista_items=gestorItems.database.items.find({"organizacion":request.GET["organizacion"],"localizador":request.GET["consulta"]})
+                    for i in lista_items:
+                        item_object=Item.build_from_json(i)
+                    aux5={"_id":str(item_object._id),"nombre":item_object.nombre_item,"descripcion":item_object.descripcion_item,"localizador":item_object.localizador,"fecha":item_object.fecha_alta_item}
+                    respuesta=aux5
+                else:
+                    respuesta=default
+            except KeyError as e:
+                raise Exception("No tienes objetos asociados : {}".format(e.message))
+            return JsonResponse(respuesta,safe=False)
+
+    else:
+        default={"_id":"ID","nombre":"Nombre","descripcion":"Descripcion","localizador":"Localizador","fecha":"Fecha"}
+        aux7=[]
+        aux7.append(default)
+        respuesta=default
+        aux=[]
+        aux3=[]
+        if request.POST["flag"] == "True":
+
+            try:
+                numero=gestorItems.database.items.find({"$or": [ {"nombre_item":{ "$regex": request.POST["consulta"]}},{"localizador":{ "$regex": request.POST["consulta"]}} ]}).count()
+                if numero > 0:
+                    lista_items=gestorItems.database.items.find({"$or": [ {"nombre_item":{ "$regex": request.POST["consulta"]}},{"localizador":{ "$regex": request.POST["consulta"]}} ]})
+                    lista_items2=[]
+                    for i in lista_items:
+                        item_object=Item.build_from_json(i)
+                        if item_object.organizacion==request.POST['organizacion']:
+                            lista_items2.append(item_object.get_as_json())
+
+                    aux4={"lista_i":lista_items2}
+                    aux5={"_id":str(aux4["lista_i"][0]["_id"]),"nombre":aux4["lista_i"][0]["nombre_item"],"descripcion":aux4["lista_i"][0]["descripcion_item"],"localizador":aux4["lista_i"][0]["localizador"],"fecha":aux4["lista_i"][0]["fecha_alta_item"]}
+                    respuesta=aux5
+                else:
+                    respuesta=default
+            except KeyError as e:
+                raise Exception("No tienes objetos asociados : {}".format(e.message))
+            return JsonResponse(respuesta,safe=False)
+        else:
+            try:
+                numero=gestorItems.database.items.find({"organizacion":request.POST["organizacion"],"localizador":request.POST["consulta"]}).count()
+                if numero > 0:
+                    lista_items=gestorItems.database.items.find({"organizacion":request.POST["organizacion"],"localizador":request.POST["consulta"]})
+                    for i in lista_items:
+                        item_object=Item.build_from_json(i)
+                    aux5={"_id":str(item_object._id),"nombre":item_object.nombre_item,"descripcion":item_object.descripcion_item,"localizador":item_object.localizador,"fecha":item_object.fecha_alta_item}
+                    respuesta=aux5
+                else:
+                    respuesta=default
+            except KeyError as e:
+                raise Exception("No tienes objetos asociados : {}".format(e.message))
+            return JsonResponse(respuesta,safe=False)
+
+
 
 
 @csrf_exempt
