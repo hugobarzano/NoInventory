@@ -1,6 +1,7 @@
 # coding=utf8
 # -*- coding: utf8 -*-
 # vim: set fileencoding=utf8 :
+import unicodedata
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -114,7 +115,8 @@ def item(request,id_item):
     for i in item:
         item_object = Item.build_from_json(i)
 
-    contexto = {"item":item_object,"map":str(item_object.tag1)+', Granada',"id_item":item_object._id}
+    #contexto = {"item":item_object,"map":str(item_object.tag1)+', Granada',"id_item":item_object._id}
+    contexto = {"item":item_object,"map":item_object.tag1,"ciudad":',Granada',"id_item":item_object._id}
     return render(request, 'noinventory/item.html',contexto)
 
 def prueba(request):
@@ -309,7 +311,7 @@ def busqueda(request):
             contenido=contenido+'<p> <strong>TAG3: </strong>'+aux2["tag3"]+'</p><hr>'
             contenido=contenido+'<p> <strong>Creado por: </strong>' +aux2["usuario"]+'</p><p><strong>Organizacion: </strong>' +aux2["organizacion"]+'</p><hr>'
             contenido=contenido+'<p><strong>Localizador: </strong>' +aux2["localizador"]+'</p>'
-            contenido = contenido + qrcode(aux2["qr_data"], alt="qr")+'<br></div>'
+            contenido = contenido + qrcode(aux2["localizador"], alt="qr")+'<br></div>'
         contenido=contenido+'</div> <div class="col-md-12 text-center"><ul id="myPager" class="pagination"></ul></div></div>'
 
         return HttpResponse(contenido)
@@ -720,13 +722,23 @@ def generaPDFCatalogoQRs(request):
 
     catalogo_object.nombre_catalogo
     codigosqr=""
+    lista_aux=[]
     for i in catalogo_object.id_items_catalogo:
         item_aux=gestorItems.database.items.find({"_id":ObjectId(i)})
         for j in item_aux:
             item_object=Item.build_from_json(j)
         print item_object.nombre_item
         print item_object.qr_data
-        codigosqr=codigosqr+str(qrcode(item_object.qr_data,alt=item_object.nombre_item))
+        lista_aux.append(str(qrcode(item_object.qr_data,alt=item_object.nombre_item)))
+    contador=0
+    for i in range(len(lista_aux)):
+        codigosqr=codigosqr+lista_aux[i]
+        contador=contador+1
+        if contador==3:
+            codigosqr=codigosqr+'<br>'
+            contador=0
+
+        #codigosqr=codigosqr+str(qrcode(item_object.qr_data,alt=item_object.nombre_item))+
     print "codigosqr"
     print codigosqr
     pdf = StringIO()
@@ -879,12 +891,12 @@ def catalogosJson(request):
         aux3=[]
         if request.POST["flag"] == "True":
             try:
-                lista_catalogos=gestorCatalogos.database.catalogos.find({"usuario":request.POST["username"]})
+                lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.POST["organizacion"]})
                 for i in lista_catalogos:
                     aux = Catalogo.build_from_json(i)
                     aux2=aux.get_as_json()
                     aux2["_id"]=str(aux2["_id"])
-                    aux4={"_id":aux2["_id"],"nombre":aux2["nombre_catalogo"],"descripcion":aux2["descripcion_catalogo"]}
+                    aux4={"_id":aux2["_id"],"nombre":aux2["nombre_catalogo"],"descripcion":aux2["descripcion_catalogo"],"fecha":aux2["fecha_alta_catalogo"]}
                     aux3.append(aux4)
                     respuesta={"catalogos":aux3}
             except KeyError as e:
@@ -920,12 +932,12 @@ def itemsJson(request):
         if request.POST["flag"] == "True":
 
             try:
-                lista_items=gestorItems.database.items.find({"usuario":request.POST["username"],"organizacion":request.POST["organizacion"]}).sort([("fecha_alta_item", -1)]).limit(50)
+                lista_items=gestorItems.database.items.find({"organizacion":request.POST["organizacion"]}).sort([("fecha_alta_item", -1)]).limit(50)
                 for i in lista_items:
                     aux = Item.build_from_json(i)
                     aux2=aux.get_as_json()
                     aux2["_id"]=str(aux2["_id"])
-                    aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"]}
+                    aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"],"localizador":aux2["localizador"],"fecha":aux2["fecha_alta_item"]}
                     aux3.append(aux4)
                     respuesta={"items":aux3}
             except KeyError as e:
@@ -968,7 +980,7 @@ def itemJson(request):
         return JsonResponse(respuesta,safe=False)
 
 @csrf_exempt
-def addItemFromQr(request):
+def addItemFromQrDEPRECATED(request):
     if request.method == 'POST':
         #print "Dicionario completo"
 
@@ -1016,7 +1028,69 @@ def addItemFromQr(request):
     #    print request.GET['contenido_scaner']
         return HttpResponse("gettttttt")
 
+@csrf_exempt
+def addItemFromQr(request):
+    if request.method == 'POST':
+        #print "Dicionario completo"
 
+        mydic=dict(request.POST)
+        catalogo=mydic["catalogo"]
+        organizacion=mydic["organizacion"]
+        localizador=mydic["scaner"]
+        #print "catalogo:"+catalogo[0]
+        #print "organizacion:"+organizacion[0]
+        #print "localizador:"+localizador[0]
+        item=gestorItems.database.items.find({"organizacion":organizacion[0],"localizador":localizador[0]})
+        if item is not None:
+            for i in item:
+                item_object = Item.build_from_json(i)
+        else:
+            return HttpResponse("error1")
+
+        catalogo=gestorCatalogos.read(catalogo_id=catalogo[0])
+        if catalogo is not None:
+            for i in catalogo:
+                catalogo_object = Catalogo.build_from_json(i)
+        else:
+            return HttpResponse("error2")
+        gestorCatalogos.database.catalogos.update({"_id": catalogo_object._id},{"$addToSet": {"id_items_catalogo" : str(item_object._id),}})
+        return HttpResponse("ok")
+
+    else:
+        print "recibido get"
+        return HttpResponse("gettttttt")
+
+@csrf_exempt
+def addItemFromNFC(request):
+    if request.method == 'POST':
+        #print "Dicionario completo"
+
+        mydic=dict(request.POST)
+        catalogo=mydic["catalogo"]
+        organizacion=mydic["organizacion"]
+        localizador=mydic["nfc"]
+        print "catalogo:"+catalogo[0]
+        print "organizacion:"+organizacion[0]
+        print "localizador:"+localizador[0]
+        item=gestorItems.database.items.find({"organizacion":organizacion[0],"localizador":localizador[0]})
+        if item is not None:
+            for i in item:
+                item_object = Item.build_from_json(i)
+        else:
+            return HttpResponse("error1")
+
+        catalogo=gestorCatalogos.read(catalogo_id=catalogo[0])
+        if catalogo is not None:
+            for i in catalogo:
+                catalogo_object = Catalogo.build_from_json(i)
+        else:
+            return HttpResponse("error2")
+        gestorCatalogos.database.catalogos.update({"_id": catalogo_object._id},{"$addToSet": {"id_items_catalogo" : str(item_object._id),}})
+        return HttpResponse("ok")
+
+    else:
+        print "recibido get"
+        return HttpResponse("gettttttt")
 
 
 class AndroidItemCreator(View):
@@ -1131,7 +1205,7 @@ def borrarItem(request):
                 contenido=contenido+'<p> <strong>TAG3: </strong>'+aux2["tag3"]+'</p><hr>'
                 contenido=contenido+'<p> <strong>Creado por: </strong>' +aux2["usuario"]+'</p><p><strong>Organizacion: </strong>' +aux2["organizacion"]+'</p><hr>'
                 contenido=contenido+'<p><strong>Localizador: </strong>' +aux2["localizador"]+'</p>'
-                contenido = contenido + qrcode(aux2["qr_data"], alt="qr")+'<br></div>'
+                contenido = contenido + qrcode(aux2["localizador"], alt="qr")+'<br></div>'
             contenido=contenido+'</div> <div class="col-md-12 text-center"><ul id="myPager" class="pagination"></ul></div></div>'
         except KeyError as e:
             raise Exception("No tienes objetos asociados : {}".format(e.message))
@@ -1382,6 +1456,8 @@ def androidLogin(request):
             if user.is_active:
                 u=User.objects.get(username=user.username)
                 user_profile = UserProfile.objects.get(user=user)
+                request.session['username'] = u.username
+                request.session['organizacion'] = user_profile.__organizacion__()
                 login(request, user)
                 #data="nombre_usuario :"+username
                 return HttpResponse(user_profile.__organizacion__())

@@ -75,7 +75,9 @@
               </div>
               {% load easy_maps_tags %}
               <!-- Default map with 300x400 dimensions -->
-              {% easy_map  map   465 300 %}
+              {% with map|add:ciudad as dir %}
+              {% easy_map dir 465 300 %}
+              {% endwith %}
               {% load easy_maps_tags cache %}
               {% cache 600 my_map firm.address %}
               {% easy_map firm.address 300 400 %}

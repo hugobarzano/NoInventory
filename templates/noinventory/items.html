@@ -259,7 +259,7 @@ $(document).ready(function(){
                    <p><strong>Organizacion: </strong> {{i.organizacion}}</p>
                   <hr>
                   <p><strong>Localizador: </strong> {{ i.localizador }}</p>
-                   {{ i.qr_data|qrcode:"qr_data" }}
+                   {{ i.localizador|qrcode:"qr_data" }}
 
                    <br>
 
