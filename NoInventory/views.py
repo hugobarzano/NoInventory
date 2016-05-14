@@ -772,8 +772,8 @@ def generaPDFCatalogoQRs(request):
             lista_aux3.append(lista_aux2)
             lista_aux2=[]
             contador=0
-
-    codigosqr="<table><tr><td>_______________</td><td>_______________</td><td>_______________</td></tr>"
+    catalogo="<hr><strong>"+catalogo_object.nombre_catalogo+'<br>'+catalogo_object.fecha_alta_catalogo+'<br></strong><br>'+catalogo_object.descripcion_catalogo
+    codigosqr=catalogo+"<hr><hr><table><tr><td>_______________</td><td>_______________</td><td>_______________</td></tr>"
     for i in lista_aux3:
         codigosqr=codigosqr+'<tr>'
         for j in i:
