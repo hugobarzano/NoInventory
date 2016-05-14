@@ -1,4 +1,7 @@
+{%load staticfiles%}
+
 <!DOCTYPE html>
+
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -57,7 +60,9 @@
     function alerta(){ alert('Registro completo');}
   </script>
 
-  <link rel="stylesheet" type="text/css" href="../static/css/stilo_propio.css">
+
+
+  <link rel="stylesheet" type="text/css" href="{% static 'noinventory/css/stilo_propio.css' %}"/>
 
 
   </head>
@@ -108,6 +113,7 @@
                   <li><a href="http://no-inventory.es/">Blog</a></li>
                    <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
+
                   <li><a href="{% url 'register' %}">Registrate </a></li>
                   <li><a href="{% url 'login' %}">Login</a></li>
             {% endif %}
@@ -121,14 +127,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <!--barra lateral izquida-->
 
-            <script type="text/javascript">
-       $(function() {
-            $( "#accordion" ).accordion({
-                 collapsible: true,
-                 active: false
-            });
-       });
-       </script>
+
                 {% block lateral_izquierda %}{% endblock %}
 
         </div>
@@ -140,6 +139,14 @@
       </div>
     </div>
 
+    <script type="text/javascript">
+$(function() {
+    $( "#accordion" ).accordion({
+         collapsible: true,
+         active: false
+    });
+});
+</script>
 
 
     <!-- Bootstrap core JavaScript

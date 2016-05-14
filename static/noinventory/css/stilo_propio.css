@@ -1,0 +1,27 @@
+
+
+.panel-primary{
+  border-color:rgba(203,96,179,1);
+
+}
+
+.panel-primary > .panel-heading {
+
+background: rgba(203,96,179,1);
+background: -moz-linear-gradient(left, rgba(203,96,179,1) 0%, rgba(203,96,179,1) 1%, rgba(179,13,137,1) 44%, rgba(168,0,119,1) 51%, rgba(168,16,117,1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(203,96,179,1)), color-stop(1%, rgba(203,96,179,1)), color-stop(44%, rgba(179,13,137,1)), color-stop(51%, rgba(168,0,119,1)), color-stop(100%, rgba(168,16,117,1)));
+background: -webkit-linear-gradient(left, rgba(203,96,179,1) 0%, rgba(203,96,179,1) 1%, rgba(179,13,137,1) 44%, rgba(168,0,119,1) 51%, rgba(168,16,117,1) 100%);
+background: -o-linear-gradient(left, rgba(203,96,179,1) 0%, rgba(203,96,179,1) 1%, rgba(179,13,137,1) 44%, rgba(168,0,119,1) 51%, rgba(168,16,117,1) 100%);
+background: -ms-linear-gradient(left, rgba(203,96,179,1) 0%, rgba(203,96,179,1) 1%, rgba(179,13,137,1) 44%, rgba(168,0,119,1) 51%, rgba(168,16,117,1) 100%);
+background: linear-gradient(to right, rgba(203,96,179,1) 0%, rgba(203,96,179,1) 1%, rgba(179,13,137,1) 44%, rgba(168,0,119,1) 51%, rgba(168,16,117,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cb60b3', endColorstr='#a81075', GradientType=1 );
+border-color:rgba(203,96,179,1);
+
+}
+.datos_item{
+  color:#fff
+}
+
+.lista{
+  color:#111
+}

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% load qr %}
 {% block title %}Items{% endblock %}
 
@@ -8,8 +9,8 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<a href="/nuevoItem"> <button id='nuevoItem'>Nuevo Item</button></a>
-<button id="deleteSearch">Eliminar Items</button>
+
+
 <hr>
 
 
@@ -43,40 +44,57 @@ $(function () {
     })
 })
 
-
-
-
-
-$(function () {
-    $("#deleteSearch").click(function ()
-    {
-      var lista_borrar=[]
-      $("#accordion div").each(function (index)
-      {
-          lista_borrar.push($(this).attr("data-item"));
-
-      })
-        var lista_json = JSON.stringify(lista_borrar);
-        $.ajax({
-          url: "/borrarItems/",
-          type: "get", //send it through get method
-          data:{lista_items:lista_json},
-          cache: false,
-          success: function(response) {
-            console.log(response);
-            $('#accordion').html(response)
-            if ( typeof $("#accordion").accordion('instance') != 'undefined') {
-              $("#accordion").accordion('destroy');
+      <!--
+         function getConfirmation(){
+            var retVal = confirm("¿Estas seguro que deseas borrar los Items?");
+            if( retVal == true ){
+               //document.write ("¡Si!");
+               eliminarBusqueda();
+               return true;
             }
-            $("#accordion").accordion({
-              collapsible: true
-            });
-          },
-          error: function(xhr) {
-          }
-      });
-    })
-})
+            else{
+               //document.write ("¡No!");
+               return false;
+            }
+         }
+      //-->
+
+
+function eliminarBusqueda() {
+  var lista_borrar=[]
+  $("#accordion div").each(function (index)
+  {
+      lista_borrar.push($(this).attr("data-item"));
+
+  })
+    var lista_json = JSON.stringify(lista_borrar);
+    $.ajax({
+      url: "/borrarItems/",
+      type: "get", //send it through get method
+      data:{lista_items:lista_json},
+      cache: false,
+      success: function(response) {
+        console.log(response);
+        $('#paginas').html(response)
+        $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:10});
+        if ( typeof $("#accordion").accordion('instance') != 'undefined') {
+          $("#accordion").accordion('destroy');
+        }
+        $("#accordion").accordion({
+          collapsible: true
+        });
+      },
+      error: function(xhr) {
+      }
+  });
+
+}
+
+
+
+
+
+
 
 $(document).on('click', ".borrarBoton", function () {
   console.log("boton para borrar")
@@ -89,7 +107,7 @@ $(document).on('click', ".borrarBoton", function () {
     data:{item_id:catid},
     success: function(response) {
       $('#paginas').html(response)
-      $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:6});
+      $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:10});
 
       if ( typeof $("#accordion").accordion('instance') != 'undefined') {
         $("#accordion").accordion('destroy');
@@ -153,7 +171,7 @@ $(document).ready(function(){
         success: function(response) {
           console.log(response);
           $('#paginas').html(response)
-          $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:6});
+          $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:10});
 
           if ( typeof $("#accordion").accordion('instance') != 'undefined') {
             $("#accordion").accordion('destroy');
@@ -185,9 +203,11 @@ $(document).ready(function(){
 
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Busqueda</h3>
+            <a href='/nuevoItem' id='nuevoItem'><button type="button" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-plus"></span><strong> Item</strong></button></a>
+            <button type="button" onclick="getConfirmation();" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span> <strong> Items</strong></button>
+            <button type="button" class="btn btn-default btn-sm" id='busqueda'><span class="glyphicon glyphicon-search"></span> <strong> Buscar</strong></button>
+
               <hr>
-              Utiliza las tags o expresiones regulares para realizar tu <button type="button" class="btn btn-success" id='busqueda' >Busqueda</button>
           </div>
           <input type="text" id="texto" class="form-control" placeholder="Texto a buscar" />
           <div class="row">
@@ -242,9 +262,9 @@ $(document).ready(function(){
                </div>
 
                  <div id="{{ i|documento_id}}" data-item="{{ i|documento_id}}" >
-                   <button class=" btn-danger btn-xs pull-right borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}"><span class="glyphicon glyphicon-remove"></span></button>
-                   <a href="/modificarItem/{{ i|documento_id}}"><button class=" btn-warning btn-xs pull-right"> <span class="glyphicon glyphicon-pencil"></span></button></a>
-                   <a href="/item/{{ i|documento_id}}" > <button id='item_details' class=' btn-info btn-xs pull-right'><span class="glyphicon glyphicon-search"></span>Detalles</button></a>
+                   <button class=" btn btn-default btn-xs pull-right borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}"><span class="glyphicon glyphicon-remove"></span></button>
+                   <a href="/modificarItem/{{ i|documento_id}}"><button class=" btn btn-default btn-xs pull-right"> <span class="glyphicon glyphicon-pencil"></span></button></a>
+                   <a href="/item/{{ i|documento_id}}" > <button id='item_details' class=' btn btn-default btn-xs pull-right'><span class="glyphicon glyphicon-search"></span>Detalles</button></a>
                    <br>
                    <hr>
                   <p><strong>Detalles: </strong>{{ i.descripcion_item }}</p>
@@ -285,13 +305,14 @@ $(document).ready(function(){
 
          <div class="panel panel-primary">
            <div class="panel-heading">
-             <select name="lista_catalogos" id="lista_catalogos" class="form-control">
-               {% for i in lista_catalogos %}
-                <h3 class="panel-title"> <option value="{{ i|documento_id}}">{{i.nombre_catalogo}}</option></h3>
-                 {% endfor %}
-              </select>
-               <hr>
-               Utiliza el resultado de tu busqueda para <button type="button" class="btn btn-info" id="addToCatalogo">Añadir contenido a tu Catalogo</button>
+             <button type="button" class="btn btn-default btn-sm" id="addToCatalogo"><span class="glyphicon glyphicon-paperclip"></span> <strong>Añadir Items</strong></button>
+               <br>
+               <br>
+               <select name="lista_catalogos" id="lista_catalogos" class="form-control">
+                 {% for i in lista_catalogos %}
+                  <h3 class="panel-title"> <option value="{{ i|documento_id}}">{{i.nombre_catalogo}}</option></h3>
+                   {% endfor %}
+                </select>
            </div>
           </div>
 
@@ -419,7 +440,7 @@ $(document).ready(function(){
         /* end plugin */
 
         $(document).ready(function(){
-          $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:6});
+          $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:10});
 
         //  $('#prueba').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:4});
 

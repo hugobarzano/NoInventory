@@ -9,13 +9,6 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<a href="/modificarCatalogo/{{ catalogo_id}}"><button class="btn btn-default btn-xs"> Modificar</button> </a>
-
-<button id="updateCatalogo">Actualizar</button>
-<button id="cleanCatalogo">Limpiar</button>
-
-<a href="/generaPDFCatalogoQRs/?catalogo_id={{ catalogo_id}}" target="_blank" class="button" id="generaPDFQR"><button> Generar PDF</button></a>
-
 
 
 {% endblock %}
@@ -27,9 +20,17 @@
 
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title">{{catalogo.nombre_catalogo}}</h3>
+        <h1 class="panel-title"><strong>{{catalogo.nombre_catalogo}}</strong>
+        <a href="/modificarCatalogo/{{ catalogo_id}}"><button type="button" class="btn btn-default btn-sm pull-right"> <span class="glyphicon glyphicon-pencil"></span><strong></strong></button></a>
+        <button type="button" class="btn btn-default btn-sm pull-right" id='updateCatalogo'><span class="glyphicon glyphicon-refresh"></span> <strong> Actualizar</strong></button>
+        <a href="/generaPDFCatalogoQRs/?catalogo_id={{ catalogo_id}}" target="_blank" id="generaPDFQR"><button type="button" class="btn btn-default btn-sm pull-right"> <span class="glyphicon glyphicon-file"></span> Pdf</button></a>
+        <button type="button" class="btn btn-default btn-sm pull-right" id='cleanCatalogo'><span class="glyphicon glyphicon-fire"></span> <strong> Limpiar</strong></button>
+        <br>
+        <br>
+      </h1>
+
       </div>
-    </div>
+
     <ul class="list-group" id="catalogo" data-catalogo = "{{ catalogo_id }}">
        <li class="list-group-item">
     {% if catalogo %}
@@ -55,14 +56,13 @@
     {% endif %}
   </li>
   </ul>
+  </div>
 
-
-      <div class="col-xs-12 col-sm-12 placeholder">
          <div class="panel panel-primary">
           <div class="panel-heading">
             <h3 class="panel-title">Items del catalogo </h3>
           </div>
-        </div>
+
 
         <div class="table-responsive scrooll">
         <table class="table table-hover table-striped  scrooll">
@@ -90,8 +90,6 @@
                 <td><button class="borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}">Borrar</button></td>
               </tr>
             {% endfor %}
-            {% else %}
-                 <strong>No hay Objetos.</strong>
             {% endif %}
           </tr>
         </tbody>

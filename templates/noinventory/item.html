@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% load qr %}
 {% block title %}Index{% endblock %}
 
@@ -18,19 +19,20 @@
 
         {% block body_block %}
 
-    <div class="page-header">
-                <h1> Item</h1>
-    </div>
+
+
+
     {% if item %}
     <div class="panel panel-primary">
      <div class="panel-heading" >
        <h3 class="panel-title">{{item.nombre_item}} </h3>
      </div>
    </div>
-    <div class="col-xs-12 col-sm-6 placeholder">
+   <div>
+     
+    <div class="col-xs-12 col-sm-6 placeholder datos_item" >
        <div class="panel panel-primary">
-        <div class="panel-heading">
-        </div>
+
       </div>
 
       <br>
@@ -43,10 +45,9 @@
       Localizador: {{item.localizador}}
     </div>
 
-    <div class="col-xs-12 col-sm-6 placeholder">
+    <div class="col-xs-12 col-sm-6 placeholder datos_item">
        <div class="panel panel-primary">
-        <div class="panel-heading">
-        </div>
+
       </div>
       Fecha: {{item.fecha_alta_item}} </h3>
         <p>
@@ -75,7 +76,6 @@
               </div>
               {% load easy_maps_tags %}
               <!-- Default map with 300x400 dimensions -->
-              {{map|direccion}}
               {% easy_map map|direccion 465 300 %}
               {% load easy_maps_tags cache %}
               {% cache 600 my_map firm.address %}
@@ -87,8 +87,18 @@
     {% else %}
          <strong>No hay Item</strong>
     {% endif %}
-
-
+  </div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <select name="lista_catalogos" id="lista_catalogos" class="form-control">
+          {% for i in lista_catalogos %}
+           <h3 class="panel-title"> <option value="{{ i|documento_id}}">{{i.nombre_catalogo}}</option></h3>
+            {% endfor %}
+         </select>
+          <hr>
+          <button type="button" class="btn btn-info" id="addToCatalogo">Añade este Item a tu Catálogo</button>
+      </div>
+     </div>
 
 
 

@@ -9,7 +9,6 @@
     <h3 class="panel-title">Acciones</h3>
   </div>
 </div>
-<a href="/nuevoCatalogo"> <button id='nuevoCatalogo'>Nuevo Catalogo</button></a>
 {% endblock %}
 
 
@@ -17,9 +16,10 @@
 
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Busqueda</h3>
+            <a href='/nuevoCatalogo' id='nuevoCatalogo'><button type="button" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-plus"></span><strong> Catálogo</strong></button></a>
+            <button type="button" class="btn btn-default btn-sm" id='busqueda'><span class="glyphicon glyphicon-search"></span> <strong> Buscar</strong></button>
+
               <hr>
-               <button type="button" class="btn btn-success" id='busqueda' >Realizar Busqueda</button>
           </div>
           <input type="text" id="texto" class="form-control" placeholder="Texto a buscar" />
           <div class="row">
@@ -46,9 +46,9 @@
               </h4>
           </div>
               <div id="{{ i|documento_id }}">
-                <button class="btn btn-danger btn-xs borrarBoton pull-right" data-catalogo="{{ i|documento_id }}"><span class="glyphicon glyphicon-remove"></span></button>
-                <a href="/modificarCatalogo/{{ i|documento_id}}"><button class="btn btn-warning btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>
-                <a href="/catalogo/{{ i|documento_id }}"> <button class="btn btn-info btn-xs pull-right"><span class="glyphicon glyphicon-search"></span> items</button></a>
+                <button class="btn btn-default btn-xs borrarBoton pull-right" data-catalogo="{{ i|documento_id }}"><span class="glyphicon glyphicon-remove"></span></button>
+                <a href="/modificarCatalogo/{{ i|documento_id}}"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>
+                <a href="/catalogo/{{ i|documento_id }}"> <button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-search"></span> items</button></a>
                 <br>
                 <hr>
                 <p><strong> Detalles:</strong> {{ i.descripcion_catalogo }}</p>
@@ -223,7 +223,7 @@
         /* end plugin */
 
         $(document).ready(function(){
-          $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:5});
+          $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:10});
 
         //  $('#prueba').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:4});
 
@@ -249,7 +249,7 @@
             success: function(response) {
               console.log(response);
               $('#paginas').html(response)
-              $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:5});
+              $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:10});
 
               if ( typeof $("#accordion").accordion('instance') != 'undefined') {
                 $("#accordion").accordion('destroy');
@@ -282,7 +282,7 @@
             data:{catalogo_id:catid},
             success: function(response) {
               $('#paginas').html(response)
-              $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:5});
+              $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:10});
 
               if ( typeof $("#accordion").accordion('instance') != 'undefined') {
                 $("#accordion").accordion('destroy');

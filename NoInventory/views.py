@@ -87,6 +87,23 @@ def qrcode(value, alt=None):
     return mark_safe(u"""<img class="qrcode" src="%s" width="200" height="200" alt="%s" />""" % (url, alt))
 
 
+def qrcode2(value, alt=None):
+    """
+    Generate QR Code image from a string with the Google charts API
+
+    http://code.google.com/intl/fr-FR/apis/chart/types.html#qrcodes
+
+    Exemple usage --
+    {{ my_string|qrcode:"my alt" }}
+
+    <img src="http://chart.apis.google.com/chart?chs=150x150&amp;cht=qr&amp;chl=my_string&amp;choe=UTF-8" alt="my alt" />
+    """
+
+    url = conditional_escape("http://chart.apis.google.com/chart?%s" % \
+            urllib.urlencode({'chs':'150x150', 'cht':'qr', 'chl':value, 'choe':'UTF-8'}))
+    alt = conditional_escape(alt or value)
+
+    return mark_safe(u"""<img class="qrcode" src="%s" width="150" height="150" alt="%s" />""" % (url, alt))
 
 
 
@@ -101,7 +118,7 @@ def items(request):
         lista_tag1=gestorClasificacion.database.tag1.find({"organizacion":request.session['organizacion']}).sort([("CLAVE1", 1)])
         lista_tag2=gestorClasificacion.database.tag2.find({"organizacion":request.session['organizacion']}).sort([("CLAVE2", 1)])
         lista_tag3=gestorClasificacion.database.tag3.find({"organizacion":request.session['organizacion']}).sort([("CLAVE3", 1)])
-        lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion']})
+        lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion']}).sort([("fecha_alta_item", -1)]).limit(50)
         lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']})
 
         contexto = {'lista_items':lista_items,'lista_catalogos':lista_catalogos,'lista_tag1': lista_tag1,'lista_tag2':lista_tag2,'lista_tag3':lista_tag3}
@@ -114,9 +131,21 @@ def item(request,id_item):
     item=gestorItems.read(item_id=id_item)
     for i in item:
         item_object = Item.build_from_json(i)
-
+    lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']})
     #contexto = {"item":item_object,"map":str(item_object.tag1)+', Granada',"id_item":item_object._id}
-    contexto = {"item":item_object,"map":item_object.tag1,"ciudad":' ,Granada, Spain,',"id_item":item_object._id}
+    contexto = {"item":item_object,"map":item_object.tag1,"ciudad":' ,Granada, Spain,',"id_item":item_object._id,"lista_catalogos":lista_catalogos}
+    return render(request, 'noinventory/item.html',contexto)
+
+@csrf_exempt
+def itemAndroid(request,id_item):
+    item_object=Item()
+
+    item=gestorItems.read(item_id=id_item)
+    for i in item:
+        item_object = Item.build_from_json(i)
+    lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.GET['organizacion']})
+    #contexto = {"item":item_object,"map":str(item_object.tag1)+', Granada',"id_item":item_object._id}
+    contexto = {"item":item_object,"map":item_object.tag1,"ciudad":' ,Granada, Spain,',"id_item":item_object._id,"lista_catalogos":lista_catalogos}
     return render(request, 'noinventory/item.html',contexto)
 
 def prueba(request):
@@ -284,7 +313,9 @@ def busqueda(request):
     respuesta={}
     if request.method == 'GET':
         if request.GET["modo_busqueda"] == str(6):
-            lista_items=gestorItems.database.items.find({"$or": [ {"nombre_item":{ "$regex": request.GET["texto"]}}, {"descripcion_item":{ "$regex": request.GET["texto"] }},{"fecha_alta_item" : {"$gte" :  request.GET["fecha_inicio"], "$lte" :  request.GET["fecha_final"]}},{"tag1":request.GET["tag1"]},{"tag2":request.GET["tag2"]},{'tag3':request.GET['tag3']} ]  })
+            inicio=request.GET["fecha_inicio"]+' 00:00:00'
+            final=request.GET["fecha_final"]+' 23:59:59'
+            lista_items=gestorItems.database.items.find({"$or": [ {"nombre_item":{ "$regex": request.GET["texto"]}}, {"descripcion_item":{ "$regex": request.GET["texto"] }},{"fecha_alta_item" : {"$gte" : inicio, "$lte" : final}},{"tag1":request.GET["tag1"]},{"tag2":request.GET["tag2"]},{'tag3':request.GET['tag3']} ]  }).sort([("fecha_alta_item", -1)]).limit(50)
 
         lista_items2=[]
         for i in lista_items:
@@ -301,9 +332,9 @@ def busqueda(request):
             contenido=contenido+'<div class="panel panel-default">'
             contenido=contenido+'<h5><strong>Item:</strong>'  + aux2["nombre_item"]+ ' <strong>Fecha:</strong>'+aux2["fecha_alta_item"]+'</h5></div>'
             contenido=contenido+' <div id="'+aux2["_id"]+'" data-item="'+aux2["_id"]+'" >'
-            contenido = contenido + '<button class="btn-danger btn-xs pull-right borrarBoton" data-item="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
-            contenido = contenido + '<a href="/modificarItem/'+aux2["_id"]+'"><button class="btn-warning btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
-            contenido = contenido + '<a href="/item/'+aux2["_id"]+'"><button class="btn-info btn-xs pull-right"><span class="glyphicon glyphicon-search"></span>Detalles</button> </a><br><hr>'
+            contenido = contenido + '<button class="btn btn-default btn-xs pull-right borrarBoton" data-item="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
+            contenido = contenido + '<a href="/modificarItem/'+aux2["_id"]+'"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
+            contenido = contenido + '<a href="/item/'+aux2["_id"]+'"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-search"></span>Detalles</button> </a><br><hr>'
             contenido=contenido+ '<p><strong>Detalles:</strong>'+aux2["descripcion_item"]+'</p>'
             contenido=contenido+ '<p><strong>Peso:</strong>'+aux2["peso"]+'</p><hr>'
             contenido=contenido+'<p> <strong>TAG1: </strong>'+aux2["tag1"]+'</p>'
@@ -329,7 +360,9 @@ def busquedaCatalogo(request):
     respuesta={}
     if request.method == 'GET':
         print request.GET["texto"]
-        lista_catalogos=gestorCatalogos.database.catalogos.find({"$or": [ {"nombre_catalogo":{ "$regex": request.GET["texto"]}}, {"descripcion_catalogo":{ "$regex": request.GET["texto"] }},{"tag_catalogo":{ "$regex": request.GET["texto"] }},{"fecha_alta_catalogo" : {"$gte" :  request.GET["fecha_inicio"], "$lte" :  request.GET["fecha_final"]}}]})
+        inicio=request.GET["fecha_inicio"]+' 00:00:00'
+        final=request.GET["fecha_final"]+' 23:59:59'
+        lista_catalogos=gestorCatalogos.database.catalogos.find({"$or": [ {"nombre_catalogo":{ "$regex": request.GET["texto"]}}, {"descripcion_catalogo":{ "$regex": request.GET["texto"] }},{"tag_catalogo":{ "$regex": request.GET["texto"] }},{"fecha_alta_catalogo" : {"$gte" :  inicio, "$lte" :  final}}]})
             #lista_items=gestorItems.database.items.find({ "organizacion":request.session['organizacion'],"$or": [ {"nombre_item":{ "$regex": request.GET["texto"]}}, {"descripcion_item":{ "$regex": request.GET["texto"] }},{"tag1":request.GET["tag1"]},{"tag2":request.GET["tag2"]},{"tag3":request.GET["tag3"]} ] })
         lista_catalogos2=[]
         for c in lista_catalogos:
@@ -350,13 +383,13 @@ def busquedaCatalogo(request):
             contenido=contenido+'<div class="panel panel-default">'
             contenido=contenido+'<h4><strong>Cat&aacutelogo:</strong>'  + aux2["nombre_catalogo"]+ ' <strong>Fecha:</strong>'+aux2["fecha_alta_catalogo"]+'</h4></div>'
             contenido=contenido+' <div id="'+aux2["_id"]+'">'
-            contenido=contenido+' <button class="btn btn-danger btn-xs borrarBoton pull-right" data-catalogo="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
-            contenido=contenido+' <a href="/modificarCatalogo/'+aux2["_id"]+'"><button class="btn btn-warning btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
-            contenido=contenido+' <a href="/catalogo/'+aux2["_id"]+'"> <button class="btn btn-info btn-xs pull-right"><span class="glyphicon glyphicon-search"></span> items</button></a><br><hr>'
+            contenido=contenido+' <button class="btn btn-default btn-xs borrarBoton pull-right" data-catalogo="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
+            contenido=contenido+' <a href="/modificarCatalogo/'+aux2["_id"]+'"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
+            contenido=contenido+' <a href="/catalogo/'+aux2["_id"]+'"> <button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-search"></span> items</button></a><br><hr>'
 
             contenido=contenido+ '<p><strong>Detalles:</strong>'+aux2["descripcion_catalogo"]+'</p>'
             contenido=contenido+ '<p> <strong>TAG: </strong>'+aux2["tag_catalogo"]+'</p>'
-            contenido=contenido+ '<p><strong>Peso Total:</strong>'+aux2["peso_total"]+'</p><hr>'
+            contenido=contenido+ '<p><strong>Peso Total:</strong>'+str(aux2["peso_total"])+'</p><hr>'
             contenido=contenido+'<p> <strong>Creado por: </strong>' +aux2["usuario"]+'</p><p><strong>Organizacion: </strong>' +aux2["organizacion"]+'</p><hr>'
 
             contenido = contenido + qrcode(aux2["qr_data"], alt="qr")+'<br></div>'
@@ -720,27 +753,33 @@ def generaPDFCatalogoQRs(request):
     for c in catalogo:
         catalogo_object = Catalogo.build_from_json(c)
 
-    catalogo_object.nombre_catalogo
-    codigosqr=""
+    print "Nombre del catalogo:"
+    print catalogo_object.nombre_catalogo
+    print "items asociados"
+    print catalogo_object.id_items_catalogo
     lista_aux=[]
+    item_object=Item()
+    lista_aux2=[]
+    lista_aux3=[]
+    contador=0
     for i in catalogo_object.id_items_catalogo:
         item_aux=gestorItems.database.items.find({"_id":ObjectId(i)})
         for j in item_aux:
             item_object=Item.build_from_json(j)
-        print item_object.nombre_item
-        print item_object.qr_data
-        lista_aux.append(str(qrcode(item_object.qr_data,alt=item_object.nombre_item)))
-    contador=0
-    for i in range(len(lista_aux)):
-        codigosqr=codigosqr+lista_aux[i]
+        lista_aux2.append(item_object)
         contador=contador+1
         if contador==3:
-            codigosqr=codigosqr+'<br>'
+            lista_aux3.append(lista_aux2)
+            lista_aux2=[]
             contador=0
 
-        #codigosqr=codigosqr+str(qrcode(item_object.qr_data,alt=item_object.nombre_item))+
-    print "codigosqr"
-    print codigosqr
+    codigosqr="<table><tr><td>_______________</td><td>_______________</td><td>_______________</td></tr>"
+    for i in lista_aux3:
+        codigosqr=codigosqr+'<tr>'
+        for j in i:
+            codigosqr=codigosqr+'<td>'+j.nombre_item+'<br>'+qrcode2(j.localizador, alt="qr")+'</td>'
+        codigosqr=codigosqr+'</tr>'
+    codigosqr=codigosqr+'</table>'
     pdf = StringIO()
     pisa.CreatePDF(StringIO(codigosqr.encode('utf-8')), pdf)
 
@@ -764,10 +803,10 @@ def guardarInforme(request):
 
         else:
             informe = Informe.build_from_json({"nombre_informe":request.GET["nombre_informe"],
-                "fecha_informe":str(datetime.now()),
+                "fecha_informe": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                 "organizacion":request.session["organizacion"],
                 "usuario":request.session['username'],
-                "datos_informe":request.GET["datos_informe"]
+                "datos_informe":request.GET["datos_informe"]+'<hr><hr>'+datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             })
             gestorInformes.create(informe)
 
@@ -800,6 +839,27 @@ def visualizarInforme(request):
         datos={'informe':objeto_informe.get_as_json()}
 
         #print datos
+    	return JsonResponse(datos, safe=False)
+
+    else:
+        return HttpResponse("informe post")
+
+@csrf_exempt
+def borrarInforme(request):
+    if request.method == 'GET':
+        objeto_informe={}
+        #print request.GET["nombre_informe"]
+        informe=gestorInformes.database.informes.remove({"organizacion":request.session['organizacion'],"nombre_informe":request.GET["nombre_informe"]})
+        informes=[]
+        informe_aux=gestorInformes.database.informes.find({"organizacion":request.session['organizacion']})
+        for i in informe_aux:
+            objeto_informe = Informe.build_from_json(i)
+            objeto_informe._id=str(objeto_informe._id)
+            informes.append(objeto_informe.get_as_json())
+
+        datos={'informes':informes}
+
+        print datos
     	return JsonResponse(datos, safe=False)
 
     else:
@@ -1279,7 +1339,7 @@ def borrarItem(request):
         gestorItems.database.items.remove( {"_id" : ObjectId(i_id) } )
         try:
             #lista_items=gestorItems.database.items.find({"usuario":request.session["username"]})
-            lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion']})
+            lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion']}).sort([("fecha_alta_item", -1)]).limit(50)
             aux4={"lista_i":lista_items}
             contenido='<div id = "paginas"> <div id = "accordion">'
             for aux2 in aux4["lista_i"]:
@@ -1287,9 +1347,9 @@ def borrarItem(request):
                 contenido=contenido+'<div class="panel panel-default">'
                 contenido=contenido+'<h5><strong>Item:</strong>'  + aux2["nombre_item"]+ ' <strong>Fecha:</strong>'+aux2["fecha_alta_item"]+'</h5></div>'
                 contenido=contenido+' <div id="'+aux2["_id"]+'" data-item="'+aux2["_id"]+'" >'
-                contenido = contenido + '<button class="btn-danger btn-xs pull-right borrarBoton" data-item="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
-                contenido = contenido + '<a href="/modificarItem/'+aux2["_id"]+'"><button class="btn-warning btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
-                contenido = contenido + '<a href="/item/'+aux2["_id"]+'"><button class="btn-info btn-xs pull-right"><span class="glyphicon glyphicon-search"></span>Detalles</button> </a><br><hr>'
+                contenido = contenido + '<button class="btn btn-default btn-xs pull-right borrarBoton" data-item="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
+                contenido = contenido + '<a href="/modificarItem/'+aux2["_id"]+'"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
+                contenido = contenido + '<a href="/item/'+aux2["_id"]+'"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-search"></span>Detalles</button> </a><br><hr>'
                 contenido=contenido+ '<p><strong>Detalles:</strong>'+aux2["descripcion_item"]+'</p>'
                 contenido=contenido+ '<p><strong>Peso:</strong>'+aux2["peso"]+'</p><hr>'
                 contenido=contenido+'<p> <strong>TAG1: </strong>'+aux2["tag1"]+'</p>'
@@ -1315,7 +1375,7 @@ def borrarItems(request):
         print data
         for i in data:
             gestorItems.database.items.remove( {"_id" : ObjectId(i) } )
-        return HttpResponse("<strong>Los elementos han sido eliminados</strong>")
+        return HttpResponse('<div id = "paginas"> <div id = "accordion"><div class="panel panel-default"><strong>Los Items han sido eliminados correctamente</strong></div><div></div></div> <div class="col-md-12 text-center"><ul id="myPager" class="pagination"></ul></div></div>')
 
 @csrf_exempt
 def borrarCatalogo(request):
@@ -1334,9 +1394,9 @@ def borrarCatalogo(request):
                 contenido=contenido+'<div class="panel panel-default">'
                 contenido=contenido+'<h4><strong>Cat&aacutelogo:</strong>'  + aux2["nombre_catalogo"]+ ' <strong>Fecha:</strong>'+aux2["fecha_alta_catalogo"]+'</h4></div>'
                 contenido=contenido+' <div id="'+aux2["_id"]+'">'
-                contenido=contenido+' <button class="btn btn-danger btn-xs borrarBoton pull-right" data-catalogo="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
-                contenido=contenido+' <a href="/modificarCatalogo/'+aux2["_id"]+'"><button class="btn btn-warning btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
-                contenido=contenido+' <a href="/catalogo/'+aux2["_id"]+'"> <button class="btn btn-info btn-xs pull-right"><span class="glyphicon glyphicon-search"></span> items</button></a><br><hr>'
+                contenido=contenido+' <button class="btn btn-default btn-xs borrarBoton pull-right" data-catalogo="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
+                contenido=contenido+' <a href="/modificarCatalogo/'+aux2["_id"]+'"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
+                contenido=contenido+' <a href="/catalogo/'+aux2["_id"]+'"> <button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-search"></span> items</button></a><br><hr>'
 
                 contenido=contenido+ '<p><strong>Detalles:</strong>'+aux2["descripcion_catalogo"]+'</p>'
                 contenido=contenido+ '<p> <strong>TAG: </strong>'+aux2["tag_catalogo"]+'</p>'
@@ -1401,7 +1461,7 @@ class ItemCreator(View):
             print unidades
             for i in range(int(unidades)):
                 item =Item.build_from_json({"nombre_item": form.data['nombre_item'],
-                            "fecha_alta_item": datetime.now().strftime('%Y-%m-%d'),
+                            "fecha_alta_item": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                             "descripcion_item": form.data['descripcion_item'],
                             "organizacion": request.session["organizacion"],
                             "usuario":request.session['username'],
@@ -1473,7 +1533,7 @@ class CatalogoCreator(View):
         form = CatalogoForm(request.POST)
         if form.is_valid():
             catalogo =Catalogo.build_from_json({"nombre_catalogo": form.data['nombre_catalogo'],
-                        "fecha_alta_catalogo": datetime.now().strftime('%Y-%m-%d'),
+                        "fecha_alta_catalogo":  datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
                         "descripcion_catalogo": form.data['descripcion_catalogo'],
                         "organizacion": request.session["organizacion"],
                         "usuario":request.session['username'],
