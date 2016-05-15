@@ -28,6 +28,22 @@ test_clasificacion:
 test_informe:
 	python NoInventory/test_informe.py
 
+test_code:
+	python NoInventory/test_clasificacion.py
+	python NoInventory/test_item.py
+	python NoInventory/test_catalogo.py
+	python NoInventory/test_informe.py
+
+test_selenium:
+	python Selenium/registro.py
+	python Selenium/login.py
+	python Selenium/preferencias.py
+	python Selenium/test_item_1.py
+	python Selenium/test_catalogo.py
+	python Selenium/test_item_2.py
+	python Selenium/graficos.py
+	python Selenium/informes.py
+
 docker_manual:
 	sudo docker-compose run db /bin/bash
 	#ejecutar dentro sudo service mongodb restart y esperar

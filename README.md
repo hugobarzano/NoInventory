@@ -73,7 +73,8 @@ La aplicación Android del proyecto se encuentra alojada en el repositorio [NoIn
 [paginacion](http://www.bootply.com/zT2ZU9DSDM#)
 [mongo](http://rafinguer.blogspot.com.es/2014/10/fechas-en-mongodb.html)
 [instaclik](http://instantclick.io/)
-
+[seleniun](http://docs.seleniumhq.org/)
+[twill](http://twill.idyll.org/)
 ###dDOC
 [libro](https://books.google.es/books?id=B6LAqCoPSeoC&pg=PA547&lpg=PA547&dq=%C2%BFcuanto+dinero+gastan+las+empresas+en+realizar+inventario?&source=bl&ots=vO72tajNO_&sig=v0GlPUNV03wV8iuxgUqJVnjX8e4&hl=es&sa=X&ved=0ahUKEwij_7DLtNTMAhXoKJoKHWYhAXMQ6AEIKDAC#v=onepage&q=%C2%BFcuanto%20dinero%20gastan%20las%20empresas%20en%20realizar%20inventario%3F&f=false)
 ###Presentación Concurso Software libre

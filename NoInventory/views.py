@@ -1692,7 +1692,7 @@ def register(request):
         # Print problems to the terminal.
         # They'll also be shown to the user.
         else:
-            return redirect('registration/register.html',{'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
+            return redirect('/register',{'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
 
             #print user_form.errors, profile_form.errors
 
