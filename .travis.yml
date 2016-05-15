@@ -9,11 +9,10 @@ install:
  - pip install -r requirements.txt
 
 script:
+ - python NoInventory/test_clasificacion.py
  - python NoInventory/test_item.py
  - python NoInventory/test_catalogo.py
 
 
 after_deploy:
   - python manage.py syncdb --noinput
-  
-    

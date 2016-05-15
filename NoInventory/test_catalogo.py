@@ -81,6 +81,7 @@ def main():
         "tag1":"Administración de  Servicios Centrales",
         "tag2":"MONITOR  CRT",
         "tag3":"DEFAULT",
+        "peso":2.2,
         "localizador":" ",
         "qr_data":" "})
 
@@ -95,7 +96,7 @@ def main():
         "usuario":"usuario",
         "tag_catalogo":"Reciclar",
         "tipo_catalogo":"publico",
-        "items_catalogo":[],
+        "peso_total":0,
         "id_items_catalogo":[],
         "qr_data":" "})
     test_create(manejador, new_catalogo)
@@ -106,9 +107,6 @@ def main():
     for i in cat:
         res = Catalogo.build_from_json(i)
 
-    print "items del catalogo"
-    print res.items_catalogo
-    print res.id_items_catalogo
     #cargar_todos_catalogos(manejador)
     #update new_item
     #new_catalogo.tipo_catalogo = "Cambiando caracteristicas para actualizar"
