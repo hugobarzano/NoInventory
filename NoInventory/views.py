@@ -940,41 +940,98 @@ def deleteInformes(request):
 @csrf_exempt
 def catalogosJson(request):
     if request.method == 'GET':
-
-        return HttpResponse("catalogos json")
-    else:
-        default={"_id":"ID","nombre":"Nombre","descripcion":"Descripcion"}
+        default={"_id":"ID","nombre":"Nombre","descripcion":"Descripcion","fecha":"Fecha"}
         aux7=[]
         aux7.append(default)
         respuesta={"catalogos":aux7}
         aux=[]
         aux3=[]
+        print "busqueda"
+        if request.GET["flag"] == "True":
+            if request.GET["busqueda"]=="":
+                try:
+                    lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.GET["organizacion"]})
+                    for i in lista_catalogos:
+                        aux = Catalogo.build_from_json(i)
+                        aux2=aux.get_as_json()
+                        aux2["_id"]=str(aux2["_id"])
+                        aux4={"_id":aux2["_id"],"nombre":aux2["nombre_catalogo"],"descripcion":aux2["descripcion_catalogo"],"fecha":aux2["fecha_alta_catalogo"]}
+                        aux3.append(aux4)
+                        respuesta={"catalogos":aux3}
+                except KeyError as e:
+                    raise Exception("No tienes catalogos asociados : {}".format(e.message))
+                return JsonResponse(respuesta,safe=False)
+            else:
+                try:
+                    lista_catalogos=gestorCatalogos.database.catalogos.find({"$or": [ {"nombre_catalogo":{ "$regex": request.POST["busqueda"]}}, {"descripcion_catalogo":{ "$regex": request.POST["busqueda"] }},{"tag_catalogo":{ "$regex": request.POST["busqueda"] }}]})
+                    lista_catalogos2=[]
+                    for c in lista_catalogos:
+                        catalogo_object=Catalogo.build_from_json(c)
+                        if catalogo_object.organizacion==request.GET['organizacion']:
+                            lista_catalogos2.append(catalogo_object.get_as_json())
+                    print len(lista_catalogos2)
+                    if len(lista_catalogos2)==0:
+                        respuesta={"catalogos":aux7}
+                    else:
+                        for i in lista_catalogos2:
+                            i["_id"]=str(i["_id"])
+                            aux4={"_id":i["_id"],"nombre":i["nombre_catalogo"],"descripcion":i["descripcion_catalogo"],"fecha":i["fecha_alta_catalogo"]}
+                            aux3.append(aux4)
+                            respuesta={"catalogos":aux3}
+                            print "Respuesta"
+                            print respuesta
+                except KeyError as e:
+                    raise Exception("No tienes catalogos asociados : {}".format(e.message))
+                return JsonResponse(respuesta,safe=False)
+
+    else:
+        default={"_id":"ID","nombre":"Nombre","descripcion":"Descripcion","fecha":"Fecha"}
+        aux7=[]
+        aux7.append(default)
+        respuesta={"catalogos":aux7}
+        aux=[]
+        aux3=[]
+        print "busqueda"
+        print request.POST["busqueda"]
         if request.POST["flag"] == "True":
-            try:
-                lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.POST["organizacion"]})
-                for i in lista_catalogos:
-                    aux = Catalogo.build_from_json(i)
-                    aux2=aux.get_as_json()
-                    aux2["_id"]=str(aux2["_id"])
-                    aux4={"_id":aux2["_id"],"nombre":aux2["nombre_catalogo"],"descripcion":aux2["descripcion_catalogo"],"fecha":aux2["fecha_alta_catalogo"]}
-                    aux3.append(aux4)
-                    respuesta={"catalogos":aux3}
-            except KeyError as e:
-                raise Exception("No tienes catalogos asociados : {}".format(e.message))
-            return JsonResponse(respuesta,safe=False)
+            if request.POST["busqueda"]=="":
+                try:
+                    lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.POST["organizacion"]}).sort([("fecha_alta_catalogo", -1)]).limit(50)
+                    for i in lista_catalogos:
+                        aux = Catalogo.build_from_json(i)
+                        aux2=aux.get_as_json()
+                        aux2["_id"]=str(aux2["_id"])
+                        aux4={"_id":aux2["_id"],"nombre":aux2["nombre_catalogo"],"descripcion":aux2["descripcion_catalogo"],"fecha":aux2["fecha_alta_catalogo"]}
+                        aux3.append(aux4)
+                        respuesta={"catalogos":aux3}
+                except KeyError as e:
+                    raise Exception("No tienes catalogos asociados : {}".format(e.message))
+                return JsonResponse(respuesta,safe=False)
+            else:
+                try:
+                    lista_catalogos=gestorCatalogos.database.catalogos.find({"$or": [ {"nombre_catalogo":{ "$regex": request.POST["busqueda"]}}, {"descripcion_catalogo":{ "$regex": request.POST["busqueda"] }},{"tag_catalogo":{ "$regex": request.POST["busqueda"] }}]}).sort([("fecha_alta_catalogo", -1)]).limit(50)
+                    lista_catalogos2=[]
+                    for c in lista_catalogos:
+                        catalogo_object=Catalogo.build_from_json(c)
+                        if catalogo_object.organizacion==request.POST['organizacion']:
+                            lista_catalogos2.append(catalogo_object.get_as_json())
+
+                    if len(lista_catalogos2)==0:
+                        respuesta={"catalogos":aux7}
+                    else:
+                        for i in lista_catalogos2:
+                            i["_id"]=str(i["_id"])
+                            aux4={"_id":i["_id"],"nombre":i["nombre_catalogo"],"descripcion":i["descripcion_catalogo"],"fecha":i["fecha_alta_catalogo"]}
+                            aux3.append(aux4)
+                            respuesta={"catalogos":aux3}
+                            print "Respuesta"
+                            print respuesta
+                except KeyError as e:
+                    raise Exception("No tienes catalogos asociados : {}".format(e.message))
+                return JsonResponse(respuesta,safe=False)
         else:
 
-            try:
-                lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.POST["organizacion"]})
-                for i in lista_items:
-                    aux = Catalogo.build_from_json(i)
-                    aux2=aux.get_as_json()
-                    aux2["_id"]=str(aux2["_id"])
-                    aux4={"_id":aux2["_id"],"nombre":aux2["nombre_catalogo"],"descripcion":aux2["descripcion_catalogo"]}
-                    aux3.append(aux4)
-                    respuesta={"catalogos":aux3}
-            except KeyError as e:
-                raise Exception("Organizacion sin  objetos asociados : {}".format(e.message))
+            #flag a false
             return JsonResponse(respuesta,safe=False)
 
 @csrf_exempt
@@ -990,32 +1047,40 @@ def itemsJson(request):
         aux=[]
         aux3=[]
         if request.POST["flag"] == "True":
+            if request.POST["busqueda"]=="":
+                try:
+                    lista_items=gestorItems.database.items.find({"organizacion":request.POST["organizacion"]}).sort([("fecha_alta_item", -1)]).limit(50)
+                    for i in lista_items:
+                        aux = Item.build_from_json(i)
+                        aux2=aux.get_as_json()
+                        aux2["_id"]=str(aux2["_id"])
+                        aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"],"localizador":aux2["localizador"],"fecha":aux2["fecha_alta_item"]}
+                        aux3.append(aux4)
+                        respuesta={"items":aux3}
+                except KeyError as e:
+                    raise Exception("No tienes objetos asociados : {}".format(e.message))
+            else:
+                try:
+                    lista_items=gestorItems.database.items.find({"$or": [ {"nombre_item":{ "$regex": request.POST["busqueda"]}}, {"descripcion_item":{ "$regex": request.POST["busqueda"] }},{"localizador":request.POST["busqueda"]}]  }).sort([("fecha_alta_item", -1)]).limit(50)
+                    lista_items2=[]
+                    for i in lista_items:
+                        item_object=Item.build_from_json(i)
+                        if item_object.organizacion==request.POST['organizacion']:
+                            lista_items2.append(item_object.get_as_json())
 
-            try:
-                lista_items=gestorItems.database.items.find({"organizacion":request.POST["organizacion"]}).sort([("fecha_alta_item", -1)]).limit(50)
-                for i in lista_items:
-                    aux = Item.build_from_json(i)
-                    aux2=aux.get_as_json()
-                    aux2["_id"]=str(aux2["_id"])
-                    aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"],"localizador":aux2["localizador"],"fecha":aux2["fecha_alta_item"]}
-                    aux3.append(aux4)
-                    respuesta={"items":aux3}
-            except KeyError as e:
-                raise Exception("No tienes objetos asociados : {}".format(e.message))
+                    if len(lista_items2)==0:
+                        respuesta={"items":aux7}
+                    else:
+                        for i in lista_items2:
+                            aux4={"_id":str(i["_id"]),"nombre":i["nombre_item"],"descripcion":i["descripcion_item"],"localizador":i["localizador"],"fecha":i["fecha_alta_item"]}
+                            aux3.append(aux4)
+                        respuesta={"items":aux3}
+                except KeyError as e:
+                    raise Exception("No tienes objetos asociados : {}".format(e.message))
             return JsonResponse(respuesta,safe=False)
         else:
 
-            try:
-                lista_items=gestorItems.database.items.find({"organizacion":request.POST["organizacion"]}).sort([("fecha_alta_item", -1)]).limit(50)
-                for i in lista_items:
-                    aux = Item.build_from_json(i)
-                    aux2=aux.get_as_json()
-                    aux2["_id"]=str(aux2["_id"])
-                    aux4={"_id":aux2["_id"],"nombre":aux2["nombre_item"],"descripcion":aux2["descripcion_item"]}
-                    aux3.append(aux4)
-                    respuesta={"items":aux3}
-            except KeyError as e:
-                raise Exception("Organizacion sin  objetos asociados : {}".format(e.message))
+            ##flag a false
             return JsonResponse(respuesta,safe=False)
 
 @csrf_exempt
