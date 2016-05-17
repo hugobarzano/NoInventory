@@ -10,6 +10,7 @@
     action: apt pkg=python-setuptools state=installed
     action: apt pkg=python-dev state=installed
     action: apt pkg=build-essential state=installed
+    action: apt pkg=python-reportlab state=installed
   - name: Install MongoDB
     apt: pkg=mongodb state=present update_cache=yes
   - name: Inicializar MongoDB
@@ -22,7 +23,7 @@
     command: chmod -R +x ~/Ansible
   - name: Instalar requisitos de la aplicacion
     pip: requirements=~/Ansible/requirements.txt
-  - name:
+  - name: migraciones
     command: python ~/Ansible/manage.py makemigrations --noinput
     command: python ~/Ansible/manage.py migrate --noinput
     command: python ~/Ansible/manage.py syncdb --noinput
