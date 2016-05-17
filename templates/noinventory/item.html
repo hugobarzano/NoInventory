@@ -29,7 +29,7 @@
      </div>
    </div>
    <div>
-     
+
     <div class="col-xs-12 col-sm-6 placeholder datos_item" >
        <div class="panel panel-primary">
 
@@ -88,19 +88,19 @@
          <strong>No hay Item</strong>
     {% endif %}
   </div>
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <select name="lista_catalogos" id="lista_catalogos" class="form-control">
-          {% for i in lista_catalogos %}
-           <h3 class="panel-title"> <option value="{{ i|documento_id}}">{{i.nombre_catalogo}}</option></h3>
-            {% endfor %}
-         </select>
-          <hr>
-          <button type="button" class="btn btn-info" id="addToCatalogo">Añade este Item a tu Catálogo</button>
+
+     <div class="panel panel-primary">
+       <div class="panel-heading">
+         <button type="button" class="btn btn-default btn-sm" id="addToCatalogo"><span class="glyphicon glyphicon-paperclip"></span> <strong>Añadir Item</strong></button>
+           <br>
+           <br>
+           <select name="lista_catalogos" id="lista_catalogos" class="form-control">
+             {% for i in lista_catalogos %}
+              <h3 class="panel-title"> <option value="{{ i|documento_id}}">{{i.nombre_catalogo}}</option></h3>
+               {% endfor %}
+            </select>
+       </div>
       </div>
-     </div>
-
-
 
 
 

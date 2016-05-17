@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load qr %}
+{% block title %}Index{% endblock %}
+
+
+
+
+        {% block body_block %}
+
+
+
+
+    {% if item %}
+    <div id="pagina_total">
+    <div class="panel panel-primary">
+     <div class="panel-heading" >
+       <h3 class="panel-title">{{item.nombre_item}}<button type="button"  class="btn btn-default btn-sm pull-right borrarBoton"data-item="{{ id_item }}"><span class="glyphicon glyphicon-trash"></span> <strong> Eliminar</strong></button>
+         <br>
+         <br>
+       </h3>
+     </div>
+   </div>
+   <div>
+
+    <div class="col-xs-12 col-sm-6 placeholder datos_item" >
+       <div class="panel panel-primary">
+
+      </div>
+
+      <br>
+      <div id="qr">
+      {{ item.qr_data|qrcode:"qr_data" }}
+    </div>
+      <br>
+      <hr>
+      Identificador: {{ id_item }}<br>
+      Localizador: {{item.localizador}}
+    </div>
+
+    <div class="col-xs-12 col-sm-6 placeholder datos_item">
+       <div class="panel panel-primary">
+
+      </div>
+      Fecha: {{item.fecha_alta_item}} </h3>
+        <p>
+          Descripcion: {{ item.descripcion_item }}
+        </p>
+        Tags:
+        <hr>
+          {{item.tag1}}
+        <hr>
+          {{item.tag2}}
+        <hr>
+          {{item.tag3}}
+
+        <br>
+        <br>
+        Creado por: {{ item.usuario }}
+        Para la Organizacion: {{item.organizacion}}
+        <br>
+    </div>
+    {% if item.organizacion == "osl" %}
+            <div class="col-xs-12 col-sm-6 placeholder">
+               <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title">{{map}} </h3>
+                </div>
+              </div>
+              {% load easy_maps_tags %}
+              <!-- Default map with 300x400 dimensions -->
+              {% easy_map map|direccion 465 300 %}
+              {% load easy_maps_tags cache %}
+              {% cache 600 my_map firm.address %}
+              {% easy_map firm.address 300 400 %}
+              {% endcache %}
+
+            </div>
+        {% endif %}
+    {% else %}
+         <strong>No hay Item</strong>
+    {% endif %}
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <button type="button" class="btn btn-default btn-sm" id="addToCatalogo" data-item="{{ id_item }}"><span class="glyphicon glyphicon-paperclip"></span> <strong>Añadir Item</strong></button>
+        <br>
+        <br>
+        <select name="lista_catalogos" id="lista_catalogos" class="form-control">
+          {% for i in lista_catalogos %}
+           <h3 class="panel-title"> <option value="{{ i|documento_id}}">{{i.nombre_catalogo}}</option></h3>
+            {% endfor %}
+         </select>
+    </div>
+   </div>
+</div>
+     <script>
+     $(document).on('click', ".borrarBoton", function () {
+       console.log("boton para borrar")
+       var catid = $(this).attr("data-item")
+       console.log("has pulsado el boton")
+       console.log(catid)
+       $.ajax({
+         url: "/borrarItemAndroid/",
+         type: "get", //send it through get method
+         data:{item_id:catid},
+         success: function(response) {
+           $('#pagina_total').html('  <div class="panel panel-primary"><div class="panel-heading" ><h3 class="panel-title">El item ha sido eliminado correctamente</h3></div></div>')
+         }
+       });
+     });
+
+
+     $(function () {
+         $("#addToCatalogo").click(function ()
+         {
+
+             var item_id= $(this).attr("data-item")
+             console.log(item_id)
+             var catalogo_id=JSON.stringify(document.getElementById('lista_catalogos').value);
+             $.ajax({
+               url: "/addItemAndroid/",
+               type: "get", //send it through get method
+               data:{item_id:item_id,catalogo_id:document.getElementById('lista_catalogos').value},
+               cache: false,
+               success: function(response) {
+                 alert('¡Item Añadido con Éxito!')
+                 console.log(response);
+
+               },
+               error: function(xhr) {
+               }
+           });
+         })
+     })
+
+</script>
+
+        {% endblock %}

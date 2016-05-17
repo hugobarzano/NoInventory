@@ -146,7 +146,7 @@ def itemAndroid(request,id_item):
     lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.GET['organizacion']})
     #contexto = {"item":item_object,"map":str(item_object.tag1)+', Granada',"id_item":item_object._id}
     contexto = {"item":item_object,"map":item_object.tag1,"ciudad":' ,Granada, Spain,',"id_item":item_object._id,"lista_catalogos":lista_catalogos}
-    return render(request, 'noinventory/item.html',contexto)
+    return render(request, 'noinventory/item_android.html',contexto)
 
 def prueba(request):
     lista_items=gestorItems.database.items.find()
@@ -315,7 +315,7 @@ def busqueda(request):
         if request.GET["modo_busqueda"] == str(6):
             inicio=request.GET["fecha_inicio"]+' 00:00:00'
             final=request.GET["fecha_final"]+' 23:59:59'
-            lista_items=gestorItems.database.items.find({"$or": [ {"nombre_item":{ "$regex": request.GET["texto"]}}, {"descripcion_item":{ "$regex": request.GET["texto"] }},{"fecha_alta_item" : {"$gte" : inicio, "$lte" : final}},{"tag1":request.GET["tag1"]},{"tag2":request.GET["tag2"]},{'tag3':request.GET['tag3']} ]  }).sort([("fecha_alta_item", -1)]).limit(50)
+            lista_items=gestorItems.database.items.find({"$or": [ {"nombre_item":{ "$regex": request.GET["texto"]}}, {"descripcion_item":{ "$regex": request.GET["texto"] }},{"fecha_alta_item" : {"$gte" : inicio, "$lte" : final}},{"localizador":{ "$regex": request.GET["texto"]}},{"tag1":request.GET["tag1"]},{"tag2":request.GET["tag2"]},{'tag3':request.GET['tag3']} ]  }).sort([("fecha_alta_item", -1)]).limit(50)
 
         lista_items2=[]
         for i in lista_items:
@@ -1310,37 +1310,26 @@ def addItemFromNFC(request):
         return HttpResponse("gettttttt")
 
 
-class AndroidItemCreator(View):
-    organizacion=None
-    def get(self, request):
-        form = ItemForm3(organizacion=request.GET['organizacion'])
-        #print request.GET['organizacion']
-        #form = ItemForm3(organizacion=request.GET['organizacion'])
-        return render(request, 'noinventory/nuevoItem.html', {'form': form})
+@csrf_exempt
+def borrarItemAndroid(request):
+    i_id = None
+    print "vamos a borrar"
+    if request.method == 'GET':
+        i_id = request.GET['item_id']
+        gestorItems.database.items.remove( {"_id" : ObjectId(i_id) } )
+        return HttpResponse("Borrado Realizado")
 
-    def post(self, request):
-        form = ItemForm3(request.POST,organizacion=request.GET['organizacion'])
-        if form.is_valid():
-            item =Item.build_from_json({"nombre_item": form.data['nombre_item'],
-                        "fecha_alta_item": str(datetime.now()),
-                        "descripcion_item": form.data['descripcion_item'],
-                        "organizacion":request.GET['organizacion'],
-                        "usuario":request.GET['organizacion'],
-                        "tag1": form.data['tag1'],
-                        "tag2": form.data['tag2'],
-                        "tag3": form.data['tag3'],
-                        "localizador":" ",
-                        "qr_data":" ",
-                        })
-            gestorItems.create(item,gestorClasificacion,request.GET['organizacion'])
-            lista_items=gestorItems.read()
-            contexto = {"lista_items":lista_items}
-            return redirect('/items',contexto)
-        else:
-            return render(request, 'noinventory/nuevoItem.html', {'form': form})
-
-
-
+@csrf_exempt
+def addItemAndroid(request):
+    if request.method == 'GET':
+        mydic=dict(request.GET)
+        gestorCatalogos.addToCatalogo( str(mydic["catalogo_id"][0]),str(mydic["item_id"][0]),gestorItems)
+        catalogo=gestorCatalogos.database.catalogos.find({"_id":ObjectId(mydic["catalogo_id"][0])})
+        for j in catalogo:
+            catalogo_object=Catalogo.build_from_json(j)
+        print "Peso total del catalogo"+str(catalogo_object.peso_total)
+        gestorCatalogos.calculatePeso(catalogo_object)
+        return HttpResponse("Add Realizado")
 
 
 
@@ -1355,43 +1344,6 @@ def jsonTOstringCatalogo(elemento):
     #d=json.dumps(elemento)
     texto="Nombre Catalogo:" + elemento["nombre_catalogo"] + "\nIdentificador:"+str(elemento["_id"]) + "\nFecha de Alta:"+elemento["fecha_alta_catalogo"]+"\nDescripcion:"+elemento["descripcion_catalogo"]+"\nTags:"+elemento["tag_catalogo"]
     return texto
-
-def desplegable():
-    tupla= []
-    tupla2=[]
-    aux2 = []
-    aux4 = []
-    lista_items=[]
-    items=db.items.find()
-    for i in items:
-        lista_items.append(i)
-
-    print "aux6:"
-    #print lista_items[0]["nombre_item"]
-
-    for i in lista_items:
-        tupla.append(str(i["_id"]))
-        tupla.append(str(i["_id"]))
-
-        tupla2.append(i["nombre_item"])
-        tupla2.append(i["nombre_item"])
-
-        aux=tuple(tupla)
-        aux2.append(aux)
-        tupla=[]
-
-        aux3=tuple(tupla2)
-        aux4.append(aux3)
-        tupla2=[]
-
-    #print tupla
-    SEL=tuple(aux2)
-    SEL2=tuple(aux4)
-    print "tupletizando1"
-    print SEL
-    print "tupletizando2"
-    print SEL2
-    return SEL2
 
 
 ######################### GESTION DE ITEMS y CATALOGOS #######################

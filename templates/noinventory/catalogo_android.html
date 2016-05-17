@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% load qr %}
+{% block title %}Index{% endblock %}
+
+
+{% block lateral_izquierda %}
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Acciones</h3>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+        {% block body_block %}
+
+
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h1 class="panel-title"><strong>{{catalogo.nombre_catalogo}}</strong>
+        <a href="/modificarCatalogo/{{ catalogo_id}}"><button type="button" class="btn btn-default btn-sm pull-right"> <span class="glyphicon glyphicon-pencil"></span><strong></strong></button></a>
+        <button type="button" class="btn btn-default btn-sm pull-right" id='updateCatalogo'><span class="glyphicon glyphicon-refresh"></span> <strong> Actualizar</strong></button>
+        <a href="/generaPDFCatalogoQRs/?catalogo_id={{ catalogo_id}}" target="_blank" id="generaPDFQR"><button type="button" class="btn btn-default btn-sm pull-right"> <span class="glyphicon glyphicon-file"></span> Pdf</button></a>
+        <button type="button" class="btn btn-default btn-sm pull-right" id='cleanCatalogo'><span class="glyphicon glyphicon-fire"></span> <strong> Limpiar</strong></button>
+        <br>
+        <br>
+      </h1>
+
+      </div>
+
+    <ul class="list-group" id="catalogo" data-catalogo = "{{ catalogo_id }}">
+       <li class="list-group-item">
+    {% if catalogo %}
+          Fecha: {{catalogo.fecha_alta_catalogo}} </h3>
+            <p>
+              Descripcion: {{ catalogo.descripcion_catalogo }}
+            </p>
+            Tag: {{catalogo.tag_catalogo}}
+            Tipo: {{catalogo.tipo_catalogo}}
+            <hr>
+            <p id="peso">Peso Total: {{catalogo.peso_total}}</p>
+
+            <br>
+            <br>
+            Creado por: {{ catalogo.usuario }}
+            Para la Organizacion: {{catalogo.organizacion}}
+            <br>
+            {{ catalogo.qr_data|qrcode:"my alt" }}
+            <br>
+
+    {% else %}
+         <strong>No hay Catalogo</strong>
+    {% endif %}
+  </li>
+  </ul>
+  </div>
+
+         <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Items del catalogo </h3>
+          </div>
+
+
+        <div class="table-responsive scrooll">
+        <table class="table table-hover table-striped  scrooll">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Fecha</th>
+            <th>Tag1</th>
+            <th>TAG2</th>
+            <th>TAG3</th>
+            <th>Peso</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody >
+          {% if lista_items %}
+            {% for i in lista_items %}
+              <tr>
+                <td>{{i.nombre_item}}</td>
+                <td>{{ i.fecha_alta_item }}</td>
+                <td>{{ i.tag1 }}</td>
+                <td>{{ i.tag2 }}</td>
+                <td>{{ i.tag3 }}</td>
+                <td>{{ i.peso }}</td>
+                <td><button class="borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}">Borrar</button></td>
+              </tr>
+            {% endfor %}
+            {% endif %}
+          </tr>
+        </tbody>
+        </table>
+      </div>
+
+    </div>
+
+
+
+
+
+
+  <script>
+
+  $(function () {
+      $("#updateCatalogo").click(function (){
+
+          $.ajax({
+            url: "/updateCatalogo/",
+            type: "get", //send it through get method
+            data:{catalogo_id:$("#catalogo").attr("data-catalogo")},
+            cache: false,
+            success: function(response) {
+              console.log(response)
+                $('.table').html(response["contenido"])
+                $('#peso').html('<p id="peso">Peso Total: '+response["peso_total"]+'</p>')
+
+            },
+            error: function(xhr) {
+            }
+        });
+      })
+  })
+
+
+  $(function () {
+      $("#cleanCatalogo").click(function (){
+
+          $.ajax({
+            url: "/cleanCatalogo/",
+            type: "get", //send it through get method
+            data:{catalogo_id:$("#catalogo").attr("data-catalogo")},
+            cache: false,
+            success: function(response) {
+              console.log(response)
+                $('.table').html(response["contenido"])
+                $('#peso').html('<p id="peso">Peso Total: '+response["peso_total"]+'</p>')
+
+            },
+            error: function(xhr) {
+            }
+        });
+      })
+  })
+
+
+  $(document).on('click', ".borrarBoton", function () {
+    console.log("boton para borrar")
+    var catid = $(this).attr("data-item")
+    var catalogo=$("#catalogo").attr("data-catalogo")
+    console.log("has pulsado el catalogo")
+    console.log(catalogo)
+
+    $.ajax({
+      url: "/borrarItemFromCatalogo/",
+      type: "get", //send it through get method
+      data:{item_id:catid,catalogo_id:catalogo},
+      success: function(response) {
+        $('.table').html(response)
+
+      },
+      error: function(xhr) {
+      }
+    });
+  });
+
+
+
+  </script>
+
+
+
+
+        {% endblock %}

@@ -144,5 +144,10 @@ class CatalogosDriver(object):
         else:
             raise Exception("Item no valido para add")
 
+    def removeItemFromCatalogos(self,i_id,organizacion):
+        print "i_id:"
+        print i_id
+        self.database.catalogos.update({"organizacion":organizacion},{"$pull" : {"id_items_catalogo" : i_id}})
+
     def destroyDriver(self):
         self.database.catalogos.remove()

@@ -85,6 +85,19 @@ def main():
         "localizador":" ",
         "qr_data":" "})
 
+    new_item2 = Item.build_from_json({"nombre_item":"HP pavilion2",
+        "fecha_alta_item":time.strftime("%c"),
+        "descripcion_item":"Ordenador portatil super potentorro",
+        "organizacion":"organizacion",
+        "usuario":"usuario",
+        "tag1":"Administración de  Servicios Centrales",
+        "tag2":"MONITOR  CRT",
+        "tag3":"DEFAULT",
+        "peso":2.2,
+        "localizador":" ",
+        "qr_data":" "})
+
+
     manejadorItem.create(new_item,manejadorClasificacion,"osl")
 
     #display all items from DB
@@ -99,13 +112,42 @@ def main():
         "peso_total":0,
         "id_items_catalogo":[],
         "qr_data":" "})
+    new_catalogo2 = Catalogo.build_from_json({"nombre_catalogo":"Catalogo 2",
+        "fecha_alta_catalogo":time.strftime("%c"),
+        "descripcion_catalogo":"Catalogo con items imposibles de manufacturar. Para reciclaje",
+        "organizacion":"organizacion",
+        "usuario":"usuario",
+        "tag_catalogo":"Reciclar",
+        "tipo_catalogo":"publico",
+        "peso_total":0,
+        "id_items_catalogo":[],
+        "qr_data":" "})
     test_create(manejador, new_catalogo)
+    test_create(manejador, new_catalogo2)
+
 
     manejador.addToCatalogo(new_catalogo._id,new_item._id,manejadorItem)
+    print "CAtalogo 1"
+    catalogo_aux=manejador.database.catalogos.find({"_id":new_catalogo._id})
+    for i in catalogo_aux:
+        print i
+    manejador.addToCatalogo(new_catalogo2._id,new_item._id,manejadorItem)
+    print "Catalogo 2"
+    catalogo_aux2=manejador.database.catalogos.find({"_id":new_catalogo2._id})
+    for i in catalogo_aux2:
+        print i
 
-    cat=manejador.read(catalogo_id=new_catalogo._id)
-    for i in cat:
-        res = Catalogo.build_from_json(i)
+    manejador.removeItemFromCatalogos(new_item._id,"organizacion")
+
+    print "########PRUEBAAAAAAAAAAAAAAA"
+    print "CAtalogo 1"
+    catalogo_aux=manejador.database.catalogos.find({"_id":new_catalogo._id})
+    for i in catalogo_aux:
+        print i
+    print "Catalogo 2"
+    catalogo_aux2=manejador.database.catalogos.find({"_id":new_catalogo2._id})
+    for i in catalogo_aux2:
+        print i
 
     #cargar_todos_catalogos(manejador)
     #update new_item

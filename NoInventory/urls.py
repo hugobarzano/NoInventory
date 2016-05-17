@@ -51,12 +51,13 @@ urlpatterns = patterns('',
         url(r'^deleteInformes/$',views.deleteInformes,name='deleteInformes'),
         url(r'^addItemFromQr/$',views.addItemFromQr,name='addItemFromQr'),
         url(r'^addItemFromNFC/$',views.addItemFromNFC,name='addItemFromNFC'),
+        url(r'^borrarItemAndroid/$', views.borrarItemAndroid,name='borrarItemAndroid'),
+        url(r'^addItemAndroid/$', views.addItemAndroid,name='addItemAndroid'),
         url(r'^register/$', views.register, name='register'),
         url(r'^login/$', views.user_login, name='login'),
         url(r'^logout/$', views.user_logout, name='logout'),
         url(r'^androidLogin/$', views.androidLogin, name='androidLogin'),
         url(r'^androidRegister/$', views.androidRegister, name='androidRegister'),
-        (r'^AndroidNuevoItem/$', AndroidItemCreator.as_view()),
 
 
         )
