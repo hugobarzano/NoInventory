@@ -19,7 +19,7 @@ def jsonTOstring(elemento):
 class Item(object):
     """Clase para almacenar informacion de los items"""
 
-    def __init__(self, item_id=None,nombre_item=None,fecha_alta_item=None, descripcion_item=None,organizacion=None,usuario=None,tag1=None,tag2=None,tag3=None,peso=None,localizador=None,qr_data=None):
+    def __init__(self, item_id=None,nombre_item=None,fecha_alta_item=None, descripcion_item=None,organizacion=None,usuario=None,tag1=None,tag2=None,tag3=None,peso=None,localizador=None):
 
         if item_id is None:
             self._id = ObjectId()
@@ -35,7 +35,6 @@ class Item(object):
         self.tag3=tag3
         self.peso=peso
         self.localizador=localizador
-        self.qr_data=qr_data
 
     def get_as_json(self):
         """ Metodo que devuelve el objeto en formato Json, para almacenar en MongoDB """
@@ -59,8 +58,7 @@ class Item(object):
                     json_data['tag2'],
                     json_data['tag3'],
                     json_data['peso'],
-                    json_data['localizador'],
-                    json_data['qr_data'])
+                    json_data['localizador'])
             except KeyError as e:
                 raise Exception("Clave no encontrada en json: {}".format(e.message))
         else:
@@ -89,32 +87,10 @@ class ItemsDriver(object):
     def create(self, item,clasificador,organizacion):
         if item is not None:
             self.database.items.save(item.get_as_json())
-            self.generateLocalizador(item,clasificador,organizacion)
-            self.generateQR(item)
+            #self.generateLocalizador(item,clasificador,organizacion)
         else:
             raise Exception("Imposible crear Item")
 
-    def generateQR(self,item):
-        if item is not None:
-            #qr_data_generated=jsonTOstring(item.get_as_json())
-            #qr_data_generated=self.getStringData(item)
-            #item._id=str(item._id)
-
-            aux=item.get_as_json()
-            aux["_id"]=str(aux["_id"])
-            #data={}
-            #data["_id"]=str(aux["_id"])
-            #data["fecha_alta_item"]=str(aux["fecha_alta_item"])
-            #data["localizador"]=str(aux["localizador"])
-            data={"_id":str(aux["_id"]),"fecha_alta_item":str(aux["fecha_alta_item"])}
-            #data = {"fecha_alta_item": "Mon Apr 11 19:12:31 2016"}
-
-            qr_data_generated=str(data)
-            print "qr_data_generated:\n"
-            print qr_data_generated
-            self.database.items.update({"_id":ObjectId(item._id)},{"$set": {"qr_data": qr_data_generated}})
-        else:
-            raise Exception("Imposible generar QR para el item")
 
     def getStringData(self,item):
         if item is not None:
@@ -154,8 +130,7 @@ class ItemsDriver(object):
             # which appears in the collection, otherwise it saves the data
             # as a new document in the collection
             self.database.items.save(item.get_as_json())
-            self.generateLocalizador(item,clasificador,organizacion)
-            self.generateQR(item)
+            #self.generateLocalizador(item,clasificador,organizacion)
         else:
             raise Exception("Imposible actualizar Item")
 

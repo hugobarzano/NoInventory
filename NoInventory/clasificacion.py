@@ -7,34 +7,6 @@ import json
 from item import *
 from bson.json_util import dumps
 
-
-
-
-
-class ClasificacionPruebas(object):
-    """ ItemsDriver implemeta las funcionalidades CRUD para administrar items """
-
-    def __init__(self,organizacion):
-
-        self.organizacion=organizacion
-        self.client = MongoClient(host='localhost', port=27017)
-        self.database = self.client[organizacion]
-
-
-
-    def prueba(self):
-        cosa={"prueba":"pruebaaaaa","organizacion":"osl"}
-        cosa2={"prueba":"pruebaaaaa","organizacion":"osl2"}
-        self.database[self.organizacion].insert(cosa)
-        self.database[self.organizacion].insert(cosa2)
-
-
-    def destroyPrueba(self):
-        self.database[self.organizacion].remove({'organizacion':'osl'})
-
-
-
-
 class ClasificacionDriver(object):
     """ ItemsDriver implemeta las funcionalidades CRUD para administrar items """
 
@@ -52,7 +24,6 @@ class ClasificacionDriver(object):
         self.database = self.client['tag1']
         self.database = self.client['tag2']
         self.database = self.client['tag3']
-
 
     def createTag1(self, fichero,organizacion):
         self.database.tag1.remove({'organizacion':organizacion})
@@ -127,3 +98,25 @@ class ClasificacionDriver(object):
         self.database.tag1.remove({'organizacion':organizacion})
         self.database.tag2.remove({'organizacion':organizacion})
         self.database.tag3.remove({'organizacion':organizacion})
+
+####################Generador de identificadores#######################
+
+    def generateLocalizador(self, item,gestorItems,organizacion):
+        localizador=""
+
+        if item is not None:
+            print item.tag1
+            get1 = list(self.database.tag1.find({'VALOR1':item.tag1,'organizacion':organizacion}))
+            get2 = list(self.database.tag2.find({'VALOR2':item.tag2,'organizacion':organizacion}))
+            get3 = list(self.database.tag3.find({'VALOR3':item.tag3,'organizacion':organizacion}))
+
+            if len(get1) is 0 or len(get2) is 0 or len(get3) is 0:
+                raise Exception("imposible generar localizador, faltan tags")
+                return localizador
+            else:
+                cod_correlativo=gestorItems.database.items.find({"tag1":item.tag1,"organizacion":organizacion}).count()
+                print "Codigo correlativo:"+str(cod_correlativo)
+                localizador=get1[0]["CLAVE1"]+get2[0]["CLAVE2"]+get3[0]["CLAVE3"]+str(cod_correlativo+1)
+                print "localizador generado:"
+                print localizador
+                return localizador

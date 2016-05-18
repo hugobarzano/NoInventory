@@ -77,7 +77,6 @@ def main():
     manejador = CatalogosDriver()
     manejadorItem = ItemsDriver()
     manejadorClasificacion=ClasificacionDriver()
-    manejadorPruebas=ClasificacionPruebas(organizacion="nombre_prueba")
 
     print "\n#######################################################"
     print "LANZANDO BATERIA DE TEST - CLASIFICACION POR TAGS"

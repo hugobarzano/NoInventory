@@ -8,6 +8,7 @@ import time
 from item import *
 from catalogo import *
 from clasificacion import *
+from identificador import *
 import os
 
 
@@ -64,6 +65,7 @@ def test_delete(manejador, new_item):
 def main():
     manejador = ItemsDriver()
     manejador2 = ClasificacionDriver()
+    manejador3 = IdentificadorDriver()
     #manejardor3= CatalogosDriver()
     #manejardor3.database.catalogos.remove()
     manejador.destroyDriver()
@@ -75,25 +77,57 @@ def main():
     #load_all_items_from_database(manejador)
 
     #display all items from DB
-
-
-    #create new_project and read back from database
-    new_item = Item.build_from_json({"nombre_item":"HP pavilion",
+    new_item = Item.build_from_json({"nombre_item":"HP pavilion2",
         "fecha_alta_item":time.strftime("%c"),
         "descripcion_item":"Ordenador portatil super potentorro",
-        "organizacion":"organizacion",
+        "organizacion":"osl",
         "usuario":"usuario",
         "tag1":"Administración de  Servicios Centrales",
         "tag2":"MONITOR  CRT",
         "tag3":"DEFAULT",
         "peso":5.2,
-        "localizador":""})
+        "localizador":" ",
+        "qr_data":" "})
 
     manejador.create(new_item,manejador2,"osl")
-    aux=manejador.database.items.find({"nombre_item":new_item.nombre_item})
-    #aux=manejador.database.items.find()
-    for i in aux:
+
+    #create new_project and read back from database
+    new_item2 = Item.build_from_json({"nombre_item":"HP pavilion",
+        "fecha_alta_item":time.strftime("%c"),
+        "descripcion_item":"Ordenador portatil super potentorro",
+        "organizacion":"osl",
+        "usuario":"usuario",
+        "tag1":"Administración de  Servicios Centrales",
+        "tag2":"MONITOR  CRT",
+        "tag3":"DEFAULT",
+        "peso":5.2,
+        "localizador":" ",
+        "qr_data":" "})
+    new_item3 = Item.build_from_json({"nombre_item":"HP pavilion",
+        "fecha_alta_item":time.strftime("%c"),
+        "descripcion_item":"Ordenador portatil super potentorro",
+        "organizacion":"osl",
+        "usuario":"usuario",
+        "tag1":"Administración de  Servicios Centrales",
+        "tag2":"MONITOR  CRT",
+        "tag3":"DEFAULT",
+        "peso":5.2,
+        "localizador":" ",
+        "qr_data":" "})
+    manejador.create(new_item2,manejador2,"osl")
+    manejador.create(new_item3,manejador2,"osl")
+
+
+    l=manejador.database.items.find({"organizacion":"osl"})
+    for i in l:
         print i
+    manejador2.generateLocalizador( new_item,manejador, "osl")
+
+
+    #aux=manejador.database.items.find({"nombre_item":new_item.nombre_item})
+    #aux=manejador.database.items.find()
+    #for i in aux:
+    #    print i
     #manejador.generateLocalizador(new_item,manejador2)
     #manejador.create(new_item)
     #salida=manejador.read(item_id=new_item._id)
@@ -102,6 +136,7 @@ def main():
     #    it = Item.build_from_json(i)
 
     #print "informacion qr:\n"
+    #print it.qr_data
     #test_create(manejador, new_item)
     #manejador.generateQR(new_item)
     #salida=manejador.read(new_item._id)
@@ -112,7 +147,7 @@ def main():
     #update new_item
     #new_item.descripcion_item = "Ordenador portatil nada pontente"
     #test_update(manejador, new_item)
-    load_all_items_from_database(manejador)
+#    load_all_items_from_database(manejador)
 
     #delete new_project and try to read back from database
     #test_delete(manejador, new_item)

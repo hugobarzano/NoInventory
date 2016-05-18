@@ -155,7 +155,7 @@ def prueba(request):
 
 @csrf_exempt
 def catalogos(request):
-    lista_catalogos=gestorCatalogos.database.catalogos.find({"usuario":request.session['username']})
+    lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']}).sort([("fecha_alta_catalogo", -1)]).limit(50)
     contexto = {"lista_catalogos":lista_catalogos}
     return render(request, 'noinventory/catalogos.html',contexto)
 
@@ -310,8 +310,10 @@ def cleanCatalogo(request):
 @csrf_exempt
 def busqueda(request):
 
-    respuesta={}
+    respuesta='<div id = "paginas"> <div id = "accordion"><div class="panel panel-default"><strong>No hay resultados</strong></div><div></div></div> <div class="col-md-12 text-center"><ul id="myPager" class="pagination"></ul></div></div>'
     if request.method == 'GET':
+#        if  request.GET["texto"]=="" and request.GET["fecha_inicio"]=="" and request.GET["fecha_final"]=="" and request.GET["tag2"] and request.GET["tag2"] and request.GET['tag3']
+
         if request.GET["modo_busqueda"] == str(6):
             inicio=request.GET["fecha_inicio"]+' 00:00:00'
             final=request.GET["fecha_final"]+' 23:59:59'
@@ -357,44 +359,52 @@ def busquedaCatalogo(request):
     #aux=[]
     #aux2=[]
     #aux3=[]
-    respuesta={}
+    respuesta='<div id = "paginas"> <div id = "accordion"><div class="panel panel-default"><strong>No hay resultados</strong></div><div></div></div> <div class="col-md-12 text-center"><ul id="myPager" class="pagination"></ul></div></div>'
+
     if request.method == 'GET':
-        print request.GET["texto"]
-        inicio=request.GET["fecha_inicio"]+' 00:00:00'
-        final=request.GET["fecha_final"]+' 23:59:59'
-        lista_catalogos=gestorCatalogos.database.catalogos.find({"$or": [ {"nombre_catalogo":{ "$regex": request.GET["texto"]}}, {"descripcion_catalogo":{ "$regex": request.GET["texto"] }},{"tag_catalogo":{ "$regex": request.GET["texto"] }},{"fecha_alta_catalogo" : {"$gte" :  inicio, "$lte" :  final}}]})
+
+        if request.GET["texto"]=='vacio' and request.GET["fecha_inicio"]=='' and request.GET["fecha_final"]=="":
+            lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']}).sort([("fecha_alta_catalogo", -1)]).limit(100)
+        else:
+            inicio=request.GET["fecha_inicio"]+' 00:00:00'
+            final=request.GET["fecha_final"]+' 23:59:59'
+            lista_catalogos=gestorCatalogos.database.catalogos.find({"$or": [ {"nombre_catalogo":{ "$regex": request.GET["texto"]}}, {"descripcion_catalogo":{ "$regex": request.GET["texto"] }},{"tag_catalogo":{ "$regex": request.GET["texto"] }},{"fecha_alta_catalogo" : {"$gte" :  inicio, "$lte" :  final}}]}).sort([("fecha_alta_catalogo", -1)]).limit(100)
             #lista_items=gestorItems.database.items.find({ "organizacion":request.session['organizacion'],"$or": [ {"nombre_item":{ "$regex": request.GET["texto"]}}, {"descripcion_item":{ "$regex": request.GET["texto"] }},{"tag1":request.GET["tag1"]},{"tag2":request.GET["tag2"]},{"tag3":request.GET["tag3"]} ] })
+
+
         lista_catalogos2=[]
         for c in lista_catalogos:
             catalogo_object=Catalogo.build_from_json(c)
             if catalogo_object.organizacion==request.session['organizacion']:
                 lista_catalogos2.append(catalogo_object.get_as_json())
+        print "tamaño Lista de catalogos"
+        print len(lista_catalogos2)
+        print request.GET["fecha_inicio"]
+        print request.GET["fecha_final"]
+        print request.GET["texto"]
+        if len(lista_catalogos2)>0:
+            aux4={"lista_c":lista_catalogos2}
 
-        aux4={"lista_c":lista_catalogos2}
-        print aux4
+            contenido='<div id = "paginas"> <div id = "accordion">'
+            for aux2 in aux4["lista_c"]:
+                aux2["_id"]=str(aux2["_id"])
+                contenido=contenido+'<div class="panel panel-default">'
+                contenido=contenido+'<h4><strong>Cat&aacutelogo:</strong>'  + aux2["nombre_catalogo"]+ ' <strong>Fecha:</strong>'+aux2["fecha_alta_catalogo"]+'</h4></div>'
+                contenido=contenido+' <div id="'+aux2["_id"]+'">'
+                contenido=contenido+' <button class="btn btn-default btn-xs borrarBoton pull-right" data-catalogo="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
+                contenido=contenido+' <a href="/modificarCatalogo/'+aux2["_id"]+'"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
+                contenido=contenido+' <a href="/catalogo/'+aux2["_id"]+'"> <button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-search"></span> items</button></a><br><hr>'
 
-        #print aux4
-        #for aux2 in aux4["lista_i"]:
-        #    print aux2["nombre_item"]
+                contenido=contenido+ '<p><strong>Detalles:</strong>'+aux2["descripcion_catalogo"]+'</p>'
+                contenido=contenido+ '<p> <strong>TAG: </strong>'+aux2["tag_catalogo"]+'</p>'
+                contenido=contenido+ '<p><strong>Peso Total:</strong>'+str(aux2["peso_total"])+'</p><hr>'
+                contenido=contenido+'<p> <strong>Creado por: </strong>' +aux2["usuario"]+'</p><p><strong>Organizacion: </strong>' +aux2["organizacion"]+'</p><hr>'
 
-        contenido='<div id = "paginas"> <div id = "accordion">'
-        for aux2 in aux4["lista_c"]:
-            aux2["_id"]=str(aux2["_id"])
-            contenido=contenido+'<div class="panel panel-default">'
-            contenido=contenido+'<h4><strong>Cat&aacutelogo:</strong>'  + aux2["nombre_catalogo"]+ ' <strong>Fecha:</strong>'+aux2["fecha_alta_catalogo"]+'</h4></div>'
-            contenido=contenido+' <div id="'+aux2["_id"]+'">'
-            contenido=contenido+' <button class="btn btn-default btn-xs borrarBoton pull-right" data-catalogo="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
-            contenido=contenido+' <a href="/modificarCatalogo/'+aux2["_id"]+'"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
-            contenido=contenido+' <a href="/catalogo/'+aux2["_id"]+'"> <button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-search"></span> items</button></a><br><hr>'
-
-            contenido=contenido+ '<p><strong>Detalles:</strong>'+aux2["descripcion_catalogo"]+'</p>'
-            contenido=contenido+ '<p> <strong>TAG: </strong>'+aux2["tag_catalogo"]+'</p>'
-            contenido=contenido+ '<p><strong>Peso Total:</strong>'+str(aux2["peso_total"])+'</p><hr>'
-            contenido=contenido+'<p> <strong>Creado por: </strong>' +aux2["usuario"]+'</p><p><strong>Organizacion: </strong>' +aux2["organizacion"]+'</p><hr>'
-
-            contenido = contenido + qrcode(aux2["qr_data"], alt="qr")+'<br></div>'
-        contenido=contenido+'</div> <div class="col-md-12 text-center"><ul id="myPager" class="pagination"></ul></div></div><br><br>'
-        return HttpResponse(contenido)
+                contenido = contenido + qrcode(aux2["qr_data"], alt="qr")+'<br></div>'
+            contenido=contenido+'</div> <div class="col-md-12 text-center"><ul id="myPager" class="pagination"></ul></div></div><br><br>'
+            return HttpResponse(contenido)
+        else:
+            return HttpResponse(respuesta)
 
     else:
         print "Entrando por post"
@@ -1402,9 +1412,18 @@ def borrarCatalogo(request):
         c_id = request.GET['catalogo_id']
         gestorCatalogos.database.catalogos.remove( {"_id" : ObjectId(c_id) } )
         try:
-            #lista_items=gestorItems.database.items.find({"usuario":request.session["username"]})
-            lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']})
-            aux4={"lista_c":lista_catalogos}
+            inicio=request.GET["fecha_inicio"]+' 00:00:00'
+            final=request.GET["fecha_final"]+' 23:59:59'
+            lista_catalogos=gestorCatalogos.database.catalogos.find({"$or": [ {"nombre_catalogo":{ "$regex": request.GET["texto"]}}, {"descripcion_catalogo":{ "$regex": request.GET["texto"] }},{"tag_catalogo":{ "$regex": request.GET["texto"] }},{"fecha_alta_catalogo" : {"$gte" :  inicio, "$lte" :  final}}]})
+            lista_catalogos2=[]
+            for c in lista_catalogos:
+                catalogo_object=Catalogo.build_from_json(c)
+                if catalogo_object.organizacion==request.session['organizacion']:
+                    lista_catalogos2.append(catalogo_object.get_as_json())
+
+            aux4={"lista_c":lista_catalogos2}
+            #lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']})
+            #aux4={"lista_c":lista_catalogos}
             contenido='<div id = "paginas"> <div id = "accordion">'
             for aux2 in aux4["lista_c"]:
                 aux2["_id"]=str(aux2["_id"])
@@ -1489,10 +1508,12 @@ class ItemCreator(View):
                             "localizador":" ",
                             "qr_data":" ",
                             })
+                item.localizador=gestorClasificacion.generateLocalizador(item,gestorItems,request.session['organizacion'])
                 print "item creado"
                 print item._id
+                print item.localizador
                 gestorItems.create(item,gestorClasificacion,request.session['organizacion'])
-            lista_items=gestorItems.database.items.find({"usuario":request.session["username"]})
+            lista_items=gestorItems.database.items.find({"organizacion":request.session["organizacion"]})
             contexto = {"lista_items":lista_items}
             return redirect('/items',contexto)
         else:
@@ -1533,7 +1554,7 @@ class ItemUpdater(View):
                         "qr_data":c.qr_data,
                         })
             gestorItems.update(itemUpdated,gestorClasificacion,request.session['organizacion'])
-            lista_items=gestorItems.database.items.find({"usuario":request.session["username"]})
+            lista_items=gestorItems.database.items.find({"organizacion":request.session["organizacion"]})
             contexto = {"lista_items":lista_items}
             return redirect('/items',contexto)
         else:
@@ -1600,7 +1621,7 @@ class CatalogoUpdater(View):
                         "qr_data":c.qr_data,
                         })
             gestorCatalogos.update(catalogoUpdated)
-            lista_catalogos=gestorCatalogos.database.catalogos.find({"usuario":request.session["username"]})
+            lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session["organizacion"]})
             contexto = {"lista_catalogos":lista_catalogos}
             return redirect('/catalogo/'+str(c._id),contexto)
         else:

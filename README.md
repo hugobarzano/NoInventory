@@ -1,17 +1,23 @@
 #NO-INVENTORY
 
 ##Trabajo de Fin de Grado - Programa Becas Talentum StartUP
-###Descripción
-
-Repositorio para el proyecto de gestión y administración de inventariado
-
 
 ############################################################################
 
 [![Build Status](https://travis-ci.org/hugobarzano/NoInventory.svg?branch=master)](https://travis-ci.org/hugobarzano/NoInventory)
 [![DockerHub](https://www.dropbox.com/s/fl5hrbbjm4g2jec/docker_l.png?dl=1)](https://hub.docker.com/r/hugobarzano/)
+[![Azure](https://www.dropbox.com/s/oqur6k70poyscxj/azure.png?dl=1)](http://noinventory.cloudapp.net/)
 
 ############################################################################
+
+
+###Descripción
+
+No-Inventory es un sistema alojado en la nube para la gestión de inventarios o almacén.
+El sistema permite registrar nuevos elementos en función de las preferencias de cada usuario. Dichos elementos se pueden agrupar en colecciones denominadas catálogos, con el objetivo de mantener el orden en el almacén y llevar el control del estado del inventario.
+
+No-Inventory proporciona un entorno colaborativo que permite trabajar a distintos usuarios agrupados por organizaciones. El sistema genera la información necesaria para identificar de manera única cada elemento y mediante su extensión android, tiene soporte para realizar las tareas de gestión mediante códigos de barras, códigos QR o etiquetas NFC. El objetivo principal de complementar la plataforma web con tecnologías móviles es optimizar y minimizar el tiempo y dinero que conllevan las tareas básicas de inventariado.  
+
 
 Blog: [http://no-inventory.es/](http://no-inventory.es/)
 
@@ -28,7 +34,20 @@ Contacto: hugobarzano@gmail.com
 [Instalación Local de la aplicación](https://github.com/hugobarzano/NoInventory/blob/master/documentacion/instalacion.md)
 ###Infraestructura
 
-La infraestrutura del proyecto se encuentra alojada en el respositorio [osl-computer-management](https://github.com/hugobarzano/osl-computer-management)
+El sistema cuenta con diversoso tipos de infraestrutura.
+
+  Infraestructura basada en docker
+
+  Infraestructura basada en docker con composicion de Servicios
+
+  Infraestructura basada en herramientas de configuración para entornos virtuales de desarrollo web
+
+    - Vagrant
+    - Ansible
+
+Todas ellas corriendo sobre azure
+
+Una infraestructura similar, de una rama anteiror del proyecto la podemos encontrar aqui: [osl-computer-management](https://github.com/hugobarzano/osl-computer-management)
 
 ###Aplicación Android
 

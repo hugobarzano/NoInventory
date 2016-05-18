@@ -272,14 +272,22 @@
 
 
         $(document).on('click', ".borrarBoton", function () {
-          console.log("boton para borrar")
+          var fecha_inicio=document.getElementById('datepicker_inicio').value;
+          var fecha_final=document.getElementById('datepicker_final').value;
+          var texto=document.getElementById('texto').value;
+          console.log(texto)
+          if (texto==""){
+            texto="vacio"
+          }
+          console.log("llena")
+          console.log(texto)
           var catid = $(this).attr("data-catalogo")
           console.log("has pulsado el boton")
           console.log(catid)
           $.ajax({
             url: "/borrarCatalogo/",
             type: "get", //send it through get method
-            data:{catalogo_id:catid},
+            data:{catalogo_id:catid,fecha_inicio:fecha_inicio,fecha_final:fecha_final,texto:texto},
             success: function(response) {
               $('#paginas').html(response)
               $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:10});
