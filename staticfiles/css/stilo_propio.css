@@ -6,7 +6,7 @@ table{
     overflow-y: auto; /**El scroll verticalmente cuando sea necesario*/
     overflow-x: hidden;/*Sin scroll horizontal*/
     table-layout: fixed;/**Forzamos a que las filas tenga el mismo ancho**/
-    border:1px solid gray;  
+    border:1px solid gray;
 }
 
 .panel-primary > .panel-heading {

@@ -37,12 +37,18 @@
 
       <br>
       <div id="qr">
-      {{ item.localizador|qrcode:"localizador" }}
+        {{ item.localizador|qrcode:"localizador" }}
     </div>
+    <br>
+    <br>
+    <div class="barcode">
+    {{ item.localizador|barcode:"localizador" }}
+  </div>
+
+
       <br>
       <hr>
-      Identificador: {{ id_item }}<br>
-      Localizador: {{item.localizador}}
+
     </div>
 
     <div class="col-xs-12 col-sm-6 placeholder datos_item">
@@ -91,7 +97,9 @@
 
      <div class="panel panel-primary">
        <div class="panel-heading">
-         <button type="button" class="btn btn-default btn-sm" id="addToCatalogo"><span class="glyphicon glyphicon-paperclip"></span> <strong>Añadir Item</strong></button>
+         <br>
+         <hr>
+         <button type="button" class="btn btn-default btn-sm pull-right" id="addToCatalogo"><span class="glyphicon glyphicon-paperclip"></span> <strong>Añadir Item</strong></button>
            <br>
            <br>
            <select name="lista_catalogos" id="lista_catalogos" class="form-control">

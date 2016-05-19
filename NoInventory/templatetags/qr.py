@@ -34,6 +34,15 @@ def qrcode(value, alt=None):
 
     return mark_safe(u"""<img class="qrcode" src="%s" width="200" height="200" alt="%s" />""" % (url, alt))
 
+@register.filter
+@stringfilter
+def barcode(value, alt=None):
+    #{{ my_string|barcode:"my alt" }}#
+    url='http://www.mbcestore.com.mx/generador_codigo_de_barras/codigo_de_barras.html?code='+value+'&style=197&type=C128B&width=250&height=50&xres=1&font=4'
+    alt = conditional_escape(alt or value)
+    return mark_safe(u"""<img class="barcode" style="border-radius: 0px" src="%s"  alt="%s" />""" % (url, alt))
+
+
 @register.filter("documento_id")
 def documento_id(value):
     return str(value['_id'])
