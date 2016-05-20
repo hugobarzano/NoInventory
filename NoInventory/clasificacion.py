@@ -115,8 +115,13 @@ class ClasificacionDriver(object):
                 return localizador
             else:
                 cod_correlativo=gestorItems.database.items.find({"tag1":item.tag1,"organizacion":organizacion}).count()
-                print "Codigo correlativo:"+str(cod_correlativo)
-                localizador=get1[0]["CLAVE1"]+get2[0]["CLAVE2"]+get3[0]["CLAVE3"]+str(cod_correlativo+1)
+                aux="00000"
+                s = aux[ 0 : 5 - len(str(cod_correlativo+1))]
+                print "diferencia"
+                s=s+str(cod_correlativo+1)
+                print s
+                #print "Codigo correlativo:"+str(cod_correlativo)
+                localizador=get1[0]["CLAVE1"]+get2[0]["CLAVE2"]+get3[0]["CLAVE3"]+s
                 print "localizador generado:"
                 print localizador
                 return localizador
