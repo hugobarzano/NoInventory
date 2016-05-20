@@ -20,7 +20,15 @@
                 {% endfor %}
              </select>
               <hr>
-              Utiliza tus catálogos para generar gráficos
+              <select name="tipos_catalogos" id="lista_graficos" class="form-control">
+                <option value="column" selected="selected">Columnas</option>
+                <option value="bar">Barras</option>
+                <option value="pie">Sectores</option>
+                <option value="line">Linea Rectas</option>
+                <option value="spline">Lineas Curvas</option>
+                <option value="areaspline">Lineas y Areas</option>
+
+              </select>
           </div>
          </div>
 
@@ -32,7 +40,12 @@
           $('#lista_catalogos').change(function () {
             Graficos(document.getElementById('lista_catalogos').value,1)
           });
+          $('#lista_graficos').change(function () {
+            Graficos(document.getElementById('lista_catalogos').value,1)
+          });
         });
+
+
 
 
         function Graficos(catalogo,modo){
@@ -42,7 +55,6 @@
              type: 'get',
              data:{catalogo:catalogo,modo:modo},
              success: function(datos) {
-               console.log(datos["datos1"]["claveTag1"])
                Visualiza_datos(datos);
              },
              failure: function(datos) {
@@ -72,13 +84,14 @@
                var clavePesoFecha=datos["datosPesof"]["clavePesoFecha"]
                var valorPesoFecha=datos["datosPesof"]["valorPesoFecha"]
                var valorTags=datos["datosTags"]["datosTags"]
-               console.log(valorTags);
+               console.log(document.getElementById('lista_graficos').value);
 
 
            $('#container').highcharts({
                chart: {
                  renderTo: 'chart',
-                 type: 'column',
+                 allowPointSelect: true,
+                 type: document.getElementById('lista_graficos').value,
                  margin: 75,
                  marginTop:100,
                  options3d: {
@@ -117,7 +130,7 @@
            $('#container2').highcharts({
                chart: {
                  renderTo: 'chart',
-                 type: 'column',
+                 type: document.getElementById('lista_graficos').value,
                  margin: 75,
                  marginTop:100,
                  options3d: {
@@ -156,7 +169,7 @@
            $('#container3').highcharts({
                chart: {
                  renderTo: 'chart',
-                 type: 'column',
+                 type: document.getElementById('lista_graficos').value,
                  margin: 75,
                  marginTop:100,
                  options3d: {
@@ -195,7 +208,7 @@
            $('#container4').highcharts({
                chart: {
                  renderTo: 'chart',
-                 type: 'column',
+                 type: document.getElementById('lista_graficos').value,
                  margin: 75,
                  marginTop:100,
                  options3d: {

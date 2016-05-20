@@ -1539,7 +1539,13 @@ class ItemCreator(View):
                 gestorItems.create(item,gestorClasificacion,request.session['organizacion'])
 
             lista_items=gestorItems.database.items.find({"organizacion":request.session["organizacion"]})
-            contexto = {"lista_items":lista_items}
+            lista_tag1=gestorClasificacion.database.tag1.find({"organizacion":request.session['organizacion']}).sort([("CLAVE1", 1)])
+            lista_tag2=gestorClasificacion.database.tag2.find({"organizacion":request.session['organizacion']}).sort([("CLAVE2", 1)])
+            lista_tag3=gestorClasificacion.database.tag3.find({"organizacion":request.session['organizacion']}).sort([("CLAVE3", 1)])
+            lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion']}).sort([("fecha_alta_item", -1)]).limit(50)
+            lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']})
+            contexto = {'lista_items':lista_items,'lista_catalogos':lista_catalogos,'lista_tag1': lista_tag1,'lista_tag2':lista_tag2,'lista_tag3':lista_tag3}
+            #contexto = {"lista_items":lista_items}
             return redirect('/items',contexto)
         else:
             return render(request, 'noinventory/nuevoItem.html', {'form': form})
