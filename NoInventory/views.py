@@ -226,7 +226,7 @@ def alertaCatalogo(request):
                     lista_alertas.append(catalogo_object)
         respuesta=[]
         for i in lista_alertas:
-            alerta=i.nombre_catalogo+"\nFecha: "+i.fecha_alerta_catalogo+"\nAlerta: "+ i.tag_catalogo
+            alerta={"catalogo":i.nombre_catalogo+" -- "+i.fecha_alerta_catalogo,"alerta":i.tag_catalogo}
             respuesta.append(alerta)
         datos={"respuesta":respuesta}
     	return JsonResponse(datos, safe=False)
@@ -406,8 +406,7 @@ def busquedaCatalogo(request):
             catalogo_object=Catalogo.build_from_json(c)
             if catalogo_object.organizacion==request.session['organizacion']:
                 lista_catalogos2.append(catalogo_object.get_as_json())
-        print "tamaño Lista de catalogos"
-        print len(lista_catalogos2)
+
         print request.GET["fecha_inicio"]
         print request.GET["fecha_final"]
         print request.GET["texto"]
@@ -420,7 +419,7 @@ def busquedaCatalogo(request):
                 contenido=contenido+'<div class="panel panel-default">'
                 contenido=contenido+'<h4><strong>Cat&aacutelogo:</strong>'  + aux2["nombre_catalogo"]+ ' <strong>Fecha:</strong>'+aux2["fecha_alta_catalogo"]+'</h4></div>'
                 contenido=contenido+' <div id="'+aux2["_id"]+'">'
-                contenido=contenido+' <button class="btn btn-default btn-xs borrarBoton pull-right" data-catalogo="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
+                contenido=contenido+' <button class="btn btn-default btn-xs borrarBoton pull-right" onclick="setNotificacion2();" data-catalogo="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
                 contenido=contenido+' <a href="/modificarCatalogo/'+aux2["_id"]+'"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
                 contenido=contenido+' <a href="/catalogo/'+aux2["_id"]+'"> <button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-search"></span> items</button></a><br><hr>'
 
@@ -1441,42 +1440,52 @@ def borrarItems(request):
 def borrarCatalogo(request):
     c_id = None
     print "vamos a borrar"
+    respuesta='<div id = "paginas"> <div id = "accordion"><div class="panel panel-default"><strong>No hay resultados</strong></div><div></div></div> <div class="col-md-12 text-center"><ul id="myPager" class="pagination"></ul></div></div>'
     if request.method == 'GET':
         c_id = request.GET['catalogo_id']
         gestorCatalogos.database.catalogos.remove( {"_id" : ObjectId(c_id) } )
-        try:
+        if request.GET["texto"]=='vacio' and request.GET["fecha_inicio"]=='' and request.GET["fecha_final"]=="":
+            lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']}).sort([("fecha_alta_catalogo", -1)]).limit(100)
+        else:
             inicio=request.GET["fecha_inicio"]+' 00:00:00'
             final=request.GET["fecha_final"]+' 23:59:59'
-            lista_catalogos=gestorCatalogos.database.catalogos.find({"$or": [ {"nombre_catalogo":{ "$regex": request.GET["texto"]}}, {"descripcion_catalogo":{ "$regex": request.GET["texto"] }},{"tag_catalogo":{ "$regex": request.GET["texto"] }},{"fecha_alta_catalogo" : {"$gte" :  inicio, "$lte" :  final}}]})
-            lista_catalogos2=[]
-            for c in lista_catalogos:
-                catalogo_object=Catalogo.build_from_json(c)
-                if catalogo_object.organizacion==request.session['organizacion']:
-                    lista_catalogos2.append(catalogo_object.get_as_json())
+            lista_catalogos=gestorCatalogos.database.catalogos.find({"$or": [ {"nombre_catalogo":{ "$regex": request.GET["texto"]}}, {"descripcion_catalogo":{ "$regex": request.GET["texto"] }},{"tag_catalogo":{ "$regex": request.GET["texto"] }},{"fecha_alta_catalogo" : {"$gte" :  inicio, "$lte" :  final}}]}).sort([("fecha_alta_catalogo", -1)]).limit(100)
+            #lista_items=gestorItems.database.items.find({ "organizacion":request.session['organizacion'],"$or": [ {"nombre_item":{ "$regex": request.GET["texto"]}}, {"descripcion_item":{ "$regex": request.GET["texto"] }},{"tag1":request.GET["tag1"]},{"tag2":request.GET["tag2"]},{"tag3":request.GET["tag3"]} ] })
 
+
+        lista_catalogos2=[]
+        for c in lista_catalogos:
+            catalogo_object=Catalogo.build_from_json(c)
+            if catalogo_object.organizacion==request.session['organizacion']:
+                lista_catalogos2.append(catalogo_object.get_as_json())
+        print "tamaño Lista de catalogos"
+        print len(lista_catalogos2)
+        print request.GET["fecha_inicio"]
+        print request.GET["fecha_final"]
+        print request.GET["texto"]
+        if len(lista_catalogos2)>0:
             aux4={"lista_c":lista_catalogos2}
-            #lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']})
-            #aux4={"lista_c":lista_catalogos}
+
             contenido='<div id = "paginas"> <div id = "accordion">'
             for aux2 in aux4["lista_c"]:
                 aux2["_id"]=str(aux2["_id"])
                 contenido=contenido+'<div class="panel panel-default">'
                 contenido=contenido+'<h4><strong>Cat&aacutelogo:</strong>'  + aux2["nombre_catalogo"]+ ' <strong>Fecha:</strong>'+aux2["fecha_alta_catalogo"]+'</h4></div>'
                 contenido=contenido+' <div id="'+aux2["_id"]+'">'
-                contenido=contenido+' <button class="btn btn-default btn-xs borrarBoton pull-right" data-catalogo="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
+                contenido=contenido+' <button class="btn btn-default btn-xs borrarBoton pull-right" onclick="setNotificacion2();" data-catalogo="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
                 contenido=contenido+' <a href="/modificarCatalogo/'+aux2["_id"]+'"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
                 contenido=contenido+' <a href="/catalogo/'+aux2["_id"]+'"> <button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-search"></span> items</button></a><br><hr>'
 
                 contenido=contenido+ '<p><strong>Detalles:</strong>'+aux2["descripcion_catalogo"]+'</p>'
                 contenido=contenido+ '<p> <strong>TAG: </strong>'+aux2["tag_catalogo"]+'</p>'
-                contenido=contenido+ '<p><strong>Peso Total:</strong>'+aux2["peso_total"]+'</p><hr>'
+                contenido=contenido+ '<p><strong>Peso Total:</strong>'+str(aux2["peso_total"])+'</p><hr>'
                 contenido=contenido+'<p> <strong>Creado por: </strong>' +aux2["usuario"]+'</p><p><strong>Organizacion: </strong>' +aux2["organizacion"]+'</p><hr>'
 
                 contenido = contenido + qrcode(aux2["qr_data"], alt="qr")+'<br></div>'
             contenido=contenido+'</div> <div class="col-md-12 text-center"><ul id="myPager" class="pagination"></ul></div></div><br><br>'
-        except KeyError as e:
-            raise Exception("No tienes objetos asociados : {}".format(e.message))
-        return HttpResponse(contenido)
+            return HttpResponse(contenido)
+        else:
+            return HttpResponse(respuesta)
 
 
 @csrf_exempt

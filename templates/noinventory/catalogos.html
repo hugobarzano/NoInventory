@@ -13,7 +13,7 @@
 
 
         {% block body_block %}
-
+            <div id="freeow" class="freeow freeow-bottom-right"></div>
         <div class="panel panel-primary">
           <div class="panel-heading">
             <a href='/nuevoCatalogo' id='nuevoCatalogo'><button type="button" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-plus"></span><strong> Catálogo</strong></button></a>
@@ -46,7 +46,7 @@
               </h4>
           </div>
               <div id="{{ i|documento_id }}" data-catalogo="{{ i|documento_id }}">
-                <button class="btn btn-default btn-xs borrarBoton pull-right" data-catalogo="{{ i|documento_id }}"><span class="glyphicon glyphicon-remove"></span></button>
+                <button class="btn btn-default btn-xs borrarBoton pull-right" onclick="setNotificacion2();" data-catalogo="{{ i|documento_id }}"><span class="glyphicon glyphicon-remove"></span></button>
                 <a href="/modificarCatalogo/{{ i|documento_id}}"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>
                 <a href="/catalogo/{{ i|documento_id }}"> <button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-search"></span> items</button></a>
                 <br>
@@ -105,7 +105,8 @@
               cache: false,
               success: function(response) {
                 for(var i = 0; i < response["respuesta"].length; i++){
-                  alert(response["respuesta"][i]);
+                  setNotificacion(response["respuesta"][i]["catalogo"],response["respuesta"][i]["alerta"])
+                  //alert(response["respuesta"][i]);
                 }
 
               },
@@ -114,7 +115,20 @@
           });
         }
 
+        function setNotificacion(titulo,cuerpo) {
+          $("#freeow").freeow(titulo, cuerpo, {
+            classes: ["smokey", "notice"],
+            autoHide: false
+          });
+        }
+        function setNotificacion2() {
+          $("#freeow").freeow("Catálogo", "Borrado con exito", {
+            classes: ["smokey", "notice"],
+            autoHide: false
+          });
+        }
         $(document).ready(function(){
+        //setNotificacion("mis huevos","mis segundos huevos")
           compruebaAlerta()
               //setInterval(compruebaAlerta, 3000);
         });
