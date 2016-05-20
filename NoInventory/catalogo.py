@@ -82,7 +82,7 @@ class CatalogosDriver(object):
 
     def generateQR(self,catalogo):
         if catalogo is not None:
-            qr_data_generated=str(catalogo.get_as_json())
+            qr_data_generated=str(catalogo._id)
             self.database.catalogos.update({"_id":catalogo._id},{"$set": {"qr_data": qr_data_generated}})
         else:
             raise Exception("Imposible generar QR para el catalogo")
@@ -146,10 +146,8 @@ class CatalogosDriver(object):
         else:
             raise Exception("Item no valido para add")
 
-    def removeItemFromCatalogos(self,i_id,organizacion):
-        print "i_id:"
-        print i_id
-        self.database.catalogos.update({"organizacion":organizacion},{"$pull" : {"id_items_catalogo" : i_id}})
+    def removeItemFromCatalogos(self,i_id):
+        self.database.catalogos.update({},{"$pull" : {"id_items_catalogo" : str(i_id)}},multi=True)
 
     def destroyDriver(self):
         self.database.catalogos.remove()

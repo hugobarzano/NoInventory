@@ -174,9 +174,11 @@ def catalogo(request,id_catalogo):
             item_object=Item.build_from_json(z)
             print item_object._id
             lista_items.append(item_object.get_as_json())
-    print lista_items
 
-    contexto = {"catalogo":catalogo_object,"catalogo_id":id_catalogo,"lista_items":lista_items}
+    lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":request.session["organizacion"]}).sort([("CLAVE1", 1)])
+    lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":request.session["organizacion"]}).sort([("CLAVE2", 1)])
+    lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":request.session["organizacion"]}).sort([("CLAVE3", 1)])
+    contexto = {"catalogo":catalogo_object,"catalogo_id":id_catalogo,"lista_items":lista_items,"tag1":lista_tag1[0]["VALOR1"],"tag2":lista_tag2[0]["VALOR2"],"tag3":lista_tag3[0]["VALOR3"]}
     return render(request, 'noinventory/catalogo.html',contexto)
 
 @csrf_exempt
@@ -296,7 +298,10 @@ def updateCatalogo(request):
                 item_object._id=str(item_object._id)
                 lista_items.append(item_object.get_as_json())
 
-        contenido='<table class="table table-hover"> <thead> <tr> <th>Item</th> <th>Fecha</th> <th>Tag1</th> <th>TAG2</th><th>TAG3</th>'
+        lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":request.session["organizacion"]}).sort([("CLAVE1", 1)])
+        lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":request.session["organizacion"]}).sort([("CLAVE2", 1)])
+        lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":request.session["organizacion"]}).sort([("CLAVE3", 1)])
+        contenido='<table class="table table-hover"> <thead> <tr> <th>Item</th> <th>Fecha</th> <th>'+lista_tag1[0]["VALOR1"]+'</th> <th>'+lista_tag2[0]["VALOR2"]+'</th><th>'+lista_tag3[0]["VALOR3"]+'</th>'
         contenido=contenido+'<th>Peso</th></tr></thead><tbody>'
         for t in lista_items:
             contenido=contenido+'<tr><td>'+t["nombre_item"]+'</td>'
@@ -441,8 +446,9 @@ def graficos(request):
     lista_tag2=gestorClasificacion.database.tag2.find({"organizacion":request.session['organizacion']})
     lista_tag3=gestorClasificacion .database.tag3.find({"organizacion":request.session['organizacion']})
     lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']})
-
-    return render(request, 'noinventory/graficos.html', {'lista_catalogos':lista_catalogos,'lista_tag1': lista_tag1,"lista_tag2":lista_tag2,"lista_tag3":lista_tag3})
+    contexto={'lista_catalogos':lista_catalogos}
+    #return render(request, 'noinventory/graficos.html', {'lista_catalogos':lista_catalogos,'lista_tag1': lista_tag1,"lista_tag2":lista_tag2,"lista_tag3":lista_tag3})
+    return render(request, 'noinventory/graficos.html', contexto)
 
 
 def dataGraficos(request):
@@ -1351,6 +1357,7 @@ def borrarItemAndroid(request):
     if request.method == 'GET':
         i_id = request.GET['item_id']
         gestorItems.database.items.remove( {"_id" : ObjectId(i_id) } )
+        gestorCatalogos.removeItemFromCatalogos(i_id,organizacion)
         return HttpResponse("Borrado Realizado")
 
 @csrf_exempt
@@ -1388,6 +1395,7 @@ def borrarItem(request):
     if request.method == 'GET':
         i_id = request.GET['item_id']
         gestorItems.database.items.remove( {"_id" : ObjectId(i_id) } )
+        gestorCatalogos.removeItemFromCatalogos(i_id)
         try:
             #lista_items=gestorItems.database.items.find({"usuario":request.session["username"]})
             lista_items=gestorItems.database.items.find({"organizacion":request.session['organizacion']}).sort([("fecha_alta_item", -1)]).limit(50)
@@ -1426,6 +1434,7 @@ def borrarItems(request):
         print data
         for i in data:
             gestorItems.database.items.remove( {"_id" : ObjectId(i) } )
+            gestorCatalogos.removeItemFromCatalogos(i)
         return HttpResponse('<div id = "paginas"> <div id = "accordion"><div class="panel panel-default"><strong>Los Items han sido eliminados correctamente</strong></div><div></div></div> <div class="col-md-12 text-center"><ul id="myPager" class="pagination"></ul></div></div>')
 
 @csrf_exempt
@@ -1489,8 +1498,10 @@ def borrarItemFromCatalogo(request):
                 item_object=Item.build_from_json(z)
                 item_object._id=str(item_object._id)
                 lista_items.append(item_object.get_as_json())
-
-        contenido='<table class="table table-hover"> <thead> <tr> <th>Item</th> <th>Fecha</th> <th>Tag1</th> <th>TAG2</th><th>TAG3</th>'
+        lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":request.session["organizacion"]}).sort([("CLAVE1", 1)])
+        lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":request.session["organizacion"]}).sort([("CLAVE2", 1)])
+        lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":request.session["organizacion"]}).sort([("CLAVE3", 1)])
+        contenido='<table class="table table-hover"> <thead> <tr> <th>Item</th> <th>Fecha</th> <th>'+lista_tag1[0]["VALOR1"]+'</th> <th>'+lista_tag2[0]["VALOR2"]+'</th><th>'+lista_tag3[0]["VALOR3"]+'</th>'
         contenido=contenido+'<th>Peso</th> </tr></thead><tbody>'
         for t in lista_items:
             print t["nombre_item"]

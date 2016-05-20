@@ -133,24 +133,27 @@ def main():
     catalogo_aux=manejador.database.catalogos.find({"_id":new_catalogo._id})
     for i in catalogo_aux:
         catalogo_object= Catalogo.build_from_json(i)
-    print catalogo_object.fecha_alerta_catalogo
+    print catalogo_object.id_items_catalogo
     manejador.addToCatalogo(new_catalogo2._id,new_item._id,manejadorItem)
     print "Catalogo 2"
     catalogo_aux2=manejador.database.catalogos.find({"_id":new_catalogo2._id})
     for i in catalogo_aux2:
-        print i
+        catalogo_object2=Catalogo.build_from_json(i)
+    print catalogo_object2.id_items_catalogo
 
-    manejador.removeItemFromCatalogos(new_item._id,"organizacion")
+    manejador.removeItemFromCatalogos(new_item._id)
 
-    print "########PRUEBAAAAAAAAAAAAAAA"
+    ###########
     print "CAtalogo 1"
     catalogo_aux=manejador.database.catalogos.find({"_id":new_catalogo._id})
     for i in catalogo_aux:
-        print i
+        catalogo_object= Catalogo.build_from_json(i)
+    print catalogo_object.id_items_catalogo
     print "Catalogo 2"
     catalogo_aux2=manejador.database.catalogos.find({"_id":new_catalogo2._id})
     for i in catalogo_aux2:
-        print i
+        catalogo_object2=Catalogo.build_from_json(i)
+    print catalogo_object2.id_items_catalogo
 
     #cargar_todos_catalogos(manejador)
     #update new_item
