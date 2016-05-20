@@ -200,6 +200,7 @@ $(document).ready(function(){
 {% endblock %}
 
         {% block body_block %}
+        <div id="freeow" class="freeow freeow-bottom-right"></div>
 
         <div class="panel panel-primary">
           <div class="panel-heading">
@@ -261,7 +262,7 @@ $(document).ready(function(){
                </div>
 
                  <div id="{{ i|documento_id}}" data-item="{{ i|documento_id}}" >
-                   <button class=" btn btn-default btn-xs pull-right borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}"><span class="glyphicon glyphicon-remove"></span></button>
+                   <button class=" btn btn-default btn-xs pull-right borrarBoton" onclick="setNotificacion4();" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}"><span class="glyphicon glyphicon-remove"></span></button>
                    <a href="/modificarItem/{{ i|documento_id}}"><button class=" btn btn-default btn-xs pull-right"> <span class="glyphicon glyphicon-pencil"></span></button></a>
                    <a href="/item/{{ i|documento_id}}" > <button id='item_details' class=' btn btn-default btn-xs pull-right'><span class="glyphicon glyphicon-search"></span>Detalles</button></a>
                    <br>
@@ -304,7 +305,7 @@ $(document).ready(function(){
 
          <div class="panel panel-primary">
            <div class="panel-heading">
-             <button type="button" class="btn btn-default btn-sm" id="addToCatalogo"><span class="glyphicon glyphicon-paperclip"></span> <strong>Añadir Items</strong></button>
+             <button type="button" class="btn btn-default btn-sm" onclick="setNotificacion3();" id="addToCatalogo"><span class="glyphicon glyphicon-paperclip"></span> <strong>Añadir Items</strong></button>
                <br>
                <br>
                <select name="lista_catalogos" id="lista_catalogos" class="form-control">
@@ -444,6 +445,19 @@ $(document).ready(function(){
         //  $('#prueba').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:4});
 
         });
+        function setNotificacion3() {
+          $("#freeow").freeow("Items Añadidos con Éxito", "Consulta tu catálogo", {
+            classes: ["smokey", "notice"],
+            autoHideDelay:5000
+
+          });
+        }
+        function setNotificacion4() {
+          $("#freeow").freeow("Item", "Eliminado con Éxito", {
+            classes: ["smokey", "error"],
+            autoHideDelay:5000
+          });
+        }
         </script>
 
 

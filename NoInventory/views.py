@@ -282,6 +282,7 @@ def updateCatalogo(request):
         c_id = request.GET['catalogo_id']
         catalog=gestorCatalogos.database.catalogos.find({"_id":ObjectId(c_id)})
         lista_items=[]
+        catalogo_object=Catalogo()
         for i in catalog:
             catalogo_object=Catalogo.build_from_json(i)
         gestorCatalogos.calculatePeso(catalogo_object)
@@ -363,7 +364,7 @@ def busqueda(request):
             contenido=contenido+'<div class="panel panel-default">'
             contenido=contenido+'<h5><strong>Item:</strong>'  + aux2["nombre_item"]+ ' <strong>Fecha:</strong>'+aux2["fecha_alta_item"]+'</h5></div>'
             contenido=contenido+' <div id="'+aux2["_id"]+'" data-item="'+aux2["_id"]+'" >'
-            contenido = contenido + '<button class="btn btn-default btn-xs pull-right borrarBoton" data-item="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
+            contenido = contenido + '<button class="btn btn-default btn-xs pull-right borrarBoton" onclick="setNotificacion4();" data-item="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
             contenido = contenido + '<a href="/modificarItem/'+aux2["_id"]+'"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
             contenido = contenido + '<a href="/item/'+aux2["_id"]+'"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-search"></span>Detalles</button> </a><br><hr>'
             contenido=contenido+ '<p><strong>Detalles:</strong>'+aux2["descripcion_item"]+'</p>'
@@ -1405,7 +1406,7 @@ def borrarItem(request):
                 contenido=contenido+'<div class="panel panel-default">'
                 contenido=contenido+'<h5><strong>Item:</strong>'  + aux2["nombre_item"]+ ' <strong>Fecha:</strong>'+aux2["fecha_alta_item"]+'</h5></div>'
                 contenido=contenido+' <div id="'+aux2["_id"]+'" data-item="'+aux2["_id"]+'" >'
-                contenido = contenido + '<button class="btn btn-default btn-xs pull-right borrarBoton" data-item="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
+                contenido = contenido + '<button class="btn btn-default btn-xs pull-right borrarBoton" onclick="setNotificacion4();" data-item="'+aux2["_id"]+'"><span class="glyphicon glyphicon-remove"></span></button>'
                 contenido = contenido + '<a href="/modificarItem/'+aux2["_id"]+'"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>'
                 contenido = contenido + '<a href="/item/'+aux2["_id"]+'"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-search"></span>Detalles</button> </a><br><hr>'
                 contenido=contenido+ '<p><strong>Detalles:</strong>'+aux2["descripcion_item"]+'</p>'

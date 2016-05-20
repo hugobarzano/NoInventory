@@ -93,7 +93,6 @@
           type: "get", //send it through get method
           data:{nombre_informe:nombre_informe.value,datos_informe:String(contenido)},
           success: function(response) {
-            console.log(response["informes"][0]);
             $('#lista_informes').html(
               function(){
                     var content = '<select name="lista_informes" id="lista_informes">';

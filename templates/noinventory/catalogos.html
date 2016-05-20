@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+
 {% load qr %}
 {% block title %}Index{% endblock %}
 
@@ -13,7 +15,7 @@
 
 
         {% block body_block %}
-            <div id="freeow" class="freeow freeow-bottom-right"></div>
+          <div id="freeow" class="freeow freeow-bottom-right"></div>
         <div class="panel panel-primary">
           <div class="panel-heading">
             <a href='/nuevoCatalogo' id='nuevoCatalogo'><button type="button" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-plus"></span><strong> Catálogo</strong></button></a>
@@ -122,8 +124,8 @@
           });
         }
         function setNotificacion2() {
-          $("#freeow").freeow("Catálogo", "Borrado con exito", {
-            classes: ["smokey", "notice"],
+          $("#freeow").freeow("Catálogo", "Eliminado con exito", {
+            classes: ["smokey", "error"],
             autoHide: false
           });
         }
