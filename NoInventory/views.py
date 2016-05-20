@@ -281,7 +281,7 @@ def updateCatalogo(request):
             contenido=contenido+'<td>'+t["tag2"]+'</td>'
             contenido=contenido+'<td>'+t["tag3"]+'</td>'
             contenido=contenido+'<td>'+t["peso"]+'</td>'
-            contenido=contenido+'<td><button class="borrarBoton" data-item="'+t["_id"]+'"id="'+t["_id"]+'">Borrar</button></td></tr>'
+            contenido=contenido+'<td><button class="btn btn-default btn-sm borrarBoton" data-item="'+t["_id"]+'"id="'+t["_id"]+'"><span class="glyphicon glyphicon-fire"></span></button></td></tr>'
         contenido=contenido+'</tr></tbody></table>'
 
         respuesta={"contenido":contenido,"peso_total":catalogo_object.peso_total}
@@ -1476,7 +1476,7 @@ def borrarItemFromCatalogo(request):
             contenido=contenido+'<td>'+t["tag2"]+'</td>'
             contenido=contenido+'<td>'+t["tag3"]+'</td>'
             contenido=contenido+'<td>'+t["peso"]+'</td>'
-            contenido=contenido+'<td><button class="borrarBoton" data-item="'+t["_id"]+'"id="'+t["_id"]+'">Borrar</button></td></tr>'
+            contenido=contenido+'<td><button class="btn btn-default btn-sm borrarBoton" data-item="'+t["_id"]+'"id="'+t["_id"]+'"><span class="glyphicon glyphicon-fire"></span></button></td></tr>'
         contenido=contenido+'</tr></tbody></table>'
         return HttpResponse(contenido)
 

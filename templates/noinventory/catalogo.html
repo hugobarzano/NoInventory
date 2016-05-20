@@ -87,7 +87,8 @@
                 <td>{{ i.tag2 }}</td>
                 <td>{{ i.tag3 }}</td>
                 <td>{{ i.peso }}</td>
-                <td><button class="borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}">Borrar</button></td>
+
+                <td><button class=" btn btn-default btn-sm borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}"><span class="glyphicon glyphicon-fire"></span></button></td>
               </tr>
             {% endfor %}
             {% endif %}
@@ -165,6 +166,28 @@
       error: function(xhr) {
       }
     });
+  });
+
+  function actualiza() {
+    console.log("actualizacion")
+    $.ajax({
+      url: "/updateCatalogo/",
+      type: "get", //send it through get method
+      data:{catalogo_id:$("#catalogo").attr("data-catalogo")},
+      cache: false,
+      success: function(response) {
+        console.log(response)
+          $('.table').html(response["contenido"])
+          $('#peso').html('<p id="peso">Peso Total: '+response["peso_total"]+'</p>')
+
+      },
+      error: function(xhr) {
+      }
+  });
+  }
+
+  $(document).ready(function(){
+        setInterval(actualiza, 3000);
   });
 
 
