@@ -99,22 +99,6 @@ class ItemsDriver(object):
         else:
             raise Exception("Imposible generar los datos en String")
 
-    def generateLocalizador(self,item,manejador_clasificacion,organizacion):
-        if item is not None:
-            get1 = list(manejador_clasificacion.database.tag1.find({'VALOR1':item.tag1,'organizacion':organizacion}))
-            get2 = list(manejador_clasificacion.database.tag2.find({'VALOR2':item.tag2,'organizacion':organizacion}))
-            get3 = list(manejador_clasificacion.database.tag3.find({'VALOR3':item.tag3,'organizacion':organizacion}))
-
-            if len(get1) is 0 or len(get2) is 0 or len(get3) is 0:
-                raise Exception("imposible generar localizador, faltan tags")
-            else:
-                localizador=get1[0]["CLAVE1"]+get2[0]["CLAVE2"]+get3[0]["CLAVE3"]
-                print "localizador generado:"
-                print localizador
-                self.database.items.update({"_id":item._id},{"$set": {"localizador": localizador}})
-
-        else:
-            raise Exception("Imposible generar localizador para el item")
 
 
     def read(self, item_id=None):

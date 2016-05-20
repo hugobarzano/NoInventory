@@ -8,10 +8,21 @@
           {% load bootstrap %}
           {{ form.nombre_catalogo|bootstrap }}
           {{ form.descripcion_catalogo|bootstrap }}
+          {{ form.fecha_alerta_catalogo|bootstrap_horizontal:'col-xs-6' }}
           {{ form.tag_catalogo|bootstrap }}
           {{ form.tipo_catalogo|bootstrap }}
 
 
             <input type="submit" name="submit" value="Crear Catalogo" />
         </form>
+
+        <script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+      dateFormat: "yy-mm-dd",
+      changeMonth: true,
+      changeYear: true
+    });
+  });
+  </script>
   {% endblock %}

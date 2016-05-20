@@ -70,7 +70,7 @@ def main():
     print "\n#######################################################"
     print "LANZANDO BATERIA DE TEST - OPERACIONES CRUD PARA CATALOGOS"
     print "#######################################################\n"
-
+    manejador.destroyDriver()
 
     #cargar_todos_catalogos(manejador)
     new_item = Item.build_from_json({"nombre_item":"HP pavilion",
@@ -107,6 +107,7 @@ def main():
         "descripcion_catalogo":"Catalogo con items imposibles de manufacturar. Para reciclaje",
         "organizacion":"organizacion",
         "usuario":"usuario",
+        "fecha_alerta_catalogo":time.strftime("%c"),
         "tag_catalogo":"Reciclar",
         "tipo_catalogo":"publico",
         "peso_total":0,
@@ -117,6 +118,7 @@ def main():
         "descripcion_catalogo":"Catalogo con items imposibles de manufacturar. Para reciclaje",
         "organizacion":"organizacion",
         "usuario":"usuario",
+        "fecha_alerta_catalogo":time.strftime("%c"),
         "tag_catalogo":"Reciclar",
         "tipo_catalogo":"publico",
         "peso_total":0,
@@ -130,7 +132,8 @@ def main():
     print "CAtalogo 1"
     catalogo_aux=manejador.database.catalogos.find({"_id":new_catalogo._id})
     for i in catalogo_aux:
-        print i
+        catalogo_object= Catalogo.build_from_json(i)
+    print catalogo_object.fecha_alerta_catalogo
     manejador.addToCatalogo(new_catalogo2._id,new_item._id,manejadorItem)
     print "Catalogo 2"
     catalogo_aux2=manejador.database.catalogos.find({"_id":new_catalogo2._id})

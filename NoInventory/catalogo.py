@@ -7,7 +7,7 @@ gestorItems=ItemsDriver()
 class Catalogo(object):
     """Clase para almacenar informacion de los catalogos"""
 
-    def __init__(self, catalogo_id=None,nombre_catalogo=None,fecha_alta_catalogo=None, descripcion_catalogo=None,organizacion=None,usuario=None,tag_catalogo=None,tipo_catalogo=None,peso_total=None,id_items_catalogo=[],qr_data=None):
+    def __init__(self, catalogo_id=None,nombre_catalogo=None,fecha_alta_catalogo=None, descripcion_catalogo=None,organizacion=None,usuario=None,fecha_alerta_catalogo=None,tag_catalogo=None,tipo_catalogo=None,peso_total=None,id_items_catalogo=[],qr_data=None):
 
         if catalogo_id is None:
             self._id = ObjectId()
@@ -19,6 +19,7 @@ class Catalogo(object):
         self.descripcion_catalogo = descripcion_catalogo
         self.organizacion=organizacion
         self.usuario=usuario
+        self.fecha_alerta_catalogo=fecha_alerta_catalogo
         self.tag_catalogo=tag_catalogo
         self.tipo_catalogo=tipo_catalogo
         self.peso_total=peso_total
@@ -44,6 +45,7 @@ class Catalogo(object):
                     json_data['descripcion_catalogo'],
                     json_data['organizacion'],
                     json_data['usuario'],
+                    json_data['fecha_alerta_catalogo'],
                     json_data['tag_catalogo'],
                     json_data['tipo_catalogo'],
                     json_data['peso_total'],

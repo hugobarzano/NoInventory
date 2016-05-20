@@ -45,7 +45,7 @@
               <h4><strong>Catálogo:</strong> {{i.nombre_catalogo}} <strong>Fecha:</strong> {{i.fecha_alta_catalogo}}
               </h4>
           </div>
-              <div id="{{ i|documento_id }}">
+              <div id="{{ i|documento_id }}" data-catalogo="{{ i|documento_id }}">
                 <button class="btn btn-default btn-xs borrarBoton pull-right" data-catalogo="{{ i|documento_id }}"><span class="glyphicon glyphicon-remove"></span></button>
                 <a href="/modificarCatalogo/{{ i|documento_id}}"><button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span></button> </a>
                 <a href="/catalogo/{{ i|documento_id }}"> <button class="btn btn-default btn-xs pull-right"><span class="glyphicon glyphicon-search"></span> items</button></a>
@@ -53,7 +53,8 @@
                 <hr>
                 <p><strong> Detalles:</strong> {{ i.descripcion_catalogo }}</p>
                 <hr>
-                <p><strong>Tag:</strong> {{i.tag_catalogo}}</p>
+                <p><strong>Fecha Alerta:</strong> {{i.fecha_alerta_catalogo}}</p>
+                <p><strong>Alerta:</strong> {{i.tag_catalogo}}</p>
                 <p><strong>Peso Total:</strong> {{i.peso_total}}</p>
                 <hr>
                 <p> <strong>Creado por: </strong> {{ i.usuario }}</p>
@@ -87,6 +88,41 @@
 
 
         <script>
+
+        function compruebaAlerta() {
+
+          var lista_alertas=[]
+            $("#accordion div").each(function (index)
+            {
+                lista_alertas.push($(this).attr("data-catalogo"));
+
+            })
+            var lista_json = JSON.stringify(lista_alertas);
+            $.ajax({
+              url: "/alertaCatalogo/",
+              type: "get", //send it through get method
+              data:{lista_catalogos:lista_json},
+              cache: false,
+              success: function(response) {
+                for(var i = 0; i < response["respuesta"].length; i++){
+                  alert(response["respuesta"][i]);
+                }
+
+              },
+              error: function(xhr) {
+              }
+          });
+        }
+
+        $(document).ready(function(){
+          compruebaAlerta()
+              //setInterval(compruebaAlerta, 3000);
+        });
+
+
+
+
+
         $(document).ready(				//Lanza la selección de fecha
         	function () {
         	    $( "#datepicker_inicio" ).datepicker({
@@ -222,7 +258,7 @@
         };
         /* end plugin */
 
-      
+
 
         $(document).ready(function(){
           $('#paginas').pageMe({pagerSelector:'#myPager',childSelector:'.panel',showPrevNext:true,hidePageNumbers:false,perPage:10});

@@ -13,3 +13,7 @@ table{
   background-color: 	#BA55D3;
   border-color: 	#BA55D3;
 }
+
+tbody{
+  overflow-y: scroll;
+}

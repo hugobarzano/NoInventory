@@ -205,6 +205,30 @@ def catalogoToInforme(request):
 
 
 
+@csrf_exempt
+def alertaCatalogo(request):
+    if request.method == 'GET':
+        data_aux=json.loads(request.GET['lista_catalogos'])
+        print data_aux
+        data=[]
+        for i in data_aux:
+            if i !=None:
+                data.append(i)
+        lista_alertas=[]
+        for i in data:
+            cursor=gestorCatalogos.database.catalogos.find({"_id":ObjectId(i)})
+            for c in cursor:
+                catalogo_object=Catalogo.build_from_json(c)
+                print "alerta"+catalogo_object.fecha_alerta_catalogo
+                if catalogo_object.fecha_alerta_catalogo==datetime.now().strftime('%Y-%m-%d'):
+                    lista_alertas.append(catalogo_object)
+        respuesta=[]
+        for i in lista_alertas:
+            alerta=i.nombre_catalogo+"\nFecha: "+i.fecha_alerta_catalogo+"\nAlerta: "+ i.tag_catalogo
+            respuesta.append(alerta)
+        datos={"respuesta":respuesta}
+    	return JsonResponse(datos, safe=False)
+
 
 
 @csrf_exempt
@@ -273,7 +297,7 @@ def updateCatalogo(request):
                 lista_items.append(item_object.get_as_json())
 
         contenido='<table class="table table-hover"> <thead> <tr> <th>Item</th> <th>Fecha</th> <th>Tag1</th> <th>TAG2</th><th>TAG3</th>'
-        contenido=contenido+'<th>Peso</th> <th>Acciones</th></tr></thead><tbody>'
+        contenido=contenido+'<th>Peso</th></tr></thead><tbody>'
         for t in lista_items:
             contenido=contenido+'<tr><td>'+t["nombre_item"]+'</td>'
             contenido=contenido+'<td>'+t["fecha_alta_item"]+'</td>'
@@ -1467,7 +1491,7 @@ def borrarItemFromCatalogo(request):
                 lista_items.append(item_object.get_as_json())
 
         contenido='<table class="table table-hover"> <thead> <tr> <th>Item</th> <th>Fecha</th> <th>Tag1</th> <th>TAG2</th><th>TAG3</th>'
-        contenido=contenido+'<th>Peso</th> <th>Acciones</th></tr></thead><tbody>'
+        contenido=contenido+'<th>Peso</th> </tr></thead><tbody>'
         for t in lista_items:
             print t["nombre_item"]
             contenido=contenido+'<tr><td>'+t["nombre_item"]+'</td>'
@@ -1533,7 +1557,7 @@ class ItemUpdater(View):
         form = ItemForm3(aux,organizacion=request.session['organizacion'])
         form.data ["peso"]=currentItem.peso
         form.data["unidades"]=1
-        form.data["descripcion_item"]=str(form.data["descripcion_item"])+"\nUltima modificacion: "+time.strftime("%c")
+        form.data["descripcion_item"]=str(form.data["descripcion_item"])+"\nUltima modificacion: "+time.strftime("%c")+'\nPor el usuario: '+request.session["usuario"]
         #form.data["tag1"]=aux["tag1"]
         return render(request, 'noinventory/modificarItem.html', {'form': form,'id_item':currentItem._id})
 
@@ -1584,6 +1608,7 @@ class CatalogoCreator(View):
                         "descripcion_catalogo": form.data['descripcion_catalogo'],
                         "organizacion": request.session["organizacion"],
                         "usuario":request.session['username'],
+                        "fecha_alerta_catalogo":form.data["fecha_alerta_catalogo"],
                         "tag_catalogo": form.data['tag_catalogo'],
                         "tipo_catalogo":form.data['tipo_catalogo'],
                         "peso_total":str(0),
@@ -1623,6 +1648,7 @@ class CatalogoUpdater(View):
                         "descripcion_catalogo": form.data['descripcion_catalogo'],
                         "organizacion": c.organizacion,
                         "usuario":c.usuario,
+                        "fecha_alerta_catalogo":form.data["fecha_alerta_catalogo"],
                         "tag_catalogo": form.data['tag_catalogo'],
                         "tipo_catalogo": form.data['tipo_catalogo'],
                         "peso_total": c.peso_total,
