@@ -4,7 +4,6 @@ import time
 import os
 from item import *
 from django.conf import settings
-settings.configure()
 
 gestorItems=ItemsDriver()
 class Catalogo(object):
