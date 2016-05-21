@@ -14,16 +14,17 @@ class ClasificacionDriver(object):
         # inizializar MongoClient
         # aacceso a la base de datos
         ON_COMPOSE = os.environ.get('COMPOSE')
-        #print ON_COMPOSE
+        self.client = getattr(settings, "CLIENTE", None)
         if ON_COMPOSE:
-        #    time.sleep(0.1)
-            self.client = MongoClient('mongodb://172.17.0.2:27017/')
-        #    time.sleep(0.1)
+            self.database=self.client.get_default_database()
+            self.database['tag1']
+            self.database['tag2']
+            self.database['tag3']
         else:
-            self.client = MongoClient(host='localhost', port=27017)
-        self.database = self.client['tag1']
-        self.database = self.client['tag2']
-        self.database = self.client['tag3']
+            self.database = self.client['tag1']
+            self.database = self.client['tag2']
+            self.database = self.client['tag3']
+
 
     def createTag1(self, fichero,organizacion):
         self.database.tag1.remove({'organizacion':organizacion})

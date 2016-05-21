@@ -7,6 +7,7 @@ import time
 import os
 from clasificacion import *
 from datetime import datetime
+from django.conf import settings
 
 
 
@@ -72,16 +73,13 @@ class ItemsDriver(object):
         # inizializar MongoClient
         # aacceso a la base de datos
         ON_COMPOSE = os.environ.get('COMPOSE')
-        #print ON_COMPOSE
+        self.client = getattr(settings, "CLIENTE", None)
         if ON_COMPOSE:
-        #    time.sleep(0.1)
-            self.client = MongoClient('mongodb://172.17.0.2:27017/')
-        #    time.sleep(0.1)
+            self.database=self.client.get_default_database()
+            self.database['items']
         else:
-            time.sleep(0.1)
-            self.client = MongoClient(host='localhost', port=27017)
-        #    time.sleep(0.1)
-        self.database = self.client['items']
+            self.database = self.client['items']
+
 
 
     def create(self, item,clasificador,organizacion):

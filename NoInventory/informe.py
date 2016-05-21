@@ -14,7 +14,7 @@ class Informe(object):
         else:
             self._id = informe_id
         self.nombre_informe = nombre_informe
-        self.fecha_informe = str(datetime.now()) 
+        self.fecha_informe = str(datetime.now())
         self.organizacion=organizacion
         self.usuario=usuario
         self.datos_informe=datos_informe
@@ -51,14 +51,13 @@ class InformesDriver(object):
         # inizializar MongoClient
         # aacceso a la base de datos
         ON_COMPOSE = os.environ.get('COMPOSE')
-        #print ON_COMPOSE
+        self.client = getattr(settings, "CLIENTE", None)
         if ON_COMPOSE:
-            self.client = MongoClient('mongodb://172.17.0.2:27017/')
-        #    time.sleep(0.01)
+            self.database=self.client.get_default_database()
+            self.database['informes']
         else:
-            self.client = MongoClient(host='localhost', port=27017)
-        self.database = self.client['informes']
-
+            self.database = self.client['informes']
+            
 
     def create(self, informe):
         if informe is not None:

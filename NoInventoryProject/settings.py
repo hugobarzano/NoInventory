@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from pymongo import *
 import logging
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -27,6 +28,15 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+
+##Configuracion y conexion del cliente para MongoDB
+MONGO_HOST='localhost'
+MONGO_PORT=27017
+ON_COMPOSE = os.environ.get('COMPOSE')
+if ON_COMPOSE:
+	CLIENTE=MongoClient('mongodb://hugo:hugo@ds011923.mlab.com:11923/noinventory')
+else:
+	CLIENTE= MongoClient(host=MONGO_HOST,port=MONGO_PORT)
 
 # Application definition
 

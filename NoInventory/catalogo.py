@@ -64,13 +64,14 @@ class CatalogosDriver(object):
         # inizializar MongoClient
         # aacceso a la base de datos
         ON_COMPOSE = os.environ.get('COMPOSE')
-        #print ON_COMPOSE
+        self.client = getattr(settings, "CLIENTE", None)
         if ON_COMPOSE:
-            self.client = MongoClient('mongodb://172.17.0.2:27017/')
-        #    time.sleep(0.01)
+            self.database=self.client.get_default_database()
+            self.database['catalogos']
         else:
-            self.client = MongoClient(host='localhost', port=27017)
-        self.database = self.client['catalogos']
+            self.database = self.client['catalogos']
+
+        
 
 
     def create(self, catalogo):
@@ -98,10 +99,8 @@ class CatalogosDriver(object):
             item_object.peso=0
             for i in catalogo.id_items_catalogo:
                 item_aux=gestorItems.database.items.find({"_id":ObjectId(i)})
-                #print "item encontrado"+item_aux
                 for j in item_aux:
                     item_object=Item.build_from_json(j)
-                    print "peso objeto"+item_object.peso
                 peso=peso+float(item_object.peso)
             self.database.catalogos.update({"_id":catalogo._id},{"$set": {"peso_total": peso}})
         else:
