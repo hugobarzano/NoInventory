@@ -9,6 +9,8 @@ from catalogo import *
 from item import *
 from clasificacion import *
 import os
+from django.conf import settings
+
 
 def cargar_todos_catalogos(manejador):
     print("Cargando todos los catalogos de la base de datos:")

@@ -7,6 +7,8 @@ from catalogo import *
 from item import *
 from clasificacion import *
 import os
+from django.conf import settings
+
 
 
 

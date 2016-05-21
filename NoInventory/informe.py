@@ -4,6 +4,8 @@ import time
 from datetime import datetime
 import os
 from item import *
+from django.conf import settings
+
 class Informe(object):
     """Clase para almacenar informacion de los catalogos"""
 
@@ -57,7 +59,7 @@ class InformesDriver(object):
             self.database['informes']
         else:
             self.database = self.client['informes']
-            
+
 
     def create(self, informe):
         if informe is not None:

@@ -41,6 +41,8 @@ from reportlab.pdfgen import canvas
 from django.http import HttpResponse
 from xhtml2pdf import pisa
 from cStringIO import StringIO
+from django.conf import settings
+
 
 
 

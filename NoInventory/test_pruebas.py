@@ -10,6 +10,8 @@ from catalogo import *
 from clasificacion import *
 from identificador import *
 import os
+from django.conf import settings
+
 
 
 def load_all_items_from_database(manejador):

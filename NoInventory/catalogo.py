@@ -3,6 +3,8 @@ from pymongo import *
 import time
 import os
 from item import *
+from django.conf import settings
+
 gestorItems=ItemsDriver()
 class Catalogo(object):
     """Clase para almacenar informacion de los catalogos"""
@@ -71,7 +73,7 @@ class CatalogosDriver(object):
         else:
             self.database = self.client['catalogos']
 
-        
+
 
 
     def create(self, catalogo):
