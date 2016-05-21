@@ -30,6 +30,7 @@ web:
 
   ports:
     - "80:80"
+    - "11923:11923"
   links:
     - db
   environment:
