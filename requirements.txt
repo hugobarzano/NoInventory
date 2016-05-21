@@ -6,6 +6,8 @@ django-registration-redux
 django-bootstrap-toolkit==2.15.0
 djangorestframework==3.3.0
 pymongo==2.8
+dj-static==0.0.6
+django-toolbelt==0.0.1
 django-easy-maps
 static3==0.6.1
 geopy

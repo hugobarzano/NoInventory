@@ -44,6 +44,19 @@ test_selenium:
 	python Selenium/graficos.py
 	python Selenium/informes.py
 
+heroku:
+		wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+		heroku login
+		git add .
+		git commit -m "despliegue en heroku"
+		git push heroku master
+		heroku run python manage.py makemigrations --noinput
+		heroku run python manage.py migrate --noinput
+		heroku run python manage.py syncdb --noinput
+		heroku run python manage.py collectstatic --noinput
+		heroku ps:scale web=1
+		heroku open
+
 docker_manual:
 	sudo docker-compose run db /bin/bash
 	#ejecutar dentro sudo service mongodb restart y esperar
