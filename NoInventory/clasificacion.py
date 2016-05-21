@@ -7,7 +7,7 @@ import json
 from item import *
 from bson.json_util import dumps
 from django.conf import settings
-
+settings.configure()
 
 class ClasificacionDriver(object):
     """ ItemsDriver implemeta las funcionalidades CRUD para administrar items """
