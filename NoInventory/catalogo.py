@@ -70,6 +70,9 @@ class CatalogosDriver(object):
         if ON_COMPOSE:
             self.database=self.client.get_default_database()
             self.database['catalogos']
+        elif ON_SNAP_CI:
+            self.database=self.client.get_default_database()
+            self.database['catalogos']
         else:
             self.database = self.client['catalogos']
 
