@@ -6,6 +6,7 @@
 
 [![Build Status](https://travis-ci.org/hugobarzano/NoInventory.svg?branch=master)](https://travis-ci.org/hugobarzano/NoInventory)
 [![DockerHub](https://www.dropbox.com/s/fl5hrbbjm4g2jec/docker_l.png?dl=1)](https://hub.docker.com/r/hugobarzano/)
+[![Heroku](https://www.herokucdn.com/deploy/button.png)](http://noinventory.herokuapp.com/)
 [![Azure](https://www.dropbox.com/s/oqur6k70poyscxj/azure.png?dl=1)](http://noinventory.cloudapp.net/)
 
 ############################################################################
