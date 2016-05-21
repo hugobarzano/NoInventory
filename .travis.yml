@@ -8,6 +8,9 @@ install:
  - python -m pip install pymongo==3.1.1
  - pip install -r requirements.txt
 
+ env:
+   - ON_COMPOSE=True
+   
 script:
  - python NoInventory/test_clasificacion.py
  - python NoInventory/test_item.py
