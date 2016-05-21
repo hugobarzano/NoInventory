@@ -67,11 +67,13 @@ class CatalogosDriver(object):
         # aacceso a la base de datos
         ON_COMPOSE = os.environ.get('COMPOSE')
         ON_SNAP_CI = os.environ.get('SNAP_CI')
+        print "sanp ci:"
+        print ON_SNAP_CI
         self.client = getattr(settings, "CLIENTE", None)
         if ON_COMPOSE:
             self.database=self.client.get_default_database()
             self.database['catalogos']
-        elif ON_SNAP_CI:
+        elif ON_SNAP_CI == 'true':
             self.database=self.client.get_default_database()
             self.database['catalogos']
         else:
