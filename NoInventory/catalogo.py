@@ -77,8 +77,8 @@ class CatalogosDriver(object):
             self.database=self.client.get_default_database()
             self.database['catalogos']
         else:
-            self.database = self.client['catalogos']
-
+            self.database=self.client.get_default_database()
+            self.database['catalogos']
 
 
 
