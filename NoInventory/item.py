@@ -8,7 +8,6 @@ import os
 from clasificacion import *
 from datetime import datetime
 from django.conf import settings
-settings.configure()
 
 
 

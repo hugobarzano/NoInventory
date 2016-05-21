@@ -5,7 +5,7 @@ from datetime import datetime
 import os
 from item import *
 from django.conf import settings
-settings.configure()
+
 class Informe(object):
     """Clase para almacenar informacion de los catalogos"""
 
