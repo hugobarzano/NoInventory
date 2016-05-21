@@ -39,7 +39,8 @@ if ON_HEROKU:
 elif ON_COMPOSE:
 	CLIENTE=MongoClient('mongodb://hugo:hugo@ds011923.mlab.com:11923/noinventory')
 else:
-	CLIENTE= MongoClient(host=MONGO_HOST,port=MONGO_PORT)
+    CLIENTE=MongoClient('mongodb://hugo:hugo@ds011923.mlab.com:11923/noinventory')
+	#CLIENTE= MongoClient(host=MONGO_HOST,port=MONGO_PORT)
 
 # Application definition
 
