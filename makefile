@@ -49,7 +49,7 @@ heroku:
 		heroku login
 		git add .
 		git commit -m "despliegue en heroku"
-		git push heroku master
+		git push herokunoinventory master
 		heroku config:set COMPOSE=true
 		heroku run python manage.py makemigrations --noinput
 		heroku run python manage.py migrate --noinput
