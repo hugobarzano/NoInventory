@@ -10,7 +10,6 @@ from item import *
 from clasificacion import *
 import os
 from datetime import datetime
-from django.conf import settings
 
 
 

@@ -9,7 +9,6 @@ from catalogo import *
 from item import *
 from clasificacion import *
 import os
-from django.conf import settings
 
 
 def cargar_todos_catalogos(manejador):

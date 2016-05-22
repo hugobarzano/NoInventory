@@ -9,7 +9,6 @@ from item import *
 from catalogo import *
 from clasificacion import *
 import os
-from django.conf import settings
 
 
 
