@@ -34,13 +34,13 @@ MONGO_HOST='localhost'
 MONGO_PORT=27017
 ON_COMPOSE = os.environ.get('COMPOSE')
 ON_SNAP_CI = os.environ.get('SNAP_CI')
-if ON_SNAP_CI=='true':
+if ON_SNAP_CI:
 	CLIENTE=MongoClient('mongodb://hugo:hugo@ds011923.mlab.com:11923/noinventory')
 elif ON_COMPOSE:
 	CLIENTE=MongoClient('mongodb://hugo:hugo@ds011923.mlab.com:11923/noinventory')
 else:
-    CLIENTE=MongoClient('mongodb://hugo:hugo@ds011923.mlab.com:11923/noinventory')
-	#CLIENTE= MongoClient(host=MONGO_HOST,port=MONGO_PORT)
+    #CLIENTE=MongoClient('mongodb://hugo:hugo@ds011923.mlab.com:11923/noinventory')
+	CLIENTE= MongoClient(host=MONGO_HOST,port=MONGO_PORT)
 
 # Application definition
 
