@@ -19,4 +19,5 @@ after_deploy:
 env:
   global:
   - DJANGO_SETTINGS_MODULE="NoInventoryProject.settings"
+  - PYTHONPATH="/home/travis/build/hugobarzano/noinventory"
   - HEROKU=true
