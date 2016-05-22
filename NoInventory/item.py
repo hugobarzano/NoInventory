@@ -73,7 +73,8 @@ class ItemsDriver(object):
         # aacceso a la base de datos
         ON_COMPOSE = os.environ.get('COMPOSE')
         ON_HEROKU = os.environ.get('HEROKU')
-        self.client = getattr(settings, "CLIENTE", None)
+        self.client = settings.CLIENTE
+        #self.client = getattr(settings, "CLIENTE", None)
         if ON_COMPOSE:
             self.database=self.client.get_default_database()
             self.database['items']

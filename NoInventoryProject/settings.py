@@ -35,11 +35,11 @@ MONGO_PORT=27017
 ON_COMPOSE = os.environ.get('COMPOSE')
 ON_HEROKU = os.environ.get('HEROKU')
 if ON_HEROKU:
-	CLIENTE=MongoClient('mongodb://hugo:hugo@ds011923.mlab.com:11923/noinventory')
+	CLIENTE = MongoClient('mongodb://hugo:hugo@ds011923.mlab.com:11923/noinventory')
 elif ON_COMPOSE:
-	CLIENTE=MongoClient('mongodb://hugo:hugo@ds011923.mlab.com:11923/noinventory')
+	CLIENTE = MongoClient('mongodb://hugo:hugo@ds011923.mlab.com:11923/noinventory')
 else:
-	CLIENTE= MongoClient(host=MONGO_HOST,port=MONGO_PORT)
+	CLIENTE = MongoClient(host=MONGO_HOST,port=MONGO_PORT)
 
 # Application definition
 
