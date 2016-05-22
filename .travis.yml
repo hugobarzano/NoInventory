@@ -18,9 +18,8 @@ after_deploy:
 
 env:
   - DJANGO=1.8
-  -DJANGO_SETTINGS_MODULE="NoInventory.settings"
+  - DJANGO_SETTINGS_MODULE="NoInventory.settings"
   global:
   - DJANGO_SETTINGS_MODULE="NoInventory.settings"
   - PYTHONPATH="/home/travis/build/hugobarzano/NoInventory"
-  - PIP_USE_MIRRORS=true
   - HEROKU=true
