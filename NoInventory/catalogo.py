@@ -5,7 +5,7 @@ import os
 from item import *
 from django.conf import settings
 if not settings.configured:
-    settings.configure()
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'NoInventoryProject.settings'
 
 gestorItems=ItemsDriver()
 class Catalogo(object):
