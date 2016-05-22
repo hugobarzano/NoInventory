@@ -48,7 +48,7 @@ heroku:
 		wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 		heroku login
 		git add .
-		git commit -m "despliegue en heroku"
+		git commit -m "Despliegue en heroku con base de datos en Mlab"
 		git push herokunoinventory master
 		heroku config:set HEROKU=true
 		heroku run python manage.py makemigrations --noinput

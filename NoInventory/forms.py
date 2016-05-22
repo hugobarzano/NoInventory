@@ -16,12 +16,6 @@ from django.template import RequestContext
 from django.forms import ClearableFileInput
 from pymongo import MongoClient
 
-ON_COMPOSE = os.environ.get('COMPOSE')
-if ON_COMPOSE:
-    client = MongoClient('mongodb://172.17.0.2:27017/')
-else:
-    client = MongoClient('mongodb://localhost:27017/')
-db = client['noinventory-database']
 
 
 

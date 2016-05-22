@@ -58,18 +58,11 @@ gestorInformes = InformesDriver()
 
 from pymongo import MongoClient
 
-ON_COMPOSE = os.environ.get('COMPOSE')
-if ON_COMPOSE:
-    client = MongoClient('mongodb://172.17.0.2:27017/')
-else:
-    client = MongoClient('mongodb://localhost:27017/')
-db = client['noinventory-database']
-#os.environ['DB_PORT_27017_TCP_ADDR']
 
 
-########################### VISTAS PRINCIPALES #################################
 
 
+#######################codigos#################################################3
 def qrcode(value, alt=None):
     """
     Generate QR Code image from a string with the Google charts API
@@ -108,6 +101,7 @@ def qrcode2(value, alt=None):
     return mark_safe(u"""<img class="qrcode" src="%s" width="150" height="150" alt="%s" />""" % (url, alt))
 
 
+########################### VISTAS PRINCIPALES #################################
 
 def index(request):
     #print "variable entorno:"
