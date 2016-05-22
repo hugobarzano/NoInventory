@@ -17,4 +17,6 @@ after_deploy:
   - python manage.py syncdb --noinput
 
 env:
-  - ON_COMPOSE=True
+  global:
+  - DJANGO_SETTINGS_MODULE="NoInventoryProject.settings"
+  - HEROKU=true
