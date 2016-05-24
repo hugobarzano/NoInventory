@@ -10,6 +10,7 @@
     action: apt pkg=python-setuptools state=installed
     action: apt pkg=python-dev state=installed
     action: apt pkg=build-essential state=installed
+    action: apt pkg=libpq-dev state=installed
     action: apt pkg=python-reportlab state=installed
   - name: Install MongoDB
     apt: pkg=mongodb state=present update_cache=yes

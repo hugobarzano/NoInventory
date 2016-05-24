@@ -68,16 +68,23 @@
     <script>
 
     function setNotificacion() {
-      $("#freeow").freeow("Informe", "guardado con exito", {
+      $("#freeow").freeow("Informe", "Guardado con exito", {
         classes: ["smokey", "notice"],
         autoHide: false
       });
     }
+    function setNotificacion2() {
+      $("#freeow").freeow("Informe", "Eliminado con exito", {
+        classes: ["smokey", "error"],
+        autoHide: false
+      });
+    }
+
 
         $('#new').click(function () {
             console.log("Boton nuevo")
             $('#nombre_informe').val("Nuevo Informe");
-            var plantilla_informe='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="http://i.imgur.com/mT7EhAo.png" height="194" width="800"><br><br><br><ul><li><font size="6"><u><b>INTRODUCCIÓN</b></u></font></li></ul><font size="6"><font size="5"><font size="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hablar un poco de las actividades que realiza tu organización</font></font><br><br></font><ul><li><font size="6"><u><b>DETALLES</b></u></font>&nbsp; &nbsp; &nbsp;&nbsp; <br></li></ul>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ¿Qué quieres reflejar en este informe? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="6"><br></font><ul><li><font size="6"><u><b>GRÁFICOS</b></u></font></li></ul>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Espacio para insertar los gráficos que se han generado<br><br><br><ul><li><font size="6"><b><u>CATÁLOGO</u></b></font></li></ul><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Espacio para añadir los tados de un catalogo, así como la lista de items asociada a él <br>'
+            var plantilla_informe='<!DOCTYPE html><head><meta charset="utf-8"/></head><body>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="http://i.imgur.com/mT7EhAo.png" height="194" width="800"><br><br><br><ul><li><font size="6"><u><b>INTRODUCCIÓN</b></u></font></li></ul><font size="6"><font size="5"><font size="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hablar un poco de las actividades que realiza tu organización</font></font><br><br></font><ul><li><font size="6"><u><b>DETALLES</b></u></font>&nbsp; &nbsp; &nbsp;&nbsp; <br></li></ul>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ¿Qué quieres reflejar en este informe? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font size="6"><br></font><ul><li><font size="6"><u><b>GRÁFICOS</b></u></font></li></ul>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Espacio para insertar los gráficos que se han generado<br><br><br><ul><li><font size="6"><b><u>CATÁLOGO</u></b></font></li></ul><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Espacio para añadir los tados de un catalogo, así como la lista de items asociada a él <br></body></html>'
             nicEditors.findEditor('editor').setContent(plantilla_informe)
 
         });

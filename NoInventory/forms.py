@@ -43,6 +43,27 @@ class ItemForm3(forms.Form):
 
 
 
+class ItemFormAndroid(forms.Form):
+    """Form for adding and editing backups."""
+
+    def __init__(self, *args, **kwargs):
+        organizacion = kwargs.pop('organizacion')
+        super(ItemFormAndroid, self).__init__(*args, **kwargs)
+        self.fields['nombre_item'] = forms.CharField(required=True,max_length=150, help_text="Introduce el nombre del objeto")
+        self.fields['descripcion_item']  = forms.CharField(widget = forms.Textarea, help_text="Breve descripcion sobre el objeto")
+        lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":organizacion}).sort([("CLAVE1", 1)])
+        lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":organizacion}).sort([("CLAVE2", 1)])
+        lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":organizacion}).sort([("CLAVE3", 1)])
+        #print "formulario"
+        #print lista_tag2[0]["VALOR2"]
+        self.fields['tag1'] = forms.ChoiceField(label='', choices=[(x["VALOR1"], x["VALOR1"]) for x in lista_tag1])
+        self.fields['tag2'] = forms.ChoiceField(label='', choices=[(x["VALOR2"], x["VALOR2"]) for x in lista_tag2])
+        self.fields['tag3'] = forms.ChoiceField(label='', choices=[(x["VALOR3"], x["VALOR3"]) for x in lista_tag3])
+        self.fields['peso'] = forms.FloatField(required=False, label='Peso/Unidad',initial=0.0)
+        self.fields['usuario'] = forms.CharField(required=True)
+        self.fields['organizacion'] = forms.CharField(required=True)
+
+
 def ItemForm(organizacion):
     print organizacion
 
