@@ -101,6 +101,12 @@ def qrcode2(value, alt=None):
     return mark_safe(u"""<img class="qrcode" src="%s" width="150" height="150" alt="%s" />""" % (url, alt))
 
 
+def barcodeIMG(value, alt=None):
+    #{{ my_string|barcode:"my alt" }}#
+    url='http://www.mbcestore.com.mx/generador_codigo_de_barras/codigo_de_barras.html?code='+value+'&style=197&type=C128B&width=250&height=50&xres=1&font=4'
+    alt = conditional_escape(alt or value)
+    return mark_safe(u"""<img class="barcode" style="border-radius: 0px" src="%s"  alt="%s" />""" % (url, alt))
+
 ########################### VISTAS PRINCIPALES #################################
 
 def index(request):
@@ -809,11 +815,11 @@ def generaPDFCatalogoQRs(request):
             lista_aux2=[]
             contador=0
     catalogo="<hr><strong>"+catalogo_object.nombre_catalogo+'<br>'+catalogo_object.fecha_alta_catalogo+'<br></strong><br>'+catalogo_object.descripcion_catalogo
-    codigosqr=catalogo+"<hr><hr><table><tr><td>_______________</td><td>_______________</td><td>_______________</td></tr>"
+    codigosqr=catalogo+"<hr><hr><table><tr><td> </td><td> </td><td> </td></tr>"
     for i in lista_aux3:
         codigosqr=codigosqr+'<tr>'
         for j in i:
-            codigosqr=codigosqr+'<td>'+j.nombre_item+'<br>'+qrcode2(j.localizador, alt="qr")+'</td>'
+            codigosqr=codigosqr+'<td>'+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+j.nombre_item+'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+j.localizador+'<br>'+qrcode2(j.localizador, alt="qr")+'</td>'
         codigosqr=codigosqr+'</tr>'
     codigosqr=codigosqr+'</table>'
     pdf = StringIO()
@@ -822,6 +828,44 @@ def generaPDFCatalogoQRs(request):
     return HttpResponse(pdf.getvalue(),content_type='application/pdf')
 
 
+@csrf_exempt
+def generaPDFCatalogoCodigosBarras(request):
+    catalogo_object=Catalogo()
+    catalogo=gestorCatalogos.database.catalogos.find({"_id":ObjectId(request.GET['catalogo_id'])})
+    for c in catalogo:
+        catalogo_object = Catalogo.build_from_json(c)
+
+    print "Nombre del catalogo:"
+    print catalogo_object.nombre_catalogo
+    print "items asociados"
+    print catalogo_object.id_items_catalogo
+    lista_aux=[]
+    item_object=Item()
+    lista_aux2=[]
+    lista_aux3=[]
+    contador=0
+    for i in catalogo_object.id_items_catalogo:
+        item_aux=gestorItems.database.items.find({"_id":ObjectId(i)})
+        for j in item_aux:
+            item_object=Item.build_from_json(j)
+        lista_aux2.append(item_object)
+        contador=contador+1
+        if contador==3:
+            lista_aux3.append(lista_aux2)
+            lista_aux2=[]
+            contador=0
+    catalogo="<hr><strong>"+catalogo_object.nombre_catalogo+'<br>'+catalogo_object.fecha_alta_catalogo+'<br></strong><br>'+catalogo_object.descripcion_catalogo
+    codigosbarras=catalogo+"<hr><hr><table><tr><td> </td><td> </td><td> </td></tr>"
+    for i in lista_aux3:
+        codigosbarras=codigosbarras+'<tr>'
+        for j in i:
+            codigosbarras=codigosbarras+'<td>'+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+j.nombre_item+'<br>'+barcodeIMG(j.localizador, alt="qr")+'</td>'
+        codigosbarras=codigosbarras+'</tr>'
+    codigosbarras=codigosbarras+'</table>'
+    pdf = StringIO()
+    pisa.CreatePDF(StringIO(codigosbarras.encode('utf-8')), pdf)
+
+    return HttpResponse(pdf.getvalue(),content_type='application/pdf')
 
 
 @csrf_exempt
