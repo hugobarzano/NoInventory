@@ -150,6 +150,28 @@ def itemAndroid(request,id_item):
     contexto = {"item":item_object,"map":item_object.tag1,"ciudad":' ,Granada, Spain,',"id_item":item_object._id,"lista_catalogos":lista_catalogos}
     return render(request, 'noinventory/item_android.html',contexto)
 
+@csrf_exempt
+def catalogoAndroid(request,id_catalogo):
+    catalogo_object=Catalogo()
+
+    lista_items=[]
+    catalogo=gestorCatalogos.read(catalogo_id=id_catalogo)
+    for i in catalogo:
+        catalogo_object = Catalogo.build_from_json(i)
+
+    for j in catalogo_object.id_items_catalogo:
+        item=gestorItems.database.items.find({"_id":ObjectId(j)})
+        for z in item:
+            item_object=Item.build_from_json(z)
+            print item_object._id
+            lista_items.append(item_object.get_as_json())
+
+    lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":request.GET['organizacion']}).sort([("CLAVE1", 1)])
+    lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":request.GET['organizacion']}).sort([("CLAVE2", 1)])
+    lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":request.GET['organizacion']}).sort([("CLAVE3", 1)])
+    contexto = {"catalogo":catalogo_object,"catalogo_id":id_catalogo,"lista_items":lista_items,"tag1":lista_tag1[0]["VALOR1"],"tag2":lista_tag2[0]["VALOR2"],"tag3":lista_tag3[0]["VALOR3"]}
+    return render(request, 'noinventory/catalogo_android.html',contexto)
+
 def prueba(request):
     lista_items=gestorItems.database.items.find()
     form = SelectItem()
@@ -313,7 +335,7 @@ def updateCatalogo(request):
             contenido=contenido+'<td>'+t["tag2"]+'</td>'
             contenido=contenido+'<td>'+t["tag3"]+'</td>'
             contenido=contenido+'<td>'+t["peso"]+'</td>'
-            contenido=contenido+'<td><button class="btn btn-default btn-sm borrarBoton" data-item="'+t["_id"]+'"id="'+t["_id"]+'"><span class="glyphicon glyphicon-fire"></span></button></td></tr>'
+            contenido=contenido+'<td><button class="btn btn-default btn-sm borrarBoton" onclick="setNotificacion4();" data-item="'+t["_id"]+'"id="'+t["_id"]+'"><span class="glyphicon glyphicon-fire"></span></button></td></tr>'
         contenido=contenido+'</tr></tbody></table>'
 
         respuesta={"contenido":contenido,"peso_total":catalogo_object.peso_total}
@@ -781,12 +803,15 @@ def generaPDF(request):
     informe=gestorInformes.database.informes.find({"organizacion":request.session['organizacion'],"nombre_informe":request.GET["nombre_informe"]})
     for i in informe:
         objeto_informe = Informe.build_from_json(i)
-
-
     pdf = StringIO()
-    pisa.CreatePDF(StringIO(objeto_informe.datos_informe.encode('utf-8')), pdf)
-
-    return HttpResponse(pdf.getvalue(),content_type='application/pdf')
+    if objeto_informe.nombre_informe != None:
+        #pdf = StringIO()
+        pisa.CreatePDF(StringIO(objeto_informe.datos_informe.encode('utf-8')), pdf)
+        return HttpResponse(pdf.getvalue(),content_type='application/pdf')
+    else:
+        default='<strong>Error al  generar Informe, es necesario guardarlo y selecionarlo antes de generar PDF</strong>'
+        pisa.CreatePDF(StringIO(default.encode('utf-8')), pdf)
+        return HttpResponse(pdf.getvalue(),content_type='application/pdf')
 
 @csrf_exempt
 def generaPDFCatalogoQRs(request):
@@ -1397,7 +1422,7 @@ def borrarItemAndroid(request):
     if request.method == 'GET':
         i_id = request.GET['item_id']
         gestorItems.database.items.remove( {"_id" : ObjectId(i_id) } )
-        gestorCatalogos.removeItemFromCatalogos(i_id,organizacion)
+        gestorCatalogos.removeItemFromCatalogos(i_id)
         return HttpResponse("Borrado Realizado")
 
 @csrf_exempt
@@ -1561,7 +1586,7 @@ def borrarItemFromCatalogo(request):
             contenido=contenido+'<td>'+t["tag2"]+'</td>'
             contenido=contenido+'<td>'+t["tag3"]+'</td>'
             contenido=contenido+'<td>'+t["peso"]+'</td>'
-            contenido=contenido+'<td><button class="btn btn-default btn-sm borrarBoton" data-item="'+t["_id"]+'"id="'+t["_id"]+'"><span class="glyphicon glyphicon-fire"></span></button></td></tr>'
+            contenido=contenido+'<td><button class="btn btn-default btn-sm borrarBoton" onclick="setNotificacion4();" data-item="'+t["_id"]+'"id="'+t["_id"]+'"><span class="glyphicon glyphicon-fire"></span></button></td></tr>'
         contenido=contenido+'</tr></tbody></table>'
         return HttpResponse(contenido)
 

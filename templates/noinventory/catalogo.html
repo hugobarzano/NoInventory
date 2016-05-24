@@ -91,7 +91,7 @@
                 <td>{{ i.tag3 }}</td>
                 <td>{{ i.peso }}</td>
 
-                <td><button class=" btn btn-default btn-sm borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}"><span class="glyphicon glyphicon-fire"></span></button></td>
+                <td><button class=" btn btn-default btn-sm borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}" onclick="setNotificacion4();"><span class="glyphicon glyphicon-fire"></span></button></td>
               </tr>
             {% endfor %}
             {% endif %}
@@ -112,6 +112,13 @@
     $("#freeow").freeow("Catálogo Limpiado con Éxito", "No tiene Items asociados", {
       classes: ["smokey", "notice"],
       autoHide: false
+    });
+  }
+
+  function setNotificacion4() {
+    $("#freeow").freeow("Item", "Eliminado del catálogo", {
+      classes: ["smokey", "notice"],
+      autoHide: true
     });
   }
   $(function () {

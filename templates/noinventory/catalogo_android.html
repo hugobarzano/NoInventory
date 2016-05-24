@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+
 {% load qr %}
 {% block title %}Index{% endblock %}
 
@@ -15,16 +17,15 @@
 
 
         {% block body_block %}
+        <div id="freeow" class="freeow freeow-bottom-right"></div>
 
 
 
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h1 class="panel-title"><strong>{{catalogo.nombre_catalogo}}</strong>
-        <a href="/modificarCatalogo/{{ catalogo_id}}"><button type="button" class="btn btn-default btn-sm pull-right"> <span class="glyphicon glyphicon-pencil"></span><strong></strong></button></a>
         <button type="button" class="btn btn-default btn-sm pull-right" id='updateCatalogo'><span class="glyphicon glyphicon-refresh"></span> <strong> Actualizar</strong></button>
-        <a href="/generaPDFCatalogoQRs/?catalogo_id={{ catalogo_id}}" target="_blank" id="generaPDFQR"><button type="button" class="btn btn-default btn-sm pull-right"> <span class="glyphicon glyphicon-file"></span> Pdf</button></a>
-        <button type="button" class="btn btn-default btn-sm pull-right" id='cleanCatalogo'><span class="glyphicon glyphicon-fire"></span> <strong> Limpiar</strong></button>
+        <button type="button" class="btn btn-default btn-sm pull-right" onclick="setNotificacion3();" id='cleanCatalogo'><span class="glyphicon glyphicon-fire"></span> <strong> Limpiar</strong></button>
         <br>
         <br>
       </h1>
@@ -64,17 +65,16 @@
           </div>
 
 
-        <div class="table-responsive scrooll">
-        <table class="table table-hover table-striped  scrooll">
+        <div class="table-responsive">
+        <table class="table table-hover table-striped">
         <thead>
           <tr>
             <th>Item</th>
             <th>Fecha</th>
-            <th>Tag1</th>
-            <th>TAG2</th>
-            <th>TAG3</th>
+            <th>{{ tag1 }}</th>
+            <th>{{ tag2 }}</th>
+            <th>{{ tag3 }}</th>
             <th>Peso</th>
-            <th>Acciones</th>
           </tr>
         </thead>
         <tbody >
@@ -87,7 +87,8 @@
                 <td>{{ i.tag2 }}</td>
                 <td>{{ i.tag3 }}</td>
                 <td>{{ i.peso }}</td>
-                <td><button class="borrarBoton" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}">Borrar</button></td>
+
+                <td><button class=" btn btn-default btn-sm borrarBoton"  onclick="setNotificacion4();" data-item="{{ i|documento_id}}" id="{{ i|documento_id}}"><span class="glyphicon glyphicon-fire"></span></button></td>
               </tr>
             {% endfor %}
             {% endif %}
@@ -104,7 +105,18 @@
 
 
   <script>
-
+  function setNotificacion3() {
+    $("#freeow").freeow("Catálogo Limpiado con Éxito", "No tiene Items asociados", {
+      classes: ["smokey", "notice"],
+      autoHide: false
+    });
+  }
+  function setNotificacion4() {
+    $("#freeow").freeow("Item", "Eliminado del catálogo", {
+      classes: ["smokey", "notice"],
+      autoHide: true
+    });
+  }
   $(function () {
       $("#updateCatalogo").click(function (){
 
@@ -165,6 +177,28 @@
       error: function(xhr) {
       }
     });
+  });
+
+  function actualiza() {
+    console.log("actualizacion")
+    $.ajax({
+      url: "/updateCatalogo/",
+      type: "get", //send it through get method
+      data:{catalogo_id:$("#catalogo").attr("data-catalogo")},
+      cache: false,
+      success: function(response) {
+        console.log(response)
+          $('.table').html(response["contenido"])
+          $('#peso').html('<p id="peso">Peso Total: '+response["peso_total"]+'</p>')
+
+      },
+      error: function(xhr) {
+      }
+  });
+  }
+
+  $(document).ready(function(){
+        setInterval(actualiza, 3000);
   });
 
 

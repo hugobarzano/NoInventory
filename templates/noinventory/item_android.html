@@ -8,6 +8,7 @@
 
         {% block body_block %}
 
+        <div id="freeow" class="freeow freeow-bottom-right"></div>
 
 
 
@@ -83,7 +84,7 @@
   </div>
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <button type="button" class="btn btn-default btn-sm" id="addToCatalogo" data-item="{{ id_item }}"><span class="glyphicon glyphicon-paperclip"></span> <strong>Añadir Item</strong></button>
+      <button type="button" class="btn btn-default btn-sm" id="addToCatalogo" onclick="setNotificacion();" data-item="{{ id_item }}"><span class="glyphicon glyphicon-paperclip"></span> <strong>Añadir Item</strong></button>
         <br>
         <br>
         <select name="lista_catalogos" id="lista_catalogos" class="form-control">
@@ -124,7 +125,6 @@
                data:{item_id:item_id,catalogo_id:document.getElementById('lista_catalogos').value},
                cache: false,
                success: function(response) {
-                 alert('¡Item Añadido con Éxito!')
                  console.log(response);
 
                },
@@ -134,6 +134,13 @@
          })
      })
 
+     function setNotificacion() {
+       $("#freeow").freeow("Item Añadido con Éxito", "Consulta tu catálogo", {
+         classes: ["smokey", "notice"],
+         autoHideDelay:5000
+
+       });
+     }
 </script>
 
         {% endblock %}

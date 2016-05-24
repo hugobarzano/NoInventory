@@ -100,7 +100,7 @@
        <div class="panel-heading">
          <br>
          <hr>
-         <button type="button" class="btn btn-default btn-sm pull-right" id="addToCatalogo"><span class="glyphicon glyphicon-paperclip"></span> <strong>Añadir Item</strong></button>
+         <button type="button" class="btn btn-default btn-sm pull-right" id="addToCatalogo" onclick="setNotificacion();" data-item="{{ id_item }}"><span class="glyphicon glyphicon-paperclip"></span> <strong>Añadir Item</strong></button>
            <br>
            <br>
            <select name="lista_catalogos" id="lista_catalogos" class="form-control">
@@ -111,6 +111,36 @@
        </div>
       </div>
 
+<script>
+$(function () {
+    $("#addToCatalogo").click(function ()
+    {
 
+        var item_id= $(this).attr("data-item")
+        console.log(item_id)
+        var catalogo_id=JSON.stringify(document.getElementById('lista_catalogos').value);
+        $.ajax({
+          url: "/addItemAndroid/",
+          type: "get", //send it through get method
+          data:{item_id:item_id,catalogo_id:document.getElementById('lista_catalogos').value},
+          cache: false,
+          success: function(response) {
+            console.log(response);
+
+          },
+          error: function(xhr) {
+          }
+      });
+    })
+})
+function setNotificacion() {
+  $("#freeow").freeow("Item Añadido con Éxito", "Consulta tu catálogo", {
+    classes: ["smokey", "notice"],
+    autoHideDelay:5000
+
+  });
+}
+
+</script>
 
         {% endblock %}
