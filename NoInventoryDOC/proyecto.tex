@@ -205,16 +205,156 @@ Las Tecnologías de la Información y Comunicaciones (TIC), se han convertido en
 la eficacia y eficiencia en el manejo de los recursos de la empresa. 
 
 
-\chapter{Objetivos}
+\chapter{Análisis y Estado del Arte}
 
-Objetivo general a conseguir: se enuncia lo que se quiere hacer sin entrar en detalles.
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=1.95]{imagenes/tstc.png}
+\caption{ man apt-cache  }  
+\end{figure}
 
-Objetivos específicos: Es dividir el objetivo general en los pasos a seguir con sub-objetivos más simples.
-Dicho de otro modo, son cada uno de los pasos a realizar para alcanzar el objetivo general, es decir solucionando todos y cada uno de los objetivos específicos se resuelve el objetivo general. (Poner entre 3 y 5 como mucho).
+Para realizar un mejor Analisis del sistema, vamos a desglosarlo en dos partes. Primero analizaremos la plataforma web y despues analizaremos la aplicación Android 
 
-Se puede decir en qué apartado se tratará cada objetivo específico.
+\section{Requisitos de Información Plataforma web}
 
-Poner también los aspectos formativos previos utilizados, por ejemplo si se han usado técnicas de visión concretas como Transformada de Hough, Método de detección de rostros Viola-Jones, Filtro de Partículas, o técnicas de aprendizaje por SVM, etc. Se explica un poco cada método.
+Los requisitos de información se caracterizan por  reunir la información 	relevante para el cliente que debe gestionar y almacenar el sistema software.\par 
+
+\textbf{RI-1. Item:} Representación de cada uno de los elementos en el sistema. 
+Contenido: nombre, descripción, fecha de alta, ID, Localizador, organización de la que forma parte, el usuario que lo dio de alta, atributos. Los atributos son una tupla de 3 valores asignados en función de las preferencias con las que se quiera clasificar  cada elemento. Por ejemplo lugar del que procede, tipo de elemento y estado del elemento.
+
+
+\textbf{RI-2. Catalogo:} Representación de cada una de las colecciones de elementos del sistema. Contenido: nombre, descripción, fecha de alta, ID, mensaje de aviso, fecha de expiración, tipo de catalogo,  organización de la que forma parte, el usuario que lo dio de alta, colección con las ID de los elementos que forman el catalogo.
+
+\textbf{RI-3. Gráfico:} Información del estado del sistema en forma de grafico, en función de los catálogos creados por los distintos usuarios de una misma organización. Gráficos representativos basados en los atributos de los items que forman cada catalogo. Comparativa entre unidades y peso de esas unidades en el catalogo. 
+Contenido: catalogo.
+
+\textbf{RI-4. Informe:} Información del estado del sistema en forma de documento. Generado en función de los catálogos creados por los distintos usuarios de una misma organización y de los gráficos representativos. 
+Contenido: nombre, fecha de creación, usuario, organización, datos del informe. 
+
+\textbf{RI-5. Perfil de Usuario:} Información sensible del usuario que va a trabajar con el sistema. Contenido: nombre de usuario, contraseña, correo electrónico, organización. 
+
+\textbf{RI-6. Preferencias:} Información de los atributos que se desean utilizar para clasificar los elementos del sistema dentro del entorno colaborativo de la organización.
+Contenido: archivo csv de preferencias 1, archivo csv de preferencias 2, archivo csv de preferencias 3. 
+
+
+\section{Requisitos Funcionales Plataforma web}
+
+Como se define en la ingeniería de requisitos, los requisitos funcionales establecen los comportamientos del sistema.
+
+\textbf{RF-1. Gestión de items:} El sistema deberá gestionar el ciclo de vida de items o elementos existentes en el sistema.
+   
+
+	RF-1.1. El sistema permitirá añadir items
+
+	RF-1.2. El sistema permitirá buscar items
+
+	RF-1.3. El sistema permitirá modificar items
+
+	RF-1.4. El sistema permitirá eliminar items
+
+	RF-1.5. El sistema permitirá agrupar items en colecciones
+
+
+\textbf{RF-2. Gestión de catálogos:} El sistema deberá gestionar el ciclo de vida de conjuntos de items, estas colecciones reciben el nombre de catálogos o agrupaciones de items con atributos u objetivos similares.   
+
+	RF-2.1. El sistema permitirá añadir catálogos
+
+	RF-2.2. El sistema permitirá buscar catálogos
+
+	RF-2.3. El sistema permitirá modificar catálogos
+
+	RF-2.4. El sistema permitirá eliminar catálogos
+
+	RF-2.5. El sistema permitirá limpiar catálogos
+
+	RF-2.6. El sistema permitirá eliminar un item del catalogo
+
+	RF-2.7. El sistema permitirá exportar los códigos qr de sus elementos
+
+	RF-2.8. El sistema permitirá exportar los códigos de barras de sus elementos
+
+	RF-2.9. El sistema permitirá controlar el peso de los elementos del catálogo
+
+	RF-2.10. El sistema permitirá controlar el número de unidades del catálogo. 
+
+\textbf{RF-3. Gestión de Gráficos:} El sistema deberá generar gráficos a raíz de los elementos que forman parte de un catálogo, mostrando una comparativa entre el numero de unidades y peso de dichas unidades. Los gráficos representativos se dividen en función de las preferencias del usuario. 
+
+	RF-3.1. El sistema permitirá generar gráficos
+	RF-3.1. El sistema permitirá exportar gráficos
+	RF-3.1. El sistema permitirá seleccionar el tipo de gráfico	
+
+	 
+\textbf{RF-4. Gestión de Informes:} El sistema deberá generar informes significativos a raíz de los elementos que forman parte de un catálogo. El sistema proveerá al usuario de una plantilla editable para personalizar los aspectos e información necesaria para el informe. El sistema permitirá combinar distintos catálogos para generar un mismo informe.  El sistema permitirá incluir en los informes, los gráficos generados con anterioridad. 
+
+	
+
+	RF-4.1. El sistema permitirá generar informes
+	RF-4.2. El sistema permitirá almacenar informes
+	RF-4.3. El sistema permitirá modificar informes
+	RF-4.4. El sistema permitirá eliminar informes
+	RF-4.5. El sistema permitirá añadir catálogos a los informes
+	RF-4.6. El sistema permitirá añadir gráficos a los informes
+	RF-4.7. El sistema permitirá exportar informes
+
+\textbf{RF-5. Gestión de Preferencias:} El sistema permitirá personalizar las preferencias de cada organización. Dichas preferencias son los atributos con los que van a catalogarse los items. Dichos atributos son los que se usarán para dotar de contenido a los catálogos. Estos atributos también son empleados para la generación de gráficos. 
+
+	RF-5.1. El sistema permitirá cargar las preferencias desde fichero CSV
+	RF-5.1. El sistema permitirá cargar preferencias por defecto 
+
+\textbf{RF-6. Gestión de Usuarios:} El sistema deberá presentar un entorno colaborativo, clasificando a los usuarios por organizaciones de forma que distintos usuarios de una misma organización tengan acceso al mismo conjunto de recursos que define dicha organización. 
+
+	RF-6.1. El sistema permitirá al administrador dar de alta a nuevos usuarios.
+	RF-6.1. El sistema permitirá al administrador asignar perfiles de usuario.
+	RF-6.2. El sistema permitirá iniciar sesión a los usuario.
+	RF-6.2. El sistema permitirá cerrar sesión a los usuario.
+	RF-6.2. El sistema registrará internamente las acciones realizadas por cada 	usuario, 	de cada organización. 
+
+\section{Requisitos No Funcionales Plataforma web}
+Los requisitos no funcionales, se refieren a todos los requisitos que no describen información a guardar, ni funciones a realizar por el sistema, sino características de funcionamiento.
+
+\textbf{RNF-1} Necesitaremos que toda la información que se almacena sobre el sistema se mantenga segura, realizando copias de seguridad periódicas.
+
+\textbf{RNF-2} Necesitaremos analizar la cantidad de elementos que una organización va a administrar. Si es considerada una cantidad importante, dicha organización recibirá servicio desde una imagen del sistema asilada (Docker). De esta forma conseguimos que el flujo de datos no afectes a la experiencia de los clientes.
+
+\textbf{RNF-3} Necesitaremos disponer de una buena conexión a internet ya que el sistema da servicio desde la nube. 
+
+DIAGRAMONESSSSSSSSSSSSSSSSSSSSSSSSSS
+
+
+DIAGRAMAAAAAAAAAAAAAOOOOOOOOOOOOOOOOOOOOOOSSS
+
+\section{Requisitos Funcionales Aplicación Android}
+Los requisitos funcionales de la aplicación Android establecen los comportamientos o funcionalidades de la aplicación.
+
+RF-1. Administración de items 
+La aplicación deberá administrar los items que formen parte del almacen.   
+
+	RF-1.1. La aplicación permitirá detectar items mediante texto o localizador
+	RF-1.2. La aplicación permitirá detectar items mediante codigo QR
+	RF-1.3. La aplicación permitirá detectar items mediante codigo de barras
+	RF-1.4. La aplicación permitirá detectar items mediante etiquetas NFC
+	RF-1.5. La aplicación permitirá escribir el localizador de un item en una etiqueta NFC
+	RF-1.6. La aplicación permitirá consultar un item en detalle
+	RF-1.7. La aplicación permitirá añadir un item detectado a un catalogo determinado
+	RF-1.8. La aplicación permitirá eliminar items
+
+
+RF-2. Administración de Catálogos 
+La aplicación deberá administrar los catálogos que se utilicen para clasificar los items del almacén.   
+
+	RF-2.1. La aplicación permitirá detectar catálogos mediante texto o ID
+	RF-2.2. La aplicación permitirá añadir items  al catalogo mediante código QR
+	RF-2.3. La aplicación permitirá añadir items al catalogo mediante código de barras
+	RF-2.4. La aplicación permitirá añadir items al catalogo mediante etiquetas NFC
+	RF-2.5. La aplicación permitirá eliminar items de un catalogo
+	RF-2.6. La aplicación permitirá limpiar la lista de items de un catalogo
+	
+RF-3. Sesión de Usuario 
+La aplicación deberá identificar a cada usuario de manera única para certificar las tareas de administración que se lleven acabo desde la aplicación. 
+
+	RF-3.1. La aplicación permitirá al usuario iniciar sesión.
+	RF-3.2. La aplicación permitirá al usuario cerrar sesión.
+
 
 \chapter{Resolución del trabajo}
 
