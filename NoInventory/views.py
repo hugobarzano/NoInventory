@@ -342,6 +342,46 @@ def updateCatalogo(request):
         return JsonResponse(respuesta)
         #return HttpResponse(contenido)
 
+@csrf_exempt
+def updateCatalogoAndroid(request):
+    if request.method == 'GET':
+        c_id = request.GET['catalogo_id']
+        org = request.GET['organizacion']
+        catalog=gestorCatalogos.database.catalogos.find({"_id":ObjectId(c_id)})
+        lista_items=[]
+        catalogo_object=Catalogo()
+        for i in catalog:
+            catalogo_object=Catalogo.build_from_json(i)
+        gestorCatalogos.calculatePeso(catalogo_object)
+
+
+        catalog=gestorCatalogos.database.catalogos.find({"_id":ObjectId(c_id)})
+        for i in catalog:
+            catalogo_object=Catalogo.build_from_json(i)
+        for j in catalogo_object.id_items_catalogo:
+            item=gestorItems.database.items.find({"_id":ObjectId(j)})
+            for z in item:
+                item_object=Item.build_from_json(z)
+                item_object._id=str(item_object._id)
+                lista_items.append(item_object.get_as_json())
+
+        lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":request.GET['organizacion']}).sort([("CLAVE1", 1)])
+        lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":request.GET['organizacion']}).sort([("CLAVE2", 1)])
+        lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":request.GET['organizacion']}).sort([("CLAVE3", 1)])
+        contenido='<table class="table table-hover"> <thead> <tr> <th>Item</th> <th>Fecha</th> <th>'+lista_tag1[0]["VALOR1"]+'</th> <th>'+lista_tag2[0]["VALOR2"]+'</th><th>'+lista_tag3[0]["VALOR3"]+'</th>'
+        contenido=contenido+'<th>Peso</th></tr></thead><tbody>'
+        for t in lista_items:
+            contenido=contenido+'<tr><td>'+t["nombre_item"]+'</td>'
+            contenido=contenido+'<td>'+t["fecha_alta_item"]+'</td>'
+            contenido=contenido+'<td>'+t["tag1"]+'</td>'
+            contenido=contenido+'<td>'+t["tag2"]+'</td>'
+            contenido=contenido+'<td>'+t["tag3"]+'</td>'
+            contenido=contenido+'<td>'+t["peso"]+'</td>'
+            contenido=contenido+'<td><button class="btn btn-default btn-sm borrarBoton" onclick="setNotificacion4();" data-item="'+t["_id"]+'"id="'+t["_id"]+'"><span class="glyphicon glyphicon-fire"></span></button></td></tr>'
+        contenido=contenido+'</tr></tbody></table>'
+
+        respuesta={"contenido":contenido,"peso_total":catalogo_object.peso_total}
+        return JsonResponse(respuesta)
 
 @csrf_exempt
 def cleanCatalogo(request):
@@ -1589,6 +1629,81 @@ def borrarItemFromCatalogo(request):
             contenido=contenido+'<td><button class="btn btn-default btn-sm borrarBoton" onclick="setNotificacion4();" data-item="'+t["_id"]+'"id="'+t["_id"]+'"><span class="glyphicon glyphicon-fire"></span></button></td></tr>'
         contenido=contenido+'</tr></tbody></table>'
         return HttpResponse(contenido)
+
+@csrf_exempt
+def borrarItemFromCatalogoAndroid(request):
+    i_id = None
+    print "vamos a borrar"
+    if request.method == 'GET':
+        i_id = request.GET['item_id']
+        c_id = request.GET['catalogo_id']
+        organizacion=request.GET['organizacion']
+        gestorCatalogos.database.catalogos.update({"_id" : ObjectId(c_id)},{"$pull" : {"id_items_catalogo" : i_id}})
+        catalog=gestorCatalogos.database.catalogos.find({"_id":ObjectId(c_id)})
+        lista_items=[]
+        for i in catalog:
+            catalogo_object=Catalogo.build_from_json(i)
+
+        for j in catalogo_object.id_items_catalogo:
+            item=gestorItems.database.items.find({"_id":ObjectId(j)})
+            for z in item:
+                item_object=Item.build_from_json(z)
+                item_object._id=str(item_object._id)
+                lista_items.append(item_object.get_as_json())
+        lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":organizacion}).sort([("CLAVE1", 1)])
+        lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":organizacion}).sort([("CLAVE2", 1)])
+        lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":organizacion}).sort([("CLAVE3", 1)])
+        contenido='<table class="table table-hover"> <thead> <tr> <th>Item</th> <th>Fecha</th> <th>'+lista_tag1[0]["VALOR1"]+'</th> <th>'+lista_tag2[0]["VALOR2"]+'</th><th>'+lista_tag3[0]["VALOR3"]+'</th>'
+        contenido=contenido+'<th>Peso</th> </tr></thead><tbody>'
+        for t in lista_items:
+            print t["nombre_item"]
+            contenido=contenido+'<tr><td>'+t["nombre_item"]+'</td>'
+            contenido=contenido+'<td>'+t["fecha_alta_item"]+'</td>'
+            contenido=contenido+'<td>'+t["tag1"]+'</td>'
+            contenido=contenido+'<td>'+t["tag2"]+'</td>'
+            contenido=contenido+'<td>'+t["tag3"]+'</td>'
+            contenido=contenido+'<td>'+t["peso"]+'</td>'
+            contenido=contenido+'<td><button class="btn btn-default btn-sm borrarBoton" onclick="setNotificacion4();" data-item="'+t["_id"]+'"id="'+t["_id"]+'"><span class="glyphicon glyphicon-fire"></span></button></td></tr>'
+        contenido=contenido+'</tr></tbody></table>'
+        return HttpResponse(contenido)
+
+class ItemCreatorAndroid(View):
+
+    def get(self, request):
+        form = ItemFormAndroid(organizacion=request.GET['organizacion'],usuario=request.GET["usuario"])
+        #print request.GET['organizacion']
+        #form = ItemForm3(organizacion=request.GET['organizacion'])
+        return render(request, 'noinventory/nuevoItem_android.html', {'form': form,'organizacion':request.GET["organizacion"]})
+
+    def post(self, request):
+        mydic=dict(request.POST)
+        print str(mydic["user"][0])
+        form = ItemFormAndroid(request.POST,usuario=str(mydic["user"][0]),organizacion=str(mydic["org"][0]))
+        if form.is_valid():
+            unidades=form.data['unidades']
+            print unidades
+            for i in range(int(unidades)):
+                item =Item.build_from_json({"nombre_item": form.data['nombre_item'],
+                            "fecha_alta_item": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                            "descripcion_item": form.data['descripcion_item'],
+                            "organizacion": str(mydic["org"][0]),
+                            "usuario":str(mydic["user"][0]),
+                            "tag1": form.data['tag1'],
+                            "tag2": form.data['tag2'],
+                            "tag3": form.data['tag3'],
+                            "peso":form.data['peso'],
+                            "localizador":" ",
+                            "qr_data":" ",
+                            })
+                item.localizador=gestorClasificacion.generateLocalizador(item,gestorItems,str(mydic["org"][0]))
+                print "item creado"
+                print item._id
+                print item.localizador
+                gestorItems.create(item,gestorClasificacion,str(mydic["org"][0]))
+                return render(request, 'noinventory/creacion_completada.html')
+        else:
+            return render(request, 'noinventory/nuevoItem_android.html', {'form': form})
+
 
 
 

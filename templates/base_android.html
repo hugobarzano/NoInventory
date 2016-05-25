@@ -1,0 +1,73 @@
+{%load staticfiles%}
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Gestion de Almacen">
+    <meta name="author" content="Hugo Barzano Cruz">
+    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+
+    <title>NO-INVENTORY - {% block title %} {% endblock %}</title>
+
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script href="../static/js/marked.js"></script>
+    <script href="../static/js/vue.js"></script>
+    <script href="../static/epiceditor/js/epiceditor.min.js"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <!--funcionalidad dragable items -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
+
+  <script type="text/javascript" src="{% static 'noinventory/js/jquery.freeow.js' %}"></script>
+  <script type="text/javascript" src="{% static 'noinventory/js/jquery.freeow.min.js' %}"></script>
+
+  <link rel="stylesheet" type="text/css" href="{% static 'noinventory/css/freeow.css' %}"/>
+  <link rel="stylesheet" type="text/css" href="{% static 'noinventory/css/stilo_propio.css' %}"/>
+
+
+  </head>
+
+  <body>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <!--barra lateral izquida-->
+
+
+                {% block lateral_izquierda %}{% endblock %}
+
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+           <div>
+                {% block body_block %}{% endblock %}
+           </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

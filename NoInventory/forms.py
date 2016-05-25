@@ -47,6 +47,7 @@ class ItemFormAndroid(forms.Form):
     """Form for adding and editing backups."""
 
     def __init__(self, *args, **kwargs):
+        usuario = kwargs.pop('usuario')
         organizacion = kwargs.pop('organizacion')
         super(ItemFormAndroid, self).__init__(*args, **kwargs)
         self.fields['nombre_item'] = forms.CharField(required=True,max_length=150, help_text="Introduce el nombre del objeto")
@@ -60,9 +61,9 @@ class ItemFormAndroid(forms.Form):
         self.fields['tag2'] = forms.ChoiceField(label='', choices=[(x["VALOR2"], x["VALOR2"]) for x in lista_tag2])
         self.fields['tag3'] = forms.ChoiceField(label='', choices=[(x["VALOR3"], x["VALOR3"]) for x in lista_tag3])
         self.fields['peso'] = forms.FloatField(required=False, label='Peso/Unidad',initial=0.0)
-        self.fields['usuario'] = forms.CharField(required=True)
-        self.fields['organizacion'] = forms.CharField(required=True)
-
+        self.fields['unidades']=forms.IntegerField(required=False,label='Unidades',initial=1)
+        self.fields['user'] =forms.CharField(required=True,initial=usuario)
+        self.fields['org'] = forms.CharField(required=True,initial=organizacion)
 
 def ItemForm(organizacion):
     print organizacion

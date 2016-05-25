@@ -1,0 +1,31 @@
+{% extends "base_android.html" %}
+
+{% block body_block %}
+      <div class="panel panel-primary">
+        <div class="panel-heading" >
+          <h3 class="panel-title">Nuevo Item</h3>
+        </div>
+      </div>
+
+        <form id="itemformCreatorAmdroid" method="post" action="/nuevoItemAndroid/">
+          {% csrf_token %}
+          {% load bootstrap %}
+          {{ form.nombre_item|bootstrap }}
+          {{ form.descripcion_item|bootstrap }}
+          {{ form.tag1|bootstrap }}
+          {{ form.tag2|bootstrap }}
+          {{ form.tag3|bootstrap }}
+          {{ form.peso|bootstrap }}
+          {{ form.unidades|bootstrap }}
+          {{ form.user.as_hidden }}
+          {{ form.org.as_hidden }}
+
+
+
+
+
+
+
+            <input type="submit" name="submit" value="Crear" />
+        </form>
+  {% endblock %}

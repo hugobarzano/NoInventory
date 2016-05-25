@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_android.html" %}
 {% load staticfiles %}
 
 {% load qr %}
@@ -24,7 +24,6 @@
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h1 class="panel-title"><strong>{{catalogo.nombre_catalogo}}</strong>
-        <button type="button" class="btn btn-default btn-sm pull-right" id='updateCatalogo'><span class="glyphicon glyphicon-refresh"></span> <strong> Actualizar</strong></button>
         <button type="button" class="btn btn-default btn-sm pull-right" onclick="setNotificacion3();" id='cleanCatalogo'><span class="glyphicon glyphicon-fire"></span> <strong> Limpiar</strong></button>
         <br>
         <br>
@@ -32,7 +31,7 @@
 
       </div>
 
-    <ul class="list-group" id="catalogo" data-catalogo = "{{ catalogo_id }}">
+    <ul class="list-group" id="catalogo" data-catalogo = "{{ catalogo_id }}" data-organizacion="{{catalogo.organizacion}}">
        <li class="list-group-item">
     {% if catalogo %}
           Fecha: {{catalogo.fecha_alta_catalogo}} </h3>
@@ -117,25 +116,7 @@
       autoHide: true
     });
   }
-  $(function () {
-      $("#updateCatalogo").click(function (){
 
-          $.ajax({
-            url: "/updateCatalogoAndroid/",
-            type: "get", //send it through get method
-            data:{catalogo_id:$("#catalogo").attr("data-catalogo")},
-            cache: false,
-            success: function(response) {
-              console.log(response)
-                $('.table').html(response["contenido"])
-                $('#peso').html('<p id="peso">Peso Total: '+response["peso_total"]+'</p>')
-
-            },
-            error: function(xhr) {
-            }
-        });
-      })
-  })
 
 
   $(function () {
@@ -163,13 +144,13 @@
     console.log("boton para borrar")
     var catid = $(this).attr("data-item")
     var catalogo=$("#catalogo").attr("data-catalogo")
-    console.log("has pulsado el catalogo")
-    console.log(catalogo)
+    var organizacion=$("#catalogo").attr("data-organizacion")
+
 
     $.ajax({
-      url: "/borrarItemFromCatalogo/",
+      url: "/borrarItemFromCatalogoAndroid/",
       type: "get", //send it through get method
-      data:{item_id:catid,catalogo_id:catalogo},
+      data:{item_id:catid,catalogo_id:catalogo,organizacion:organizacion},
       success: function(response) {
         $('.table').html(response)
 
@@ -181,10 +162,12 @@
 
   function actualiza() {
     console.log("actualizacion")
+    console.log($("#catalogo").attr("data-organizacion"));
+
     $.ajax({
       url: "/updateCatalogoAndroid/",
       type: "get", //send it through get method
-      data:{catalogo_id:$("#catalogo").attr("data-catalogo")},
+      data:{catalogo_id:$("#catalogo").attr("data-catalogo"),organizacion:$("#catalogo").attr("data-organizacion")},
       cache: false,
       success: function(response) {
         console.log(response)

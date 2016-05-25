@@ -24,10 +24,10 @@
 
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <button type="button"  id="new" class="btn btn-default btn-sm" ><strong><span class="glyphicon glyphicon-plus"></span></strong> Nuevo</button>
+            <button type="button"  id="new" class="btn btn-default btn-sm" onclick="setNotificacion3();" ><strong><span class="glyphicon glyphicon-plus"></span></strong> Nuevo</button>
             <button type="button"  id="save" class="btn btn-default btn-sm" onclick="setNotificacion();"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button>
-           <a href="#" target="_blank" id="generaPDF"><button type="button" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-file"></span> Pdf</button></a>
-           <button type="button"  id="delete" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-trash"></span>Eliminar</button>
+           <a href="#" target="_blank" id="generaPDF"><button type="button" class="btn btn-default btn-sm" onclick="setNotificacion4();"> <span class="glyphicon glyphicon-file"></span> Pdf</button></a>
+           <button type="button"  id="delete" class="btn btn-default btn-sm" onclick="setNotificacion2();"><span class="glyphicon glyphicon-trash"></span>Eliminar</button>
            <br>
            <br>
             <select name="lista_informes" id="lista_informes" class="form-control lista">
@@ -37,7 +37,7 @@
              </select>
                 <hr>
 
-              <button type="button" class="btn btn-default btn-sm" id="addToInforme"><span class="glyphicon glyphicon-paperclip"></span> Añadir Catalogo</button>
+              <button type="button" class="btn btn-default btn-sm" id="addToInforme" onclick="setNotificacion5();" ><span class="glyphicon glyphicon-paperclip"></span> Añadir Catalogo</button>
               <br>
               <br>
               <select name="lista_catalogos" id="lista_catalogos"  class="form-control lista">
@@ -76,6 +76,24 @@
     function setNotificacion2() {
       $("#freeow").freeow("Informe", "Eliminado con exito", {
         classes: ["smokey", "error"],
+        autoHide: false
+      });
+    }
+    function setNotificacion3() {
+      $("#freeow").freeow("Nuevo Informe", "Plantilla cargada con exito", {
+        classes: ["smokey", "notice"],
+        autoHide: false
+      });
+    }
+    function setNotificacion4() {
+      $("#freeow").freeow("Informe Generado", "Comprueba el pdf para mas información", {
+        classes: ["smokey", "notice"],
+        autoHide: false
+      });
+    }
+    function setNotificacion5() {
+      $("#freeow").freeow("Catalogo Añadido", "La información ha sido añadida al informe", {
+        classes: ["smokey", "notice"],
         autoHide: false
       });
     }
