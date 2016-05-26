@@ -2,10 +2,12 @@ from bson.objectid import ObjectId
 from pymongo import *
 import time
 import os
+import os, sys
 from item import *
 from django.conf import settings
-if not settings.configured:
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'NoInventoryProject.settings'
+#if not settings.configured:
+    #os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'NoInventory.settings')
+    #os.environ['DJANGO_SETTINGS_MODULE'] = 'NoInventoryProject.settings'
 
 gestorItems=ItemsDriver()
 class Catalogo(object):

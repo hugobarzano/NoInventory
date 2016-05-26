@@ -33,6 +33,7 @@ def test_create(manejador, new_item):
     for i in db_items:
         items_from_db = Item.build_from_json(i)
         print("new_item = {}".format(items_from_db.get_as_json()))
+        assertEqual("mimimi",'nombre_dispositivo1')
 
 
 def test_update(manejador, new_item):

@@ -7,7 +7,7 @@ import time
 import os
 from clasificacion import *
 from datetime import datetime
-from django.conf import settings
+#from django.conf import settings
 
 
 
