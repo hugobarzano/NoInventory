@@ -135,7 +135,7 @@ def index(request):
                     correos.append(u.email)
                 send_mail(asunto, correo, origen,correos, fail_silently=False)
                 print "Enviar mensaje miembros oraganizacion"
-                
+
             form=BuzonForm()
             return render(request, 'noinventory/index.html',{"form":form})
         else:
@@ -252,7 +252,14 @@ def catalogoToInforme(request):
             item=item_object.get_as_json()
             items.append(item)
 
-        respuesta={"catalogo":catalogo_object.get_as_json(),"items":items}
+        datosTags={'datosTags':[]}
+        lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":request.session["organizacion"]}).sort([("CLAVE1", 1)])
+        lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":request.session["organizacion"]}).sort([("CLAVE2", 1)])
+        lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":request.session["organizacion"]}).sort([("CLAVE3", 1)])
+        datosTags["datosTags"].append( lista_tag1[0]["VALOR1"])
+        datosTags["datosTags"].append( lista_tag2[0]["VALOR2"])
+        datosTags["datosTags"].append( lista_tag3[0]["VALOR3"])
+        respuesta={"catalogo":catalogo_object.get_as_json(),"items":items,"datosTags":datosTags}
         print respuesta
         return JsonResponse(respuesta,safe=False)
 
@@ -365,7 +372,7 @@ def updateCatalogo(request):
             contenido=contenido+'<td><button class="btn btn-default btn-sm borrarBoton" onclick="setNotificacion4();" data-item="'+t["_id"]+'"id="'+t["_id"]+'"><span class="glyphicon glyphicon-fire"></span></button></td></tr>'
         contenido=contenido+'</tr></tbody></table>'
 
-        respuesta={"contenido":contenido,"peso_total":catalogo_object.peso_total}
+        respuesta={"contenido":contenido,"peso_total":catalogo_object.peso_total,"unidades":str(len(catalogo_object.id_items_catalogo))}
         return JsonResponse(respuesta)
         #return HttpResponse(contenido)
 
@@ -407,7 +414,7 @@ def updateCatalogoAndroid(request):
             contenido=contenido+'<td><button class="btn btn-default btn-sm borrarBoton" onclick="setNotificacion4();" data-item="'+t["_id"]+'"id="'+t["_id"]+'"><span class="glyphicon glyphicon-fire"></span></button></td></tr>'
         contenido=contenido+'</tr></tbody></table>'
 
-        respuesta={"contenido":contenido,"peso_total":catalogo_object.peso_total}
+        respuesta={"contenido":contenido,"peso_total":catalogo_object.peso_total,"unidades":str(len(catalogo_object.id_items_catalogo))}
         return JsonResponse(respuesta)
 
 @csrf_exempt
@@ -671,184 +678,11 @@ def dataGraficos(request):
 
             datos={'datos1':datos1,'datosPeso1':datosPeso1,'datos2':datos2,'datosPeso2':datosPeso2,'datos3':datos3,'datosPeso3':datosPeso3,'datosf':datosf,'datosPesof':datosPesof,'datosTags':datosTags}
 
-
-
         else:
             print "pesos"
         #diferenciamos entre pesos y unidades
 
-
-
-
-
-
-
-
     	return JsonResponse(datos, safe=False)
-
-
-
-
-
-def datosTag1 (request):
-    if request.method == 'GET':
-        dicTag2=dict()
-        lista_items=gestorItems.database.items.find({"tag1":request.GET['tag1']})
-        for item in lista_items:
-            item_object = Item.build_from_json(item)
-            #print item_object.nombre_item + " -- "+ item_object.tag1+ " -- "+ item_object.tag2
-            dicTag2[item_object.tag2]=0
-        #print dicTag2
-
-        lista_items=gestorItems.database.items.find({"tag1":request.GET['tag1']})
-        for item in lista_items:
-            item_object=Item.build_from_json(item)
-            #print "tag2:"+item_object.tag2
-            dicTag2[item_object.tag2]=dicTag2[item_object.tag2]+1
-
-        datos1={'clave':[],'valor':[]}
-
-
-        for tag in dicTag2:
-            datos1['clave'].append(tag)
-            datos1['valor'].append(dicTag2[tag])
-        #############Segundos datos
-        dicTag3=dict()
-        lista_items=gestorItems.database.items.find({"tag1":request.GET['tag1']})
-        for item in lista_items:
-            item_object = Item.build_from_json(item)
-            #print item_object.nombre_item + " -- "+ item_object.tag1+ " -- "+ item_object.tag2
-            dicTag3[item_object.tag3]=0
-        #print dicTag2
-
-        lista_items=gestorItems.database.items.find({"tag1":request.GET['tag1']})
-        for item in lista_items:
-            item_object=Item.build_from_json(item)
-            #print "tag2:"+item_object.tag2
-            dicTag3[item_object.tag3]=dicTag3[item_object.tag3]+1
-
-        datos2={'clave':[],'valor':[]}
-
-
-        for tag in dicTag3:
-            datos2['clave'].append(tag)
-            datos2['valor'].append(dicTag3[tag])
-
-        print datos2
-
-        datos={'datos1':datos1,'datos2':datos2}
-
-        print datos
-    	return JsonResponse(datos, safe=False)
-    else:
-        return HttpResponse("datosTag1")
-
-
-
-
-def datosTag2 (request):
-    if request.method == 'GET':
-        dicTag1=dict()
-        lista_items=gestorItems.database.items.find({"tag2":request.GET['tag2']})
-        for item in lista_items:
-            item_object = Item.build_from_json(item)
-            #print item_object.nombre_item + " -- "+ item_object.tag1+ " -- "+ item_object.tag2
-            dicTag1[item_object.tag1]=0
-        #print dicTag2
-
-        lista_items=gestorItems.database.items.find({"tag2":request.GET['tag2']})
-        for item in lista_items:
-            item_object=Item.build_from_json(item)
-            #print "tag2:"+item_object.tag2
-            dicTag1[item_object.tag1]=dicTag1[item_object.tag1]+1
-
-        datos1={'clave':[],'valor':[]}
-
-
-        for tag in dicTag1:
-            datos1['clave'].append(tag)
-            datos1['valor'].append(dicTag1[tag])
-
-
-        ##################Segundos datos
-        dicTag3=dict()
-        lista_items=gestorItems.database.items.find({"tag2":request.GET['tag2']})
-        for item in lista_items:
-            item_object = Item.build_from_json(item)
-            #print item_object.nombre_item + " -- "+ item_object.tag1+ " -- "+ item_object.tag2
-            dicTag3[item_object.tag3]=0
-        #print dicTag2
-
-        lista_items=gestorItems.database.items.find({"tag2":request.GET['tag2']})
-        for item in lista_items:
-            item_object=Item.build_from_json(item)
-            #print "tag2:"+item_object.tag2
-            dicTag3[item_object.tag3]=dicTag3[item_object.tag3]+1
-
-        datos2={'clave':[],'valor':[]}
-
-
-        for tag in dicTag3:
-            datos2['clave'].append(tag)
-            datos2['valor'].append(dicTag3[tag])
-
-        datos={'datos1':datos1,'datos2':datos2}
-        print datos
-    	return JsonResponse(datos, safe=False)
-    else:
-        return HttpResponse("datosTag2")
-
-
-def datosTag3 (request):
-    if request.method == 'GET':
-        dicTag1=dict()
-        lista_items=gestorItems.database.items.find({"tag3":request.GET['tag3']})
-        for item in lista_items:
-            item_object = Item.build_from_json(item)
-            #print item_object.nombre_item + " -- "+ item_object.tag1+ " -- "+ item_object.tag2
-            dicTag1[item_object.tag1]=0
-        #print dicTag2
-
-        lista_items=gestorItems.database.items.find({"tag3":request.GET['tag3']})
-        for item in lista_items:
-            item_object=Item.build_from_json(item)
-            #print "tag2:"+item_object.tag2
-            dicTag1[item_object.tag1]=dicTag1[item_object.tag1]+1
-
-        datos1={'clave':[],'valor':[]}
-
-
-        for tag in dicTag1:
-            datos1['clave'].append(tag)
-            datos1['valor'].append(dicTag1[tag])
-
-
-        dicTag2=dict()
-        lista_items=gestorItems.database.items.find({"tag3":request.GET['tag3']})
-        for item in lista_items:
-            item_object = Item.build_from_json(item)
-            #print item_object.nombre_item + " -- "+ item_object.tag1+ " -- "+ item_object.tag2
-            dicTag2[item_object.tag2]=0
-        #print dicTag2
-
-        lista_items=gestorItems.database.items.find({"tag3":request.GET['tag3']})
-        for item in lista_items:
-            item_object=Item.build_from_json(item)
-            #print "tag2:"+item_object.tag2
-            dicTag2[item_object.tag2]=dicTag2[item_object.tag2]+1
-
-        datos2={'clave':[],'valor':[]}
-
-
-        for tag in dicTag2:
-            datos2['clave'].append(tag)
-            datos2['valor'].append(dicTag2[tag])
-
-        datos={'datos1':datos1,'datos2':datos2}
-        print datos
-    	return JsonResponse(datos, safe=False)
-    else:
-        return HttpResponse("datosTag3")
 
 
 
@@ -857,10 +691,6 @@ def informes(request):
     lista_informes=gestorInformes.database.informes.find({"organizacion":request.session['organizacion']})
     lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']})
     return render(request, 'noinventory/informes.html', {"lista_catalogos":lista_catalogos,"numeroItems":numeroItems,"lista_informes":lista_informes, 'indice':5})
-
-
-
-
 
 
 
@@ -1791,7 +1621,7 @@ class ItemUpdater(View):
         form = ItemForm3(aux,organizacion=request.session['organizacion'])
         form.data ["peso"]=currentItem.peso
         form.data["unidades"]=1
-        form.data["descripcion_item"]=str(form.data["descripcion_item"])+"\nUltima modificacion: "+time.strftime("%c")+'\nPor el usuario: '+request.session["usuario"]
+        form.data["descripcion_item"]=str(form.data["descripcion_item"])+"\nUltima modificacion: "+time.strftime("%c")
         #form.data["tag1"]=aux["tag1"]
         return render(request, 'noinventory/modificarItem.html', {'form': form,'id_item':currentItem._id})
 

@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
 {% block body_block %}
-        <h1>Añadir Catalogo</h1>
+<div class="panel panel-primary">
+  <div class="panel-heading" >
+    <h3 class="panel-title">Nuevo Catalogo</h3>
+  </div>
+</div>
+
 
         <form id="catalogoformCreator" method="post" action="/nuevoCatalogo/">
           {% csrf_token %}

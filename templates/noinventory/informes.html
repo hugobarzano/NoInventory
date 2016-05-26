@@ -5,11 +5,7 @@
 {% block title %}Index{% endblock %}
 
 {% block lateral_izquierda %}
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">Acciones</h3>
-  </div>
-</div>
+
 
 
 
@@ -220,21 +216,26 @@
         data:{catalogo_id:catalogo_id},
         success: function(result) {
           console.log(result["catalogo"]);
-
+          var valorTags=result["datosTags"]["datosTags"]
           var cata='<h3>'+result["catalogo"]["nombre_catalogo"]+"</h3>"
-          cata=cata+'<p>'+result["catalogo"]["descripcion_catalogo"]+"</p>"
-
-          var content = '<table class="table table-hover"><thead><tr><th>Item</th><th>Fecha</th><th>Tag1</th><th>TAG2</th><th>TAG3</th> <th>Peso</th></tr></thead><tbody>';
+          cata = cata+'<p>'+result["catalogo"]["descripcion_catalogo"]+"</p>"
+          cata = cata + '<hr><br><strong>Total Unidades: </strong>'+ result["items"].length+'<br>'
+          cata = cata + '<strong>Peso total: </strong>'+result["catalogo"]["peso_total"]+' Kg<br><hr>'
+          //<table><tr><td> </td><td> </td><td> </td></tr>
+          var content = '<table border="1" cellpadding="2" cellspacing="3" class="table table-hover"><thead><tr><th>&nbsp;&nbsp;Item</th><th align="center">&nbsp;Fecha</th><th align="center">&nbsp;'+valorTags[0]+'</th><th align="center">&nbsp;'+valorTags[1]+'</th><th align="center">&nbsp;'+valorTags[2]+'</th> <th align="center">&nbsp;Peso</th></tr></thead><tbody>';
+          //var content = '<table border="1" cellpadding="3" cellspacing="5" align="center" ><tr><td>Item</td><td>Fecha</td><td>'+valorTags[0]+'</td><td>'+valorTags[1]+'</td><td>'+valorTags[2]+'</td> <td>Peso</td></tr>';
           for(var i = 0; i < result["items"].length; i++){
-               content = content + '<tr><td>' + result["items"][i]["nombre_item"]+'</td>';
-               content = content + '<td>' + result["items"][i]["fecha_alta_item"]+'</td>';
-               content = content + '<td>' + result["items"][i]["tag1"]+'</td>';
-               content = content + '<td>' + result["items"][i]["tag2"]+'</td>';
-               content = content + '<td>' + result["items"][i]["tag3"]+'</td>';
-               content = content + '<td>' + result["items"][i]["peso"]+'</td>';
+               content = content + '<tr><td align="center">' + result["items"][i]["nombre_item"]+'</td>';
+               content = content + '<td align="center" cellspacing="5">' + result["items"][i]["fecha_alta_item"]+'</td>';
+               content = content + '<td align="center" cellspacing="5">' + result["items"][i]["tag1"]+'</td>';
+               content = content + '<td align="center" cellspacing="5">' + result["items"][i]["tag2"]+'</td>';
+               content = content + '<td align="center" cellspacing="5">' + result["items"][i]["tag3"]+'</td>';
+               content = content + '<td align="center" cellspacing="5">' + result["items"][i]["peso"]+'</td></tr>';
           }
-          content = content + '</tbody></table><hr><br>';
-          content = content + '<strong>Peso total :</strong>'
+          content = content + '</tbody></table><hr>';
+          //content = content + '</table><hr>'
+          content = content + '<strong>Observaciones:</strong><br><br>';
+
           nicEditors.findEditor('editor').setContent(contenido+"<hr>"+cata+"<hr>"+content)
 
 

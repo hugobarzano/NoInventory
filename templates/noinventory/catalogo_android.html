@@ -6,11 +6,7 @@
 
 
 {% block lateral_izquierda %}
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">Acciones</h3>
-  </div>
-</div>
+
 
 
 {% endblock %}
@@ -41,7 +37,9 @@
             Tag: {{catalogo.tag_catalogo}}
             Tipo: {{catalogo.tipo_catalogo}}
             <hr>
-            <p id="peso">Peso Total: {{catalogo.peso_total}}</p>
+            <p id="peso">Peso Total: {{catalogo.peso_total}} Kg</p>
+            <p id="unidades">Total Unidades: {{catalogo.id_items_catalogo|unidades}}</p>
+
 
             <br>
             <br>
@@ -132,6 +130,7 @@
                 $('.table').html(response["contenido"])
                 $('#peso').html('<p id="peso">Peso Total: '+response["peso_total"]+'</p>')
 
+
             },
             error: function(xhr) {
             }
@@ -172,7 +171,8 @@
       success: function(response) {
         console.log(response)
           $('.table').html(response["contenido"])
-          $('#peso').html('<p id="peso">Peso Total: '+response["peso_total"]+'</p>')
+          $('#peso').html('<p id="peso">Peso Total: '+response["peso_total"]+' Kg</p>')
+          $('#unidades').html('<p id="unidades">Total Unidades: '+response["unidades"]+'</p>')
 
       },
       error: function(xhr) {

@@ -47,6 +47,10 @@ def barcode(value, alt=None):
 def documento_id(value):
     return str(value['_id'])
 
+@register.filter("unidades")
+def unidades(value):
+    return str(len(value))
+
 @register.filter("direccion")
 def direccion(value):
     aux=value.encode('utf-8')

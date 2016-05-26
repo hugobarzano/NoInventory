@@ -6,11 +6,7 @@
 
 
 {% block lateral_izquierda %}
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">Acciones</h3>
-  </div>
-</div>
+
 {% endblock %}
 
 
@@ -58,6 +54,8 @@
                 <p><strong>Fecha Alerta:</strong> {{i.fecha_alerta_catalogo}}</p>
                 <p><strong>Alerta:</strong> {{i.tag_catalogo}}</p>
                 <p><strong>Peso Total:</strong> {{i.peso_total}}</p>
+                <p><strong>Total Unidades:</strong> {{i.id_items_catalogo|unidades}}</p>
+
                 <hr>
                 <p> <strong>Creado por: </strong> {{ i.usuario }}</p>
                 <p><strong>Organizacion: </strong> {{i.organizacion}}</p>

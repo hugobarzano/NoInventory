@@ -4,9 +4,12 @@
 {% block title %}Index{% endblock %}
 
 {% block lateral_izquierda %}
-<a class="twitter-timeline"  href="https://twitter.com/no_inventory" data-widget-id="706815994006794240">Tweets por el @no_inventory.</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
+<br>
+<br>
+<br>
+<!--<a class="twitter-timeline"  href="https://twitter.com/no_inventory" data-widget-id="706815994006794240">Tweets por el @no_inventory.</a>
+<script>//!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+-->
 
 {% endblock %}
 
@@ -15,7 +18,9 @@
         <div id="freeow" class="freeow freeow-bottom-right"></div>
 
     <div class="page-header">
-                <h1>¡Bienvenido a No-inventory!</h1>
+      <div align="center">
+                <img src="{% static 'noinventory/css/noInventory.png' %}"/>
+              </div>
     </div>
 
 
@@ -28,13 +33,18 @@
         <div class="panel-heading">
           <h3 class="panel-title">¿Qué es No-inventory?</h3>
             <hr>
-            No-inventory es la aplicación que te permitirá llevar un control exaustivo de todos los activos de tu negocio
+            <p>No-Inventory es la plataforma definitiva para llevar un control exaustivo de todos los activos de tu negocio.
+            Proporciona un entorno colaborativo que permite trabajar a distintos usuarios agrupados por organizaciones.
+            No-Inventory esta alojado en la nube y cuenta con una extensión android con soporte para realizar las tareas
+            de gestión mediante códigos de barras, códigos QR o etiquetas NFC.</p>
         </div>
-             Facil Catalogación
+            <p>
+            Ahorra tiempo y dinero en la gestión de tu almacen
             <br>
-             Facil Localización
+            Controla tu almacén desde tu propio Smartphone
             <br>
-             Facil seguimiento
+            Generación automatizada de Gráficos e Informes
+          </p>
       </div>
 
       <div class="panel panel-primary">
@@ -67,18 +77,7 @@
 
 
 
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">¿Por qué utilizar No-inventory?</h3>
-            <hr>
-            No-inventory utiliza un motor de bases de datos No-relacional que proporciona una mayor flexibilidad y eficiencia en la administración de sus activos
-        </div>
-             servicio
-            <br>
-             servicio
-            <br>
-             servicio
-      </div>
+
 
 <script>
 function setNotificacion() {

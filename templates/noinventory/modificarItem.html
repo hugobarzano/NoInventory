@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
 {% block body_block %}
-        <h1>Añadir item</h1>
+<div class="panel panel-primary">
+  <div class="panel-heading" >
+    <h3 class="panel-title">Modificar Item</h3>
+  </div>
+</div>
+
 
         <form id="itemformUpdater" method="post" action="/modificarItem/{{id_item}}/">
           {% csrf_token %}

@@ -143,12 +143,12 @@ class CatalogosDriver(object):
         else:
             raise Exception("Imposible Borrar Catalogo")
 
+
     def addToCatalogo(self,catalogo_id,item_id,manejador_item):
         item=manejador_item.read(item_id=item_id)
         if item is not None:
             for i in item:
                 item_object = Item.build_from_json(i)
-                print item_object.nombre_item
             self.database.catalogos.update({"_id": ObjectId(catalogo_id)},{"$addToSet": {"id_items_catalogo" : str(item_object._id),}})
 
         else:
