@@ -108,6 +108,11 @@ class ClasificacionDriver(object):
         self.database.tag2.remove({'organizacion':organizacion})
         self.database.tag3.remove({'organizacion':organizacion})
 
+    def destroyTotalDriver(self):
+        self.database.tag1.remove()
+        self.database.tag2.remove()
+        self.database.tag3.remove()
+
 ####################Generador de identificadores#######################
 
     def generateLocalizador(self, item,gestorItems,organizacion):

@@ -77,5 +77,9 @@ docker_compose:
 	sleep 10
 	sudo docker-compose run web
 
+prueba:
+	python conf.py
+	python NoInventory/test_pruebas.py
+
 cosas:
 	sudo docker run -t -p 80:80 -p 27017:27017 -i hugobarzano/noinventory:mongo /bin/bash

@@ -74,7 +74,6 @@
               {% if user.is_authenticated %}
                      <li><a href="{% url 'items' %}">Items</a></li>
                      <li><a href="{% url 'catalogos' %}">Catalogos</a></li>
-
                      <li><a href="{% url 'graficos' %}">Graficos</a></li>
                      <li><a href="{% url 'informes' %}">Informes</a></li>
 
@@ -111,7 +110,8 @@
                   <h3 class="panel-title">Perfil de Usuario</h3>
                   <hr>
                     {{user.username}}
-                    {{user.email}}
+                    <br>
+                    {{user.userprofile.organizacion}}
                   <hr>
                   <a href="{% url 'logout' %}"><button type="button" class="btn btn-default btn-sm" onclick="setNotificacion4();"> <span class="glyphicon glyphicon-log-out"></span> Log-Out</button></a>
 

@@ -7,8 +7,7 @@ import time
 import os
 from clasificacion import *
 from datetime import datetime
-#from django.conf import settings
-
+from django.conf import settings
 
 
 def jsonTOstring(elemento):
@@ -74,6 +73,7 @@ class ItemsDriver(object):
         ON_COMPOSE = os.environ.get('COMPOSE')
         ON_HEROKU = os.environ.get('HEROKU')
         self.client = settings.CLIENTE
+        #self.client = os.environ.get('DB')
         #self.client = getattr(settings, "CLIENTE", None)
         if ON_COMPOSE:
             self.database=self.client.get_default_database()

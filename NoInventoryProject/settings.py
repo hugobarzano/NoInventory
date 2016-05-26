@@ -41,6 +41,9 @@ elif ON_COMPOSE:
 else:
 	CLIENTE = MongoClient(host=MONGO_HOST,port=MONGO_PORT)
 
+#os.environ.setdefault("DB", CLIENTE)
+#export
+#export DB = CLIENTE
 # Application definition
 
 INSTALLED_APPS = (
