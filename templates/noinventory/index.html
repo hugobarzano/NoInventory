@@ -12,6 +12,7 @@
 
 
         {% block body_block %}
+        <div id="freeow" class="freeow freeow-bottom-right"></div>
 
     <div class="page-header">
                 <h1>¡Bienvenido a No-inventory!</h1>
@@ -38,13 +39,33 @@
 
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <h3 class="panel-title">¿Qué servicios proporciona No-inventory?</h3>
+          <h3 class="panel-title">¿Ponte en contacto?</h3>
             <hr>
-            No-inventory en las redes sociales
+
+            <form id="buzon" method="post" action="/">
+              {% csrf_token %}
+              {% load bootstrap %}
+              <div class="row">
+              <div class="col-xs-6">
+                {{ form.origen|bootstrap }}
+            </div>
+              <div class="col-xs-6">
+                {{ form.destino|bootstrap }}
+            </div>
+          </div>
+              {{ form.asunto|bootstrap }}
+              {{ form.correo|bootstrap }}
+
+
+                <input onclick="setNotificacion();" type="submit" name="submit" value="Enviar Correo" style="color:#111111;" />
+            </form>
+
         </div>
 
 
-      </div>
+        </div>
+
+
 
       <div class="panel panel-primary">
         <div class="panel-heading">
@@ -59,5 +80,14 @@
              servicio
       </div>
 
+<script>
+function setNotificacion() {
+  $("#freeow").freeow("Estamos intentando enviar tu correo", "En breve recibirás una notificación", {
+    classes: ["smokey", "notice"],
+    autoHideDelay:10000
+
+  });
+}
+</script>
 
         {% endblock %}

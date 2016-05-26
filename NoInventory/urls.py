@@ -4,6 +4,7 @@ from NoInventory.views import *
 
 urlpatterns = patterns('',
         url(r'^$', views.index, name='index'),
+        #(r'^$',index.as_view()),
         url(r'^catalogos$', views.catalogos, name='catalogos'),
         url(r'^catalogo/(?P<id_catalogo>[\w\-]+)/$', views.catalogo, name='catalogo'),
         url(r'^addToCatalogo2/(?P<id_catalogo>[\w\-]+)/(?P<id_item>[\w\-]+)/$', views.addToCatalogo, name='addToCatalogo'),

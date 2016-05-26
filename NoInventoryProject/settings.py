@@ -98,6 +98,14 @@ USE_L10N = True
 USE_TZ = True
 
 
+################correoo
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'noinventory'
+EMAIL_HOST_PASSWORD = 'noinventory93'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 

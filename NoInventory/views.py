@@ -42,6 +42,7 @@ from django.http import HttpResponse
 from xhtml2pdf import pisa
 from cStringIO import StringIO
 from django.conf import settings
+from django.core.mail import send_mail
 
 
 
@@ -110,10 +111,36 @@ def barcodeIMG(value, alt=None):
 ########################### VISTAS PRINCIPALES #################################
 
 def index(request):
-    #print "variable entorno:"
-    #print VAR
-    #return redirect('/index/')
-    return render(request, 'noinventory/index.html')
+    if request.method == 'GET':
+        form=BuzonForm()
+        return render(request, 'noinventory/index.html',{"form":form})
+
+    else:
+        mydic=dict(request.POST)
+        form = BuzonForm(request.POST)
+        #destinatario=None
+        if form.is_valid():
+            asunto=form.data["asunto"]
+            correo=form.data["correo"]
+            origen=form.data["origen"]
+            destino=form.data["destino"]
+            if destino =='Administrador':
+                send_mail(asunto, correo, origen, ['hugobarzano@gmail.com'], fail_silently=False)
+            else:
+                perfiles=UserProfile.objects.filter(organizacion=destino)
+                usuarios=User.objects.filter(userprofile=perfiles)
+                print usuarios
+                correos=[]
+                for u in usuarios:
+                    correos.append(u.email)
+                send_mail(asunto, correo, origen,correos, fail_silently=False)
+                print "Enviar mensaje miembros oraganizacion"
+                
+            form=BuzonForm()
+            return render(request, 'noinventory/index.html',{"form":form})
+        else:
+            return render(request, 'noinventory/index.html', {'form': form})
+
 
 @csrf_exempt
 def items(request):
@@ -2040,3 +2067,9 @@ def user_logout(request):
 
     # Take the user back to the homepage.
     return HttpResponseRedirect('/')
+
+
+def emailOrganizacion(request):
+    send_mail('Subject here', 'Here is the message.', 'from@example.com', ['to@example.com'], fail_silently=False)
+
+#############correo########################

@@ -117,6 +117,21 @@ class FormEntrada(forms.Form):
     #file_tag2 = forms.FileField(label='Selecciona un archivo para tag 2')
     #file_tag3 = forms.FileField(label='Selecciona un archivo para tag 3')
 
+class BuzonForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(BuzonForm, self).__init__(*args, **kwargs)
+        perfiles=UserProfile.objects.filter()
+        organizaciones=[]
+        organizaciones.append("Administrador")
+        for i in perfiles:
+            if i.organizacion not in organizaciones:
+                organizaciones.append(i.organizacion)
+
+        self.fields["asunto"] = forms.CharField(label="Asunto",required=True,max_length=150)
+        self.fields["origen"] = forms.EmailField(label="Tu correo")#forms.CharField(label="Tu correo",required=True,max_length=150)
+        self.fields["destino"] = forms.ChoiceField(label="Destinatario", choices=[(x,x) for x in organizaciones])
+        self.fields["correo"]  = forms.CharField(label="Correo",widget = forms.Textarea)
+
 
 
 
