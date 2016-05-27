@@ -103,8 +103,8 @@ USE_TZ = True
 
 ################correoo
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'noinventory'
-EMAIL_HOST_PASSWORD = 'noinventory93'
+EMAIL_HOST_USER = os.environ.get('MAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('MAIL_PASS')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

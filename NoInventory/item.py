@@ -1,6 +1,7 @@
 # coding=utf8
 # -*- coding: utf8 -*-
 # vim: set fileencoding=utf8 :
+import unicodedata
 from bson.objectid import ObjectId
 from pymongo import *
 import time

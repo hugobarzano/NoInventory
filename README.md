@@ -102,6 +102,7 @@ La aplicación Android del proyecto se encuentra alojada en el repositorio [NoIn
 [doc Mlab](http://docs.mlab.com/connecting/#mongo_shell)
 ###dDOC
 [libro](https://books.google.es/books?id=B6LAqCoPSeoC&pg=PA547&lpg=PA547&dq=%C2%BFcuanto+dinero+gastan+las+empresas+en+realizar+inventario?&source=bl&ots=vO72tajNO_&sig=v0GlPUNV03wV8iuxgUqJVnjX8e4&hl=es&sa=X&ved=0ahUKEwij_7DLtNTMAhXoKJoKHWYhAXMQ6AEIKDAC#v=onepage&q=%C2%BFcuanto%20dinero%20gastan%20las%20empresas%20en%20realizar%20inventario%3F&f=false)
+[codificacion utf8 para azure](https://alejandrok5.wordpress.com/2010/12/10/django-ascii-utf-8/)
 ###Presentación Concurso Software libre
 
 [Hackaton Marzo](https://www.dropbox.com/s/2z3nephfqtxzdzc/NO-INVENTORY.pdf?dl=1)
