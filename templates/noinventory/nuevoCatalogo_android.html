@@ -1,0 +1,36 @@
+{% extends "base_android.html" %}
+
+{% block body_block %}
+<div class="panel panel-primary">
+  <div class="panel-heading" >
+    <h3 class="panel-title">Nuevo Catalogo</h3>
+  </div>
+</div>
+
+
+        <form id="catalogoformAndroidCreator" method="post" action="/nuevoCatalogoAndroid/">
+          {% csrf_token %}
+          {% load bootstrap %}
+          {{ form.nombre_catalogo|bootstrap }}
+          {{ form.descripcion_catalogo|bootstrap }}
+          {{ form.fecha_alerta_catalogo|bootstrap_horizontal:'col-xs-6' }}
+          {{ form.tag_catalogo|bootstrap }}
+          {{ form.tipo_catalogo|bootstrap }}
+          {{ form.user.as_hidden }}
+          {{ form.org.as_hidden }}
+
+
+
+            <input type="submit" name="submit" value="Crear Catalogo" />
+        </form>
+
+        <script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+      dateFormat: "yy-mm-dd",
+      changeMonth: true,
+      changeYear: true
+    });
+  });
+  </script>
+  {% endblock %}

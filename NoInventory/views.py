@@ -1658,6 +1658,38 @@ class ItemUpdater(View):
             print form.errors
             return render(request, 'noinventory/modificarItem.html', {'form': form,'id_item':id_item})
 
+
+class CatalogoCreatorAndroid(View):
+
+    def get(self, request):
+        form = CatalogoFormAndroid(organizacion=request.GET['organizacion'],usuario=request.GET["usuario"])
+        #print request.GET['organizacion']
+        #form = ItemForm3(organizacion=request.GET['organizacion'])
+        return render(request, 'noinventory/nuevoCatalogo_android.html', {'form': form})
+
+    def post(self, request):
+        mydic=dict(request.POST)
+        print str(mydic["user"][0])
+        form = CatalogoFormAndroid(request.POST,usuario=str(mydic["user"][0]),organizacion=str(mydic["org"][0]))
+        if form.is_valid():
+            catalogo =Catalogo.build_from_json({"nombre_catalogo": form.data['nombre_catalogo'],
+                        "fecha_alta_catalogo":  datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                        "descripcion_catalogo": form.data['descripcion_catalogo'],
+                        "organizacion": str(mydic["org"][0]),
+                        "usuario": str(mydic["user"][0]),
+                        "fecha_alerta_catalogo":form.data["fecha_alerta_catalogo"],
+                        "tag_catalogo": form.data['tag_catalogo'],
+                        "tipo_catalogo":form.data['tipo_catalogo'],
+                        "peso_total":str(0),
+                        "id_items_catalogo": [],
+                        "qr_data":" ",
+                        })
+            gestorCatalogos.create(catalogo)
+            return render(request, 'noinventory/creacion_completada_catalogo.html')
+        else:
+            return render(request, 'noinventory/nuevoCatalogo_android.html', {'form': form})
+
+
 class CatalogoCreator(View):
 
     def get(self, request):

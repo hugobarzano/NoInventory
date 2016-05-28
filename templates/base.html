@@ -76,6 +76,8 @@
                      <li><a href="{% url 'catalogos' %}">Catalogos</a></li>
                      <li><a href="{% url 'graficos' %}">Graficos</a></li>
                      <li><a href="{% url 'informes' %}">Informes</a></li>
+                     <li><a href="/preferencias">Preferencias</a></li>
+
 
               {% else %}
                      <li><a href="http://no-inventory.es/">Blog</a></li>
@@ -89,58 +91,35 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
-                  <li><a href="/preferencias">Preferencias</a></li>
-                  <li><a href="http://no-inventory.es/">Blog</a></li>
+                  <li><a href="#"> Usuario: {{user.username}}</a></li>
+                  <li><a href="{% url 'logout' %}"><button type="button" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-off"></span></button></a></li>
             {% else %}
-                  <li><a href="http://no-inventory.es/">Blog</a></li>
-
+            <li>
+            <form id="login_form" method="post" action="/login/" style="color:#111111; padding-top: 10px; ">
+                 {% csrf_token %}
+                   <input type="text" name="username" value=""  size=15/>
+                   <input type="password" name="password" value="" size=15 />
+                   <button type="submit" class="btn btn-default btn-sm" onclick=><strong><span class="glyphicon glyphicon-log-in"></span></strong></button>
+                   <a href="{% url 'register' %}" ><button type="button" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-registration-mark"></span></button></a>
+            </form>
+          </li>
             {% endif %}
               </ul>
         </div>
+        <!--segunda barra navegacion-->
       </div>
     </div>
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            <!--barra lateral izquida-->
-              {% if user.is_authenticated %}
-              <div class="panel panel-primary">
-                <div class="panel-heading">
-                  <h3 class="panel-title">Perfil de Usuario</h3>
-                  <hr>
-                    {{user.username}}
-                    <br>
-                    {{user.userprofile.organizacion}}
-                  <hr>
-                  <a href="{% url 'logout' %}"><button type="button" class="btn btn-default btn-sm" onclick="setNotificacion4();"> <span class="glyphicon glyphicon-log-out"></span> Log-Out</button></a>
+        <div class="col-sm-1 col-md-1 sidebar">
+        <!--<div class="col-sm-3 col-md-2 sidebar"><div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            barra lateral izquida-->
 
-                </div>
-              </div>
-              {% else %}
-                    <div class="panel panel-primary">
-                      <div class="panel-heading">
-                        <h3 class="panel-title">Iniciar Session</h3>
-                          <hr>
-                          <form id="login_form" method="post" action="/login/" style="color:#111111;">
-                               {% csrf_token %}
-                                 <input type="text" name="username" value=""  size=15/>
-                                 <br/>
-                               <input type="password" name="password" value="" size=15 />
-                               <br />
-                                <br>
-                                 <button type="submit" class="btn btn-default btn-sm" onclick="setNotificacion3();" ><strong><span class="glyphicon glyphicon-log-in"></span></strong> Log-in</button>
-                                 <hr>
-                                 <a href="{% url 'register' %}" ><button type="button" class="btn btn-default btn-sm"> <span class=""></span> Registrate</button></a>
-                          </form>
-                        </div>
-                        </div>
-
-              {% endif %}
                 {% block lateral_izquierda %}{% endblock %}
 
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="col-sm-19 col-sm-offset-3 col-md-25 col-md-offset-1 main">
            <div>
                 {% block body_block %}{% endblock %}
            </div>

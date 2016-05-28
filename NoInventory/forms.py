@@ -44,14 +44,14 @@ class ItemForm3(forms.Form):
 
 
 class ItemFormAndroid(forms.Form):
-    """Form for adding and editing backups."""
+    """Form for adding and editing items."""
 
     def __init__(self, *args, **kwargs):
         usuario = kwargs.pop('usuario')
         organizacion = kwargs.pop('organizacion')
         super(ItemFormAndroid, self).__init__(*args, **kwargs)
-        self.fields['nombre_item'] = forms.CharField(required=True,max_length=150, help_text="Introduce el nombre del objeto")
-        self.fields['descripcion_item']  = forms.CharField(widget = forms.Textarea, help_text="Breve descripcion sobre el objeto")
+        self.fields['nombre_item'] = forms.CharField(required=True,max_length=150,label="Nombre")
+        self.fields['descripcion_item']  = forms.CharField(widget = forms.Textarea, label="Detalles")
         lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":organizacion}).sort([("CLAVE1", 1)])
         lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":organizacion}).sort([("CLAVE2", 1)])
         lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":organizacion}).sort([("CLAVE3", 1)])
@@ -65,23 +65,21 @@ class ItemFormAndroid(forms.Form):
         self.fields['user'] =forms.CharField(required=True,initial=usuario)
         self.fields['org'] = forms.CharField(required=True,initial=organizacion)
 
-def ItemForm(organizacion):
-    print organizacion
+class CatalogoFormAndroid(forms.Form):
+    """Form for adding and editing backups."""
 
-    class form_base(forms.Form):
-
-        lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":organizacion})
-        lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":organizacion})
-        lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":organizacion})
-
-        nombre_item = forms.CharField(required=True,max_length=150, help_text="Introduce el nombre del objeto")
-        descripcion_item  = forms.CharField(widget = forms.Textarea, help_text="Breve descripcion sobre el objeto")
-        tag_item = forms.CharField(required=True, max_length=150, help_text="Tag para ayudar a clasificar el objeto")
-        tag1 = forms.ChoiceField(label="TAG 1", choices=[(x["VALOR1"], x["VALOR1"]) for x in lista_tag1])
-        tag2 = forms.ChoiceField(label="TAG 2", choices=[(x["VALOR2"], x["VALOR2"]) for x in lista_tag2])
-        tag3 = forms.ChoiceField(label="TAG 3", choices=[(x["VALOR3"], x["VALOR3"]) for x in lista_tag3])
-
-    return form_base
+    def __init__(self, *args, **kwargs):
+        usuario = kwargs.pop('usuario')
+        organizacion = kwargs.pop('organizacion')
+        super(CatalogoFormAndroid, self).__init__(*args, **kwargs)
+        TIPO = (('Publico', 'Publico'),('Privado', 'Privado'),)
+        self.fields['nombre_catalogo'] = forms.CharField(required=True,max_length=150, label="Nombre")
+        self.fields['descripcion_catalogo']  = forms.CharField(widget = forms.Textarea, label="Detalles")
+        self.fields['fecha_alerta_catalogo'] = forms.DateField(widget=forms.TextInput(attrs={'class':'datepicker'}),initial="",required=False, label="Fecha Alerta")
+        self.fields['tag_catalogo'] = forms.CharField(widget = forms.Textarea, max_length=300,label="Alerta")
+        self.fields['tipo_catalogo'] = forms.CharField(label="Tipo",max_length=150,widget=forms.Select(choices=TIPO))
+        self.fields['user'] =forms.CharField(required=True,initial=usuario)
+        self.fields['org'] = forms.CharField(required=True,initial=organizacion)
 
 
 
