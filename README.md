@@ -122,3 +122,7 @@ Test Navegación:
 [Hackaton Marzo](https://www.dropbox.com/s/2z3nephfqtxzdzc/NO-INVENTORY.pdf?dl=1)
 
 [Hackaton Mayo](https://www.dropbox.com/s/mj4tplyahtk6kxt/Presentacion_hackaton_mayo.pdf?dl=1)
+
+###Inscripción en el concurso de software libre
+
+![inscripcion](https://www.dropbox.com/s/7yrlzu2pkvbtobb/concurso.png?dl=1)
