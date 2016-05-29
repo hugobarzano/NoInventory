@@ -9,7 +9,6 @@ dj-static==0.0.6
 django-toolbelt==0.0.1
 djangorestframework==3.3.0
 django-easy-maps
-dj-static==0.0.6
 static3==0.6.1
 django-appconf
 xhtml2pdf
