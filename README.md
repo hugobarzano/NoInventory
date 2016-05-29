@@ -10,6 +10,8 @@
 [![DockerHub](https://www.dropbox.com/s/fl5hrbbjm4g2jec/docker_l.png?dl=1)](https://hub.docker.com/r/hugobarzano/)
 [![Azure](https://www.dropbox.com/s/oqur6k70poyscxj/azure.png?dl=1)](http://noinventory.cloudapp.net/)
 
+[![No-Inventory-Android-apk](https://www.dropbox.com/s/xx672e199qvvwgb/android.jpg?dl=1)](https://www.dropbox.com/s/itzz91qe5lw1pew/app-debug.apk?dl=1)
+
 ############################################################################
 
 
@@ -27,16 +29,26 @@ Twiiter: [@no_inventory](https://twitter.com/no_inventory)
 
 Contacto: hugobarzano@gmail.com
 
-###Objetivos
+[![Licencia](https://www.dropbox.com/s/o9w70i4i2wfjs9e/gplv3-127x51.png?dl=1)](https://github.com/hugobarzano/NoInventory/blob/master/LICENSE)
+###Plataforma Web
 
-[Objetivos](https://github.com/hugobarzano/NoInventory/blob/master/documentacion/objetivos.md) del proyecto, cosas que se quieren hacer, cosas que se han hecho, cosa de interes.  
+La plataforma web esta desarrollada sobre Django, el framework de alto nivel y open source de Python. El modelo de datos esta basado en clases python que interactúan con la base de datos mongoDB, externa el framework mediante el cliente Pymongo. Esto se traduce en un incremento de eficiencia y en el aprovechamiento de la libertad y flexibilidad que otorgan las bases de datos NO-SQL
 
-###Instalación
+Para mejorar la experiencia del usuario dentro de la plataforma web, se utilizan técnicas de programación en Fron-End basadas en Ajax, Javascript y Jquery.
 
-[Instalación Local de la aplicación](https://github.com/hugobarzano/NoInventory/blob/master/documentacion/instalacion.md)
+La plataforma web utiliza API-REST de Google para generar los códigos QR y los códigos de barras dinámicamente.  La plataforma web cuenta con el potente editor en tiempo real “NiceEditor” para el proceso de generación y edición de informes.  La plataforma utiliza la librería Javascript “Highcharts” para la generación de gráficos. La plataforma utiliza el paquete “Pisa” para exportar informes e identificadores a formato PDF.
+
+La plataforma utiliza el modulo “django-registration-redux” que garantiza la seguridad y la autenticación de usuarios, tanto para la plataforma web como para la extensión Android.
+
+La plataforma utiliza el cliente de mensajería Send-Grid para mostrar el buzón de incidencias en la pagina principal. Esto permite que los usuarios puedan contactar con el administrador en caso de algún problema o contactar con las distintas organizaciones que utilizan el sistema.
+
 ###Infraestructura
 
 El sistema cuenta con diversoso tipos de infraestrutura.
+
+  PaaS: Heroku
+
+  IaaS: Azure
 
   Infraestructura basada en docker
 
@@ -47,63 +59,63 @@ El sistema cuenta con diversoso tipos de infraestrutura.
     - Vagrant
     - Ansible
 
-Todas ellas corriendo sobre azure
-
-Una infraestructura similar, de una rama anteiror del proyecto la podemos encontrar aqui: [osl-computer-management](https://github.com/hugobarzano/osl-computer-management)
+  Para consegir esto, se ha utilizado MLab, servicio de base de datos en la nube completamente gestionado que aloja bases de datos MongoDB. MLab se ejecuta en proveedores de la nube de Amazon, Google y Microsoft Azure.
 
 ###Aplicación Android
+La aplicación Android se encuentra alojada en el repositorio [NoInventory-Android-Apps] (https://github.com/hugobarzano/NoInventory-Android-Apps/tree/master/Noinventory)
+Esta extensión de la plataforma es la encargada de la tareas de clasificación. Permite leer/escribir los codigos de barras, codigos qr o etiquetas nfc que identifican a los objetos.
+Puede descargarse desde aquí.
 
-La aplicación Android del proyecto se encuentra alojada en el repositorio [NoInventory-Android-Apps] (https://github.com/hugobarzano/NoInventory-Android-Apps)
+  [![No-Inventory-Android-apk](https://www.dropbox.com/s/xx672e199qvvwgb/android.jpg?dl=1)](https://www.dropbox.com/s/itzz91qe5lw1pew/app-debug.apk?dl=1)
+
 
 ###Documentación
+
+La documentación del proyecto se encuentra en este [directorio](https://github.com/hugobarzano/NoInventory/tree/master/NoInventoryDOC). Se está realizando con LaTEX y puede descargarse aquí.
+
+  [No-Inventory-DOC](https://www.dropbox.com/s/4tt3viylmf32la2/proyecto.pdf?dl=1)
+
+
+### Instalación Local
+
+  [Instalación Local de la aplicación](https://github.com/hugobarzano/NoInventory/blob/master/documentacion/instalacion.md)
+
+###Despliegues
+
+  make heroku
+
+  make docker
+
+  make docker_compose
+
+  vagrant up --provider=azure
+
+### Desarrollo Basado en TDD
+
+Test Propios:
+
+  [Test Clasificación](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_clasificacion.py)
+
+  [Test Item](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_item.py)
+
+  [Test Catálogo](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_catalogo.py)
+
+  [Test Informe](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_informe.py)
+
+Test Django:
+
+  [Test.py](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/tests.py)
+
+Test Navegación:
+
+  [Test con Selenium](https://github.com/hugobarzano/NoInventory/tree/master/Selenium)
+
 ####NinjaMock
 [Diseño de la web](https://ninjamock.com/s/KDGZS)
-
 [Diseño de la aplicacion](https://ninjamock.com/s/F12ZS)
 
-####Casos de uso
-[Documento casos de uso](https://www.dropbox.com/s/90tang9wazsx1vt/casos_uso.odt?dl=1)
-
-####Análisis de Requisitos
-[Documento requisitos de información](https://www.dropbox.com/s/ipidn2bou6xmexf/requitos.odt?dl)
-
-###Herramientas y cosas utiles
-
-[Investigar 123d](http://www.123dapp.com/catch)
-[Realizar Diagramas Online](https://creately.com/app/?tempID=h165rwt81&login_type=demo#)
-
-[Disparadores para redes sociales](https://ifttt.com/recipes)
-
-[POST-TUNELING](https://baxeico.wordpress.com/2014/06/25/put-and-delete-http-requests-with-django-and-jquery/)
-
-###Tutoriales
-
-[Implementar lector codigos](http://code.tutsplus.com/tutorials/android-sdk-create-a-barcode-reader--mobile-17162)
-[implementar interfaz](http://www.androidhive.info/2013/11/android-sliding-menu-using-navigation-drawer/)
-[NFC](http://www.jessechen.net/blog/how-to-nfc-on-the-android-platform/)
-[NFC2](http://www.creativebloq.com/android/getting-started-nfc-android-5122811)
-[NFC3](http://androcode.es/2013/04/nfc-i-explicacion-tutorial-basico-y-sorteo/)
-[NFC4](http://code.tutsplus.com/tutorials/reading-nfc-tags-with-android--mobile-17278)
-[NFC5](http://www.survivingwithandroid.com/2016/01/how-to-write-nfc-tag-in-android-2.html)
-[Tutoriales android](http://www.survivingwithandroid.com/category/android-tutorial/page/6)
-[boostrap](http://librosweb.es/libro/bootstrap_3/)
-[conexion http](https://danielme.com/tip-android-8-obtener-recursos-web/)
-[webview](http://www.desarrollolibre.net/blog/tema/152/android/como-mostrar-paginas-web-con-webview-en-android#.VwPR6UKlilM)
-[JsonCustonRequest](http://stackoverflow.com/questions/25948191/send-post-request-using-volley-and-receive-in-php)
-[draggable and droppable](http://www.desarrolloweb.com/articulos/ejemplo-drag-drop-jquery.html)
-[paginacion](http://www.bootply.com/zT2ZU9DSDM#)
-[mongo](http://rafinguer.blogspot.com.es/2014/10/fechas-en-mongodb.html)
-[instaclik](http://instantclick.io/)
-[seleniun](http://docs.seleniumhq.org/)
-[twill](http://twill.idyll.org/)
-[uml](https://www.gliffy.com/go/html5/10619971#)
-[notificaciones](http://pjdietz.com/jquery-plugins/freeow/)
-[mongoDB con Mlab](https://docs.mongodb.com/master/tutorial/install-mongodb-on-ubuntu/)
-[doc Mlab](http://docs.mlab.com/connecting/#mongo_shell)
-###dDOC
-[libro](https://books.google.es/books?id=B6LAqCoPSeoC&pg=PA547&lpg=PA547&dq=%C2%BFcuanto+dinero+gastan+las+empresas+en+realizar+inventario?&source=bl&ots=vO72tajNO_&sig=v0GlPUNV03wV8iuxgUqJVnjX8e4&hl=es&sa=X&ved=0ahUKEwij_7DLtNTMAhXoKJoKHWYhAXMQ6AEIKDAC#v=onepage&q=%C2%BFcuanto%20dinero%20gastan%20las%20empresas%20en%20realizar%20inventario%3F&f=false)
-[codificacion utf8 para azure](https://alejandrok5.wordpress.com/2010/12/10/django-ascii-utf-8/)
-###Presentación Concurso Software libre
+###Presentaciónes
 
 [Hackaton Marzo](https://www.dropbox.com/s/2z3nephfqtxzdzc/NO-INVENTORY.pdf?dl=1)
-[editor](https://scotch.io/tutorials/building-a-real-time-markdown-viewer)
+
+[Hackaton Mayo](https://www.dropbox.com/s/mj4tplyahtk6kxt/Presentacion_hackaton_mayo.pdf?dl=1)
