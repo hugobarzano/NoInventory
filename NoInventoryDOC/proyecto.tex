@@ -174,7 +174,7 @@ pdfproducer = {pdflatex}
 \usepackage{pdfpages}
 \begin{document}
 \input{portada/portada}
-\input{prefacios/prefacio}
+%\input{prefacios/prefacio}
 %\frontmatter
 \tableofcontents
 \listoffigures
@@ -187,8 +187,38 @@ pdfproducer = {pdflatex}
 %\input{capitulos/01_Introduccion}
 
 
-\chapter{Introducción}
+\chapter{Resumen, Introducción y Estudio del Arte}
 
+\section{Resumen}
+
+Este proyecto surge a raíz de un problema real presentado por la Oficina de Software Libre. Desde principios de 2012 y a partir de un acuerdo con la Unidad de Calidad, la oficina se encarga de recoger material informático procedente de los distintivos organismos de la Universidad de Granada. Dicho material ha alcanzado una gran cantidad, por lo que es necesario un sistema para catalogarlo y procesarlo. 
+
+Partiendo de este problema, existen necesidades similares en empresas, organizaciones, instituciones, comercios y todo tipo de negocio con un almacén de activos.
+En dichos almacenes, las tareas de gestión suelen ser ineficientes, complejas y costosas.  El tiempo y dinero que conllevan estas tareas suele ser un factor a tener en cuenta, ya que una gran mayoría de entidades, con almacenes pequeños o medianos, no utilizan un sistema comercial debido a los costes que suponen su mantenimiento. Este problema, sigue presente en entidades con almacenes de gran tamaño, ya que  el número de empleados y el tiempo necesario para las tareas básicas de catalogación y administración suponen un coste a tener en cuenta.
+
+Otro problema con el que se encuentran los empleados de estas entidades es la generación de informes. Recopilar información de los activos del almacén con el objetivo de representarla de manera adecuada a las necesidades de cada negocio, puede llegar a ser una tarea complicada. 
+
+Como solución a estos problemas, surge el sistema de gestión NO-INVENTORY que pretende mejorar estas tareas, con el objetivo de ahorrar tiempo y dinero al cliente, automatizando y facilitando las tareas administrativas.
+
+La piedra angular del sistema es una plataforma web alojada en la nube por lo que no es necesaria la instalación de ningún software adicional en las máquinas de la entidad que deseé comenzar a utilizarlo, solo es necesario un navegador.  En dicha plataforma, las tareas de administración se realizan de manera intuitiva permitiendo a los distintos empleados trabajar de forma cooperativa utilizando un sistema de tag's personalizables en función de las características con las que se quieran clasificar los elementos. Facilita la agrupación de elementos con o sin propiedades comunes en colecciones denominadas catálogos en función de las necesidades de cada cliente y utiliza dichas colecciones para la generación automática de informes y gráficos representativos del estado del almacén. 
+
+El sistema cuenta con una aplicación Android como extensión para realizar tareas de catalogación y clasificación dentro del propio almacén. La ventaja de esto reside en que hoy en día casi todo el mundo cuenta con un smartphone, dando la posibilidad a los empleados de llevar la gestión del almacén con sus propios dispositivos.
+
+En función de los activos que formen el almacén, y del presupuesto que se quiera dedicar a etiquetar cada elemento, el cliente puede decidir que método utilizar, ya que la funcionalidad de la extensión  Android es la de lector/escritor de los identificadores de cada elemento, con soporte para:
+
+\begin{enumerate}
+\item Códigos de Barras
+\item Códigos QR
+\item Etiquetas NFC 
+\end{enumerate}
+
+
+En resumen, el sistema pretende reducir tiempo y costes a las entidades que decidan implantarlo en su almacén con el objetivo  de optimizar las tareas de los empleados consiguiendo así un mayor rendimiento. 
+
+Por último, resaltar que todo el código desarrollado para el sistema, está liberado en Github, para que pueda ser consultado o mejorado por la comunidad de software libre.
+
+
+\section{Introducción}
 
 Este proyecto tiene el objetivo de solucionar un problema real. Desde principios de 2012, la Oficina de Software Libre (OSL) tiene un acuerdo con Unidad de Calidad de la Universidad de Granada. Dicho acuerdo establece que la oficina es la encargada de recoger el material  informático procedente de los distintivos organismos de la Universidad. Debido a la acumulación de material a lo largo de estos 5 años, la oficina de software libre necesita un sistema de gestión que le permita catalogar y clasificar este material.
 
@@ -203,16 +233,62 @@ En los últimos años, el análisis de la información asociada a los recursos o
 Lo principales motivos por los que estas empresas no utilizan sistemas de gestión para sus productos se deben a los costes elevados, a la carencia de recursos, la falta de acceso a la información, etc... 
 
 Las Tecnologías de la Información y Comunicaciones (TIC), se han convertido en la herramienta perfecta para llevar a cabo las tareas necesarias para aumentar 
-la eficacia y eficiencia en el manejo de los recursos de la empresa. 
+la eficacia y eficiencia en el manejo de los recursos de la empresa.
+
+ 
+\section{Estudio del Arte}
 
 
-\chapter{Análisis y Estado del Arte}
+Como parte del estudio, para mejorar el nivel de comprensión de lo que se quiere llevar a cabo, se han investigado diversos sistemas de inventariado. De esta manera, se puede hacer balance de las cosas que hay actualmente en el mercado, cuales son sus aspectos fuertes y cuales las debilidades. 
+
+
+\subsection{3PL Central}
+
+3PL Central\cite{3pl} Diseñado exclusivamente para proveedores de logística a terceros . Ofrecer a sus clientes la visibilidad global, gestión de facturación , generación automática de informes, gestión de múltiples clientes, cada uno con diferentes prácticas, procesos y facturación. Es de los pocos sistemas que da servicio de inventariado desde la nube. El precio de este servicio ronda entorno a los 500\$ por almacén con el paquete más básico. Presenta una interfaz tediosa que lleva a los clientes a confusión, desaprovechando la potencia total de la herramienta.
+
+\begin{figure}[htbpH]  
+\centering 
+\includegraphics[scale=0.35]{imagenes/estudioArte/pl-800.png}
+\caption{ 3PL Cental  }  
+\end{figure} 
 
 
 
-Para realizar un mejor Analisis del sistema, vamos a desglosarlo en dos partes. Primero analizaremos la plataforma web y despues analizaremos la aplicación Android 
+\subsection{Windward System Five's Inventory Control}
 
-\section{Requisitos de Información Plataforma web}
+
+Windward System Five's Inventory Control\cite{wws} diseñado en principio para gestionar inventarios de negocios con E-commerce, utiliza un sistema de códigos de barras para facilitar el pago, cuenta con procesamiento integrado de tarjeta de crédito y utiliza aplicaciones móviles pero no para la gestión, si no para las ventas. Su principal desentaja es el precio, el paquete básico de servicios ronda entorno a los 4300\$
+
+\begin{figure}[htbpH]  
+\centering 
+\includegraphics[scale=0.35]{imagenes/estudioArte/five.jpg}
+\caption{Windward System Five's}  
+\end{figure}
+
+\subsection{Snappii}
+
+Snappii\cite{snp} es una plataforma de desarrollo de aplicaciones a medida para la gestión de almacenes. NO cuenta con plataforma o aplicación de escritorio propiamente dicha. Proporciona aplicaciones ya desarrolladas o la posibilidad de crear nuevas que se ajusten alas necesidades del negocio. Plataforma Android e IOS. El paquete básico de servicios ronda entorno a los 50\$ al mes
+
+\begin{figure}[htbpH]  
+\centering 
+\includegraphics[scale=0.5]{imagenes/estudioArte/shapi.jpeg}
+\caption{Snappii}  
+\end{figure}
+
+\subsection{Conclusiones}
+
+De todos estos productos, podemos destacar puntos fuertes como estar alojados en la nube, utilizar tecnologías de radiofrecuencia o tecnologías móviles para la gestión. Otros aspectos importantes son la automatización de tareas, controlar el flujo de entrada/salida de objetos o la generación de informes pero también presentan aspectos negativos como son el precio de los servicios o las complicadas interfaces que no facilitan su uso para empleados poco cualificados. 
+
+Estas conclusiones  han sido de gran utilidad para el siguiente capítulo en el que se detallará el proceso de análisis y especificación del sistema final.  
+
+\chapter{Análisis}
+
+
+
+Para realizar un mejor análisis del sistema, vamos a desglosarlo en dos partes. Primero analizaremos la plataforma web y después analizaremos la aplicación Android 
+
+\section{Analisis Plataforma Web}
+\subsection{Requisitos de Información Plataforma web}
 
 Los requisitos de información se caracterizan por  reunir la información 	relevante para el cliente que debe gestionar y almacenar el sistema software.\par 
 
@@ -234,7 +310,7 @@ Contenido: nombre, fecha de creación, usuario, organización, datos del informe
 Contenido: archivo csv de preferencias 1, archivo csv de preferencias 2, archivo csv de preferencias 3. 
 
 
-\section{Requisitos Funcionales Plataforma web}
+\subsection{Requisitos Funcionales Plataforma web}
 
 Como se define en la ingeniería de requisitos, los requisitos funcionales establecen los comportamientos del sistema.
 
@@ -253,6 +329,7 @@ Como se define en la ingeniería de requisitos, los requisitos funcionales estab
 
 
 \textbf{RF-2. Gestión de catálogos:} El sistema deberá gestionar el ciclo de vida de conjuntos de items, estas colecciones reciben el nombre de catálogos o agrupaciones de items con atributos u objetivos similares.   
+
 
 	RF-2.1. El sistema permitirá añadir catálogos
 
@@ -273,8 +350,10 @@ Como se define en la ingeniería de requisitos, los requisitos funcionales estab
 	RF-2.9. El sistema permitirá controlar el peso de los elementos del catálogo
 
 	RF-2.10. El sistema permitirá controlar el número de unidades del catálogo. 
+	
 
 \textbf{RF-3. Gestión de Gráficos:} El sistema deberá generar gráficos a raíz de los elementos que forman parte de un catálogo, mostrando una comparativa entre el numero de unidades y peso de dichas unidades. Los gráficos representativos se dividen en función de las preferencias del usuario. 
+
 
 	RF-3.1. El sistema permitirá generar gráficos
 	
@@ -301,15 +380,19 @@ Como se define en la ingeniería de requisitos, los requisitos funcionales estab
 	RF-4.6. El sistema permitirá añadir gráficos a los informes
 	
 	RF-4.7. El sistema permitirá exportar informes
+	
 
 \textbf{RF-5. Gestión de Preferencias:} El sistema permitirá personalizar las preferencias de cada organización. Dichas preferencias son los atributos con los que van a catalogarse los items. Dichos atributos son los que se usarán para dotar de contenido a los catálogos. Estos atributos también son empleados para la generación de gráficos. 
+
 
 	RF-5.1. El sistema permitirá cargar las preferencias desde fichero CSV
 	
 	RF-5.1. El sistema permitirá cargar preferencias por defecto 
 	
+	
 
 \textbf{RF-6. Gestión de Usuarios:} El sistema deberá presentar un entorno colaborativo, clasificando a los usuarios por organizaciones de forma que distintos usuarios de una misma organización tengan acceso al mismo conjunto de recursos que define dicha organización. 
+
 
 	RF-6.1. El sistema permitirá al administrador dar de alta a nuevos usuarios.
 	
@@ -321,18 +404,23 @@ Como se define en la ingeniería de requisitos, los requisitos funcionales estab
 	
 	RF-6.2. El sistema registrará internamente las acciones realizadas por cada 	usuario, 	de cada organización. 
 	
+	
 
-\section{Requisitos No Funcionales Plataforma web}
+\subsection{Requisitos No Funcionales Plataforma web}
 Los requisitos no funcionales, se refieren a todos los requisitos que no describen información a guardar, ni funciones a realizar por el sistema, sino características de funcionamiento.
+
 
 \textbf{RNF-1} Necesitaremos que toda la información que se almacena sobre el sistema se mantenga segura, realizando copias de seguridad periódicas.
 
+
 \textbf{RNF-2} Necesitaremos analizar la cantidad de elementos que una organización va a administrar. Si es considerada una cantidad importante, dicha organización recibirá servicio desde una imagen del sistema asilada (Docker). De esta forma conseguimos que el flujo de datos no afectes a la experiencia de los clientes.
+
 
 \textbf{RNF-3} Necesitaremos disponer de una buena conexión a internet ya que el sistema da servicio desde la nube. 
 
 
-\section{Casos de Uso: Plataforma Web}
+
+\subsection{Casos de Uso: Plataforma Web}
 
 Los diagramas de casos de uso, son diagramas UML que representan gráficamente a todos los elementos que forman parte del modelo de casos de uso junto con la frontera del sistema. Delimitan el sistema a diseñar. Determinan el contexto del uso del sistema. Describen el punto de vista de los usuarios  en el sistema 
 
@@ -354,11 +442,13 @@ Los diagramas de casos de uso, son diagramas UML que representan gráficamente a
 \includegraphics[scale=0.50]{imagenes/casosUso/Informe.jpg}
 \caption{ Casos de uso - Gestión Informes  }  
 \end{figure}
-\section{Requisitos Funcionales Aplicación Android}
+
+\section{Analisis Aplicación Android}
+\subsection{Requisitos Funcionales Aplicación Android}
 Los requisitos funcionales de la aplicación Android establecen los comportamientos o funcionalidades de la aplicación.
 
-RF-1. Administración de items 
-La aplicación deberá administrar los items que formen parte del almacen.   
+\textbf{RF-1. Administración de items} La aplicación deberá administrar los items que formen parte del almacen.   
+
 
 	RF-1.1. La aplicación permitirá detectar items mediante texto o localizador
 	
@@ -377,8 +467,8 @@ La aplicación deberá administrar los items que formen parte del almacen.
 	RF-1.8. La aplicación permitirá eliminar items
 
 
-RF-2. Administración de Catálogos 
-La aplicación deberá administrar los catálogos que se utilicen para clasificar los items del almacén.   
+\textbf{RF-2. Administración de Catálogos}La aplicación deberá administrar los catálogos que se utilicen para clasificar los items del almacén.   
+
 
 	RF-2.1. La aplicación permitirá detectar catálogos mediante texto o ID
 	
@@ -393,8 +483,8 @@ La aplicación deberá administrar los catálogos que se utilicen para clasifica
 	RF-2.6. La aplicación permitirá limpiar la lista de items de un catalogo
 	
 	
-RF-3. Sesión de Usuario 
-La aplicación deberá identificar a cada usuario de manera única para certificar las tareas de administración que se lleven acabo desde la aplicación. 
+\textbf{RF-3. Sesión de Usuario} La aplicación deberá identificar a cada usuario de manera única para certificar las tareas de administración que se lleven acabo desde la aplicación. 
+
 
 	RF-3.1. La aplicación permitirá al usuario iniciar sesión.
 	
@@ -405,9 +495,27 @@ La aplicación deberá identificar a cada usuario de manera única para certific
 \chapter{Desarrollo del sistema}
 
 \section{Dessarrollo web}
+En esta parte se abordarán los aspectos mas importantes de la plataforma web. Que tecnologías has sido utilizadas, como han sido utilizadas y por qué han sido utilizadas.
 
+\subsection{Django}
+Django\cite{dj}, es un Framework de alto nivel para Python. Django sigue la metodología de diseño “Modelo Vista Controlador” (MVC) lo que permite crear aplicaciones web extensibles, escalables y sostenibles. Django es de código abierto. 
+
+Django cuenta con varios módulos para asegurar la seguridad e integridad de las aplicaciones web desarrolladas con el. 
+
+Django posee un sistema jerárquico de plantillas que facilita la reutilización de código y extensibilidad de aplicaciones. Además cuenta con soporte para internacionalización.
+
+En este proyecto se ha decidido utilizar Django debido a que utiliza python y que además al ser un framework de alto nivel, reúne diversas herramientas y aplicaciones, como por ejemplo el servidor de aplicación para desarrollo que facilita el trabajo para desarrollar de manera ágil, el modulo de autenticación de usuarios, el modulo para desarrollo baso en test o la integración de servicios de mensajería de manera interna. Al principio se planteaba realizar la plataforma web con PHP pero al ser un sistema bastante grande, se decidió optar por Django ya que facilitaba el proceso de desarrollo. También se pensó en el mini-framework python Flask pero después del proceso de análisis, se llegó a la conclusión de que con Flask se repetiría mucho mas código y con Django el diseño seria también más escalable.
+
+\subsection{MongoDB}
+
+MongoDB es un sistema de base de datos NoSQL orientado a grandes cantidades de datos, guarda estructuras de datos en documentos similares a JSON haciendo que la integración de los datos en ciertas aplicaciones sea más fácil y rápida.
+Se trata de una base de datos ágil que permite cambiar los esquemas de una aplicación cuando esta evoluciona. Los principales objetivos de estas bases de datos son la escalabilidad, rendimiento y gran disponibilidad,
+
+En MongoDB los documentos se agrupan en colecciones. Las colecciones  no imponen una estructura fija a los documentos que contienen, ni siquiera al tipo de datos de cada campo. Esto es una ventaja cuando estamos desarrollado un sistema en el que las entradas de la base de datos dependen de las preferencias del usuario.  
+  
 \section{Infraestructura}
 \subsection{Plataforma Como Servicio}
+
 La Plataforma como Servicio\cite{paas} (PaaS, Platform as a Service) es una categoría de servicios cloud que proporciona un entorno a los desarrolladores crear aplicaciones y servicios que funcionen a través de internet. Los servicios PaaS se alojan en la nube, y los usuarios pueden acceder a ellos a través de un navegador web. . Los servicios PaaS consisten en funcionalidades preconfiguradas a las que los clientes puedan suscribirse, eligiendo las funciones que deseen incluir en función de sus necesidades.
 
 Algunas de las funcionalidades PaaS son:
@@ -456,126 +564,40 @@ Estas son las ventajas características de una implementación basada en el mode
 \subsection{Herramientas de infraestructura}
 
 
-\chapter{Resolución del trabajo}
-
-Como método de ingeniería del software decir que vamos a seguir la técnicas de modelo de prototipos rápido o también llamado modelado de prototipado rápido.
-
-Ver \url{http://www.ecured.cu/index.php/Modelo_de_Prototipos}
-
 \section{Recursos}
 
 Decir los recursos humanos (autor y directores), hardware y software que se van a utilizar.
 
-\section{Especificación de requisitos}
-
-Decir que se partió de una especificación inicial de requisitos que a medida que se fueron implementando los prototipos se fue refinando posteriormente. Se puede poner la inicial y la final o solo la final indicando que se están poniendo los requisitos que finalmente tiene que tener el sistema.
-
-Los requisitos se pueden referir a las necesidades del usuario del sistema (requisitos del usuario), a lo que tiene que hacer la aplicación (requisito funcional) o a cómo tiene que hacerlo (requisito no funcional). Ejemplo:
-
-En este sistema un robot tiene que coger con sus pinzas un envase de medicamento y llevárselo a una persona anciana que por sí misma no puede recordar su medicación.
-
-Requisitos del usuario:
-
-RU1. La persona puede moverse libremente por una habitación donde está el robot.
-
-RU2. La persona es capaz de coger el medicamento cuando se lo ofrece el robot.
-
-RU3. La persona es capaz de tomarse el medicamento por sí misma.
-
-
-Requisitos funcionales.
-
-RF1. El robot mediante la cámara kinect debe poder localizar a la persona.
-
-RF2. El robot conoce la posición de la mesa pues tiene un mapa de la habitación.
-
-RF3. El robot debe identificar el medicamento correcto según un plan de medicación previamente establecido.
-
-RF4. El robot debe poder coger el medicamento con sus pinzas.
-
-etc...
-
-Requisitos no funcionales
-
-RNF1. El robot no puede atropellar ni dañar a la persona en ningún momento.
-
-RNF2. La aplicación debe ejecutarse en entornos linux
-
-RNF3. La aplicación debe utilizar pocos recursos para reaccionar con rapidez.
-
-algo de la interfaz, como tratar posibles fallos, etc.
 
 
 \section{Planificación}
 
-Poner una tabla de tiempos con las planificación del proyecto diciendo cuando se tiene previsto alcanzar cada subobjetivo planteado. Con su correspondiente división en fases y tareas, y la posterior
-comparación con los datos reales obtenidos tras realizar el proyecto. Entre las fases está la realización de los diferentes prototipos I, II y III por ejemplo.
-
-Poner presupuesto según horas de trabajo estimadas.
 
 
-\section{Análisis funcional}
 
-A partir de aquí nos referimos solamente al prototipo final que da lugar a la aplicación final.
-
-Hay que describir la funcionalidad que debe poseer el sistema para poder cumplir con los objetivos y requisitos que se han dicho previamente.La descripción de esta funcionalidad puede hacerse analizando las tareas (que aparecerán en la planificación) y estudiando la inter-relación entre ellas y sus conexiones.
-
-Para la realización de este análisis se pueden utilizar Diagramas de Flujo para poder conocer generalmente un único punto de inicio y un único punto de término o en varios. 
-
-\url{https://es.wikipedia.org/wiki/Diagrama_de_flujo}
-
- Se pueden plantear también casos de uso. Los diagramas de casos de uso sirven para describir la inter-relación entre el sistema y el usuario del mismo. Se pueden utilizar para plantear diferentes casos de interacción entre el robot y la persona y cómo tiene que reaccionar el sistema en cada caso.
-
-\url{https://es.wikipedia.org/wiki/Diagrama_de_casos_de_uso}
-
-
-\section{Implementación y pruebas}
-
-Decir qué lenguaje de programación se ha utilizado y las tecnologías implicadas aunque se hayan comentado en el apartado de recursos. Justificar su uso (rendimiento, disponibilidad, etc.). Si se ha usado open source decirlo y explicar las ventajas.
-
-Las pruebas se realizan para comprobar la verificación y validación del producto software. La verificación consiste es comprobar que el producto realiza lo que está programado, es decir la programación no tiene errores y funciona en todos los casos cumpliendo los requisitos. La validación tiene que ver con que cumpla con lo que espera el usuario.
-
-Verificación y Validación: Conjunto de procesos de comprobación y
-análisis que aseguran que el software que se desarrolla está acorde a su
-especificación y cumple las necesidades de los clientes.
-
-Verificación:
-¿Estamos construyendo el producto correctamente?
-e su especificacin.
-
-Validación:
-¿Estamos construyendo el producto correcto?
-Comprueba que el software cumple las expectativas que el cliente espera
-Importante: Nunca se va a poder demostrar que el software está
-completamente libre de defectos
-
-las pruebas que pueden utilizarse son muy diversas. Aconsejo centrarnos en pruebas de caja blanca y de caja negra.
-
-Las pruebas de la caja blanca se centran en la estructura interna del programa para elegir los casos de prueba. El objetivo de estas pruebas consiste en probar todos los posibles casos de ejecución de la aplicación para comprobar que los datos se comportan de manera correcta internamente.
-
-Decir que se han hecho las pruebas de caja blanca.
-
-Las pruebas de caja negra son aquellas que se centran en las salidas y entradas de los módulos, sin atender a su comportamiento interno (comprobando mediante las pruebas de caja blanca). Las pruebas de caja negra garantizan la interconectividad entre los diferentes módulos de la aplicación, así como su correcto funcionamiento final.
-
-Poner algunos casos de prueba de caja negra.
-
-\chapter{Conclusiones y trabajo futuro}
-
-Decir lo que se ha conseguido realizar comentando sus puntos fuertes y débiles.
-Decir si se han alcanzado los objetivos específicos y el general propuesto y en qué grado.
-
-Indicar las asignaturas del grado más relacionadas con la ejecución del TFG y cómo el TFG ha ayudado a afianzar los conocimientos adquiridos en el Grado.
-
-Valoración personal si se quiere.
-
-
-Avanzar algunas líneas de trabajo futuro para solucionar las debilidades detectadas o para conseguir nuevas funcionalidades interesantes.
-
-\chapter{Bibliografía}
-
-Poner las citas bibliográficas, direcciones de internet, etc.
 
 \begin{thebibliography}{aaaa}
+
+%estudio del arte
+\bibitem[7]{3pl} \textsc{3PL},
+\textit{3PL Central}
+\url{http://3plcentral.com/} 
+
+\bibitem[8]{wws} \textsc{wws},
+\textit{Windward System Five's Inventory Control}
+\url{http://www.windwardsoftware.com/en-US/}
+
+\bibitem[8]{snp} \textsc{snp},
+\textit{Snappii}
+\url{https://www.snappii.com/}
+
+%desarolloweb
+\bibitem[8]{dj} \textsc{Django},
+\textit{Django}
+\url{https://www.djangoproject.com/}
+
+%infraestructura
+
 \bibitem[1]{paas} \textsc{PaaS},
 \textit{Plataforma como Servicio}
 \url{http://www.interoute.es/what-paas} 
@@ -597,7 +619,6 @@ Poner las citas bibliográficas, direcciones de internet, etc.
 
 \chapter{Anexo}
 
-Al final de la memoria hay que añadir un anexo de una página o dos, explicando como se usa el software a modo de manual de usuario. Es decir, como se llaman los comandos, qué parámetros hay que darle, como se llaman los ficheros de datos de entrada, etc.
 
 
 
