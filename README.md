@@ -74,7 +74,7 @@ Puede descargarse desde aquí.
 
 La documentación del proyecto se encuentra en este [directorio](https://github.com/hugobarzano/NoInventory/tree/master/NoInventoryDOC). Se está realizando con LaTEX y puede descargarse aquí.
 
-  [No-Inventory-DOC](https://www.dropbox.com/s/4tt3viylmf32la2/proyecto.pdf?dl=1)
+    [No-Inventory-DOC](https://www.dropbox.com/s/4tt3viylmf32la2/proyecto.pdf?dl=1)
 
 
 ### Instalación Local
@@ -97,13 +97,13 @@ Los distintos despliegues se pueden realizar con la herramienta de construcción
 
 Test Propios:
 
-    - [Test Clasificación](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_clasificacion.py)
+    [Test Clasificación](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_clasificacion.py)
 
-    - [Test Item](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_item.py)
+    [Test Item](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_item.py)
 
-    - [Test Catálogo](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_catalogo.py)
+    [Test Catálogo](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_catalogo.py)
 
-    - [Test Informe](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_informe.py)
+    [Test Informe](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_informe.py)
 
 Test Django:
 
