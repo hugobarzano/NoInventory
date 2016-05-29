@@ -82,33 +82,35 @@ La documentación del proyecto se encuentra en este [directorio](https://github.
 
 ###Despliegues
 
-  make heroku
+Los distintos despliegues se pueden realizar con la herramienta de construcción [Makefile](https://github.com/hugobarzano/NoInventory/blob/master/makefile) o con el archivo [Vagrant](https://github.com/hugobarzano/NoInventory/blob/master/Vagrantfile) para configuración de entornos de desarrollo virtuales:
 
-  make docker
+    - make heroku
 
-  make docker_compose
+    - make docker
 
-  vagrant up --provider=azure
+    - make docker_compose
+
+    - vagrant up --provider=azure
 
 ### Desarrollo Basado en TDD
 
 Test Propios:
 
-  [Test Clasificación](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_clasificacion.py)
+    - [Test Clasificación](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_clasificacion.py)
 
-  [Test Item](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_item.py)
+    - [Test Item](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_item.py)
 
-  [Test Catálogo](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_catalogo.py)
+    - [Test Catálogo](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_catalogo.py)
 
-  [Test Informe](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_informe.py)
+    - [Test Informe](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/test_informe.py)
 
 Test Django:
 
-  [Test.py](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/tests.py)
+    - [Test.py](https://github.com/hugobarzano/NoInventory/blob/master/NoInventory/tests.py)
 
 Test Navegación:
 
-  [Test con Selenium](https://github.com/hugobarzano/NoInventory/tree/master/Selenium)
+    - [Test con Selenium](https://github.com/hugobarzano/NoInventory/tree/master/Selenium)
 
 ####NinjaMock
 [Diseño de la web](https://ninjamock.com/s/KDGZS)
