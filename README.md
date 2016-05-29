@@ -69,6 +69,8 @@ Puede descargarse desde aquí.
 
   [![No-Inventory-Android-apk](https://www.dropbox.com/s/xx672e199qvvwgb/android.jpg?dl=1)](https://www.dropbox.com/s/itzz91qe5lw1pew/app-debug.apk?dl=1)
 
+  [Diseño de la aplicacion Con NinjaMock - Baja Fidelidad](https://www.dropbox.com/s/f5tzxc2axhd8pi2/NoInventory-Android-App.pdf?dl=1)
+
 
 ###Documentación
 
@@ -113,9 +115,6 @@ Test Navegación:
 
   [Test con Selenium](https://github.com/hugobarzano/NoInventory/tree/master/Selenium)
 
-####NinjaMock
-[Diseño de la web](https://ninjamock.com/s/KDGZS)
-[Diseño de la aplicacion](https://ninjamock.com/s/F12ZS)
 
 ###Presentaciónes
 

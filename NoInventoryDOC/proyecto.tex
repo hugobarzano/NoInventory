@@ -10,6 +10,7 @@
 
 %\decimalpoint
 \usepackage{dcolumn}
+\usepackage{float}
 \newcolumntype{.}{D{.}{\esperiod}{-1}}
 \makeatletter
 %\addto\shorthandsspanish{\let\esperiod\es@period@code}
@@ -276,8 +277,11 @@ Como se define en la ingeniería de requisitos, los requisitos funcionales estab
 \textbf{RF-3. Gestión de Gráficos:} El sistema deberá generar gráficos a raíz de los elementos que forman parte de un catálogo, mostrando una comparativa entre el numero de unidades y peso de dichas unidades. Los gráficos representativos se dividen en función de las preferencias del usuario. 
 
 	RF-3.1. El sistema permitirá generar gráficos
+	
 	RF-3.1. El sistema permitirá exportar gráficos
+	
 	RF-3.1. El sistema permitirá seleccionar el tipo de gráfico	
+
 
 	 
 \textbf{RF-4. Gestión de Informes:} El sistema deberá generar informes significativos a raíz de los elementos que forman parte de un catálogo. El sistema proveerá al usuario de una plantilla editable para personalizar los aspectos e información necesaria para el informe. El sistema permitirá combinar distintos catálogos para generar un mismo informe.  El sistema permitirá incluir en los informes, los gráficos generados con anterioridad. 
@@ -285,25 +289,38 @@ Como se define en la ingeniería de requisitos, los requisitos funcionales estab
 	
 
 	RF-4.1. El sistema permitirá generar informes
+	
 	RF-4.2. El sistema permitirá almacenar informes
+	
 	RF-4.3. El sistema permitirá modificar informes
+	
 	RF-4.4. El sistema permitirá eliminar informes
+	
 	RF-4.5. El sistema permitirá añadir catálogos a los informes
+	
 	RF-4.6. El sistema permitirá añadir gráficos a los informes
+	
 	RF-4.7. El sistema permitirá exportar informes
 
 \textbf{RF-5. Gestión de Preferencias:} El sistema permitirá personalizar las preferencias de cada organización. Dichas preferencias son los atributos con los que van a catalogarse los items. Dichos atributos son los que se usarán para dotar de contenido a los catálogos. Estos atributos también son empleados para la generación de gráficos. 
 
 	RF-5.1. El sistema permitirá cargar las preferencias desde fichero CSV
+	
 	RF-5.1. El sistema permitirá cargar preferencias por defecto 
+	
 
 \textbf{RF-6. Gestión de Usuarios:} El sistema deberá presentar un entorno colaborativo, clasificando a los usuarios por organizaciones de forma que distintos usuarios de una misma organización tengan acceso al mismo conjunto de recursos que define dicha organización. 
 
 	RF-6.1. El sistema permitirá al administrador dar de alta a nuevos usuarios.
+	
 	RF-6.1. El sistema permitirá al administrador asignar perfiles de usuario.
+	
 	RF-6.2. El sistema permitirá iniciar sesión a los usuario.
+	
 	RF-6.2. El sistema permitirá cerrar sesión a los usuario.
+	
 	RF-6.2. El sistema registrará internamente las acciones realizadas por cada 	usuario, 	de cada organización. 
+	
 
 \section{Requisitos No Funcionales Plataforma web}
 Los requisitos no funcionales, se refieren a todos los requisitos que no describen información a guardar, ni funciones a realizar por el sistema, sino características de funcionamiento.
@@ -314,11 +331,29 @@ Los requisitos no funcionales, se refieren a todos los requisitos que no describ
 
 \textbf{RNF-3} Necesitaremos disponer de una buena conexión a internet ya que el sistema da servicio desde la nube. 
 
-DIAGRAMONESSSSSSSSSSSSSSSSSSSSSSSSSS
+
+\section{Casos de Uso: Plataforma Web}
+
+Los diagramas de casos de uso, son diagramas UML que representan gráficamente a todos los elementos que forman parte del modelo de casos de uso junto con la frontera del sistema. Delimitan el sistema a diseñar. Determinan el contexto del uso del sistema. Describen el punto de vista de los usuarios  en el sistema 
+
+\begin{figure}[htbpH]  
+\centering 
+\includegraphics[scale=0.50]{imagenes/casosUso/gestionItem.jpg}
+\caption{ Casos de uso - Gestión Items  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/casosUso/gestionCatalogo.jpg}
+\caption{ Casos de uso - Gestión Catalogos  }  
+\end{figure}
 
 
-DIAGRAMAAAAAAAAAAAAAOOOOOOOOOOOOOOOOOOOOOOSSS
-
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/casosUso/Informe.jpg}
+\caption{ Casos de uso - Gestión Informes  }  
+\end{figure}
 \section{Requisitos Funcionales Aplicación Android}
 Los requisitos funcionales de la aplicación Android establecen los comportamientos o funcionalidades de la aplicación.
 
@@ -326,12 +361,19 @@ RF-1. Administración de items
 La aplicación deberá administrar los items que formen parte del almacen.   
 
 	RF-1.1. La aplicación permitirá detectar items mediante texto o localizador
+	
 	RF-1.2. La aplicación permitirá detectar items mediante codigo QR
+	
 	RF-1.3. La aplicación permitirá detectar items mediante codigo de barras
+	
 	RF-1.4. La aplicación permitirá detectar items mediante etiquetas NFC
+	
 	RF-1.5. La aplicación permitirá escribir el localizador de un item en una etiqueta NFC
+	
 	RF-1.6. La aplicación permitirá consultar un item en detalle
+	
 	RF-1.7. La aplicación permitirá añadir un item detectado a un catalogo determinado
+	
 	RF-1.8. La aplicación permitirá eliminar items
 
 
@@ -339,16 +381,23 @@ RF-2. Administración de Catálogos
 La aplicación deberá administrar los catálogos que se utilicen para clasificar los items del almacén.   
 
 	RF-2.1. La aplicación permitirá detectar catálogos mediante texto o ID
+	
 	RF-2.2. La aplicación permitirá añadir items  al catalogo mediante código QR
-	RF-2.3. La aplicación permitirá añadir items al catalogo mediante código de barras
+	
+	RF-2.3. La aplicación permitirá añadir items al catalogo mediante código de barra
+	s
 	RF-2.4. La aplicación permitirá añadir items al catalogo mediante etiquetas NFC
+	
 	RF-2.5. La aplicación permitirá eliminar items de un catalogo
+	
 	RF-2.6. La aplicación permitirá limpiar la lista de items de un catalogo
+	
 	
 RF-3. Sesión de Usuario 
 La aplicación deberá identificar a cada usuario de manera única para certificar las tareas de administración que se lleven acabo desde la aplicación. 
 
 	RF-3.1. La aplicación permitirá al usuario iniciar sesión.
+	
 	RF-3.2. La aplicación permitirá al usuario cerrar sesión.
 
 
