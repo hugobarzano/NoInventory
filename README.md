@@ -28,7 +28,9 @@ Twiiter: [@no_inventory](https://twitter.com/no_inventory)
 
 Contacto: hugobarzano@gmail.com
 
-[![Licencia](https://www.dropbox.com/s/o9w70i4i2wfjs9e/gplv3-127x51.png?dl=1)](https://github.com/hugobarzano/NoInventory/blob/master/LICENSE)
+Licencia: [![Licencia](https://www.dropbox.com/s/o9w70i4i2wfjs9e/gplv3-127x51.png?dl=1)](https://github.com/hugobarzano/NoInventory/blob/master/LICENSE)
+
+
 ###Plataforma Web
 
 La plataforma web esta desarrollada sobre Django, el framework de alto nivel y open source de Python. El modelo de datos esta basado en clases python que interactúan con la base de datos mongoDB, externa el framework mediante el cliente Pymongo. Esto se traduce en un incremento de eficiencia y en el aprovechamiento de la libertad y flexibilidad que otorgan las bases de datos NO-SQL
