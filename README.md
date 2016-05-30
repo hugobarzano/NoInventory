@@ -76,8 +76,7 @@ Puede descargarse desde aquí.
 
 La documentación del proyecto se encuentra en este [directorio](https://github.com/hugobarzano/NoInventory/tree/master/NoInventoryDOC). Se está realizando con LaTEX y puede descargarse aquí.
 
-  [No-Inventory-DOC](https://www.dropbox.com/s/4tt3viylmf32la2/proyecto.pdf?dl=1)
-
+  [No-Inventory-DOC](https://www.dropbox.com/s/ckvtyy782bt6df2/proyecto.pdf?dl=1)
 
 ### Instalación Local
 
