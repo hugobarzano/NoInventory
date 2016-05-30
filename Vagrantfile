@@ -10,9 +10,9 @@ Vagrant.configure('2') do |config|
 
 
  config.vm.provider :azure do |azure, override|
- azure.mgmt_certificate = File.expand_path('~/.ssh/azurevagrant.pem')
+ azure.mgmt_certificate = File.expand_path('~/.ssh/azurejuanfran.pem')
  azure.mgmt_endpoint = 'https://management.core.windows.net'
- azure.subscription_id = 'b0eda1f9-f644-4cfd-bc55-29015eed62c9'
+ azure.subscription_id = 'b187be6d-afae-40aa-9513-a3b91e07f3a3'
  azure.vm_image = 'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_2-LTS-amd64-server-20150506-en-us-30GB'
  azure.vm_name = 'noinventory'
  azure.cloud_service_name = 'noinventory'

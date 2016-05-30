@@ -82,4 +82,5 @@ prueba:
 	python NoInventory/test_pruebas.py
 
 cosas:
+	#necesario para vagrant sudo apt-get install libpq-dev python-dev
 	sudo docker run -t -p 80:80 -p 27017:27017 -i hugobarzano/noinventory:mongo /bin/bash

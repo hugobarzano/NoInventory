@@ -275,6 +275,9 @@ Snappii\cite{snp} es una plataforma de desarrollo de aplicaciones a medida para 
 \caption{Snappii}  
 \end{figure}
 
+
+
+
 \subsection{Conclusiones}
 
 De todos estos productos, podemos destacar puntos fuertes como estar alojados en la nube, utilizar tecnologías de radiofrecuencia o tecnologías móviles para la gestión. Otros aspectos importantes son la automatización de tareas, controlar el flujo de entrada/salida de objetos o la generación de informes pero también presentan aspectos negativos como son el precio de los servicios o las complicadas interfaces que no facilitan su uso para empleados poco cualificados. 
@@ -504,14 +507,16 @@ Django cuenta con varios módulos para asegurar la seguridad e integridad de las
 
 Django posee un sistema jerárquico de plantillas que facilita la reutilización de código y extensibilidad de aplicaciones. Además cuenta con soporte para internacionalización.
 
-En este proyecto se ha decidido utilizar Django debido a que utiliza python y que además al ser un framework de alto nivel, reúne diversas herramientas y aplicaciones, como por ejemplo el servidor de aplicación para desarrollo que facilita el trabajo para desarrollar de manera ágil, el modulo de autenticación de usuarios, el modulo para desarrollo baso en test o la integración de servicios de mensajería de manera interna. Al principio se planteaba realizar la plataforma web con PHP pero al ser un sistema bastante grande, se decidió optar por Django ya que facilitaba el proceso de desarrollo. También se pensó en el mini-framework python Flask pero después del proceso de análisis, se llegó a la conclusión de que con Flask se repetiría mucho mas código y con Django el diseño seria también más escalable.
+En este proyecto se ha decidido utilizar Django debido a que utiliza python y que además al ser un framework de alto nivel, reúne diversas herramientas y aplicaciones, como por ejemplo el servidor de aplicación para desarrollo que facilita el trabajo para desarrollar de manera ágil, el modulo de autenticación de usuarios, el modulo para desarrollo baso en test o la integración de servicios de mensajería de manera interna. Al principio se planteaba realizar la plataforma web con PHP pero al ser un sistema bastante grande, se decidió optar por Django ya que facilitaba el proceso de desarrollo. También se pensó en el micro-framework python Flask pero después del proceso de análisis, se llegó a la conclusión de que con Flask\cite{fl} se repetiría mucho mas código y con Django el diseño seria también más escalable.
 
 \subsection{MongoDB}
 
-MongoDB es un sistema de base de datos NoSQL orientado a grandes cantidades de datos, guarda estructuras de datos en documentos similares a JSON haciendo que la integración de los datos en ciertas aplicaciones sea más fácil y rápida.
+MongoDB\cite{mg} es un sistema de base de datos NoSQL orientado a grandes cantidades de datos, guarda estructuras de datos en documentos similares a JSON haciendo que la integración de los datos en ciertas aplicaciones sea más fácil y rápida.
 Se trata de una base de datos ágil que permite cambiar los esquemas de una aplicación cuando esta evoluciona. Los principales objetivos de estas bases de datos son la escalabilidad, rendimiento y gran disponibilidad,
 
 En MongoDB los documentos se agrupan en colecciones. Las colecciones  no imponen una estructura fija a los documentos que contienen, ni siquiera al tipo de datos de cada campo. Esto es una ventaja cuando estamos desarrollado un sistema en el que las entradas de la base de datos dependen de las preferencias del usuario.  
+
+
   
 \section{Infraestructura}
 \subsection{Plataforma Como Servicio}
@@ -554,8 +559,123 @@ Estas son las ventajas características de una implementación basada en el mode
 \item Seguridad física en los centros de datos
 \end{enumerate}
 
+\subsection{Docker}
+
+Docker\cite{dk} es una herramienta para automatizar el despliegue de aplicaciones dentro de contenedores, proporcionando una capa de abstracción y automatización de Virtualización a nivel de sistema operativo. Docker utiliza aislamiento de recursos del kernel de Linux, para permitir que contenedores independientes se ejecuten dentro de una sola instancia de Linux, evitando la sobrecarga de iniciar y mantener máquinas virtuales.
+
+\begin{figure}[h] 
+\centering 
+\includegraphics[scale=0.35]{imagenes/desarrollo_herramienta/docker.png}
+\caption{ Virtualización Docker\cite{dkw}}
+\end{figure}
+
+La principal diferencia con respecto a maquinas virtuales es el tamaño. Las maquinas virtuales incluyen la aplicación, el codigos, las libresrias necesarias y un sistema operativo anfitrion completo mientras que los contenedores contienen los mismo pero comparten el nucleo con otros contenedores corriendo como una proceso asilado en el espacio de usuario del sistema operativo anfitrion. No estan vinculados con ninguna infraestructura especifica 
+
+\subsection{Ansible}
+
+Ansible\cite{ans} es una herramienta de automatización que permite configurar sistemas, implementar software y orquestar tareas complejas como por ejemplo despliegues continuos. En este proyecto se ha decidido utilizar Ansible como mecanismo de aprovisionamiento de aplicación, debido a su fiabilidad, facilidad de uso y seguridad. Para poder trabajar con Ansible es necesario crear playbooks que no son mas que archivos de aprovisionamiento.yml en los que detallar todas las dependencias, servicios y tareas que nuestra aplicación necesita para funcionar. Aunque puede usarse de manera independiente, si la combinamos con herramientas de creación y administración de entornos virtuales como por ejemplo Vagrant, podemos llegar a conseguir grandes resultados.
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.35]{imagenes/desarrollo_herramienta/ansible.jpg}
+\caption{ Arquitectura Ansible\cite{ans2}}
+\end{figure}
+
+\subsection{Vagrant}
+
+Vagrant\cite{vg} es una herramienta open-source para la creación y configuración de entornos de desarrollo virtualizados. Vagrant proporciona entornos de trabajo fáciles de configurar, reproducibles y portátiles. Está desarrollado con Ruby y utiliza el sistema de virtualización Virtualbox de Oracle. Este proyecto tiene asociado un fichero denominado Vagrantfile cuya función principal es la de describir el tipo de máquinas necesarias para la aplicación, cómo configurarlas y como aprovisionarlas. Las posibilidades con Vagrant son muy numerosas, en este proyecto se va a utilizar Vagrant para la configuración de maquinas virtuales alojadas en Azure. Dichas maquinas correrán directamente con la aplicación utilizando Ansible y también correrán con la aplicación de manera asilada utilizando contenedores. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.75]{imagenes/desarrollo_herramienta/vagrant.jpeg}
+\caption{ Funcionamiento Vagrant\cite{vg2}}
+\end{figure}
+
+
+Dependiendo del proveedor de servicio, Vagrant será configurado de una manera u otra. En este proyecto se va a utilizar Azure, por lo que Vagrant necesita el plugin Microsoft Azure provider to Vagrant. Con este plugin detallamos entre otras cosas las credenciales necesarias para autenticación en Azure.
+
+Vagrant cuenta con infinidad de plugins para distintos cloud services y distintos entornos de de desarrollo virtuales. Con Vagrant no solo podemos trabajar individualmente maquina a máquina, podemos utilizar la caracteristica vagrant-multimachine para crear en paralelo N máquinas virtuales y aprovisionarlas cada una como queramos. 
+
 
 \section{Desarrollo Android}
+
+Android es un sistema operativo basado en el núcleo Linux diseñado inicialmente para teléfonos móviles, al igual que iOS, Symbian y Blackberry OS. El sistema permite programar aplicaciones en una variación de Java llamada Dalvik. El sistema operativo proporciona todas las interfaces necesarias para desarrollar aplicaciones que accedan a las funciones del teléfono. 
+
+En esta sección se hablará del entorno de programación utilizado para desarrollar la aplicación Android, así como de las tecnologías utilizadas en la aplicación para mantener la sincronización con la plataforma web y llevar a cabo las tareas de clasificación.  
+
+\subsection{Android-Studio}
+
+Para trabajar con Android hay diversos entornos de desarrollo como por ejemplo Eclipse, pero el mas recomendado y el utilizado en este proyecto es Android Studio\cite{as}. Android Studio es un entorno de desarrollo integrado (IDE), basado en IntelliJ IDEA de la compañía JetBrains,  que proporciona varias mejoras con respecto al plugin ADT (Android Developer Tools) para Eclipse. Android Studio utiliza una licencia de software libre Apache 2.0
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.5]{imagenes/desarrollo_herramienta/android.png}
+\caption{ Android-Studio}
+\end{figure}
+
+
+Algunas características\cite{as2} de este entorno de programación son:
+
+\begin{enumerate}
+\item Soporte para programar aplicaciones para Android Wear.
+\item Herramientas Lint para detectar problemas de rendimiento, usabilidad y compatibilidad de versiones.
+\item Utiliza ProGuard para optimizar y reducir el código del proyecto al exportar a APK.\item Integración de la herramienta Gradle encargada de gestionar y automatizar la construcción de proyectos.
+\item Nuevo diseño del editor con soporte para la edición de temas. 
+\item Nueva interfaz específica para el desarrollo en Android.
+\item control de versiones accediendo a un repositorio desde el que poder descargar Mercurial, Git, Github o Subversion. 
+\end{enumerate}
+
+\subsection{Librería Volley}
+La aplicación No-inventory-Android-App, sirve como extensión de la plataforma web. Esta aplicación esta sincronizada en tiempo real con el servidor de manera que la experiencia de usuario entre la web y la aplicación es óptima.  Para conseguir esto, se utiliza la librería Volley\cite{volley} desarrollada por Google con el objetivo de optimizar el envío de peticiones Http desde las aplicaciones Android hacia servidores externos. Actúa como una interfaz de alto nivel, liberando al programador de la administración de hilos y procesos de parsing. 
+
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.5]{imagenes/desarrollo_herramienta/volley.png}
+\caption{ Arquitectura Volley\cite{volley2}}
+\end{figure}
+
+Volley funciona mediante una arquitectura a capas, en la que cada capa está representada por una hebra. Se puede distinguir entre la hebra principal de la aplicación, la hebra de cache y la hebra que se encarga de realizar las peticiones HTTP.  Las peticiones son añadidas a una cola con prioridad y van siendo atendidas en función de los requisitos de la hebra principal. En el caso de que los datos no estén cacheados, la hebra de cache envía la petición a la hebra de transacción y esta realiza la petición. Un problema importante a la hora utilizar Volley en esta aplicación fue la congestión de la red, ya que cada petición Volley creaba una cola de peticiones propia para cada consulta. La solución tomada fue la de implementar esta cola como estática de manera que todas las peticiones que se llevan a cabo en las distintas vistas de la aplicación, comparten la cola de peticiones, mejorando así el rendimiento y evitando problemas de sobre carga de memoria ya que Volley lo cachea todo. 
+
+
+\subsection{Near field communication (NFC)}
+NFC\cite{nfc} o comunicación de campo cercano, es una tecnología inalámbrica derivada de la etiquetas RFID. NFC es una plataforma abierta pensada para teléfonos  y dispositivos móviles. Su tasa de trasferencia ronda entono a los  424 kbit/s por lo que es ideal para la comunicación instanatea aunque como su propio nombre indica, su radio de acción esta entorno a los 10 o 15 cm aunque no necesita emparejamiento previo. 
+
+La tecnología NFC puede funcionar en dos modos:
+
+\begin{enumerate}
+\item Activo, en el que ambos equipos con NFC intercambian datos. 
+\item Pasivo, en el que solo hay un dispositivo activo y el otro aprovecha el campo magnético generado por este para intercambiar la información.
+\end{enumerate}
+
+En este sistema, la aplicación No-inventory-Android-App es capaz de Leer/Escribir etiquetas NFC. Dichas etiquetas contienen el localizador de cada objeto del sistema. De esta manera las tareas de identificación, catalogación y agrupación  se pueden llevar acabo de una manera rápida y eficiente.
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.5]{imagenes/desarrollo_herramienta/nfc.jpg}
+\caption{ Ejemplo Funcionamiento Etiquetas NFC\cite{nfc4}}
+\end{figure}
+
+Para llevar a cabo estas tareas, se ha creado la clase NFC Manager siguiendo los ejemplos de la documentación oficial de Android Developers\cite{nfc2}, con la que controlar las acciones de lectura/escritura y el tipo de etiquetas a escribir. También se usa el Foreground Dispatch System\cite{nfc3} que se encarga de realizar estas tareas en segundo plano  y de establecer la prioridad entre Intens de manera que la lectura/escritura de etiquetas NFC no influya en el hilo de ejecución principal. 
+
+
+ 
+
+\subsection{Lector de Códigos de Barras ZXing}
+
+Otro método de identificación que utiliza  No-inventory-Android-App es la lectura de códigos de barras o códigos QR que contienen, al igual que las etiquetas NFC, el localizador propio de cada objeto dado de alta en el sistema. Son códigos de respuesta rápida, con un coste reducido y con la única necesidad de disponer de una cámara en el Smartphone. 
+
+Para conseguir esto, la aplicación utiliza la librería procesadora de imágenes multi-formato Zxing\cite{cebra}. Esta librería de código abierto  es capaz de reconocer una gran variedad de formatos, como por ejemplo  UPC-A, UPC-E, EAN-8, EAN-13, Códigos 39, 93, 128, ITF, Codabar, RSS-14, Matriz de datos, Aztec, PDF 417 y códigos QR. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.5]{imagenes/desarrollo_herramienta/zxing.png}
+\caption{ zxing - logo\cite{cebra3}}
+\end{figure}
+
+ZXing ofrece el lector de códigos de barras como una aplicación independiente que, mediante mecanismo de control de Intens\cite{cebra2} permite que otras aplicaciones, como por ejemplo esta,  puedan integrar el lector de manera sencilla.
+
+
 
 
 \chapter{Implementación y pruebas}
@@ -596,6 +716,13 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 \textit{Django}
 \url{https://www.djangoproject.com/}
 
+\bibitem[9]{fl} \textsc{Flask},
+\textit{Flask}
+\url{http://flask.pocoo.org/}
+
+\bibitem[9]{mg} \textsc{mongo},
+\textit{MongoDB}
+\url{https://www.mongodb.com/}
 %infraestructura
 
 \bibitem[1]{paas} \textsc{PaaS},
@@ -613,6 +740,80 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 \bibitem[4]{iaas} \textsc{IaaS},
 \textit{Infraestructura como Servicio}
 \url{http://www.interoute.es/what-iaas} 
+
+
+\bibitem[4]{dk} \textsc{Docker},
+\textit{Docker - Aislamiento de recursos}
+\url{https://www.docker.com/what-docker} 
+
+\bibitem[4]{dkw} \textsc{Docker-Wiki},
+\textit{Docker - Wikipedia}
+\url{https://es.wikipedia.org/wiki/Docker_\%28software\%29} 
+
+
+\bibitem[4]{ans} \textsc{Ansible},
+\textit{Ansible}
+\url{https://www.ansible.com/} 
+
+\bibitem[4]{ans2} \textsc{Ansible},
+\textit{Deploying Symfony2 app with Ansible}
+\url{http://www.slideshare.net/rodomansky/deploying-symfony2-app-with-ansible} 
+
+\bibitem[4]{vg} \textsc{Vagrant},
+\textit{Vagrant}
+\url{https://www.vagrantup.com/} 
+
+\bibitem[4]{vg2} \textsc{Vagrant},
+\textit{Cómo manejar máquinas virtuales de forma sencilla}
+\url{http://www.pixelovers.com/utiliza-vagrant-y-haz-portable-tu-entorno-de-desarrollo/} 
+
+
+%desarollo android
+\bibitem[4]{as} \textsc{Android-Studio},
+\textit{Android-Studio-Developer}
+\url{https://developer.android.com/studio/index.html?hl=es} 
+
+\bibitem[4]{as2} \textsc{Android-Studio},
+\textit{Android-Studio VS Eclipse}
+\url{http://academiaandroid.com/android-studio-v1-caracteristicas-comparativa-eclipse/} 
+
+\bibitem[4]{volley} \textsc{Librería Volley},
+\textit{Transmitting Network Data Using Volley}
+\url{https://developer.android.com/training/volley/index.html?hl=es}
+
+\bibitem[4]{volley2} \textsc{Arquitectura Volley},
+\textit{Arquitectura Volley}
+\url{https://packetzoom.com/blog/which-android-http-library-to-use.html}
+
+\bibitem[4]{nfc} \textsc{NFC},
+\textit{NFC}
+\url{http://www.nearfieldcommunication.org/}
+
+\bibitem[4]{nfc2} \textsc{NFC Basico},
+\textit{NFC-Basic-Developer}
+\url{https://developer.android.com/guide/topics/connectivity/nfc/nfc.html?hl=es}
+
+\bibitem[4]{nfc3} \textsc{ NFC-Foreground Dispatch System },
+\textit{NFC -  Foreground Dispatch System}
+\url{https://developer.android.com/guide/topics/connectivity/nfc/advanced-nfc.html?hl=es#foreground-dispatch}
+
+
+\bibitem[4]{nfc4} \textsc{ NFC- Diagrama Ejemplo },
+\textit{NFC -  Diagrama Ejemplo}
+\url{http://www.secureidnews.com/wp-content/uploads/2014/10/nfc-tag-slider-610x259.jpg}
+
+\bibitem[4]{cebra} \textsc{ Zxing - Proyect},
+\textit{Zxing -Zxing}
+\url{https://github.com/zxing/zxing}
+
+\bibitem[4]{cebra2} \textsc{ Zxing-Control-Intens},
+\textit{Zxing - Stack Overflow}
+\url{http://stackoverflow.com/questions/2050263/using-zxing-to-create-an-android-barcode-scanning-app}
+
+
+\bibitem[4]{cebra3} \textsc{ Zxing },
+\textit{Zxing - Logo}
+\url{http://weblabo.oscasierra.net/wp-content/uploads/2014/07/eyecatch-zxing.png}
 
 \end{thebibliography}
  

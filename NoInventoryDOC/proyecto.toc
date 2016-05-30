@@ -22,11 +22,18 @@
 \contentsline {section}{\numberline {3.2}Infraestructura}{22}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}Plataforma Como Servicio}{22}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}Infraestructura Como Servicio}{23}{subsection.3.2.2}
-\contentsline {section}{\numberline {3.3}Desarrollo Android}{24}{section.3.3}
-\contentsline {chapter}{\numberline {4}Implementaci\IeC {\'o}n y pruebas}{25}{chapter.4}
-\contentsline {section}{\numberline {4.1}Herramientas}{25}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Herramientas de infraestructura}{25}{subsection.4.1.1}
-\contentsline {section}{\numberline {4.2}Recursos}{25}{section.4.2}
-\contentsline {section}{\numberline {4.3}Planificaci\IeC {\'o}n}{25}{section.4.3}
-\contentsline {chapter}{\numberline {5}Anexo}{29}{chapter.5}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{29}{chapter.5}
+\contentsline {subsection}{\numberline {3.2.3}Docker}{24}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}Ansible}{24}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}Vagrant}{25}{subsection.3.2.5}
+\contentsline {section}{\numberline {3.3}Desarrollo Android}{26}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Android-Studio}{26}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Librer\IeC {\'\i }a Volley}{27}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Near field communication (NFC)}{28}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}Lector de C\IeC {\'o}digos de Barras ZXing}{29}{subsection.3.3.4}
+\contentsline {chapter}{\numberline {4}Implementaci\IeC {\'o}n y pruebas}{31}{chapter.4}
+\contentsline {section}{\numberline {4.1}Herramientas}{31}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Herramientas de infraestructura}{31}{subsection.4.1.1}
+\contentsline {section}{\numberline {4.2}Recursos}{31}{section.4.2}
+\contentsline {section}{\numberline {4.3}Planificaci\IeC {\'o}n}{31}{section.4.3}
+\contentsline {chapter}{\numberline {5}Anexo}{35}{chapter.5}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{35}{chapter.5}
