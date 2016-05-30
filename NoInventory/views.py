@@ -429,8 +429,8 @@ def cleanCatalogo(request):
             catalogo_object=Catalogo.build_from_json(i)
 
         gestorCatalogos.cleanCatalogo(catalogo_object)
-        actividad_log="--> "+request.session['organizacion']+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Los items han sido eliminados del catalgo: "+str(catalogo_object._id)+" por: "+request.session['username']
-        gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
+        actividad_log="--> "+catalogo_object.organizacion+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Los items han sido restados del catalgo: "+str(catalogo_object._id)
+        gestorLog.registrarActividad(catalogo_object.organizacion,actividad_log)
 
         contenido='<table class="table table-hover"> <thead> <tr> <th>Item</th> <th>Fecha</th> <th>Tag1</th> <th>TAG2</th><th>TAG3</th>'
         contenido=contenido+'<th>Peso</th> <th>Acciones</th></tr></thead><tbody>'
@@ -764,7 +764,7 @@ def generaPDFCatalogoCodigosBarras(request):
     for c in catalogo:
         catalogo_object = Catalogo.build_from_json(c)
 
-    
+
     lista_aux=[]
     item_object=Item()
     lista_aux2=[]
@@ -1340,10 +1340,10 @@ def borrarItemAndroid(request):
     if request.method == 'GET':
         i_id = request.GET['item_id']
         cursor=gestorItems.database.items.find({"_id":ObjectId(i_id)})
-        for c in cursos:
+        for c in cursor:
             item_object=Item.build_from_json(c)
         actividad_log="--> "+item_object.organizacion+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Item: "+item_object.localizador+" eliminado"
-        gestorLog.registrarActividad(organizacion[0],actividad_log)
+        gestorLog.registrarActividad(item_object.organizacion,actividad_log)
         gestorItems.database.items.remove( {"_id" : ObjectId(i_id) } )
         gestorCatalogos.removeItemFromCatalogos(i_id)
         return HttpResponse("Borrado Realizado")
@@ -1587,7 +1587,7 @@ class ItemCreatorAndroid(View):
                 print item.localizador
                 gestorItems.create(item,gestorClasificacion,str(mydic["org"][0]))
                 actividad_log="--> "+str(mydic["org"][0])+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Item:"+item.localizador+" creado por: "+str(mydic["user"][0]) + "desde Android"
-                gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
+                gestorLog.registrarActividad(str(mydic["org"][0]),actividad_log)
 
 
                 return render(request, 'noinventory/creacion_completada.html')
@@ -1723,7 +1723,7 @@ class CatalogoCreatorAndroid(View):
                         })
             gestorCatalogos.create(catalogo)
             actividad_log="--> "+str(mydic["org"][0])+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Catalgo: "+str(catalogo_object._id)+" creado por: "+str(mydic["user"][0]) + "desde Android"
-            gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
+            gestorLog.registrarActividad(str(mydic["org"][0]),actividad_log)
             return render(request, 'noinventory/creacion_completada_catalogo.html')
         else:
             return render(request, 'noinventory/nuevoCatalogo_android.html', {'form': form})
