@@ -29,4 +29,16 @@
 
       <input type="submit" value="Enviar Preferencia">
   </form>
+
+<br>
+<hr>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Registro de Log</h3>
+  </div>
+{% for l in log %}
+  {{ l }}
+  <br>
+{% endfor %}
+</div>
   {% endblock %}

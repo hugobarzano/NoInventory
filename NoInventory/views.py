@@ -30,6 +30,7 @@ from item import *
 from catalogo import *
 from clasificacion import *
 from informe import *
+from log import *
 from io import StringIO
 from datetime import datetime
 from django.utils.html import conditional_escape
@@ -54,6 +55,7 @@ gestorItems = ItemsDriver()
 gestorCatalogos = CatalogosDriver()
 gestorClasificacion=ClasificacionDriver()
 gestorInformes = InformesDriver()
+gestorLog = LogDriver()
 
 
 
@@ -544,6 +546,8 @@ def graficos(request):
     lista_tag2=gestorClasificacion.database.tag2.find({"organizacion":request.session['organizacion']})
     lista_tag3=gestorClasificacion .database.tag3.find({"organizacion":request.session['organizacion']})
     lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']})
+    actividad_log="--> "+request.session['organizacion']+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Grafics consultados por: "+request.session['username']
+    gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
     contexto={'lista_catalogos':lista_catalogos}
     #return render(request, 'noinventory/graficos.html', {'lista_catalogos':lista_catalogos,'lista_tag1': lista_tag1,"lista_tag2":lista_tag2,"lista_tag3":lista_tag3})
     return render(request, 'noinventory/graficos.html', contexto)
@@ -811,6 +815,8 @@ def guardarInforme(request):
                 "datos_informe":request.GET["datos_informe"]+'<hr><hr>'+datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             })
             gestorInformes.create(informe)
+            actividad_log="--> "+request.session['organizacion']+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Informe: "+request.GET["nombre_informe"]+" creado  por: "+request.session['username']
+            gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
 
         informes=[]
         informe_aux=gestorInformes.database.informes.find({"organizacion":request.session['organizacion']})
@@ -852,6 +858,8 @@ def borrarInforme(request):
         objeto_informe={}
         #print request.GET["nombre_informe"]
         informe=gestorInformes.database.informes.remove({"organizacion":request.session['organizacion'],"nombre_informe":request.GET["nombre_informe"]})
+        actividad_log="--> "+request.session['organizacion']+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Informe: "+request.GET["nombre_informe"]+" eliminado  por: "+request.session['username']
+        gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
         informes=[]
         informe_aux=gestorInformes.database.informes.find({"organizacion":request.session['organizacion']})
         for i in informe_aux:
@@ -874,7 +882,11 @@ class Preferencias(View):
     def get(self, request):
         print "Entrando por el get"
         form=FormEntrada()
-        return render(request, 'noinventory/preferencias.html', {'form': form})
+        cursor=gestorLog.database.log.find({"organizacion":request.session["organizacion"]})
+        for c in cursor:
+            log_object=Log.build_from_json(c)
+
+        return render(request, 'noinventory/preferencias.html', {'form': form,'log':log_object.datos_log})
 
     def post(self, request):
         print "Entrando por el post"
@@ -1406,6 +1418,8 @@ def borrarCatalogo(request):
     respuesta='<div id = "paginas"> <div id = "accordion"><div class="panel panel-default"><strong>No hay resultados</strong></div><div></div></div> <div class="col-md-12 text-center"><ul id="myPager" class="pagination"></ul></div></div>'
     if request.method == 'GET':
         c_id = request.GET['catalogo_id']
+        actividad_log="--> "+request.session['organizacion']+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Catalogo: "+c_id+" eliminado por: "+request.session['username']
+        gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
         gestorCatalogos.database.catalogos.remove( {"_id" : ObjectId(c_id) } )
         if request.GET["texto"]=='vacio' and request.GET["fecha_inicio"]=='' and request.GET["fecha_final"]=="":
             lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']}).sort([("fecha_alta_catalogo", -1)]).limit(100)
@@ -1463,6 +1477,7 @@ def borrarItemFromCatalogo(request):
         lista_items=[]
         for i in catalog:
             catalogo_object=Catalogo.build_from_json(i)
+
 
         for j in catalogo_object.id_items_catalogo:
             item=gestorItems.database.items.find({"_id":ObjectId(j)})
@@ -1557,6 +1572,7 @@ class ItemCreatorAndroid(View):
                 print item._id
                 print item.localizador
                 gestorItems.create(item,gestorClasificacion,str(mydic["org"][0]))
+
                 return render(request, 'noinventory/creacion_completada.html')
         else:
             return render(request, 'noinventory/nuevoItem_android.html', {'form': form})
@@ -1592,9 +1608,11 @@ class ItemCreator(View):
                             })
                 item.localizador=gestorClasificacion.generateLocalizador(item,gestorItems,request.session['organizacion'])
                 print "item creado"
-                print item._id
+                #print item._id
                 print item.localizador
                 gestorItems.create(item,gestorClasificacion,request.session['organizacion'])
+                actividad_log="--> "+request.session['organizacion']+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Item:"+item.localizador+" creado por: "+request.session['username']
+                gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
 
             lista_items=gestorItems.database.items.find({"organizacion":request.session["organizacion"]})
             lista_tag1=gestorClasificacion.database.tag1.find({"organizacion":request.session['organizacion']}).sort([("CLAVE1", 1)])
@@ -1644,6 +1662,8 @@ class ItemUpdater(View):
                         "localizador":c.localizador,
                         })
             gestorItems.update(itemUpdated,gestorClasificacion,request.session['organizacion'])
+            actividad_log="--> "+request.session['organizacion']+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Item:"+itemUpdated.localizador+" modificado por: "+request.session['username']
+            gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
             lista_tag1=gestorClasificacion.database.tag1.find({"organizacion":request.session['organizacion']}).sort([("CLAVE1", 1)])
             lista_tag2=gestorClasificacion.database.tag2.find({"organizacion":request.session['organizacion']}).sort([("CLAVE2", 1)])
             lista_tag3=gestorClasificacion.database.tag3.find({"organizacion":request.session['organizacion']}).sort([("CLAVE3", 1)])
@@ -1712,6 +1732,8 @@ class CatalogoCreator(View):
                         "qr_data":" ",
                         })
             gestorCatalogos.create(catalogo)
+            actividad_log="--> "+request.session['organizacion']+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Catalogo "+str(catalogo._id) +" creado por: "+request.session['username']
+            gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
             lista_catalogos=gestorCatalogos.database.catalogos.find({"usuario":request.session["username"]})
             contexto = {"lista_catalogos":lista_catalogos}
             return redirect('/catalogos',contexto)
@@ -1850,10 +1872,22 @@ def register(request):
             # This delays saving the model until we're ready to avoid integrity problems.
             profile = profile_form.save(commit=False)
             profile.user = user
-
             # Now we save the UserProfile model instance.
             profile.save()
 
+            print "organizacion en el registro"
+            print profile.__organizacion__()
+            n_log=gestorLog.database.log.find({"organizacion":profile.__organizacion__()}).count()
+            if n_log==0:
+                log=Log.build_from_json({"fecha_log": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                            "organizacion": profile.__organizacion__(),
+                            "datos_log":[],})
+                inicializar_log="--> "+log.organizacion+" -- "+str(log.fecha_log)+": Fichero de Log creado por el usuario: "+user.username
+                log.datos_log.append(inicializar_log)
+                gestorLog.create(log)
+            else:
+                actividad_log="--> "+profile.__organizacion__()+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Nuevo usuario registrado: "+user.username
+                gestorLog.registrarActividad(profile.__organizacion__(),actividad_log)
             # Update our variable to tell the template registration was successful.
             registered = True
             return HttpResponseRedirect('/')
@@ -1903,6 +1937,8 @@ def user_login(request):
                 #print user_profile.__organizacion__()
                 request.session['organizacion'] = user_profile.__organizacion__()
                 login(request, user)
+                actividad_log="--> "+user_profile.__organizacion__()+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Inicio de sesion: "+user.username
+                gestorLog.registrarActividad(user_profile.__organizacion__(),actividad_log)
                 return HttpResponseRedirect('/')
             else:
                 # An inactive account was used - no logging in!
@@ -1923,6 +1959,8 @@ def user_login(request):
 @login_required
 def user_logout(request):
     # Since we know the user is logged in, we can now just log them out.
+    actividad_log="--> "+request.session['organizacion']+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Cierre de sesion: "+request.session['username']
+    gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
     del request.session['username']
     del request.session['organizacion']
     logout(request)

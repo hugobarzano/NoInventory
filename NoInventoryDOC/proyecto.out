@@ -18,21 +18,22 @@
 \BOOKMARK [1][-]{section.3.1}{Dessarrollo web}{chapter.3}% 18
 \BOOKMARK [2][-]{subsection.3.1.1}{Django}{section.3.1}% 19
 \BOOKMARK [2][-]{subsection.3.1.2}{MongoDB}{section.3.1}% 20
-\BOOKMARK [1][-]{section.3.2}{Infraestructura}{chapter.3}% 21
-\BOOKMARK [2][-]{subsection.3.2.1}{Plataforma Como Servicio}{section.3.2}% 22
-\BOOKMARK [2][-]{subsection.3.2.2}{Infraestructura Como Servicio}{section.3.2}% 23
-\BOOKMARK [2][-]{subsection.3.2.3}{Docker}{section.3.2}% 24
-\BOOKMARK [2][-]{subsection.3.2.4}{Ansible}{section.3.2}% 25
-\BOOKMARK [2][-]{subsection.3.2.5}{Vagrant}{section.3.2}% 26
-\BOOKMARK [1][-]{section.3.3}{Desarrollo Android}{chapter.3}% 27
-\BOOKMARK [2][-]{subsection.3.3.1}{Android-Studio}{section.3.3}% 28
-\BOOKMARK [2][-]{subsection.3.3.2}{Librer\355a Volley}{section.3.3}% 29
-\BOOKMARK [2][-]{subsection.3.3.3}{Near field communication \(NFC\)}{section.3.3}% 30
-\BOOKMARK [2][-]{subsection.3.3.4}{Lector de C\363digos de Barras ZXing}{section.3.3}% 31
-\BOOKMARK [0][-]{chapter.4}{Implementaci\363n y pruebas}{}% 32
-\BOOKMARK [1][-]{section.4.1}{Herramientas}{chapter.4}% 33
-\BOOKMARK [2][-]{subsection.4.1.1}{Herramientas de infraestructura}{section.4.1}% 34
-\BOOKMARK [1][-]{section.4.2}{Recursos}{chapter.4}% 35
-\BOOKMARK [1][-]{section.4.3}{Planificaci\363n}{chapter.4}% 36
-\BOOKMARK [0][-]{chapter.5}{Anexo}{}% 37
-\BOOKMARK [0][-]{chapter.5}{Bibliograf\355a}{}% 38
+\BOOKMARK [2][-]{subsection.3.1.3}{JQuery}{section.3.1}% 21
+\BOOKMARK [1][-]{section.3.2}{Infraestructura}{chapter.3}% 22
+\BOOKMARK [2][-]{subsection.3.2.1}{Plataforma Como Servicio}{section.3.2}% 23
+\BOOKMARK [2][-]{subsection.3.2.2}{Infraestructura Como Servicio}{section.3.2}% 24
+\BOOKMARK [2][-]{subsection.3.2.3}{Docker}{section.3.2}% 25
+\BOOKMARK [2][-]{subsection.3.2.4}{Ansible}{section.3.2}% 26
+\BOOKMARK [2][-]{subsection.3.2.5}{Vagrant}{section.3.2}% 27
+\BOOKMARK [1][-]{section.3.3}{Desarrollo Android}{chapter.3}% 28
+\BOOKMARK [2][-]{subsection.3.3.1}{Android-Studio}{section.3.3}% 29
+\BOOKMARK [2][-]{subsection.3.3.2}{Librer\355a Volley}{section.3.3}% 30
+\BOOKMARK [2][-]{subsection.3.3.3}{Near field communication \(NFC\)}{section.3.3}% 31
+\BOOKMARK [2][-]{subsection.3.3.4}{Lector de C\363digos de Barras ZXing}{section.3.3}% 32
+\BOOKMARK [0][-]{chapter.4}{Implementaci\363n y pruebas}{}% 33
+\BOOKMARK [1][-]{section.4.1}{Herramientas}{chapter.4}% 34
+\BOOKMARK [2][-]{subsection.4.1.1}{Herramientas de infraestructura}{section.4.1}% 35
+\BOOKMARK [1][-]{section.4.2}{Recursos}{chapter.4}% 36
+\BOOKMARK [1][-]{section.4.3}{Planificaci\363n}{chapter.4}% 37
+\BOOKMARK [0][-]{chapter.5}{Anexo}{}% 38
+\BOOKMARK [0][-]{chapter.5}{Bibliograf\355a}{}% 39
