@@ -1588,9 +1588,7 @@ class ItemCreatorAndroid(View):
                 gestorItems.create(item,gestorClasificacion,str(mydic["org"][0]))
                 actividad_log="--> "+str(mydic["org"][0])+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Item:"+item.localizador+" creado por: "+str(mydic["user"][0]) + "desde Android"
                 gestorLog.registrarActividad(str(mydic["org"][0]),actividad_log)
-
-
-                return render(request, 'noinventory/creacion_completada.html')
+            return render(request, 'noinventory/creacion_completada.html')
         else:
             return render(request, 'noinventory/nuevoItem_android.html', {'form': form})
 
@@ -1722,7 +1720,7 @@ class CatalogoCreatorAndroid(View):
                         "qr_data":" ",
                         })
             gestorCatalogos.create(catalogo)
-            actividad_log="--> "+str(mydic["org"][0])+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Catalgo: "+str(catalogo_object._id)+" creado por: "+str(mydic["user"][0]) + "desde Android"
+            actividad_log="--> "+str(mydic["org"][0])+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Catalgo: "+str(catalogo._id)+" creado por: "+str(mydic["user"][0]) + "desde Android"
             gestorLog.registrarActividad(str(mydic["org"][0]),actividad_log)
             return render(request, 'noinventory/creacion_completada_catalogo.html')
         else:
