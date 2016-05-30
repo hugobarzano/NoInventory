@@ -429,6 +429,8 @@ def cleanCatalogo(request):
             catalogo_object=Catalogo.build_from_json(i)
 
         gestorCatalogos.cleanCatalogo(catalogo_object)
+        actividad_log="--> "+request.session['organizacion']+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Los items han sido eliminados del catalgo: "+str(catalogo_object._id)+" por: "+request.session['username']
+        gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
 
         contenido='<table class="table table-hover"> <thead> <tr> <th>Item</th> <th>Fecha</th> <th>Tag1</th> <th>TAG2</th><th>TAG3</th>'
         contenido=contenido+'<th>Peso</th> <th>Acciones</th></tr></thead><tbody>'
@@ -708,6 +710,8 @@ def generaPDF(request):
     if objeto_informe.nombre_informe != None:
         #pdf = StringIO()
         pisa.CreatePDF(StringIO(objeto_informe.datos_informe.encode('utf-8')), pdf)
+        actividad_log="--> "+request.session['organizacion']+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+":Informe: "+objeto_informe.nombre_informe+" ha sido exportado a PDF por: "+request.session['username']
+        gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
         return HttpResponse(pdf.getvalue(),content_type='application/pdf')
     else:
         default='<strong>Error al  generar Informe, es necesario guardarlo y selecionarlo antes de generar PDF</strong>'
@@ -721,10 +725,7 @@ def generaPDFCatalogoQRs(request):
     for c in catalogo:
         catalogo_object = Catalogo.build_from_json(c)
 
-    print "Nombre del catalogo:"
-    print catalogo_object.nombre_catalogo
-    print "items asociados"
-    print catalogo_object.id_items_catalogo
+
     lista_aux=[]
     item_object=Item()
     lista_aux2=[]
@@ -750,7 +751,9 @@ def generaPDFCatalogoQRs(request):
     codigosqr=codigosqr+'</table>'
     pdf = StringIO()
     pisa.CreatePDF(StringIO(codigosqr.encode('utf-8')), pdf)
-
+    #actividad_log="--> "+request.session['organizacion']+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+":Los codigos QR del catalogo: "+str(catalogo_object._id)+" han sido exportado a PDF por: "+request.session['username']
+    #gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
+    print codigosqr
     return HttpResponse(pdf.getvalue(),content_type='application/pdf')
 
 
@@ -761,10 +764,7 @@ def generaPDFCatalogoCodigosBarras(request):
     for c in catalogo:
         catalogo_object = Catalogo.build_from_json(c)
 
-    print "Nombre del catalogo:"
-    print catalogo_object.nombre_catalogo
-    print "items asociados"
-    print catalogo_object.id_items_catalogo
+    
     lista_aux=[]
     item_object=Item()
     lista_aux2=[]
@@ -790,7 +790,8 @@ def generaPDFCatalogoCodigosBarras(request):
     codigosbarras=codigosbarras+'</table>'
     pdf = StringIO()
     pisa.CreatePDF(StringIO(codigosbarras.encode('utf-8')), pdf)
-
+    actividad_log="--> "+request.session['organizacion']+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+":Los codigos de barras del catalogo: "+str(catalogo_object._id)+" han sido exportado a PDF por: "+request.session['username']
+    gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
     return HttpResponse(pdf.getvalue(),content_type='application/pdf')
 
 
@@ -843,7 +844,8 @@ def visualizarInforme(request):
         for i in informe:
             objeto_informe = Informe.build_from_json(i)
         objeto_informe._id=str(objeto_informe._id)
-
+        actividad_log="--> "+request.session['organizacion']+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+":El informe: "+request.GET["nombre_informe"]+" han sido visualizado por: "+request.session['username']
+        gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
         datos={'informe':objeto_informe.get_as_json()}
 
         #print datos
@@ -930,6 +932,9 @@ class Preferencias(View):
                     gestorClasificacion.createTag3FromReader(reader_tag3,request.session['organizacion'])
             else:
                 gestorClasificacion.createDefaultTag3(request.session['organizacion'])
+
+            actividad_log="--> "+request.session['organizacion']+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": "+request.session['username']+ " ha inizializado sus preferencias"
+            gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
             return redirect('/preferencias',{'form':form})
         else:
             print "formulario invalido"
@@ -1285,6 +1290,8 @@ def addItemFromQr(request):
         else:
             return HttpResponse("error2")
         gestorCatalogos.database.catalogos.update({"_id": catalogo_object._id},{"$addToSet": {"id_items_catalogo" : str(item_object._id),}})
+        actividad_log="--> "+organizacion[0]+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Item: "+item_object.localizador+" sumado al catalgo: "+str(catalogo_object._id)
+        gestorLog.registrarActividad(organizacion[0],actividad_log)
         return HttpResponse("ok")
 
     else:
@@ -1317,6 +1324,8 @@ def addItemFromNFC(request):
         else:
             return HttpResponse("error2")
         gestorCatalogos.database.catalogos.update({"_id": catalogo_object._id},{"$addToSet": {"id_items_catalogo" : str(item_object._id),}})
+        actividad_log="--> "+organizacion[0]+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Item: "+item_object.localizador+" sumado al catalgo: "+str(catalogo_object._id)
+        gestorLog.registrarActividad(organizacion[0],actividad_log)
         return HttpResponse("ok")
 
     else:
@@ -1330,6 +1339,11 @@ def borrarItemAndroid(request):
     print "vamos a borrar"
     if request.method == 'GET':
         i_id = request.GET['item_id']
+        cursor=gestorItems.database.items.find({"_id":ObjectId(i_id)})
+        for c in cursos:
+            item_object=Item.build_from_json(c)
+        actividad_log="--> "+item_object.organizacion+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Item: "+item_object.localizador+" eliminado"
+        gestorLog.registrarActividad(organizacion[0],actividad_log)
         gestorItems.database.items.remove( {"_id" : ObjectId(i_id) } )
         gestorCatalogos.removeItemFromCatalogos(i_id)
         return HttpResponse("Borrado Realizado")
@@ -1572,6 +1586,9 @@ class ItemCreatorAndroid(View):
                 print item._id
                 print item.localizador
                 gestorItems.create(item,gestorClasificacion,str(mydic["org"][0]))
+                actividad_log="--> "+str(mydic["org"][0])+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Item:"+item.localizador+" creado por: "+str(mydic["user"][0]) + "desde Android"
+                gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
+
 
                 return render(request, 'noinventory/creacion_completada.html')
         else:
@@ -1705,6 +1722,8 @@ class CatalogoCreatorAndroid(View):
                         "qr_data":" ",
                         })
             gestorCatalogos.create(catalogo)
+            actividad_log="--> "+str(mydic["org"][0])+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Catalgo: "+str(catalogo_object._id)+" creado por: "+str(mydic["user"][0]) + "desde Android"
+            gestorLog.registrarActividad(request.session['organizacion'],actividad_log)
             return render(request, 'noinventory/creacion_completada_catalogo.html')
         else:
             return render(request, 'noinventory/nuevoCatalogo_android.html', {'form': form})
@@ -1802,6 +1821,8 @@ def androidLogin(request):
                 request.session['username'] = u.username
                 request.session['organizacion'] = user_profile.__organizacion__()
                 login(request, user)
+                actividad_log="--> "+user_profile.__organizacion__()+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Inicio de sesion desde Android: "+user.username
+                gestorLog.registrarActividad(user_profile.__organizacion__(),actividad_log)
                 #data="nombre_usuario :"+username
                 return HttpResponse(user_profile.__organizacion__())
             else:
@@ -1834,6 +1855,19 @@ def androidRegister(request):
                 profile = profile_form.save(commit=False)
                 profile.user = user
                 profile.save()
+                print "organizacion en el registro"
+                print profile.__organizacion__()
+                n_log=gestorLog.database.log.find({"organizacion":profile.__organizacion__()}).count()
+                if n_log==0:
+                    log=Log.build_from_json({"fecha_log": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                                "organizacion": profile.__organizacion__(),
+                                "datos_log":[],})
+                    inicializar_log="--> "+log.organizacion+" -- "+str(log.fecha_log)+": Fichero Log creado desde android por el usuario: "+user.username
+                    log.datos_log.append(inicializar_log)
+                    gestorLog.create(log)
+                else:
+                    actividad_log="--> "+profile.__organizacion__()+" -- "+datetime.now().strftime('%Y-%m-%d %H:%M:%S')+": Nuevo usuario registrado desde Android: "+user.username
+                    gestorLog.registrarActividad(profile.__organizacion__(),actividad_log)
                 return HttpResponse("success")
             else:
                 return HttpResponse("Invalid User or Organizacion")
