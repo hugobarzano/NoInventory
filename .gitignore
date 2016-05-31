@@ -20,12 +20,13 @@ lib64/
 parts/
 sdist/
 var/
+imagenes/
 *.egg-info/
 .installed.cfg
 *.egg
 *.pdf
 *.jpg
-*.png
+
 *.gif
 
 # PyInstaller
