@@ -24,21 +24,27 @@
    </div>
    <div>
 
-    <div class="col-xs-12 col-sm-6 placeholder datos_item" >
-       <div class="panel panel-primary">
+     <div class="col-xs-12 col-sm-6 placeholder datos_item" >
+        <div class="panel panel-primary">
 
-      </div>
+       </div>
 
-      <br>
-      <div id="qr">
-      {{ item.localizador|qrcode:"localizador" }}
-    </div>
-      <br>
-      <hr>
-      Identificador: {{ id_item }}<br>
-      Localizador: {{item.localizador}}
-    </div>
+       <br>
+       <div id="qr">
+         {{ item.localizador|qrcode:"localizador" }}
+     </div>
+     <br>
+     <br>
+     <div class="barcode">
+     {{ item.localizador|barcode:"localizador" }}
+     </div>
 
+
+       <br>
+       <hr>
+
+     </div>
+     
     <div class="col-xs-12 col-sm-6 placeholder datos_item">
        <div class="panel panel-primary">
 

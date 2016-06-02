@@ -135,8 +135,9 @@ class BuzonForm(forms.Form):
 
 ############### REGISTRO DE USUARIOS #################
 class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
-
+    username = forms.CharField(label="Usuario",required=True,max_length=150)
+    password = forms.CharField(widget=forms.PasswordInput(),label="Password")
+    email = forms.EmailField(label="Correo")
     class Meta:
         model = User
         fields = ('username', 'email', 'password')

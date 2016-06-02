@@ -4,19 +4,24 @@
 
 
 {% block body_block %}
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Formulario de registro</h3>
+  </div>
+  <form id="user_form" method="post" action="/register/"
+    enctype="multipart/form-data">
+      {% csrf_token %}
+      {% load bootstrap %}
+      {{ user_form.username|bootstrap }}
+      {{ user_form.email|bootstrap }}
+      {{ user_form.password|bootstrap }}
+      {{ profile_form.organizacion|bootstrap }}
 
-{% if registered %}
+      <input type="submit" name="submit" value="Completar Registro" onclick="alerta()" />
+  </form>
 
-        <strong>Thank you for registering!</strong>
-       <a href="/rango/">Return to the homepage.</a><br />
-       {% else %}
-          <h1>Register Here</h1>
-          <form id="user_form" method="post" action="/register/"
-            enctype="multipart/form-data">
-              {% csrf_token %}
-              {{ user_form.as_p }}
-              {{ profile_form.as_p }}
-              <input type="submit" name="submit" value="Register" onclick="alerta()" />
-          </form>
-        {% endif %}
+</div>
+
+
+
 {% endblock %}
