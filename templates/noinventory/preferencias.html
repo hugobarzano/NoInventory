@@ -7,7 +7,7 @@
 
 
 {% block body_block %}
-<div class="panel panel-primary">
+<!--<div class="panel panel-primary">
   <div class="panel-heading">
     <h3 class="panel-title">Administracion</h3>
   </div>
@@ -19,7 +19,11 @@
       <br>
       <a href="/deleteInformes"> <button id='deleteInformes'>Eliminar Todos los informes</button></a>
 
-</div>
+</div>-->
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Administracion</h3>
+  </div>
   <form action="/preferencias/" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% load bootstrap %}
@@ -29,7 +33,7 @@
 
       <input type="submit" value="Enviar Preferencia">
   </form>
-
+</div>
 <br>
 <hr>
 <div class="panel panel-primary">
