@@ -143,6 +143,7 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password')
 
 class UserProfileForm(forms.ModelForm):
+    organizacion = forms.CharField(label="",required=True,max_length=150)
     class Meta:
         model = UserProfile
         fields = ('organizacion',)
