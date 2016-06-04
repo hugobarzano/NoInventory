@@ -28,8 +28,8 @@ class ItemForm3(forms.Form):
     def __init__(self, *args, **kwargs):
         organizacion = kwargs.pop('organizacion')
         super(ItemForm3, self).__init__(*args, **kwargs)
-        self.fields['nombre_item'] = forms.CharField(required=True,max_length=150, help_text="Introduce el nombre del objeto")
-        self.fields['descripcion_item']  = forms.CharField(widget = forms.Textarea, help_text="Breve descripcion sobre el objeto")
+        self.fields['nombre_item'] = forms.CharField(required=True,max_length=150, label="Nombre")
+        self.fields['descripcion_item']  = forms.CharField(widget = forms.Textarea, label="Detalles")
         lista_tag1=manejadorClasificacion.database.tag1.find({"organizacion":organizacion}).sort([("CLAVE1", 1)])
         lista_tag2=manejadorClasificacion.database.tag2.find({"organizacion":organizacion}).sort([("CLAVE2", 1)])
         lista_tag3=manejadorClasificacion.database.tag3.find({"organizacion":organizacion}).sort([("CLAVE3", 1)])
@@ -85,11 +85,11 @@ class CatalogoFormAndroid(forms.Form):
 
 class CatalogoForm(forms.ModelForm):
     TIPO = (('Publico', 'Publico'),('Privado', 'Privado'),)
-    nombre_catalogo = forms.CharField(max_length=150, help_text="Introduce el nombre del catalogo")
-    descripcion_catalogo  = forms.CharField(widget = forms.Textarea, max_length=600,help_text="Breve descripcion sobre el catalogo")
-    fecha_alerta_catalogo = forms.DateField(widget=forms.TextInput(attrs={'class':'datepicker'}),initial="",required=False)
-    tag_catalogo = forms.CharField(widget = forms.Textarea, max_length=300,help_text="Alerta a mostar cuando expire el catalogo")
-    tipo_catalogo = forms.CharField(max_length=150,widget=forms.Select(choices=TIPO))
+    nombre_catalogo = forms.CharField(max_length=150, label="Nombre")
+    descripcion_catalogo  = forms.CharField(widget = forms.Textarea, max_length=600,label="Detalles")
+    fecha_alerta_catalogo = forms.DateField(widget=forms.TextInput(attrs={'class':'datepicker'}),initial="",required=False, label="Fecha Alerta")
+    tag_catalogo = forms.CharField(widget = forms.Textarea, max_length=300,help_text="Alerta a mostar",label="Alerta")
+    tipo_catalogo = forms.CharField(max_length=150,widget=forms.Select(choices=TIPO),label="Tipo")
 
     class Meta:
         model = Catalogo
