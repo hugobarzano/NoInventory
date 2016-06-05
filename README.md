@@ -121,6 +121,8 @@ Test Navegación:
 
 [Hackaton Mayo](https://www.dropbox.com/s/mj4tplyahtk6kxt/Presentacion_hackaton_mayo.pdf?dl=1)
 
+[Final Certamen Proyectos](https://www.dropbox.com/s/p15sk09vinpuxdo/NoInventoryCertamen.pdf?dl=1)
+
 ###Inscripción en el concurso de software libre
 
 ![inscripcion](https://www.dropbox.com/s/7yrlzu2pkvbtobb/concurso.png?dl=1)
