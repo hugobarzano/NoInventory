@@ -9,7 +9,7 @@
 [![Heroku](https://www.herokucdn.com/deploy/button.png)](http://noinventory.herokuapp.com/)
 [![DockerHub](https://www.dropbox.com/s/fl5hrbbjm4g2jec/docker_l.png?dl=1)](https://hub.docker.com/r/hugobarzano/)
 [![Azure](https://www.dropbox.com/s/oqur6k70poyscxj/azure.png?dl=1)](http://noinventory.cloudapp.net/)
-[![No-Inventory-Android-apk](https://www.dropbox.com/s/xx672e199qvvwgb/android.jpg?dl=1)](https://www.dropbox.com/s/itzz91qe5lw1pew/app-debug.apk?dl=1)
+[![No-Inventory-Android-apk](https://www.dropbox.com/s/xx672e199qvvwgb/android.jpg?dl=1)](https://www.dropbox.com/s/egmvzn66n77qahj/app-debug.apk?dl=1)
 
 ############################################################################
 
@@ -67,7 +67,7 @@ La aplicación Android se encuentra alojada en el repositorio [NoInventory-Andro
 Esta extensión de la plataforma es la encargada de la tareas de clasificación. Permite leer/escribir los codigos de barras, codigos qr o etiquetas nfc que identifican a los objetos.
 Puede descargarse desde aquí.
 
-  [![No-Inventory-Android-apk](https://www.dropbox.com/s/xx672e199qvvwgb/android.jpg?dl=1)](https://www.dropbox.com/s/itzz91qe5lw1pew/app-debug.apk?dl=1)
+  [![No-Inventory-Android-apk](https://www.dropbox.com/s/xx672e199qvvwgb/android.jpg?dl=1)](https://www.dropbox.com/s/egmvzn66n77qahj/app-debug.apk?dl=1)
 
   [Diseño de la aplicacion Con NinjaMock - Baja Fidelidad](https://www.dropbox.com/s/f5tzxc2axhd8pi2/NoInventory-Android-App.pdf?dl=1)
 
