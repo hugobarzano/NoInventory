@@ -1,33 +1,33 @@
 \select@language {spanish}
-\contentsline {chapter}{\numberline {1}Resumen, Introducci\IeC {\'o}n y Estudio del Arte}{17}{chapter.1}
-\contentsline {section}{\numberline {1.1}Resumen}{17}{section.1.1}
-\contentsline {section}{\numberline {1.2}Introducci\IeC {\'o}n}{18}{section.1.2}
-\contentsline {section}{\numberline {1.3}Estudio del Arte}{19}{section.1.3}
-\contentsline {subsection}{\numberline {1.3.1}3PL Central}{19}{subsection.1.3.1}
-\contentsline {subsection}{\numberline {1.3.2}Windward System Five's Inventory Control}{20}{subsection.1.3.2}
+\contentsline {chapter}{\numberline {1}Introducci\IeC {\'o}n}{17}{chapter.1}
+\contentsline {section}{\numberline {1.1}Introducci\IeC {\'o}n}{17}{section.1.1}
+\contentsline {section}{\numberline {1.2}Motivaci\IeC {\'o}n}{18}{section.1.2}
+\contentsline {section}{\numberline {1.3}Estudio del Arte}{18}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}3PL Central}{18}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}Windward System Five's Inventory Control}{18}{subsection.1.3.2}
 \contentsline {subsection}{\numberline {1.3.3}Snappii}{20}{subsection.1.3.3}
-\contentsline {subsection}{\numberline {1.3.4}Conclusiones}{21}{subsection.1.3.4}
-\contentsline {chapter}{\numberline {2}An\IeC {\'a}lisis}{23}{chapter.2}
-\contentsline {section}{\numberline {2.1}Analisis Plataforma Web}{23}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}Requisitos de Informaci\IeC {\'o}n Plataforma web}{23}{subsection.2.1.1}
-\contentsline {subsection}{\numberline {2.1.2}Requisitos Funcionales Plataforma web}{24}{subsection.2.1.2}
-\contentsline {subsection}{\numberline {2.1.3}Requisitos No Funcionales Plataforma web}{25}{subsection.2.1.3}
-\contentsline {subsection}{\numberline {2.1.4}Casos de Uso: Plataforma Web}{26}{subsection.2.1.4}
-\contentsline {section}{\numberline {2.2}Analisis Aplicaci\IeC {\'o}n Android}{28}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Requisitos Funcionales Aplicaci\IeC {\'o}n Android}{28}{subsection.2.2.1}
-\contentsline {chapter}{\numberline {3}Desarrollo del sistema}{31}{chapter.3}
-\contentsline {section}{\numberline {3.1}Dessarrollo web}{31}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}Django}{31}{subsection.3.1.1}
-\contentsline {subsection}{\numberline {3.1.2}MongoDB}{32}{subsection.3.1.2}
-\contentsline {subsection}{\numberline {3.1.3}JQuery}{32}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {1.3.4}Conclusiones}{20}{subsection.1.3.4}
+\contentsline {chapter}{\numberline {2}An\IeC {\'a}lisis}{21}{chapter.2}
+\contentsline {section}{\numberline {2.1}Analisis Plataforma Web}{21}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Requisitos de Informaci\IeC {\'o}n Plataforma web}{21}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Requisitos Funcionales Plataforma web}{22}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Requisitos No Funcionales Plataforma web}{23}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}Casos de Uso: Plataforma Web}{24}{subsection.2.1.4}
+\contentsline {section}{\numberline {2.2}Analisis Aplicaci\IeC {\'o}n Android}{26}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Requisitos Funcionales Aplicaci\IeC {\'o}n Android}{26}{subsection.2.2.1}
+\contentsline {chapter}{\numberline {3}Desarrollo del sistema}{29}{chapter.3}
+\contentsline {section}{\numberline {3.1}Dessarrollo web}{29}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Django}{29}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}MongoDB}{30}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}JQuery}{31}{subsection.3.1.3}
 \contentsline {section}{\numberline {3.2}Infraestructura}{32}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}Plataforma Como Servicio}{32}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}Infraestructura Como Servicio}{33}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Docker}{34}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.3}Docker}{33}{subsection.3.2.3}
 \contentsline {subsection}{\numberline {3.2.4}Ansible}{34}{subsection.3.2.4}
 \contentsline {subsection}{\numberline {3.2.5}Vagrant}{35}{subsection.3.2.5}
 \contentsline {section}{\numberline {3.3}Desarrollo Android}{36}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Android-Studio}{37}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.1}Android-Studio}{36}{subsection.3.3.1}
 \contentsline {subsection}{\numberline {3.3.2}Librer\IeC {\'\i }a Volley}{37}{subsection.3.3.2}
 \contentsline {subsection}{\numberline {3.3.3}Near field communication (NFC)}{38}{subsection.3.3.3}
 \contentsline {subsection}{\numberline {3.3.4}Lector de C\IeC {\'o}digos de Barras ZXing}{39}{subsection.3.3.4}
@@ -36,5 +36,5 @@
 \contentsline {subsection}{\numberline {4.1.1}Herramientas de infraestructura}{41}{subsection.4.1.1}
 \contentsline {section}{\numberline {4.2}Recursos}{41}{section.4.2}
 \contentsline {section}{\numberline {4.3}Planificaci\IeC {\'o}n}{41}{section.4.3}
-\contentsline {chapter}{\numberline {5}Anexo}{45}{chapter.5}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{45}{chapter.5}
+\contentsline {chapter}{\numberline {5}Anexo}{47}{chapter.5}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{47}{chapter.5}

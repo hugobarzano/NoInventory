@@ -32,7 +32,6 @@ from clasificacion import *
 from informe import *
 from log import *
 from io import StringIO
-from datetime import datetime
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 import urllib

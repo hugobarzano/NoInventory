@@ -187,35 +187,7 @@ pdfproducer = {pdflatex}
 %\input{capitulos/01_Introduccion}
 
 
-\chapter{Resumen, Introducción y Estudio del Arte}
-
-\section{Resumen}
-
-Este proyecto surge a raíz de un problema real presentado por la Oficina de Software Libre. Desde principios de 2012 y a partir de un acuerdo con la Unidad de Calidad, la oficina se encarga de recoger material informático procedente de los distintivos organismos de la Universidad de Granada. Dicho material ha alcanzado una gran cantidad, por lo que es necesario un sistema para catalogarlo y procesarlo. 
-
-Partiendo de este problema, existen necesidades similares en empresas, organizaciones, instituciones, comercios y todo tipo de negocio con un almacén de activos.
-En dichos almacenes, las tareas de gestión suelen ser ineficientes, complejas y costosas.  El tiempo y dinero que conllevan estas tareas suele ser un factor a tener en cuenta, ya que una gran mayoría de entidades, con almacenes pequeños o medianos, no utilizan un sistema comercial debido a los costes que suponen su mantenimiento. Este problema, sigue presente en entidades con almacenes de gran tamaño, ya que  el número de empleados y el tiempo necesario para las tareas básicas de catalogación y administración suponen un coste a tener en cuenta.
-
-Otro problema con el que se encuentran los empleados de estas entidades es la generación de informes. Recopilar información de los activos del almacén con el objetivo de representarla de manera adecuada a las necesidades de cada negocio, puede llegar a ser una tarea complicada. 
-
-Como solución a estos problemas, surge el sistema de gestión NO-INVENTORY que pretende mejorar estas tareas, con el objetivo de ahorrar tiempo y dinero al cliente, automatizando y facilitando las tareas administrativas.
-
-La piedra angular del sistema es una plataforma web alojada en la nube por lo que no es necesaria la instalación de ningún software adicional en las máquinas de la entidad que deseé comenzar a utilizarlo, solo es necesario un navegador.  En dicha plataforma, las tareas de administración se realizan de manera intuitiva permitiendo a los distintos empleados trabajar de forma cooperativa utilizando un sistema de tag's personalizables en función de las características con las que se quieran clasificar los elementos. Facilita la agrupación de elementos con o sin propiedades comunes en colecciones denominadas catálogos en función de las necesidades de cada cliente y utiliza dichas colecciones para la generación automática de informes y gráficos representativos del estado del almacén. 
-
-El sistema cuenta con una aplicación Android como extensión para realizar tareas de catalogación y clasificación dentro del propio almacén. La ventaja de esto reside en que hoy en día casi todo el mundo cuenta con un smartphone, dando la posibilidad a los empleados de llevar la gestión del almacén con sus propios dispositivos.
-
-En función de los activos que formen el almacén, y del presupuesto que se quiera dedicar a etiquetar cada elemento, el cliente puede decidir que método utilizar, ya que la funcionalidad de la extensión  Android es la de lector/escritor de los identificadores de cada elemento, con soporte para:
-
-\begin{enumerate}
-\item Códigos de Barras
-\item Códigos QR
-\item Etiquetas NFC 
-\end{enumerate}
-
-
-En resumen, el sistema pretende reducir tiempo y costes a las entidades que decidan implantarlo en su almacén con el objetivo  de optimizar las tareas de los empleados consiguiendo así un mayor rendimiento. 
-
-Por último, resaltar que todo el código desarrollado para el sistema, está liberado en Github, para que pueda ser consultado o mejorado por la comunidad de software libre.
+\chapter{Introducción}
 
 
 \section{Introducción}
@@ -235,6 +207,7 @@ Lo principales motivos por los que estas empresas no utilizan sistemas de gesti�
 Las Tecnologías de la Información y Comunicaciones (TIC), se han convertido en la herramienta perfecta para llevar a cabo las tareas necesarias para aumentar 
 la eficacia y eficiencia en el manejo de los recursos de la empresa.
 
+\section{Motivación}
  
 \section{Estudio del Arte}
 
@@ -512,9 +485,35 @@ En este proyecto se ha decidido utilizar Django debido a que utiliza python y qu
 \subsection{MongoDB}
 
 MongoDB\cite{mg} es un sistema de base de datos NoSQL orientado a grandes cantidades de datos, guarda estructuras de datos en documentos similares a JSON haciendo que la integración de los datos en ciertas aplicaciones sea más fácil y rápida.
-Se trata de una base de datos ágil que permite cambiar los esquemas de una aplicación cuando esta evoluciona. Los principales objetivos de estas bases de datos son la escalabilidad, rendimiento y gran disponibilidad,
+Se trata de una base de datos ágil que permite cambiar los esquemas de una aplicación cuando esta evoluciona. Los principales objetivos de estas bases de datos son la escalabilidad, rendimiento y gran disponibilidad.
 
 En MongoDB los documentos se agrupan en colecciones. Las colecciones  no imponen una estructura fija a los documentos que contienen, ni siquiera al tipo de datos de cada campo. Esto es una ventaja cuando estamos desarrollado un sistema en el que las entradas de la base de datos dependen de las preferencias del usuario.
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.45]{imagenes/desarrollo_herramienta/mongo.png}
+\caption{ MongoDB-Logo\cite{mongoL}  }  
+\end{figure} 
+
+Las principales características de las bases de datos no relacionales como MongoDB son la velocidad y la flexibilidad. La eficiencia en las consultas sobre bases de datos no relacionales, y mas aun, cuando estas consultas marcan la calidad de experiencia que percibe el usuario, ya sea en el portal web o en la aplicación Android.  Las tareas de consulta, inserción, modificación o borrado presentan una gran eficiencia ya que pueden ser realizadas mediante funciones JavaScript en el cliente, conectando directamente con la base de datos.
+
+En cuanto a la flexibilidad, la principal ventaja es la escalabilidad, por ejemplo, en el momento en que un usuario necesite mas atributos para clasificar sus objetos, lo que en el mundo de las bases de datos relacionales se traduciría en agregar mas columnas a las tablas que representan todos los objetos, cuando se trabaja con bases de datos no relacionales esto no es un impedimento, ya que en la misma colección pueden convivir documentos u objetos con distintos campos o valores. Esto es perfecto para darle al usuario la libertad de personalizar los atributos con los que quiere identificar sus objetos. 
+
+Las consultas sobre MongoDB son consultas Ad Hoc, las cuales soportan búsqueda por campos, consultas por rangos y expresiones regulares. También pueden ser funciones JavasScript definidas por el desarrollador. 
+
+Cualquier documento de MongoDB puede ser indexado. Los índices funcionan de manera similar a los de las bases de datos relacionales. 
+
+En cuanto a la replicación y Balanceo de carga, MongoDb soporta el paradigma maestro-esclavo. Es capaz de escalar horizontalmente y tiene la capacidad de ejecutarse en múltiples servidores, balanceando la carga y duplicando de datos para garantizar el funcionamiento del sistema en caso de fallo. 
+
+En MongoDB, los documentos los guarda en BSON, que es una forma de representar de forma binaria objetos JSON. Un ejemplo de documento almacenado en MongoDB que representa a un item del almacén, es el siguiente:
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.45]{imagenes/desarrollo_herramienta/bson.png}
+\caption{ Ejemplo Bson\cite{propio}}  
+\end{figure} 
+
+Este documento es básico. Los documentos pueden anidarse, dando lugar a documentos mas complejos con muchas mas información. Pueden contener también listas de otros elementos o valores.  
 
 \subsection{JQuery}
 
@@ -735,6 +734,14 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 \bibitem[9]{mg} \textsc{mongo},
 \textit{MongoDB}
 \url{https://www.mongodb.com/}
+
+\bibitem[9]{mongoL} \textsc{mongo-logo},
+\textit{MongoDB-Logo}
+\url{http://cftic.centrosdeformacion.empleo.madrid.org/web/educamadrid/principal/files/abf76d62-7094-44c2-8970-5ed8387f1cbf/mongodb-logo1.png}
+
+\bibitem[9]{propio} \textsc{propio},
+\textit{Elaboración Propia}
+\url{}
 
 \bibitem[9]{jq} \textsc{JQuery},
 \textit{JQuery Oficial}
