@@ -513,7 +513,32 @@ En MongoDB, los documentos los guarda en BSON, que es una forma de representar d
 \caption{ Ejemplo Bson\cite{propio}}  
 \end{figure} 
 
-Este documento es básico. Los documentos pueden anidarse, dando lugar a documentos mas complejos con muchas mas información. Pueden contener también listas de otros elementos o valores.  
+Este documento es básico. Los documentos pueden anidarse, dando lugar a documentos mas complejos con muchas mas información. Pueden contener también listas de otros elementos o valores. 
+
+\subsection{Pymongo} 
+Pymongo\cite{pymongo} es un paquete python que facilita un cliente o driver intermediario para controlar la iteración del sistema con la base de datos MongoDB. Algunas de las características que Pymongo ofrece son:
+
+\begin{enumerate}
+\item Conexión con la Base de Datos
+\item Visualización de las Bases de Datos creadas.
+\item Creación de nuevas Bases de Datos
+\item Visualización de las colecciones creadas
+\item Creación de nuevas colecciones
+\item Inserción de nuevos documentos
+\item Actualización de documentos
+\item Búsqueda de documentos
+\item Eliminación de documentos
+\end{enumerate}
+
+Pymongo es el controlador que permite a nuestro modelos interaccionar con la base de datos, de esta manera se consigue utilizar Django, que esta pensado para bases de datos relacionales, con MongoDB que es una base de datos no relacional ya que funciona como intermediario entre los modelos de objetos creados de manera externa al framework y la base de datos.
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/desarrollo_herramienta/pymongo.jpg}
+\caption{ Logo Pymongo\cite{pymongoL}}  
+\end{figure} 
+
+ 
 
 \subsection{JQuery}
 
@@ -742,6 +767,14 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 \bibitem[9]{propio} \textsc{propio},
 \textit{Elaboración Propia}
 \url{}
+
+\bibitem[9]{pymongo} \textsc{pymongo},
+\textit{Pymongo Package Index }
+\url{https://pypi.python.org/pypi/pymongo/}
+
+\bibitem[9]{pymongoL} \textsc{pymongo-logo},
+\textit{pymongo-Logo}
+\url{http://easylearning.guru/images/courses/self-paced/pymongo/pymongo.jpg}
 
 \bibitem[9]{jq} \textsc{JQuery},
 \textit{JQuery Oficial}
