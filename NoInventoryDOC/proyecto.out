@@ -6,35 +6,38 @@
 \BOOKMARK [2][-]{subsection.1.3.2}{Windward System Five's Inventory Control}{section.1.3}% 6
 \BOOKMARK [2][-]{subsection.1.3.3}{Snappii}{section.1.3}% 7
 \BOOKMARK [2][-]{subsection.1.3.4}{Conclusiones}{section.1.3}% 8
-\BOOKMARK [0][-]{chapter.2}{An\341lisis}{}% 9
-\BOOKMARK [1][-]{section.2.1}{Analisis Plataforma Web}{chapter.2}% 10
-\BOOKMARK [2][-]{subsection.2.1.1}{Requisitos de Informaci\363n Plataforma web}{section.2.1}% 11
-\BOOKMARK [2][-]{subsection.2.1.2}{Requisitos Funcionales Plataforma web}{section.2.1}% 12
-\BOOKMARK [2][-]{subsection.2.1.3}{Requisitos No Funcionales Plataforma web}{section.2.1}% 13
-\BOOKMARK [2][-]{subsection.2.1.4}{Casos de Uso: Plataforma Web}{section.2.1}% 14
-\BOOKMARK [1][-]{section.2.2}{Analisis Aplicaci\363n Android}{chapter.2}% 15
-\BOOKMARK [2][-]{subsection.2.2.1}{Requisitos Funcionales Aplicaci\363n Android}{section.2.2}% 16
-\BOOKMARK [0][-]{chapter.3}{Desarrollo del sistema}{}% 17
-\BOOKMARK [1][-]{section.3.1}{Dessarrollo web}{chapter.3}% 18
-\BOOKMARK [2][-]{subsection.3.1.1}{Django}{section.3.1}% 19
-\BOOKMARK [2][-]{subsection.3.1.2}{MongoDB}{section.3.1}% 20
-\BOOKMARK [2][-]{subsection.3.1.3}{Pymongo}{section.3.1}% 21
-\BOOKMARK [2][-]{subsection.3.1.4}{JQuery}{section.3.1}% 22
-\BOOKMARK [1][-]{section.3.2}{Infraestructura}{chapter.3}% 23
-\BOOKMARK [2][-]{subsection.3.2.1}{Plataforma Como Servicio}{section.3.2}% 24
-\BOOKMARK [2][-]{subsection.3.2.2}{Infraestructura Como Servicio}{section.3.2}% 25
-\BOOKMARK [2][-]{subsection.3.2.3}{Docker}{section.3.2}% 26
-\BOOKMARK [2][-]{subsection.3.2.4}{Ansible}{section.3.2}% 27
-\BOOKMARK [2][-]{subsection.3.2.5}{Vagrant}{section.3.2}% 28
-\BOOKMARK [1][-]{section.3.3}{Desarrollo Android}{chapter.3}% 29
-\BOOKMARK [2][-]{subsection.3.3.1}{Android-Studio}{section.3.3}% 30
-\BOOKMARK [2][-]{subsection.3.3.2}{Librer\355a Volley}{section.3.3}% 31
-\BOOKMARK [2][-]{subsection.3.3.3}{Near field communication \(NFC\)}{section.3.3}% 32
-\BOOKMARK [2][-]{subsection.3.3.4}{Lector de C\363digos de Barras ZXing}{section.3.3}% 33
-\BOOKMARK [0][-]{chapter.4}{Implementaci\363n y pruebas}{}% 34
-\BOOKMARK [1][-]{section.4.1}{Herramientas}{chapter.4}% 35
-\BOOKMARK [2][-]{subsection.4.1.1}{Herramientas de infraestructura}{section.4.1}% 36
-\BOOKMARK [1][-]{section.4.2}{Recursos}{chapter.4}% 37
-\BOOKMARK [1][-]{section.4.3}{Planificaci\363n}{chapter.4}% 38
-\BOOKMARK [0][-]{chapter.5}{Anexo}{}% 39
-\BOOKMARK [0][-]{chapter.5}{Bibliograf\355a}{}% 40
+\BOOKMARK [0][-]{chapter.2}{Objetivos y Planificaci\363n}{}% 9
+\BOOKMARK [1][-]{section.2.1}{Objetivos}{chapter.2}% 10
+\BOOKMARK [1][-]{section.2.2}{Planificaci\363n}{chapter.2}% 11
+\BOOKMARK [0][-]{chapter.3}{An\341lisis}{}% 12
+\BOOKMARK [1][-]{section.3.1}{Analisis Plataforma Web}{chapter.3}% 13
+\BOOKMARK [2][-]{subsection.3.1.1}{Requisitos de Informaci\363n Plataforma web}{section.3.1}% 14
+\BOOKMARK [2][-]{subsection.3.1.2}{Requisitos Funcionales Plataforma web}{section.3.1}% 15
+\BOOKMARK [2][-]{subsection.3.1.3}{Requisitos No Funcionales Plataforma web}{section.3.1}% 16
+\BOOKMARK [2][-]{subsection.3.1.4}{Casos de Uso: Plataforma Web}{section.3.1}% 17
+\BOOKMARK [1][-]{section.3.2}{Analisis Aplicaci\363n Android}{chapter.3}% 18
+\BOOKMARK [2][-]{subsection.3.2.1}{Requisitos Funcionales Aplicaci\363n Android}{section.3.2}% 19
+\BOOKMARK [0][-]{chapter.4}{Desarrollo del sistema}{}% 20
+\BOOKMARK [1][-]{section.4.1}{Dessarrollo web}{chapter.4}% 21
+\BOOKMARK [2][-]{subsection.4.1.1}{Django}{section.4.1}% 22
+\BOOKMARK [2][-]{subsection.4.1.2}{MongoDB}{section.4.1}% 23
+\BOOKMARK [2][-]{subsection.4.1.3}{Pymongo}{section.4.1}% 24
+\BOOKMARK [2][-]{subsection.4.1.4}{JQuery}{section.4.1}% 25
+\BOOKMARK [2][-]{subsection.4.1.5}{Bootstrap}{section.4.1}% 26
+\BOOKMARK [1][-]{section.4.2}{Infraestructura}{chapter.4}% 27
+\BOOKMARK [2][-]{subsection.4.2.1}{Plataforma Como Servicio}{section.4.2}% 28
+\BOOKMARK [2][-]{subsection.4.2.2}{Infraestructura Como Servicio}{section.4.2}% 29
+\BOOKMARK [2][-]{subsection.4.2.3}{Docker}{section.4.2}% 30
+\BOOKMARK [2][-]{subsection.4.2.4}{Ansible}{section.4.2}% 31
+\BOOKMARK [2][-]{subsection.4.2.5}{Vagrant}{section.4.2}% 32
+\BOOKMARK [1][-]{section.4.3}{Desarrollo Android}{chapter.4}% 33
+\BOOKMARK [2][-]{subsection.4.3.1}{Android-Studio}{section.4.3}% 34
+\BOOKMARK [2][-]{subsection.4.3.2}{Librer\355a Volley}{section.4.3}% 35
+\BOOKMARK [2][-]{subsection.4.3.3}{Near field communication \(NFC\)}{section.4.3}% 36
+\BOOKMARK [2][-]{subsection.4.3.4}{Lector de C\363digos de Barras ZXing}{section.4.3}% 37
+\BOOKMARK [0][-]{chapter.5}{Implementaci\363n y pruebas}{}% 38
+\BOOKMARK [1][-]{section.5.1}{Herramientas}{chapter.5}% 39
+\BOOKMARK [2][-]{subsection.5.1.1}{Herramientas de infraestructura}{section.5.1}% 40
+\BOOKMARK [1][-]{section.5.2}{Recursos}{chapter.5}% 41
+\BOOKMARK [0][-]{chapter.6}{Anexo}{}% 42
+\BOOKMARK [0][-]{chapter.6}{Bibliograf\355a}{}% 43

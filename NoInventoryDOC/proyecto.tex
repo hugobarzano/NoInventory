@@ -257,9 +257,46 @@ De todos estos productos, podemos destacar puntos fuertes como estar alojados en
 
 Estas conclusiones  han sido de gran utilidad para el siguiente capítulo en el que se detallará el proceso de análisis y especificación del sistema final.  
 
+\chapter{Objetivos y Planificación}
+\section{Objetivos}
+
+\section{Planificación}
+
+Una vez definidos los objetivos a cumplir para el proyecto, se presenta la planificación temporal a cumplir en forma de diagrama de Gantt. Dicho diagrama ha sido dividido en 4 partes para facilitar su comprensión. Ha sido realizado con la herramienta online Tom's Planner\cite{tomsplanner}
+
+La primera fase del proyecto se basa en recabar información. Realizar un estudio del arte con el objetivo de identificar las ventajas e inconvenientes de algunos sistemas de almacén, analizar el problema, realizar el análisis de requisitos, la creación de los repositorios para el control de versiones y la creación de diversas redes sociales como son el blog\cite{blog} del proyecto y su perfil\cite{twitter} de Twitter. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.45]{imagenes/planificacion/planificacion1.png}
+\caption{ Fase 1 - Planificación\cite{propio}  }  
+\end{figure}
+
+La segunda fase del proyecto corresponde con el comienzo del desarrollo de un prototipo de la plataforma web y de la aplicación Android basándose en el análisis y especificación de requisitos. Un prototipo que permita interactuar a los dos subsistemas siempre y cuando estén conectados a la misma red local.
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.45]{imagenes/planificacion/planificacion2.png}
+\caption{ Fase 2 - Planificación\cite{propio}  }  
+\end{figure}
+
+La tercera fase de planificación se centra en completar el desarrollo web y principalmente en la creación de toda la infraestructura de la plataforma
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.45]{imagenes/planificacion/planificacion3.png}
+\caption{ Fase 3 - Planificación\cite{propio}  }  
+\end{figure}
+
+La cuarta y última fase de la planificación se basa en la documentación del proyecto, en pulir ciertos aspectos de la aplicación Android y en testear el sistema completo (plataforma web + aplicación Android) desplegado en la nube. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.45]{imagenes/planificacion/planificacion4.png}
+\caption{ Fase 4 - Planificación\cite{propio}  }  
+\end{figure}
+
 \chapter{Análisis}
-
-
 
 Para realizar un mejor análisis del sistema, vamos a desglosarlo en dos partes. Primero analizaremos la plataforma web y después analizaremos la aplicación Android 
 
@@ -470,6 +507,8 @@ Los requisitos funcionales de la aplicación Android establecen los comportamien
 
 \chapter{Desarrollo del sistema}
 
+
+
 \section{Dessarrollo web}
 En esta parte se abordarán los aspectos mas importantes de la plataforma web. Que tecnologías has sido utilizadas, como han sido utilizadas y por qué han sido utilizadas.
 
@@ -553,7 +592,24 @@ JQuery\cite{jq} es una librería de JavaScript, que permite interactuar con los 
 En este proyecto, el principal uso de Jquery se realiza junto con Ajax para recargar la información de la web de manera dinámica mediante llamadas asíncronas. El uso de estas tecnologías mejora la experiencia del usuario cuando interactúa con el sistema mediante la plataforma web y la aplicación Android.
 
 
-  
+\subsection{Bootstrap}
+Bootstrap\cite{boo} es un framework CSS para dar forma a sitios web mediante librerías CSS. Bootstrap  permite crear interfaces de usuario limpias y totalmente adaptables a todo tipo de dispositivos y pantallas ya que esta caracterizado por ser responsive. Es compatible con los siguientes navegadores: 
+
+\begin{enumerate}
+\item Google Chrome
+\item Safari
+\item Mozilla Firefox 
+\item Internet Explorer 
+\item Opera  
+\end{enumerate}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/desarrollo_herramienta/bootstrap.png}
+\caption{ Bootstrap-Logo\cite{booL}  }  
+\end{figure}   
+ 
+ 
 \section{Infraestructura}
 \subsection{Plataforma Como Servicio}
 
@@ -726,7 +782,7 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 
 
 
-\section{Planificación}
+
 
 
 
@@ -746,6 +802,19 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 \bibitem[8]{snp} \textsc{snp},
 \textit{Snappii}
 \url{https://www.snappii.com/}
+
+%planificacion
+\bibitem[8]{tomsplanner} \textsc{tomsplanner},
+\textit{Tom's Planner: Software de planificación}
+\url{http://www.tomsplanner.es/}
+
+\bibitem[8]{blog} \textsc{Blog},
+\textit{No-Inventory: Blog}
+\url{http://no-inventory.es/}
+
+\bibitem[8]{twitter} \textsc{twitter},
+\textit{No-Inventory: twitter}
+\url{https://twitter.com/no_inventory}
 
 %desarolloweb
 \bibitem[8]{dj} \textsc{Django},
@@ -783,6 +852,14 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 \bibitem[9]{jq2} \textsc{JQuery Logo},
 \textit{JQuery Logo}
 \url{https://www.returngis.net/wp-content/uploads/2011/01/JQuery.png}
+
+\bibitem[9]{boo} \textsc{Bootstrap},
+\textit{getbootstrap}
+\url{http://getbootstrap.com/}
+
+\bibitem[9]{booL} \textsc{Bootstrap Logo},
+\textit{Logo}
+\url{http://davidgaitan.com/wp-content/uploads/2015/09/singlepro-twitter-bootstrap.png}
 
 %infraestructura
 
