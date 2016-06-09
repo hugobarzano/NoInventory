@@ -16,30 +16,31 @@
 \contentsline {subsection}{\numberline {3.1.1}Requisitos de Informaci\IeC {\'o}n Plataforma web}{27}{subsection.3.1.1}
 \contentsline {subsection}{\numberline {3.1.2}Requisitos Funcionales Plataforma web}{28}{subsection.3.1.2}
 \contentsline {subsection}{\numberline {3.1.3}Requisitos No Funcionales Plataforma web}{29}{subsection.3.1.3}
-\contentsline {subsection}{\numberline {3.1.4}Casos de Uso: Plataforma Web}{29}{subsection.3.1.4}
-\contentsline {section}{\numberline {3.2}Analisis Aplicaci\IeC {\'o}n Android}{31}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Requisitos Funcionales Aplicaci\IeC {\'o}n Android}{31}{subsection.3.2.1}
-\contentsline {chapter}{\numberline {4}Desarrollo del sistema}{33}{chapter.4}
-\contentsline {section}{\numberline {4.1}Dessarrollo web}{33}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Django}{33}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}MongoDB}{33}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Pymongo}{35}{subsection.4.1.3}
-\contentsline {subsection}{\numberline {4.1.4}JQuery}{36}{subsection.4.1.4}
-\contentsline {subsection}{\numberline {4.1.5}Bootstrap}{36}{subsection.4.1.5}
-\contentsline {section}{\numberline {4.2}Infraestructura}{37}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Plataforma Como Servicio}{37}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}Infraestructura Como Servicio}{38}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}Docker}{38}{subsection.4.2.3}
-\contentsline {subsection}{\numberline {4.2.4}Ansible}{39}{subsection.4.2.4}
-\contentsline {subsection}{\numberline {4.2.5}Vagrant}{40}{subsection.4.2.5}
-\contentsline {section}{\numberline {4.3}Desarrollo Android}{40}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Android-Studio}{41}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Librer\IeC {\'\i }a Volley}{42}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}Near field communication (NFC)}{43}{subsection.4.3.3}
-\contentsline {subsection}{\numberline {4.3.4}Lector de C\IeC {\'o}digos de Barras ZXing}{43}{subsection.4.3.4}
-\contentsline {chapter}{\numberline {5}Implementaci\IeC {\'o}n y pruebas}{45}{chapter.5}
-\contentsline {section}{\numberline {5.1}Herramientas}{45}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}Herramientas de infraestructura}{45}{subsection.5.1.1}
-\contentsline {section}{\numberline {5.2}Recursos}{45}{section.5.2}
-\contentsline {chapter}{\numberline {6}Anexo}{51}{chapter.6}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{51}{chapter.6}
+\contentsline {subsection}{\numberline {3.1.4}Casos de Uso}{29}{subsection.3.1.4}
+\contentsline {subsection}{\numberline {3.1.5}Diagramas de Secuencia}{31}{subsection.3.1.5}
+\contentsline {section}{\numberline {3.2}Analisis Aplicaci\IeC {\'o}n Android}{40}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Requisitos Funcionales Aplicaci\IeC {\'o}n Android}{40}{subsection.3.2.1}
+\contentsline {chapter}{\numberline {4}Desarrollo del sistema}{43}{chapter.4}
+\contentsline {section}{\numberline {4.1}Dessarrollo web}{43}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Django}{43}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}MongoDB}{43}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Pymongo}{45}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}JQuery}{46}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}Bootstrap}{46}{subsection.4.1.5}
+\contentsline {section}{\numberline {4.2}Infraestructura}{47}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Plataforma Como Servicio}{47}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Infraestructura Como Servicio}{48}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Docker}{48}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}Ansible}{49}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}Vagrant}{50}{subsection.4.2.5}
+\contentsline {section}{\numberline {4.3}Desarrollo Android}{50}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Android-Studio}{51}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Librer\IeC {\'\i }a Volley}{52}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}Near field communication (NFC)}{53}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}Lector de C\IeC {\'o}digos de Barras ZXing}{53}{subsection.4.3.4}
+\contentsline {chapter}{\numberline {5}Implementaci\IeC {\'o}n y pruebas}{55}{chapter.5}
+\contentsline {section}{\numberline {5.1}Herramientas}{55}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Herramientas de infraestructura}{55}{subsection.5.1.1}
+\contentsline {section}{\numberline {5.2}Recursos}{55}{section.5.2}
+\contentsline {chapter}{\numberline {6}Anexo}{61}{chapter.6}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{61}{chapter.6}

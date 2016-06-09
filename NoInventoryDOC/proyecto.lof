@@ -12,19 +12,37 @@
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Casos de uso - Gesti\IeC {\'o}n Items }}{30}{figure.3.1}
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Casos de uso - Gesti\IeC {\'o}n Catalogos }}{30}{figure.3.2}
 \contentsline {figure}{\numberline {3.3}{\ignorespaces Casos de uso - Gesti\IeC {\'o}n Informes }}{31}{figure.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Diagramas de Secuencia - Registro de Usuarios\cite {diagrama} }}{32}{figure.3.4}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Diagramas de Secuencia - Inicio Sesi\IeC {\'o}n de Usuario\cite {diagrama} }}{32}{figure.3.5}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Diagramas de Secuencia - Crear Item\cite {diagrama} }}{33}{figure.3.6}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Diagramas de Secuencia - Modificar Item\cite {diagrama} }}{33}{figure.3.7}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Diagramas de Secuencia - Borrar Item\cite {diagrama} }}{34}{figure.3.8}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Diagramas de Secuencia - Consultar Item\cite {diagrama} }}{34}{figure.3.9}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Diagramas de Secuencia - Insertar Item en Cat\IeC {\'a}logo\cite {diagrama} }}{35}{figure.3.10}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Diagramas de Secuencia - Crear Cat\IeC {\'a}logo\cite {diagrama} }}{35}{figure.3.11}
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Diagramas de Secuencia - Modificar Cat\IeC {\'a}logo\cite {diagrama} }}{36}{figure.3.12}
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Diagramas de Secuencia - Modificar Cat\IeC {\'a}logo\cite {diagrama} }}{36}{figure.3.13}
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Diagramas de Secuencia - Limpiar Cat\IeC {\'a}logo\cite {diagrama} }}{37}{figure.3.14}
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Diagramas de Secuencia - Consultar Cat\IeC {\'a}logo\cite {diagrama} }}{37}{figure.3.15}
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Diagramas de Secuencia - Agregar Items a Cat\IeC {\'a}logo\cite {diagrama} }}{37}{figure.3.16}
+\contentsline {figure}{\numberline {3.17}{\ignorespaces Diagramas de Secuencia - Generar PDF Identificadores Cat\IeC {\'a}logo(c\IeC {\'o}digos de barras o QRs\cite {diagrama} }}{38}{figure.3.17}
+\contentsline {figure}{\numberline {3.18}{\ignorespaces Diagramas de Secuencia - Generaci\IeC {\'o}n de Gr\IeC {\'a}ficos\cite {diagrama} }}{38}{figure.3.18}
+\contentsline {figure}{\numberline {3.19}{\ignorespaces Diagramas de Secuencia - Crear Informe\cite {diagrama} }}{39}{figure.3.19}
+\contentsline {figure}{\numberline {3.20}{\ignorespaces Diagramas de Secuencia - Borrar Informe\cite {diagrama} }}{39}{figure.3.20}
+\contentsline {figure}{\numberline {3.21}{\ignorespaces Diagramas de Secuencia - Consultar Informe\cite {diagrama} }}{40}{figure.3.21}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces MongoDB-Logo\cite {mongoL} }}{34}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Ejemplo Bson\cite {propio}}}{35}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Logo Pymongo\cite {pymongoL}}}{36}{figure.4.3}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces JQuery-Logo\cite {jq2} }}{36}{figure.4.4}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Bootstrap-Logo\cite {booL} }}{37}{figure.4.5}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Pipeline Snap-CI }}{38}{figure.4.6}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Virtualizaci\IeC {\'o}n Docker\cite {dkw}}}{39}{figure.4.7}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Arquitectura Ansible\cite {ans2}}}{39}{figure.4.8}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Funcionamiento Vagrant\cite {vg2}}}{40}{figure.4.9}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Android-Studio}}{41}{figure.4.10}
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Arquitectura Volley\cite {volley2}}}{42}{figure.4.11}
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Ejemplo Funcionamiento Etiquetas NFC\cite {nfc4}}}{43}{figure.4.12}
-\contentsline {figure}{\numberline {4.13}{\ignorespaces zxing - logo\cite {cebra3}}}{44}{figure.4.13}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces MongoDB-Logo\cite {mongoL} }}{44}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Ejemplo Bson\cite {propio}}}{45}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Logo Pymongo\cite {pymongoL}}}{46}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces JQuery-Logo\cite {jq2} }}{46}{figure.4.4}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Bootstrap-Logo\cite {booL} }}{47}{figure.4.5}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Pipeline Snap-CI }}{48}{figure.4.6}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Virtualizaci\IeC {\'o}n Docker\cite {dkw}}}{49}{figure.4.7}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Arquitectura Ansible\cite {ans2}}}{49}{figure.4.8}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Funcionamiento Vagrant\cite {vg2}}}{50}{figure.4.9}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Android-Studio}}{51}{figure.4.10}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Arquitectura Volley\cite {volley2}}}{52}{figure.4.11}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Ejemplo Funcionamiento Etiquetas NFC\cite {nfc4}}}{53}{figure.4.12}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces zxing - logo\cite {cebra3}}}{54}{figure.4.13}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

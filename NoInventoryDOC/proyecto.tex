@@ -463,7 +463,7 @@ Los requisitos no funcionales, se refieren a todos los requisitos que no describ
 
 
 
-\subsection{Casos de Uso: Plataforma Web}
+\subsection{Casos de Uso}
 
 Los diagramas de casos de uso, son diagramas UML que representan gráficamente a todos los elementos que forman parte del modelo de casos de uso junto con la frontera del sistema. Delimitan el sistema a diseñar. Determinan el contexto del uso del sistema. Describen el punto de vista de los usuarios  en el sistema 
 
@@ -485,6 +485,131 @@ Los diagramas de casos de uso, son diagramas UML que representan gráficamente a
 \includegraphics[scale=0.50]{imagenes/casosUso/Informe.jpg}
 \caption{ Casos de uso - Gestión Informes  }  
 \end{figure}
+
+\subsection{Diagramas de Secuencia}
+Una vez definidos los casos de uso, se va a especificar las interacciones temporales mediante diagramas de secuencia, mostrando las interacciones de la aplicación a través del tiempo. 
+
+Para comenzar, se especifica el proceso de registro de usuarios, en el que se detalla la organización para la que se va a trabajar, el proceso de inicio de sesión para la validación de credenciales y la inicialización de las preferencias para dicha organización:
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Registro_Usuario.jpg}
+\caption{ Diagramas de Secuencia - Registro de Usuarios\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Inicio_Sesion.jpg}
+\caption{ Diagramas de Secuencia - Inicio Sesión de Usuario\cite{diagrama}  }  
+\end{figure}
+
+DIAGRAMAAAAAAAA INICIOALIZACION DE PREFERENCIAS 
+
+El siguiente punto a especificar es la gestión de items. Se detallará los proceso de creación, modificación, borrado, consulta y agregado a catálogo de items:
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Crear_Item.jpg}
+\caption{ Diagramas de Secuencia - Crear Item\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Modificar_Item.jpg}
+\caption{ Diagramas de Secuencia - Modificar Item\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Borrar_Item.jpg}
+\caption{ Diagramas de Secuencia - Borrar Item\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Consultar_Item.jpg}
+\caption{ Diagramas de Secuencia - Consultar Item\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Insertar_Item_Catalogo.jpg}
+\caption{ Diagramas de Secuencia - Insertar Item en Catálogo\cite{diagrama}  }  
+\end{figure}
+
+El siguiente punto a especificar es la gestión de catálogos. Se detallarán los procesos de creación,modificación, borrado, limpieza, consulta, agregado de items a un catalogo y generar PDF con los identificadores (códigos de barras o códigos QR)  
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Crear_Catalogo.jpg}
+\caption{ Diagramas de Secuencia - Crear Catálogo\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Modificar_Catalogo.jpg}
+\caption{ Diagramas de Secuencia - Modificar Catálogo\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Borrar_Catalogo.jpg}
+\caption{ Diagramas de Secuencia - Modificar Catálogo\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Limpiar_Items_Catalogo.jpg}
+\caption{ Diagramas de Secuencia - Limpiar Catálogo\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Consultar_Catalogo.jpg}
+\caption{ Diagramas de Secuencia - Consultar Catálogo\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Insertar_Items_Catalogo.jpg}
+\caption{ Diagramas de Secuencia - Agregar Items a Catálogo\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Generar_PDF_Identificadores_Catalogo.jpg}
+\caption{ Diagramas de Secuencia - Generar PDF Identificadores Catálogo(códigos de barras o QRs\cite{diagrama}  }  
+\end{figure}
+
+El siguiente diagrama especifica la generación de gráficos representativos de un catálogo en función de las preferencias inicializadas para la organización y además por rango de fechas en el que los items del catálogo fueron dados de alta en el sistema. El diagrama también muestra la posibilidad de que el usuarios quiera cambiar la forma del gráfico y también si desea exportarlo como una imagen en distintos formatos:
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Graficos.jpg}
+\caption{ Diagramas de Secuencia - Generación de Gráficos\cite{diagrama}  }  
+\end{figure}
+
+Por último, los siguientes diagramas pretenden especificar el modulo de generación de informes, detallando los procesos de creación, borrado y consulta de informes. El diagrama de creación especifica las acciones opcionales de agregar gráficos y catálogos al informe. El diagrama de consulta, especifica además el proceso de modificación, visualización y la posibilidad de exportar dicho informe a formato PDF. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Crear_Informe.jpg}
+\caption{ Diagramas de Secuencia - Crear Informe\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Borrar_Informe.jpg}
+\caption{ Diagramas de Secuencia - Borrar Informe\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Consultar_Informe.jpg}
+\caption{ Diagramas de Secuencia - Consultar Informe\cite{diagrama}  }  
+\end{figure}
+
+
 
 \section{Analisis Aplicación Android}
 \subsection{Requisitos Funcionales Aplicación Android}
@@ -845,6 +970,12 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 \bibitem[8]{twitter} \textsc{twitter},
 \textit{No-Inventory: twitter}
 \url{https://twitter.com/no_inventory}
+
+%analisis
+\bibitem[9]{diagrama} \textsc{Diagrama},
+\textit{Diagrama Elaboración Propia - Visual Paradigm}
+\url{https://www.visual-paradigm.com/}
+
 
 %desarolloweb
 \bibitem[8]{dj} \textsc{Django},
