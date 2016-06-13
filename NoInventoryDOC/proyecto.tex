@@ -238,8 +238,9 @@ En principio este sistema de gestión será implantado en la oficina de software
 Este proyecto también forma parte del programa de becas Talentum StartUP patrocinado por Telefónica y la fundación SEPI y dentro de este programa de formación es candidato a consolidarse como una StartUP propia al tener un posible nicho de mercado. Al tratarse de un sistema Open Source, su nicho de mercado estaría en el servicio que presta y no en el software en si, que es de dominio público. 
 
  
-\section{Estudio del Arte}
 
+
+\section{Estudio del Arte}
 
 Como parte del estudio, para mejorar el nivel de comprensión de lo que se quiere llevar a cabo, se han investigado diversos sistemas de inventariado. De esta manera, se puede hacer balance de las cosas que hay actualmente en el mercado, cuales son sus aspectos fuertes y cuales las debilidades. 
 
@@ -286,7 +287,9 @@ De todos estos productos, podemos destacar puntos fuertes como estar alojados en
 
 Estas conclusiones  han sido de gran utilidad para el siguiente capítulo en el que se detallará el proceso de análisis y especificación del sistema final.  
 
-\chapter{Planificación y Costes}
+
+
+\chapter{Planificación y Análisis }
 
 \section{Planificación}
 
@@ -324,10 +327,9 @@ La cuarta y última fase de la planificación se basa en la documentación del p
 \caption{ Fase 4 - Planificación\cite{propio}  }  
 \end{figure}
 
-\section{Costes}
 
-\chapter{Análisis}
 
+\section{Análisis}
 Para realizar un mejor análisis del sistema, vamos a desglosarlo en dos partes. Primero analizaremos la plataforma web y después analizaremos la aplicación Android 
 
 \section{Analisis Plataforma Web}
@@ -661,11 +663,48 @@ Los requisitos funcionales de la aplicación Android establecen los comportamien
 
 
 \chapter{Desarrollo del sistema}
-
-
-
-\section{Dessarrollo web}
+tdd:http://iwt2.org/wp-content/uploads/2015/05/Desarrollo-%C3%A1gil-basado-en-PAs.pdf
 En esta parte se abordarán los aspectos mas importantes de la plataforma web. Que tecnologías has sido utilizadas, como han sido utilizadas y por qué han sido utilizadas.
+
+
+\section{Desarrollo basado en test - TDD}
+
+
+El desarrollo basado en test o también conocido como Test-driven development\cite{tdd}(TDD) es una metodología de la ingeniería del software que consiste en escribir las pruebas o test necesarios para las funcionalidades de un sistema o aplicación, dichos test reciben el nombre de pruebas unitarias, y a partir de las pruebas unitarias, escribir el código necesario, de la manera mas simple y atómica posible para que dichas pruebas, se cumpla con éxito.  
+
+
+Utilizar esta metodología de desarrollo se traduce en una mejor organización de código, permitiendo entender de una forma simple los requisitos funcionales que ha de cumplir el sistema. Esta metodología facilita los cambios o actualizaciones en el software del sistema, ya que cualquier cambio que no cumpla con la lógica del código o no cumpla los requisitos funcionales será detectado de forma rápida. La autorización de pruebas también tiene un efecto positivo en el grado de productividad del equipo de desarrollo, ya que garantiza de forma rápida que las mejoras introducidas sean coherentes con los casos de prueba definidos. En conclusión, los proyectos software desarrollados bajo TDD son más fáciles de mejorar y más fáciles de mantener. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.45]{imagenes/desarrollo_herramienta/tdd.png}
+\caption{ Fases TDD\cite{tdd2}  }  
+\end{figure} 
+	
+
+
+En la imagen anterior, podemos observar las distintas fases del proceso de desarrollo basado en TDD. De estas fases, se hace especial inca pie en:
+
+\begin{enumerate}
+\item \textbf{Fase de diseño:} Donde se definen los casos de prueba a implementar partiendo de los requerimientos.
+
+\item \textbf{Fase de Pruebas:} Donde se implementan los casos de prueba, produciendo así los test unitarios.
+
+\item \textbf{Fase de Producción:} El mantenimiento del sistema exige actualizaciones o refactorizaciones , es decir, producir nuevos test unitarios. 
+\end{enumerate}
+
+	 
+
+Por ultimo resaltar que dentro de la metodología TDD están los test de integración, cuya finalidad es garantizar que las distintas funcionalidades producto de los test unitarios, funcionan correctamente de manera conjunta, es decir, las funcionalidades que dan solución a los  distintos test unitarios funcionan correctamente en conjunto. 
+
+
+En este proyecto, se ha utilizado TDD en la fase de desarrollo de los modelos, así como en los manejadores asociados a los modelos, encargados de las operaciones CRUD (Create, Read, Update and Delete). En la primera fase del desarrollo web, las baterías de test, fueron realizadas directamente sobre scripts python creados exclusivamente para ellos pero en la segunda fase, se decidió, por motivos de automatización de despliegue,  migrar estos test al entorno para desarrollo basado en test que proporciona el framework Django.
+
+En esta segunda fase, y una vez creadas y testeadas las funcionalidades CRUD, para completar el proceso de desarrollo basado en TDD,  se decidió utilizar la herramienta Selenium\cite{sele} para realizar test de integridad y test de navegación, lo que permitió detectar enlaces caídos e inconsistencias en las vistas de la plataforma web, ya que Selenium funciona como una “grabadora” de las acciones que se llevan a cabo con el navegador, permitiendo reproducirlas en cualquier momento en forma de test unitarios.
+
+Para finalizar, es necesario resaltar el hecho de que utilizando TDD disponemos de baterías de test unitarios que garantizan el correcto funcionamiento del sistema. Dichas baterías son aprovechadas por herramientas de integración continua,  como Travis-CI o Snap-CI, a la hora de automatizar el despliegue del sistema. Estas herramientas, simulan un entorno en el que correr la aplicación y además ejecutar las baterías de test, de manera que si por algún motivo, cambios o actualización en el software, la ejecución de los test unitarios falla, el despliegue no se llevará a cabo, manteniendo en linea una versión estable del sistemas hasta que la incoherencia sea corregida. 
+
+
 
 \subsection{Django}
 Django\cite{dj}, es un Framework de alto nivel para Python. Django sigue la metodología de diseño “Modelo Vista Controlador” (MVC) lo que permite crear aplicaciones web extensibles, escalables y sostenibles. Django es de código abierto. 
@@ -978,6 +1017,21 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 
 
 %desarolloweb
+\bibitem[8]{tdd} \textsc{Kent Beck},
+\textit{Test Driven Development: By Example}
+\url{https://www.amazon.com/Test-Driven-Development-Kent-Beck/dp/0321146530/179-0524398-5224362?ie=UTF8&qid=&redirect=true&ref_=cm_lm_asin&sr=&v=glance}
+
+
+\bibitem[8]{tdd2} \textsc{Patricio Letelier},
+\textit{Desarrollo ágil basado en pruebas de aceptación}
+\url{http://iwt2.org/wp-content/uploads/2015/05/Desarrollo-%C3%A1gil-basado-en-PAs.pdf}
+
+\bibitem[8]{sele} \textsc{Selenium},
+\textit{Test de Integración y Navegación}
+\url{http://www.seleniumhq.org/}
+
+
+
 \bibitem[8]{dj} \textsc{Django},
 \textit{Django}
 \url{https://www.djangoproject.com/}
