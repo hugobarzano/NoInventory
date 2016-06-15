@@ -231,7 +231,7 @@ El objetivo de este proyecto es el de conseguir un sistema de gestión de almace
 
 \textbf{OBJ-8.}Emplear tecnologías móviles para dotar al sistema diversos métodos de identificación de elementos. 
 
-\section{Alcance de los objetivos}
+\subsection{Alcance de los objetivos}
 
 En principio este sistema de gestión será implantado en la oficina de software libre con el objetivo de gestionar el material informático resultante de las campañas de recogida y donación que la Oficina lleva a cabo con las entidades de la Universidad de Granada. 
 
@@ -287,6 +287,91 @@ De todos estos productos, podemos destacar puntos fuertes como estar alojados en
 
 Estas conclusiones  han sido de gran utilidad para el siguiente capítulo en el que se detallará el proceso de análisis y especificación del sistema final.  
 
+
+\section{Cloud Computing}
+La real academia de la ingeniería, define la computación en la nube o Cloud Computing  como: “La Utilización de las instalaciones propias de un servidor web albergadas por un proveedor de Internet para almacenar, desplegar y ejecutar aplicaciones a petición de los usuarios demandantes de las mismas.”\cite{RAI} La computación en la nube es un paradigma en el que la información se almacena de manera permanente en servidores de internet y se ofrece, a través de aplicaciones, como servicio. El Cloud Computing es un nuevo modelo de prestación de servicios\cite{magazine} de negocio y tecnología, pagando únicamente por el consumo efectuado.
+
+La computación en la nube permite aumentar el número de servicios basados en red. Esto genera beneficios para los proveedores, que ofrecen de forma rápida y eficiente, un gran número de servicios. La computación en la nube esta basada en una infraestructura tecnología dinámica que se caracteriza, por la automatización de tareas, la implantación de recursos, técnicas de visualización avanzada, fácil escalabilidad y todo esto con un coste flexible en función de las características demandadas.  La computación en la nube permite a los usuarios acceder a los sistemas o servicios utilizando un navegador web, independientemente de su ubicación, además,  las actualizaciones automáticas no afectan negativamente a los recursos TI. La siguiente imagen muestra los beneficios de la computación en la nube:
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.5]{imagenes/desarrollo_herramienta/beneficiosCC.jpg}
+\caption{ Beneficios Cloud Computing\cite{beneficios} }
+\end{figure}
+
+La computación en la nube permite la integración de servicios en Red dando servicio a nivel mundial y además contribuye al uso eficiente de la energía pero la centralización de las aplicaciones y el almacenamiento de los datos origina una interdependencia de los proveedores de servicios. La disponibilidad de estos servicios necesita de conexión a internet. Los servicios que ofrece pueden clasificarse en las siguientes subsecciones: 
+
+ 
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.5]{imagenes/desarrollo_herramienta/arquitecturaCC.jpg}
+\caption{ Arquitectura Cloud Computing\cite{arquitecturaCC} }
+\end{figure}
+
+\subsection{Software Como Servicio}
+
+El Software como Servicio\cite{saas} (SaaS, Platform as a Service) ofrece el consumo de una gran variedad de aplicaciones o servicios proporcionadas por los proveedores del servicio y que se ejecutan en la infraestructura de la nube. Las aplicaciones en la nube son accesibles por distintos dispositivos del cliente a través de una interfaz sencilla, como por ejemplo un navegador web. El cliente no gestiona la infraestructura del servicio, que incluye la red de comunicaciones, los servidores, los sistemas operativos y el almacenamiento.
+
+\subsection{Plataforma Como Servicio}
+
+La Plataforma como Servicio\cite{paas} (PaaS, Platform as a Service) es una categoría de servicios cloud que proporciona un entorno a los desarrolladores crear aplicaciones y servicios que funcionen a través de internet. Los servicios PaaS se alojan en la nube, y los usuarios pueden acceder a ellos a través de un navegador web. . Los servicios PaaS consisten en funcionalidades preconfiguradas a las que los clientes puedan suscribirse, eligiendo las funciones que deseen incluir en función de sus necesidades.
+
+Algunas de las funcionalidades PaaS son:
+
+\begin{enumerate}
+\item Sistema operativo 
+\item Entorno de scripting de servidor 
+\item Sistema de gestión de base de datos 
+\item Software de servidor 
+\item Soporte técnico 
+\item Almacenamiento 
+\item Acceso a la red 
+\item Herramientas de diseño y desarrollo 
+\item Hosting 
+\end{enumerate}
+
+
+\subsection{Infraestructura Como Servicio}
+La Infraestructura como Servicio\cite{iaas} (IaaS, Infrastructure as a Service) es un servicio cloud, que proporciona acceso a recursos informáticos situados en un entorno virtualizado, a través de una conexión pública. Los recursos informáticos ofrecidos  son básicamente infraestructura de procesamiento. Físicamente, el repertorio de recursos hardware disponibles procede de multitud de servidores y redes, generalmente distribuidos entre numerosos centros de datos, de cuyo mantenimiento se encarga el proveedor del servicio cloud. El cliente, por su parte, obtiene acceso a los componentes virtualizados para construir con ellos su propia plataforma informática.
+
+Estas son las ventajas características de una implementación basada en el modelo de Infraestructura como Servicio:
+
+\begin{enumerate}
+\item Escalabilidad
+\item Sin necesidad de invertir en hardware
+\item Independencia de la localización
+\item Seguridad física en los centros de datos
+\end{enumerate}
+
+
+\section{Desarrollo basado en test - TDD}
+
+El desarrollo basado en test o también conocido como Test-driven development\cite{tdd}(TDD) es una metodología de la ingeniería del software que consiste en escribir las pruebas o test necesarios para las funcionalidades de un sistema o aplicación, dichos test reciben el nombre de pruebas unitarias, y a partir de las pruebas unitarias, escribir el código necesario, de la manera mas simple y atómica posible para que dichas pruebas, se cumpla con éxito.  
+
+
+Utilizar esta metodología de desarrollo se traduce en una mejor organización de código, permitiendo entender de una forma simple los requisitos funcionales que ha de cumplir el sistema. Esta metodología facilita los cambios o actualizaciones en el software del sistema, ya que cualquier cambio que no cumpla con la lógica del código o no cumpla los requisitos funcionales será detectado de forma rápida. La autorización de pruebas también tiene un efecto positivo en el grado de productividad del equipo de desarrollo, ya que garantiza de forma rápida que las mejoras introducidas sean coherentes con los casos de prueba definidos. En conclusión, los proyectos software desarrollados bajo TDD son más fáciles de mejorar y más fáciles de mantener. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.45]{imagenes/desarrollo_herramienta/tdd.png}
+\caption{ Fases TDD\cite{tdd2}  }  
+\end{figure} 
+	
+
+
+En la imagen anterior, podemos observar las distintas fases del proceso de desarrollo basado en TDD. De estas fases, se hace especial inca pie en:
+
+\begin{enumerate}
+\item \textbf{Fase de diseño:} Donde se definen los casos de prueba a implementar partiendo de los requerimientos.
+
+\item \textbf{Fase de Pruebas:} Donde se implementan los casos de prueba, produciendo así los test unitarios.
+
+\item \textbf{Fase de Producción:} El mantenimiento del sistema exige actualizaciones o refactorizaciones , es decir, producir nuevos test unitarios. 
+\end{enumerate}
+
+	 
+
+Por ultimo resaltar que dentro de la metodología TDD están los test de integración, cuya finalidad es garantizar que las distintas funcionalidades producto de los test unitarios, funcionan correctamente de manera conjunta, es decir, las funcionalidades que dan solución a los  distintos test unitarios funcionan correctamente en conjunto. 
 
 
 \chapter{Planificación y Análisis }
@@ -661,44 +746,21 @@ Los requisitos funcionales de la aplicación Android establecen los comportamien
 	RF-3.2. La aplicación permitirá al usuario cerrar sesión.
 
 
-
-\chapter{Desarrollo del sistema}
-tdd:http://iwt2.org/wp-content/uploads/2015/05/Desarrollo-%C3%A1gil-basado-en-PAs.pdf
-En esta parte se abordarán los aspectos mas importantes de la plataforma web. Que tecnologías has sido utilizadas, como han sido utilizadas y por qué han sido utilizadas.
-
-
-\section{Desarrollo basado en test - TDD}
-
-
-El desarrollo basado en test o también conocido como Test-driven development\cite{tdd}(TDD) es una metodología de la ingeniería del software que consiste en escribir las pruebas o test necesarios para las funcionalidades de un sistema o aplicación, dichos test reciben el nombre de pruebas unitarias, y a partir de las pruebas unitarias, escribir el código necesario, de la manera mas simple y atómica posible para que dichas pruebas, se cumpla con éxito.  
-
-
-Utilizar esta metodología de desarrollo se traduce en una mejor organización de código, permitiendo entender de una forma simple los requisitos funcionales que ha de cumplir el sistema. Esta metodología facilita los cambios o actualizaciones en el software del sistema, ya que cualquier cambio que no cumpla con la lógica del código o no cumpla los requisitos funcionales será detectado de forma rápida. La autorización de pruebas también tiene un efecto positivo en el grado de productividad del equipo de desarrollo, ya que garantiza de forma rápida que las mejoras introducidas sean coherentes con los casos de prueba definidos. En conclusión, los proyectos software desarrollados bajo TDD son más fáciles de mejorar y más fáciles de mantener. 
+\subsection{Diagrama de Clases}
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.45]{imagenes/desarrollo_herramienta/tdd.png}
-\caption{ Fases TDD\cite{tdd2}  }  
-\end{figure} 
-	
+\includegraphics[scale=0.15]{imagenes/clases/clasesAndroid.jpg}
+\caption{ Diagrama de Clases - Android\cite{propio}  }  
+\end{figure}
+
+\chapter{Desarrollo del Sistema}
+En esta parte se abordarán los aspectos mas importantes de la plataforma web. Que tecnologías has sido utilizadas, como han sido utilizadas y por qué han sido utilizadas.
 
 
-En la imagen anterior, podemos observar las distintas fases del proceso de desarrollo basado en TDD. De estas fases, se hace especial inca pie en:
+\section{Desarrollo Web}
 
-\begin{enumerate}
-\item \textbf{Fase de diseño:} Donde se definen los casos de prueba a implementar partiendo de los requerimientos.
-
-\item \textbf{Fase de Pruebas:} Donde se implementan los casos de prueba, produciendo así los test unitarios.
-
-\item \textbf{Fase de Producción:} El mantenimiento del sistema exige actualizaciones o refactorizaciones , es decir, producir nuevos test unitarios. 
-\end{enumerate}
-
-	 
-
-Por ultimo resaltar que dentro de la metodología TDD están los test de integración, cuya finalidad es garantizar que las distintas funcionalidades producto de los test unitarios, funcionan correctamente de manera conjunta, es decir, las funcionalidades que dan solución a los  distintos test unitarios funcionan correctamente en conjunto. 
-
-
-En este proyecto, se ha utilizado TDD en la fase de desarrollo de los modelos, así como en los manejadores asociados a los modelos, encargados de las operaciones CRUD (Create, Read, Update and Delete). En la primera fase del desarrollo web, las baterías de test, fueron realizadas directamente sobre scripts python creados exclusivamente para ellos pero en la segunda fase, se decidió, por motivos de automatización de despliegue,  migrar estos test al entorno para desarrollo basado en test que proporciona el framework Django.
+En este proyecto, se ha utilizado TDD en la fase de desarrollo web para los modelos, así como en los manejadores asociados a los modelos, encargados de las operaciones CRUD (Create, Read, Update and Delete). En la primera fase del desarrollo web, las baterías de test, fueron realizadas directamente sobre scripts python creados exclusivamente para ellos pero en la segunda fase, se decidió, por motivos de automatización de despliegue,  migrar estos test al entorno para desarrollo basado en test que proporciona Django, framkework python que se explicará mas adelante.
 
 En esta segunda fase, y una vez creadas y testeadas las funcionalidades CRUD, para completar el proceso de desarrollo basado en TDD,  se decidió utilizar la herramienta Selenium\cite{sele} para realizar test de integridad y test de navegación, lo que permitió detectar enlaces caídos e inconsistencias en las vistas de la plataforma web, ya que Selenium funciona como una “grabadora” de las acciones que se llevan a cabo con el navegador, permitiendo reproducirlas en cualquier momento en forma de test unitarios.
 
@@ -805,23 +867,9 @@ Bootstrap\cite{boo} es un framework CSS para dar forma a sitios web mediante lib
  
  
 \section{Infraestructura}
+
+
 \subsection{Plataforma Como Servicio}
-
-La Plataforma como Servicio\cite{paas} (PaaS, Platform as a Service) es una categoría de servicios cloud que proporciona un entorno a los desarrolladores crear aplicaciones y servicios que funcionen a través de internet. Los servicios PaaS se alojan en la nube, y los usuarios pueden acceder a ellos a través de un navegador web. . Los servicios PaaS consisten en funcionalidades preconfiguradas a las que los clientes puedan suscribirse, eligiendo las funciones que deseen incluir en función de sus necesidades.
-
-Algunas de las funcionalidades PaaS son:
-
-\begin{enumerate}
-\item Sistema operativo 
-\item Entorno de scripting de servidor 
-\item Sistema de gestión de base de datos 
-\item Software de servidor 
-\item Soporte técnico 
-\item Almacenamiento 
-\item Acceso a la red 
-\item Herramientas de diseño y desarrollo 
-\item Hosting 
-\end{enumerate}
 
 Para Realizar el despliegue de este proyecto en un PaaS se ha utilizado Heroku\cite{hero}. Heroku es una plataforma en la nube basado en un sistema de contenedores gestionados, con servicios de datos integrados y un potente ecosistema, para implementar y ejecutar aplicaciones modernas. Heroku presenta una fácil integración con github y por es de carácter gratuito (al menos algunos servicios). Heroku se caracteriza por el fichero de configuración denominado Procfile. Dicho fichero, se encarga de arrancar una instancia web y dejar que gunicorn (servidor de aplicación) ejecute el sistema en ella.
 
@@ -834,16 +882,7 @@ Otro motivo por el cual usar Heroku es por la automatización del despliegue. He
 \end{figure}
 
 \subsection{Infraestructura Como Servicio}
-La Infraestructura como Servicio\cite{iaas} (IaaS, Infrastructure as a Service) es un servicio cloud, que proporciona acceso a recursos informáticos situados en un entorno virtualizado, a través de una conexión pública. Los recursos informáticos ofrecidos  son básicamente infraestructura de procesamiento. Físicamente, el repertorio de recursos hardware disponibles procede de multitud de servidores y redes, generalmente distribuidos entre numerosos centros de datos, de cuyo mantenimiento se encarga el proveedor del servicio cloud. El cliente, por su parte, obtiene acceso a los componentes virtualizados para construir con ellos su propia plataforma informática.
 
-Estas son las ventajas características de una implementación basada en el modelo de Infraestructura como Servicio:
-
-\begin{enumerate}
-\item Escalabilidad
-\item Sin necesidad de invertir en hardware
-\item Independencia de la localización
-\item Seguridad física en los centros de datos
-\end{enumerate}
 
 \subsection{Docker}
 
@@ -997,6 +1036,44 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 \textit{Snappii}
 \url{https://www.snappii.com/}
 
+
+%cloud computing
+\bibitem[1]{RAI} \textsc{Real Academia de Ingeniería},
+\textit{Acepciones}
+\url{http://diccionario.raing.es/es/lema/computaci\%C3\%B3n-en-la-nube}
+
+
+\bibitem[1]{magazine} \textsc{Magazine Communications of the ACM },
+\textit{A view of cloud computing}
+\url{http://dl.acm.org/citation.cfm?doid=1721654.1721672}
+
+
+\bibitem[9]{beneficios} \textsc{Cloud Computing},
+\textit{Imagen Beneficios}
+\url{http://www.geospatialworld.net/wp-content/uploads/magazines/gw-may11-20_5.jpg}
+
+\bibitem[9]{arquitecturaCC} \textsc{Cloud Computing},
+\textit{Imagen Arquitectura}
+\url{http://image.slidesharecdn.com/tocandolanubev2-141007052808-conversion-gate01/95/cloud-computing-una-perspectiva-tecnolgica-9-638.jpg?cb=1412659848}
+
+\bibitem[1]{saas} \textsc{SaaS},
+\textit{Software como Servicio}
+\url{(http://www.osimga.gal/export/sites/osimga/gl/documentos/d/2010_12_29_ORSI_estudio_cloud_computing.pdf)} 
+
+\bibitem[1]{paas} \textsc{PaaS},
+\textit{Plataforma como Servicio}
+\url{http://www.interoute.es/what-paas} 
+
+%TDD
+\bibitem[8]{tdd} \textsc{Kent Beck},
+\textit{Test Driven Development: By Example}
+\url{https://www.amazon.com/Test-Driven-Development-Kent-Beck/dp/0321146530/179-0524398-5224362?ie=UTF8&qid=&redirect=true&ref_=cm_lm_asin&sr=&v=glance}
+
+
+\bibitem[8]{tdd2} \textsc{Patricio Letelier},
+\textit{Desarrollo ágil basado en pruebas de aceptación}
+\url{http://iwt2.org/wp-content/uploads/2015/05/Desarrollo-\%C3\%A1gil-basado-en-PAs.pdf}
+
 %planificacion
 \bibitem[8]{tomsplanner} \textsc{tomsplanner},
 \textit{Tom's Planner: Software de planificación}
@@ -1017,14 +1094,7 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 
 
 %desarolloweb
-\bibitem[8]{tdd} \textsc{Kent Beck},
-\textit{Test Driven Development: By Example}
-\url{https://www.amazon.com/Test-Driven-Development-Kent-Beck/dp/0321146530/179-0524398-5224362?ie=UTF8&qid=&redirect=true&ref_=cm_lm_asin&sr=&v=glance}
 
-
-\bibitem[8]{tdd2} \textsc{Patricio Letelier},
-\textit{Desarrollo ágil basado en pruebas de aceptación}
-\url{http://iwt2.org/wp-content/uploads/2015/05/Desarrollo-%C3%A1gil-basado-en-PAs.pdf}
 
 \bibitem[8]{sele} \textsc{Selenium},
 \textit{Test de Integración y Navegación}
@@ -1076,11 +1146,9 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 \textit{Logo}
 \url{http://davidgaitan.com/wp-content/uploads/2015/09/singlepro-twitter-bootstrap.png}
 
-%infraestructura
+%infraestructura 
 
-\bibitem[1]{paas} \textsc{PaaS},
-\textit{Plataforma como Servicio}
-\url{http://www.interoute.es/what-paas} 
+
 
 \bibitem[2]{hero} \textsc{Heroku},
 \textit{Heroku: Plataforma como Servicio}
