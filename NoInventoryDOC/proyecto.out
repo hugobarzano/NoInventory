@@ -32,19 +32,21 @@
 \BOOKMARK [2][-]{subsection.3.1.4}{JQuery}{section.3.1}% 32
 \BOOKMARK [2][-]{subsection.3.1.5}{Bootstrap}{section.3.1}% 33
 \BOOKMARK [1][-]{section.3.2}{Infraestructura}{chapter.3}% 34
-\BOOKMARK [2][-]{subsection.3.2.1}{Plataforma Como Servicio}{section.3.2}% 35
-\BOOKMARK [2][-]{subsection.3.2.2}{Infraestructura Como Servicio}{section.3.2}% 36
-\BOOKMARK [2][-]{subsection.3.2.3}{Docker}{section.3.2}% 37
-\BOOKMARK [2][-]{subsection.3.2.4}{Ansible}{section.3.2}% 38
-\BOOKMARK [2][-]{subsection.3.2.5}{Vagrant}{section.3.2}% 39
-\BOOKMARK [1][-]{section.3.3}{Desarrollo Android}{chapter.3}% 40
-\BOOKMARK [2][-]{subsection.3.3.1}{Android-Studio}{section.3.3}% 41
-\BOOKMARK [2][-]{subsection.3.3.2}{Librer\355a Volley}{section.3.3}% 42
-\BOOKMARK [2][-]{subsection.3.3.3}{Near field communication \(NFC\)}{section.3.3}% 43
-\BOOKMARK [2][-]{subsection.3.3.4}{Lector de C\363digos de Barras ZXing}{section.3.3}% 44
-\BOOKMARK [0][-]{chapter.4}{Implementaci\363n y pruebas}{}% 45
-\BOOKMARK [1][-]{section.4.1}{Herramientas}{chapter.4}% 46
-\BOOKMARK [2][-]{subsection.4.1.1}{Herramientas de infraestructura}{section.4.1}% 47
-\BOOKMARK [1][-]{section.4.2}{Recursos}{chapter.4}% 48
-\BOOKMARK [0][-]{chapter.5}{Anexo}{}% 49
-\BOOKMARK [0][-]{chapter.5}{Bibliograf\355a}{}% 50
+\BOOKMARK [2][-]{subsection.3.2.1}{Integraci\363n Continua}{section.3.2}% 35
+\BOOKMARK [2][-]{subsection.3.2.2}{Plataforma Como Servicio}{section.3.2}% 36
+\BOOKMARK [2][-]{subsection.3.2.3}{Infraestructura Como Servicio}{section.3.2}% 37
+\BOOKMARK [2][-]{subsection.3.2.4}{Docker}{section.3.2}% 38
+\BOOKMARK [2][-]{subsection.3.2.5}{Ansible}{section.3.2}% 39
+\BOOKMARK [2][-]{subsection.3.2.6}{Vagrant}{section.3.2}% 40
+\BOOKMARK [1][-]{section.3.3}{Desarrollo Android}{chapter.3}% 41
+\BOOKMARK [2][-]{subsection.3.3.1}{Android-Studio}{section.3.3}% 42
+\BOOKMARK [2][-]{subsection.3.3.2}{Librer\355a Volley}{section.3.3}% 43
+\BOOKMARK [2][-]{subsection.3.3.3}{Near field communication \(NFC\)}{section.3.3}% 44
+\BOOKMARK [2][-]{subsection.3.3.4}{Lector de C\363digos de Barras ZXing}{section.3.3}% 45
+\BOOKMARK [0][-]{chapter.4}{Implementaci\363n y pruebas}{}% 46
+\BOOKMARK [1][-]{section.4.1}{Herramientas}{chapter.4}% 47
+\BOOKMARK [2][-]{subsection.4.1.1}{Herramientas de infraestructura}{section.4.1}% 48
+\BOOKMARK [1][-]{section.4.2}{Recursos}{chapter.4}% 49
+\BOOKMARK [0][-]{chapter.5}{Anexo}{}% 50
+\BOOKMARK [1][-]{section.5.1}{Travis.yml}{chapter.5}% 51
+\BOOKMARK [0][-]{lstnumber.-1.25}{Bibliograf\355a}{}% 52

@@ -867,6 +867,11 @@ Bootstrap\cite{boo} es un framework CSS para dar forma a sitios web mediante lib
  
  
 \section{Infraestructura}
+En esta sección se detallará la infraestructura virtual subyacente con la que cuenta el proyecto. Para empezar se hablará de los sistemas de integración continua utilizados y el papel que juegan en el despliegue. Se hablará también de Heroku, la Plataforma como servicio utilizada, de como distribuir la base de datos MongoDB utilizando Mlab. También se hablará de Azure, la infraestructura como servicio utilizada, de las herramientas de despliegue utilizadas para trabajar con Azure y por último como utilizar Docker y las ventajas del aislamiento de recursos para levantar instancias del sistema de manera rápida en el caso de que la cantidad de datos a gestionar por el cliente así lo requiera. 
+
+\subsection{Integración Continua}
+
+fichero de configuracion\ref{sec:travis}
 
 
 \subsection{Plataforma Como Servicio}
@@ -1240,7 +1245,34 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
  
 
 \chapter{Anexo}
+\section{Travis.yml}\label{sec:travis}
+\begin{lstlisting}
+language: python
+python:
+ - "2.7"
 
+services: mongodb
+
+install:
+ - python -m pip install pymongo==3.1.1
+ - pip install -r requirements.txt
+
+script:
+ - python NoInventory/test_clasificacion.py
+ - python NoInventory/test_item.py
+ - python NoInventory/test_catalogo.py
+ - python manage.py test
+ 
+after_deploy:
+  - python manage.py syncdb --noinput
+
+env:
+  global:
+  - DJANGO_SETTINGS_MODULE="NoInventoryProject.settings"
+  - PYTHONPATH="/home/travis/build/hugobarzano/NoInventory"
+  - HEROKU=true
+
+\end{lstlisting}
 
 %
 %\input{capitulos/02_EspecificacionRequisitos}
