@@ -764,7 +764,29 @@ En este proyecto, se ha utilizado TDD en la fase de desarrollo web para los mode
 
 En esta segunda fase, y una vez creadas y testeadas las funcionalidades CRUD, para completar el proceso de desarrollo basado en TDD,  se decidió utilizar la herramienta Selenium\cite{sele} para realizar test de integridad y test de navegación, lo que permitió detectar enlaces caídos e inconsistencias en las vistas de la plataforma web, ya que Selenium funciona como una “grabadora” de las acciones que se llevan a cabo con el navegador, permitiendo reproducirlas en cualquier momento en forma de test unitarios.
 
-Para finalizar, es necesario resaltar el hecho de que utilizando TDD disponemos de baterías de test unitarios que garantizan el correcto funcionamiento del sistema. Dichas baterías son aprovechadas por herramientas de integración continua,  como Travis-CI o Snap-CI, a la hora de automatizar el despliegue del sistema. Estas herramientas, simulan un entorno en el que correr la aplicación y además ejecutar las baterías de test, de manera que si por algún motivo, cambios o actualización en el software, la ejecución de los test unitarios falla, el despliegue no se llevará a cabo, manteniendo en linea una versión estable del sistemas hasta que la incoherencia sea corregida. 
+Es necesario resaltar el hecho de que utilizando TDD disponemos de baterías de test unitarios que garantizan el correcto funcionamiento del sistema. Dichas baterías son aprovechadas por herramientas de integración continua,  como Travis-CI o Snap-CI, a la hora de automatizar el despliegue del sistema. Estas herramientas, simulan un entorno en el que correr la aplicación y además ejecutar las baterías de test, de manera que si por algún motivo, cambios o actualización en el software, la ejecución de los test unitarios falla, el despliegue no se llevará a cabo, manteniendo en linea una versión estable del sistemas hasta que la incoherencia sea corregida. 
+
+Como parte del desarrollo web, también se ha utilizado el patrón de arquitectura software modelo-vista-controlador (MVC)\cite{mvc} cuya finalidad es separar los datos y la lógica de una aplicación de la interfaz de usuario. Este patrón de arquitectura se basa en la reutilización de código y separación de conceptos con el objetivo de facilitar el desarrollo y mantenimiento de aplicaciones que al utilizar esta metodología son fácilmente escalables. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/desarrollo_herramienta/mvc.png}
+\caption{ Modelo-Vista-Controlador\cite{mvc2}  }  
+\end{figure} 
+
+Los componentes\cite{mvc3}\cite{mvc4} del Modelo-Vista-Controlador se pueden definir en:
+
+\begin{enumerate}
+\item \textbf{Modelo:} Representa la información , gestiona los accesos a ella, la base de datos seria un componente del modelo. 
+
+\item \textbf{Vista:} Representa el modelo en un formato adecuado para interactuar con él mediante la interfaz de usuario.  
+
+\item \textbf{Controlador:} Responde a eventos invocando peticiones al modelo cuando se hace alguna solicitud de la información (por ejemplo, editar un documento o un registro en una base de datos). El controlador interactúa con su vista asociada para realizar cambios en la forma de representar el modelo. 
+\end{enumerate}
+
+Este proyecto se ha desarrollado en python, utilizando el framework Django. Como sistema de bases de datos, se ha utilizado mongoDB por su capacidad de manejar grandes cantidades de datos y su eficiencia a la hora de realizar consultas, algo imprescindible para el correcto funcionamiento tanto de la web como de la aplicación Android. Para la interacción con este motor de bases de datos se ha utilizado el cliente Pymongo. Para mejorar la experiencia de usuario, se ha utilizado técnicas de programación en el cliente basadas en Ajax, Jquery y Javascript. Para la apariencia de la web, se ha utilizado el framework CSS Bootstrap. A continuación se profundizará en las herramientas utilizadas. 
+
+ 
 
 
 
@@ -774,6 +796,12 @@ Django\cite{dj}, es un Framework de alto nivel para Python. Django sigue la meto
 Django cuenta con varios módulos para asegurar la seguridad e integridad de las aplicaciones web desarrolladas con el. 
 
 Django posee un sistema jerárquico de plantillas que facilita la reutilización de código y extensibilidad de aplicaciones. Además cuenta con soporte para internacionalización.
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/desarrollo_herramienta/django.jpg}
+\caption{ Django-Logo\cite{djL}  }  
+\end{figure} 
 
 En este proyecto se ha decidido utilizar Django debido a que utiliza python y que además al ser un framework de alto nivel, reúne diversas herramientas y aplicaciones, como por ejemplo el servidor de aplicación para desarrollo que facilita el trabajo para desarrollar de manera ágil, el modulo de autenticación de usuarios, el modulo para desarrollo baso en test o la integración de servicios de mensajería de manera interna. Al principio se planteaba realizar la plataforma web con PHP pero al ser un sistema bastante grande, se decidió optar por Django ya que facilitaba el proceso de desarrollo. También se pensó en el micro-framework python Flask pero después del proceso de análisis, se llegó a la conclusión de que con Flask\cite{fl} se repetiría mucho mas código y con Django el diseño seria también más escalable.
 
@@ -802,11 +830,20 @@ En cuanto a la replicación y Balanceo de carga, MongoDb soporta el paradigma ma
 
 En MongoDB, los documentos los guarda en BSON, que es una forma de representar de forma binaria objetos JSON. Un ejemplo de documento almacenado en MongoDB que representa a un item del almacén, es el siguiente:
 
-\begin{figure}[H] 
-\centering 
-\includegraphics[scale=0.45]{imagenes/desarrollo_herramienta/bson.png}
-\caption{ Ejemplo Bson\cite{propio}}  
-\end{figure} 
+\begin{lstlisting}
+{u'nombre_item': u'nombre del objeto', 
+ u'descripcion_item': u'Detalles del objeto', 
+ u'tag1': u'Facultad de Filosof\xeda y Letras',
+ u'tag2': u'SWITCH',
+ u'tag3': u'NO FUNCIONAL',
+ u'usuario': u'user',
+ u'peso': u'0.0',
+ u'organizacion': u'osl',
+ u'fecha_alta_item': u'2016-06-02 07:50:41',
+ u'localizador': u'010B05140000001',
+ u'_id': ObjectId('574fe5511a4d6d0e054d8519')}
+
+\end{lstlisting}
 
 Este documento es básico. Los documentos pueden anidarse, dando lugar a documentos mas complejos con muchas mas información. Pueden contener también listas de otros elementos o valores. 
 
@@ -1173,11 +1210,29 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 \textit{Test de Integración y Navegación}
 \url{http://www.seleniumhq.org/}
 
+\bibitem[8]{mvc} \textsc{MVC},
+\textit{MVC: Patrón de arquitectura de software }
+\url{http://librosweb.es/libro/jobeet_1_4/capitulo_4/la_arquitectura_mvc.html}
 
+\bibitem[8]{mvc2} \textsc{MVC},
+\textit{MVC: Diagrama}
+\url{https://yalantis.com/media/content/ckeditor/2014/05/mvc_role_diagram.png}
+
+\bibitem[8]{mvc3} \textsc{MVC},
+\textit{MVC: Componentes}
+\url{http://martinfowler.com/eaaDev/uiArchs.html}
+
+\bibitem[8]{mvc4} \textsc{MVC},
+\textit{MVC Wikipedia}
+\url{https://es.wikipedia.org/wiki/Modelo%E2%80%93vista%E2%80%93controlador}
 
 \bibitem[8]{dj} \textsc{Django},
 \textit{Django}
 \url{https://www.djangoproject.com/}
+
+\bibitem[8]{djL} \textsc{Django},
+\textit{Django Logo}
+\url{http://blog.djangostars.com/content/images/2015/12/maxresdefault.jpg}
 
 \bibitem[9]{fl} \textsc{Flask},
 \textit{Flask}

@@ -160,6 +160,7 @@ def item(request,id_item):
 
     item=gestorItems.read(item_id=id_item)
     for i in item:
+        #print i
         item_object = Item.build_from_json(i)
     lista_catalogos=gestorCatalogos.database.catalogos.find({"organizacion":request.session['organizacion']})
     #contexto = {"item":item_object,"map":str(item_object.tag1)+', Granada',"id_item":item_object._id}

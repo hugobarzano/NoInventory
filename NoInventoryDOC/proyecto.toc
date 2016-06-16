@@ -28,22 +28,22 @@
 \contentsline {chapter}{\numberline {3}Desarrollo del Sistema}{45}{chapter.3}
 \contentsline {section}{\numberline {3.1}Desarrollo Web}{45}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}Django}{46}{subsection.3.1.1}
-\contentsline {subsection}{\numberline {3.1.2}MongoDB}{46}{subsection.3.1.2}
-\contentsline {subsection}{\numberline {3.1.3}Pymongo}{47}{subsection.3.1.3}
-\contentsline {subsection}{\numberline {3.1.4}JQuery}{48}{subsection.3.1.4}
-\contentsline {subsection}{\numberline {3.1.5}Bootstrap}{49}{subsection.3.1.5}
-\contentsline {section}{\numberline {3.2}Infraestructura}{49}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Integraci\IeC {\'o}n Continua}{50}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Plataforma Como Servicio}{51}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Infraestructura Como Servicio}{52}{subsection.3.2.3}
-\contentsline {subsubsection}{Vagrant}{52}{section*.7}
-\contentsline {subsubsection}{Ansible}{53}{section*.8}
-\contentsline {subsubsection}{Docker}{54}{section*.9}
-\contentsline {section}{\numberline {3.3}Desarrollo Android}{55}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Android-Studio}{56}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}Librer\IeC {\'\i }a Volley}{56}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Near field communication (NFC)}{57}{subsection.3.3.3}
-\contentsline {subsection}{\numberline {3.3.4}Lector de C\IeC {\'o}digos de Barras ZXing}{58}{subsection.3.3.4}
+\contentsline {subsection}{\numberline {3.1.2}MongoDB}{47}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}Pymongo}{49}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}JQuery}{49}{subsection.3.1.4}
+\contentsline {subsection}{\numberline {3.1.5}Bootstrap}{50}{subsection.3.1.5}
+\contentsline {section}{\numberline {3.2}Infraestructura}{50}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Integraci\IeC {\'o}n Continua}{51}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Plataforma Como Servicio}{52}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Infraestructura Como Servicio}{53}{subsection.3.2.3}
+\contentsline {subsubsection}{Vagrant}{54}{section*.7}
+\contentsline {subsubsection}{Ansible}{55}{section*.8}
+\contentsline {subsubsection}{Docker}{55}{section*.9}
+\contentsline {section}{\numberline {3.3}Desarrollo Android}{57}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Android-Studio}{57}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Librer\IeC {\'\i }a Volley}{58}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Near field communication (NFC)}{59}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}Lector de C\IeC {\'o}digos de Barras ZXing}{60}{subsection.3.3.4}
 \contentsline {chapter}{\numberline {4}Implementaci\IeC {\'o}n y pruebas}{61}{chapter.4}
 \contentsline {section}{\numberline {4.1}Herramientas}{61}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Herramientas de infraestructura}{61}{subsection.4.1.1}
@@ -56,4 +56,4 @@
 \contentsline {subsection}{\numberline {5.1.4}Dockerfile}{69}{subsection.5.1.4}
 \contentsline {subsection}{\numberline {5.1.5}Configuraci\IeC {\'o}n Nginx}{70}{subsection.5.1.5}
 \contentsline {subsection}{\numberline {5.1.6}Configuraci\IeC {\'o}n supervisor}{70}{subsection.5.1.6}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{70}{lstnumber.-6.7}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{70}{lstnumber.-7.7}
