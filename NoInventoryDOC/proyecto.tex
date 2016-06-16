@@ -867,43 +867,94 @@ Bootstrap\cite{boo} es un framework CSS para dar forma a sitios web mediante lib
  
  
 \section{Infraestructura}
-En esta sección se detallará la infraestructura virtual subyacente con la que cuenta el proyecto. Para empezar se hablará de los sistemas de integración continua utilizados y el papel que juegan en el despliegue. Se hablará también de Heroku, la Plataforma como servicio utilizada, de como distribuir la base de datos MongoDB utilizando Mlab. También se hablará de Azure, la infraestructura como servicio utilizada, de las herramientas de despliegue utilizadas para trabajar con Azure y por último como utilizar Docker y las ventajas del aislamiento de recursos para levantar instancias del sistema de manera rápida en el caso de que la cantidad de datos a gestionar por el cliente así lo requiera. 
+
+En esta sección se detallará la infraestructura virtual subyacente con la que cuenta el proyecto. Para empezar se hablará de las herramientas de integración continua utilizadas y el papel que juegan en el despliegue. Se hablará también de Heroku, la Plataforma como servicio utilizada, de como distribuir la base de datos MongoDB utilizando Mlab. También se hablará de Azure, la infraestructura como servicio utilizada, de las herramientas de despliegue utilizadas para trabajar con Azure y por último como utilizar Docker y las ventajas del aislamiento de recursos para levantar instancias del sistema de manera rápida en el caso de que la cantidad de datos a gestionar por el cliente así lo requiera. 
 
 \subsection{Integración Continua}
 
-fichero de configuracion\ref{sec:travis}
+Para detallar la infraestructura subyacente con la que cuenta el proyecto, es necesario comenzar hablando de las herramientas de integración continua que se usan en el. La integración continua consiste en realizar compilaciones y ejecución de pruebas o test unitarios de todo el proyecto, cada cierto tiempo con el objetivo de detectar fallos. Debido al desarrollo TDD, el proyecto cuenta con las baterías de test asociadas a los modelos y a sus manejadores.
+
+En este proyecto la primera herramienta de integración continua utilizada es Travis-CI\cite{travis}.Travis es un  sistema distribuido de integración continua utilizado para construir y testear proyectos. Travis utiliza el control de versiones GitHub y un archivo denominado travis.yml\ref{sec:travis} para realizar el proceso de integración. En dicho fichero, se especifica el lenguaje utilizado, la versión, la instalación de dependencias y la ejecución de test unitarios. Dicho fichero también puede utilizarse para realizar despliegue de la aplicación en distintas plataformas aunque en este proyecto no ha sido el caso. Travis es una herramienta de código abierto compatible con multitud de lenguajes. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/desarrollo_herramienta/travis.jpg}
+\caption{ Travis-CI Logo\cite{travisL}  }  
+\end{figure} 
+
+La segunda herramienta de integración continua utilizada ha sido SNAP-CI\cite{snap}. Esta herramienta es perfecta para el proceso de integración continua y la automatización del despliegue de la aplicación. Como podemos observar en la siguiente imagen, Snap-CI nos permite vincular el repositorio de github en el que se encuentra el sistema y desglosar en un pipeline los distintos pasos que de pasar la aplicación para completar la integración y desplegarse.En este proyecto, el pipeline esta desglosado en 3 bloques, los cuales se ejecutarán cada vez que se realice un push al repositorio:
+
+\begin{enumerate}
+\item Instalación de dependencias
+\item Ejecución de los test unitarios
+\item Despliegue en un PaaS (Heroku)  
+\end{enumerate}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.30]{imagenes/desarrollo_herramienta/snp_ci.png}
+\caption{ Pipeline Snap-CI\cite{snapP}  }  
+\end{figure}  	
+
+
+
 
 
 \subsection{Plataforma Como Servicio}
 
-Para Realizar el despliegue de este proyecto en un PaaS se ha utilizado Heroku\cite{hero}. Heroku es una plataforma en la nube basado en un sistema de contenedores gestionados, con servicios de datos integrados y un potente ecosistema, para implementar y ejecutar aplicaciones modernas. Heroku presenta una fácil integración con github y por es de carácter gratuito (al menos algunos servicios). Heroku se caracteriza por el fichero de configuración denominado Procfile. Dicho fichero, se encarga de arrancar una instancia web y dejar que gunicorn (servidor de aplicación) ejecute el sistema en ella.
+Para continuar con el desarrollo de la infraestructura, se va a hablar de la plataforma como servicio. Como se vio en la introducción, la plataforma como servicio es uno de los servicios cloud que hoy en día pueden ofrecerse. Este proyecto se encuentra desplegado en el PaaS Heroku\cite{hero} que al ser de carácter gratuito el objetivo de desplegar el sistema aquí es tener una versión disponible para que el usuario prueba el sistema sin ningún compromiso.
 
-Otro motivo por el cual usar Heroku es por la automatización del despliegue. Heroku nos facilita un repositorio para almacenar el sistema. Un complemento para realizar despliegues en Heroku de forma automatizada es el sistema de integración continua Snap-CI\cite{snap}.  Como podemos observar en la siguiente captura, Snap-CI nos permite vincular el repositorio en el que se encuentra el sistema y desglosar en un pipeline los distintos estados por los que pasa el despliegue, pasando por la instalación de dependencias y ejecución de los test para integración continua hasta despliegue con Heroku.  
-
-\begin{figure}[h] 
+\begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.25]{imagenes/desarrollo_herramienta/snp_ci.png}
-\caption{ Pipeline Snap-CI  }  
-\end{figure}
+\includegraphics[scale=0.30]{imagenes/desarrollo_herramienta/heroku.jpg}
+\caption{ Heroku Logo\cite{heroL}  }  
+\end{figure}  	
+ 
+
+Heroku es una plataforma en la nube basado en un sistema de contenedores gestionados, con servicios de datos integrados y un potente ecosistema, para implementar y ejecutar aplicaciones. Heroku presenta una fácil integración con github y con herramientas de integración continua como vimos en la subsección anterior. Heroku se caracteriza por el fichero de configuración denominado Procfile. Dicho fichero, se encarga de arrancar una instancia web y dejar que gunicorn (servidor de aplicación) ejecute el sistema en ella. Heroku también cuenta con una herramienta de linea de comandos que facilita la automatización de tareas y despliegues. 
+
+El principal problema es que Heroku es gratuito hasta cierto punto, por ejemplo el sistema de bases de datos es de pago, por lo que se decidió utilizar Mlab para distribuir la base de datos.
+
+Mlab\cite{mlab} es un servicio de base de datos alojado en la nube completamente gestionado que proporciona servicio de bases de datos MongoDB. MLab se ejecuta en proveedores cloud como Amazon, Google y Microsoft Azure. Mlab facilita la automatización de despliegue, proporciona servicio de Backup, Recovery, monitorización y alertas de consumo desde la interfaz del navegador. Mlab proporciona de manera gratuita hasta 500MB de almacenamiento y el acceso a las bases de datos creadas en la plataforma se realiza mediante url la cual aprovechan los clientes de bases datos como Pymongo para conectar con el servicio, de esta manera se consigue distribuir la base de datos cuando estamos trabajando por ejemplo con Heroku. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/desarrollo_herramienta/mlab.png}
+\caption{ Mlab Logo\cite{mlabL}  }  
+\end{figure} 
+  
 
 \subsection{Infraestructura Como Servicio}
+Para finalizar con el desarrollo de la infraestructura, se va a hablar de la infraestructura como servicio. Como se vio en la introducción, la infraestructura como servicio es uno de los servicios cloud que proporciona acceso a recursos informáticos situados en un entorno virtualizados. Este proyecto, a nivel de IaaS, se encuentra desplegado en Azure\cite{azure} con el objetivo de  dar la mejor experiencia, calidad de servicio y alta disponibilidad al usuario, ya que al no necesitar distribuir la base de datos, la eficiencia se ve incrementada de manera importante.
+Azure proporciona herramientas integradas, plantillas precompiladas e infinidad de servicios administrados para facilitar la compilación y administración de aplicaciones. Azure admite una gran selección de sistemas operativos, lenguajes de programación, frameworks, bases de datos y dispositivos. Proporciona una gran flexibilidad a través de su red de conexiones privadas seguras, y sistemas de almacenamiento híbridos pagando solo por su uso. 
 
-
-\subsection{Docker}
-
-Docker\cite{dk} es una herramienta para automatizar el despliegue de aplicaciones dentro de contenedores, proporcionando una capa de abstracción y automatización de Virtualización a nivel de sistema operativo. Docker utiliza aislamiento de recursos del kernel de Linux, para permitir que contenedores independientes se ejecuten dentro de una sola instancia de Linux, evitando la sobrecarga de iniciar y mantener máquinas virtuales.
-
-\begin{figure}[h] 
+\begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.35]{imagenes/desarrollo_herramienta/docker.png}
-\caption{ Virtualización Docker\cite{dkw}}
+\includegraphics[scale=0.50]{imagenes/desarrollo_herramienta/azure.png}
+\caption{ Arquitectura Azure\cite{azureA}  }  
 \end{figure}
 
-La principal diferencia con respecto a maquinas virtuales es el tamaño. Las maquinas virtuales incluyen la aplicación, el codigos, las libresrias necesarias y un sistema operativo anfitrion completo mientras que los contenedores contienen los mismo pero comparten el nucleo con otros contenedores corriendo como una proceso asilado en el espacio de usuario del sistema operativo anfitrion. No estan vinculados con ninguna infraestructura especifica 
+Al trabajar con Azure a nivel de IaaS, disponemos de maquinas virtuales en linea con la capacidad de dar servicio y con la posibilidad de instalar en ellas todo lo que el sistema necesite para funcionar de manera óptima. En las siguientes subsecciones se detallarán las herramientas utilizadas en este proyecto para configurar estas maquinas en función del tipo de servicio que se quiera ofrecer. 
 
-\subsection{Ansible}
+\subsubsection{Vagrant}
 
-Ansible\cite{ans} es una herramienta de automatización que permite configurar sistemas, implementar software y orquestar tareas complejas como por ejemplo despliegues continuos. En este proyecto se ha decidido utilizar Ansible como mecanismo de aprovisionamiento de aplicación, debido a su fiabilidad, facilidad de uso y seguridad. Para poder trabajar con Ansible es necesario crear playbooks que no son mas que archivos de aprovisionamiento.yml en los que detallar todas las dependencias, servicios y tareas que nuestra aplicación necesita para funcionar. Aunque puede usarse de manera independiente, si la combinamos con herramientas de creación y administración de entornos virtuales como por ejemplo Vagrant, podemos llegar a conseguir grandes resultados.
+La herramienta base es Vagrant\cite{vg}, herramienta open-source para la creación y configuración de entornos de desarrollo virtualizados. Vagrant proporciona entornos de trabajo fáciles de configurar, reproducibles y portátiles. Está desarrollado con Ruby y utiliza el sistema de virtualización Virtualbox de Oracle. Este proyecto tiene asociado un fichero denominado Vagrantfile\ref{sec:vagrantfile} cuya función principal es la de describir el tipo de máquinas necesarias para la aplicación, cómo configurarlas y como aprovisionarlas. Las posibilidades con Vagrant son muy numerosas, en este proyecto se va a utilizar Vagrant para la configuración de maquinas virtuales alojadas en Azure. Dichas maquinas correrán directamente con la aplicación utilizando Ansible y también correrán con la aplicación de manera asilada utilizando contenedores. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.95]{imagenes/desarrollo_herramienta/vagrant.jpeg}
+\caption{ Funcionamiento Vagrant\cite{vg2}}
+\end{figure}
+
+
+Dependiendo del proveedor de servicio, Vagrant será configurado de una manera u otra. En este proyecto se ha utilizado Azure, por lo que Vagrant necesita el plugin Microsoft Azure provider to Vagrant. Con este plugin detallamos entre otras cosas las credenciales necesarias para autenticación en Azure.
+
+Vagrant cuenta con infinidad de plugins para distintos cloud services y distintos entornos de de desarrollo virtuales. Con Vagrant no solo podemos trabajar individualmente maquina a máquina, podemos utilizar la caracteristica vagrant-multimachine para crear en paralelo N máquinas virtuales y aprovisionarlas cada una como queramos. 
+
+
+\subsubsection{Ansible}
+
+Ansible\cite{ans} es una herramienta de automatización que permite configurar sistemas, implementar software y orquestar tareas complejas como por ejemplo despliegues continuos. En este proyecto se ha decidido utilizar Ansible como mecanismo de aprovisionamiento de aplicación, debido a su fiabilidad, facilidad de uso y seguridad. Para poder trabajar con Ansible es necesario crear playbooks\ref{sec:playbook} que no son mas que archivos de aprovisionamiento.yml en los que detallar todas las dependencias, servicios y tareas que nuestra aplicación necesita para funcionar. Aunque puede usarse de manera independiente, si la combinamos con herramientas de creación y administración de entornos virtuales como por ejemplo Vagrant, podemos llegar a conseguir grandes resultados.
 
 \begin{figure}[H] 
 \centering 
@@ -911,20 +962,33 @@ Ansible\cite{ans} es una herramienta de automatización que permite configurar s
 \caption{ Arquitectura Ansible\cite{ans2}}
 \end{figure}
 
-\subsection{Vagrant}
 
-Vagrant\cite{vg} es una herramienta open-source para la creación y configuración de entornos de desarrollo virtualizados. Vagrant proporciona entornos de trabajo fáciles de configurar, reproducibles y portátiles. Está desarrollado con Ruby y utiliza el sistema de virtualización Virtualbox de Oracle. Este proyecto tiene asociado un fichero denominado Vagrantfile cuya función principal es la de describir el tipo de máquinas necesarias para la aplicación, cómo configurarlas y como aprovisionarlas. Las posibilidades con Vagrant son muy numerosas, en este proyecto se va a utilizar Vagrant para la configuración de maquinas virtuales alojadas en Azure. Dichas maquinas correrán directamente con la aplicación utilizando Ansible y también correrán con la aplicación de manera asilada utilizando contenedores. 
+
+\subsubsection{Docker}
+
+Docker\cite{dk} es una herramienta para automatizar el despliegue de aplicaciones dentro de contenedores, proporcionando una capa de abstracción y automatización de Virtualización a nivel de sistema operativo. Docker utiliza aislamiento de recursos del kernel de Linux, para permitir que contenedores independientes se ejecuten dentro de una sola instancia de Linux, evitando la sobrecarga de iniciar y mantener máquinas virtuales.
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.75]{imagenes/desarrollo_herramienta/vagrant.jpeg}
-\caption{ Funcionamiento Vagrant\cite{vg2}}
+\includegraphics[scale=0.35]{imagenes/desarrollo_herramienta/docker.png}
+\caption{ Virtualización Docker\cite{dkw}}
 \end{figure}
 
+La principal diferencia con respecto a maquinas virtuales es el tamaño. Las maquinas virtuales incluyen la aplicación, el codigos, las librerias necesarias y un sistema operativo anfitrion completo mientras que los contenedores contienen los mismo pero comparten el nucleo con otros contenedores corriendo como una proceso asilado en el espacio de usuario del sistema operativo anfitrion. No estan vinculados con ninguna infraestructura especifica 
 
-Dependiendo del proveedor de servicio, Vagrant será configurado de una manera u otra. En este proyecto se va a utilizar Azure, por lo que Vagrant necesita el plugin Microsoft Azure provider to Vagrant. Con este plugin detallamos entre otras cosas las credenciales necesarias para autenticación en Azure.
 
-Vagrant cuenta con infinidad de plugins para distintos cloud services y distintos entornos de de desarrollo virtuales. Con Vagrant no solo podemos trabajar individualmente maquina a máquina, podemos utilizar la caracteristica vagrant-multimachine para crear en paralelo N máquinas virtuales y aprovisionarlas cada una como queramos. 
+En este proyecto se ha decidido utilizar Docker con el objetivo de levantar instancias del sistema de manera rápida y asilada. Esto puede ser de gran ayuda a la hora de que el sistema tenga que gestionar un almacén con una cantidad inmensa de elementos. Manejar tal cantidad de datos, podría afectar negativamente no solo al almacén en cuestión, si no a otros usuarios de otros almacenes que obtengan servicio de la misma instancia. Usar Docker puede resultar interesante también cuando los objetos a gestionar sean sensibles y el cliente requiera mayor grado de seguridad para sus datos. Docker también facilita la puesta en producción de la aplicación, ya que en un mismo archivo de configuración denominado Dockerfile\ref{sec:dockerfile}, se pueden automatizar las tareas de puesta en producción, configuración de Nginx\ref{sec:nginx} como servidor de contenido estático, configuración de gunicorn como servidor de aplicación y monitorización del sistema utilizando supervisor\ref{sec:supervisor}. 
+
+Otra ventaja de utilizar Docker es el uso de Docker Hub\cite{dkh}, servicio cloud para la construcción y envío de aplicaciones o servicios utilizando contenedores. Proporciona recursos centralizados para la creación, distribución y gestión de imágenes de contenedores. Permite al usuario la automatización del flujo de trabajo a lo largo de la línea de desarrollo.
+
+Con Docker Hub se vincula el repositorio del proyecto alojado en el control de versiones Github, de manera que cuando se realice un push al repositorio, el servicio detectará el Dockerfile principal, lo ejecutará y generará una imagen preconstruida de la aplicación, con esta imagen se pueden levantar nuevas instancias de la aplicación en cuestión de minutos. 
+
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.35]{imagenes/desarrollo_herramienta/dockerhub.png}
+\caption{ Generación Imagen Docker Hub\cite{dkh2}}
+\end{figure}
 
 
 \section{Desarrollo Android}
@@ -1069,6 +1133,10 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 \textit{Plataforma como Servicio}
 \url{http://www.interoute.es/what-paas} 
 
+\bibitem[4]{iaas} \textsc{IaaS},
+\textit{Infraestructura como Servicio}
+\url{http://www.interoute.es/what-iaas} 
+
 %TDD
 \bibitem[8]{tdd} \textsc{Kent Beck},
 \textit{Test Driven Development: By Example}
@@ -1155,17 +1223,69 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 
 
 
+
+\bibitem[3]{travis} \textsc{Travis-CI},
+\textit{Travis-CI: Herramienta Integración Continua}
+\url{https://travis-ci.org/}
+
+\bibitem[3]{travisL} \textsc{Travis-CI},
+\textit{Travis-CI: Logo}
+\url{https://luisfuentes.me/images/travis-ci-logo.jpg}
+
+
+\bibitem[3]{snap} \textsc{Snap-CI},
+\textit{Snap-CI: Herramienta Integración Continua}
+\url{https://snap-ci.com/}
+
+\bibitem[3]{snapP} \textsc{Snap-CI},
+\textit{Snap-CI: Pipeline}
+\url{https://snap-ci.com/hugobarzano/NoInventory/branch/master}
+
+
 \bibitem[2]{hero} \textsc{Heroku},
 \textit{Heroku: Plataforma como Servicio}
 \url{https://www.heroku.com/}
 
-\bibitem[3]{snap} \textsc{Snap-CI},
-\textit{Snap-CI: Sistema Integración Continua}
-\url{https://snap-ci.com/}
+\bibitem[2]{heroL} \textsc{Heroku},
+\textit{Heroku: Logo}
+\url{https://vort3x.me/images/heroku-logo.jpg}
 
-\bibitem[4]{iaas} \textsc{IaaS},
-\textit{Infraestructura como Servicio}
-\url{http://www.interoute.es/what-iaas} 
+\bibitem[2]{mlab} \textsc{Mlab},
+\textit{Mlab: Database-as-a-Service for MongoDB}
+\url{https://mlab.com/}
+
+\bibitem[2]{mlabL} \textsc{Mlab},
+\textit{Mlab: Logo}
+\url{https://apiplug.com/blog/wp-content/uploads/2016/03/mlab_logo.png}
+
+
+
+\bibitem[4]{azure} \textsc{Azure},
+\textit{¿Qué es Azure?}
+\url{https://azure.microsoft.com/es-es/overview/what-is-azure/} 
+
+\bibitem[4]{azureA} \textsc{Azure},
+\textit{Arquitectura Azure}
+\url{www.exevi.com/wp-content/uploads/2014/08/arquitectura-azure.png} 
+
+
+
+\bibitem[4]{vg} \textsc{Vagrant},
+\textit{Vagrant}
+\url{https://www.vagrantup.com/} 
+
+\bibitem[4]{vg2} \textsc{Vagrant},
+\textit{Cómo manejar máquinas virtuales de forma sencilla}
+\url{http://www.pixelovers.com/utiliza-vagrant-y-haz-portable-tu-entorno-de-desarrollo/} 
+
+
+\bibitem[4]{ans} \textsc{Ansible},
+\textit{Ansible}
+\url{https://www.ansible.com/} 
+
+\bibitem[4]{ans2} \textsc{Ansible},
+\textit{Deploying Symfony2 app with Ansible}
+\url{http://www.slideshare.net/rodomansky/deploying-symfony2-app-with-ansible} 
 
 
 \bibitem[4]{dk} \textsc{Docker},
@@ -1177,21 +1297,18 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
 \url{https://es.wikipedia.org/wiki/Docker_\%28software\%29} 
 
 
-\bibitem[4]{ans} \textsc{Ansible},
-\textit{Ansible}
-\url{https://www.ansible.com/} 
+\bibitem[4]{dkh} \textsc{Docker Hub},
+\textit{Docker Hub}
+\url{https://hub.docker.com/} 
 
-\bibitem[4]{ans2} \textsc{Ansible},
-\textit{Deploying Symfony2 app with Ansible}
-\url{http://www.slideshare.net/rodomansky/deploying-symfony2-app-with-ansible} 
+\bibitem[4]{dkh2} \textsc{Docker Hub },
+\textit{Docker Hub: Proceso}
+\url{http://helloit.es/wp-content/uploads/2016/01/docker1.png}
 
-\bibitem[4]{vg} \textsc{Vagrant},
-\textit{Vagrant}
-\url{https://www.vagrantup.com/} 
 
-\bibitem[4]{vg2} \textsc{Vagrant},
-\textit{Cómo manejar máquinas virtuales de forma sencilla}
-\url{http://www.pixelovers.com/utiliza-vagrant-y-haz-portable-tu-entorno-de-desarrollo/} 
+
+
+
 
 
 %desarollo android
@@ -1245,7 +1362,8 @@ Decir los recursos humanos (autor y directores), hardware y software que se van 
  
 
 \chapter{Anexo}
-\section{Travis.yml}\label{sec:travis}
+\section{Infraestructura: Archivos De Configuración}
+\subsection{Travis.yml}\label{sec:travis}
 \begin{lstlisting}
 language: python
 python:
@@ -1273,6 +1391,162 @@ env:
   - HEROKU=true
 
 \end{lstlisting}
+
+\subsection{Vagrantfile}\label{sec:vagrantfile}
+\begin{lstlisting}
+Vagrant.configure('2') do |config|
+ config.vm.box = 'azure'
+ config.vm.network "public_network"
+ config.vm.network "private_network",ip: "192.168.56.10", virtualbox__intnet: "vboxnet0"
+ config.vm.network "forwarded_port", guest: 80, host: 80
+ config.vm.define "localhost" do |l|
+    l.vm.hostname = "localhost"
+  end
+
+
+
+ config.vm.provider :azure do |azure, override|
+ azure.mgmt_certificate = File.expand_path('~/.ssh/azurejuanfran.pem')
+ azure.mgmt_endpoint = 'https://management.core.windows.net'
+ azure.subscription_id = 'b187be6d-afae-40aa-9513-a3b91e07f3a3'
+ azure.vm_image = 'b39f27a8b8c64d52b05eac6a62ebad85__Ubuntu-14_04_2-LTS-amd64-server-20150506-en-us-30GB'
+ azure.vm_name = 'noinventory'
+ azure.cloud_service_name = 'noinventory'
+ azure.vm_password = 'Clave#Hugo#1'
+ azure.vm_location = 'Central US'
+ azure.ssh_port = '22'
+ azure.tcp_endpoints = '80:80'
+ end
+
+ config.vm.provision "ansible" do |ansible|
+    ansible.sudo = true
+    ansible.playbook = "playbook.yml"
+    ansible.verbose = "v"
+    ansible.host_key_checking = false
+  end
+
+end
+\end{lstlisting}
+
+\subsection{Ansible}\label{sec:playbook}
+\begin{lstlisting}
+- hosts: localhost
+  sudo: yes
+  remote_user: vagrant
+  tasks:
+  - name: Actualizar sistema base
+    apt: update_cache=yes upgrade=dist
+  - name: Instalar git
+    action: apt pkg=git state=installed
+  - name: Install Python
+    action: apt pkg=python-setuptools state=installed
+    action: apt pkg=python-dev state=installed
+    action: apt pkg=build-essential state=installed
+    action: apt pkg=libpq-dev state=installed
+    action: apt pkg=python-psycopg2 state=installed
+    action: apt pkg=python-reportlab state=installed
+  - name: Install MongoDB
+    apt: pkg=mongodb state=present update_cache=yes
+  - name: Inicializar MongoDB
+    service: name=mongodb state=started
+  - name: Install Python Pip
+    action: apt pkg=python-pip state=installed
+  - name: Obtener aplicacion de git
+    git: repo=https://github.com/hugobarzano/NoInventory.git dest=~/Ansible force=yes
+  - name: Dar permisos de ejecucion
+    command: chmod -R +x ~/Ansible
+  - name: Instalar requisitos de la aplicacion
+    pip: requirements=~/Ansible/requirements.txt
+  - name: migraciones
+    command: python ~/Ansible/manage.py makemigrations --noinput
+    command: python ~/Ansible/manage.py migrate --noinput
+    command: python ~/Ansible/manage.py syncdb --noinput
+  - name: ejecutar
+    command: sudo fuser -k 80/tcp
+    command: sleep 10
+    command: nohup sudo python ~/Ansible/manage.py runserver 0.0.0.0:80
+\end{lstlisting}
+
+\subsection{Dockerfile}\label{sec:dockerfile}
+\begin{lstlisting}
+FROM ubuntu:latest
+
+#Autor
+MAINTAINER Hugo Barzano Cruz <hugobarzano@gmail.com>
+ENV PYTHONUNBUFFERED 1
+#Actualizar Sistema Base
+RUN sudo apt-get -y update
+
+#Descargar aplicacion
+RUN sudo apt-get install -y git
+RUN sudo git clone https://github.com/hugobarzano/NoInventory.git
+
+# Instalar Python y PostgreSQL
+RUN sudo apt-get install -y python-setuptools
+RUN sudo apt-get -y install python-dev
+RUN sudo apt-get -y install build-essential
+RUN sudo apt-get -y install libpq-dev
+RUN sudo apt-get -y install mongodb
+RUN sudo apt-get -y install python-reportlab
+RUN sudo easy_install pip
+RUN sudo pip install --upgrade pip
+RUN sudo python -m pip install pymongo==2.8
+
+
+
+#Instalamos la aplicacion
+RUN ls
+RUN cd NoInventory/ && ls -l
+RUN cd NoInventory/ && sudo pip install -r requirements.txt
+
+# PRODUCCION
+
+# servidor web y watchdog
+RUN apt-get install -y nginx
+RUN apt-get install -y supervisor
+
+#  configuraciones
+RUN cp NoInventory/supervisor.conf /etc/supervisor/conf.d/
+RUN cp NoInventory/nginx-default /etc/nginx/sites-available/default
+
+run sed -i 's/DEBUG = True/DEBUG= False/' NoInventory/NoInventoryProject/settings.py
+
+expose 80
+
+cmd NoInventory/collect_static.sh && supervisord
+\end{lstlisting}
+
+\subsection{Configuración Nginx}\label{sec:nginx}
+\begin{lstlisting}
+server {
+     listen 80 default_server;
+
+     # servidor web para archivos en  /static
+     location /static/ {
+     autoindex on;
+		 alias /var/www/static/;
+	 }
+
+     # proxy inverso, se pasa a la aplicacion wsgi
+     location / {
+           proxy_pass http://127.0.0.1:8001;
+           proxy_set_header X-Forwarded-Host $server_name;
+           proxy_set_header X-Real-IP $remote_addr;
+     }
+\end{lstlisting}
+
+\subsection{Configuración supervisor}\label{sec:supervisor}
+\begin{lstlisting}
+[program:gunicorn]
+command=/usr/local/bin/gunicorn NoInventoryProject.wsgi  --bind 0.0.0.0:80
+directory=~/NoInventory/manage.py
+user=root
+autostart=true
+autorestart=true
+redirect_stderr=true
+\end{lstlisting}
+
+
 
 %
 %\input{capitulos/02_EspecificacionRequisitos}
