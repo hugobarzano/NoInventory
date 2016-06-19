@@ -1214,10 +1214,242 @@ ZXing ofrece el lector de códigos de barras como una aplicación independiente 
 
 \chapter{Implementación y pruebas}
 
+En este capítulo se va a probar el sistema realizando una simulación del estado del almacén de la oficina de software libre así como de la gestión de dicho inventario para una campaña de donación de equipos informáticos. La simulación del almacén se va a llevar a cabo con un total de 500 artículos y con dos usuarios distintos, uno desde la web y otro desde la aplicación Android para probar también el entorno colaborativo.   Para realizar la prueba, se va a llevar a cabo una demostración y ejemplo de uso del sistema, dividiendo las tareas en 4 bloques con el objetivo de facilitar su comprensión. Los bloques en los que se ha decidido dividir el proceso son: Inicialización, Creación y Catalogación, Clasificación, Gráficos e Informes. 
+
+\section{Inicialización}
+El primer bloque es la inicialización. En este bloque se llevará a cabo el registro del usuario que trabajará desde la plataforma web. Es tarea de este usuario inicializar las preferencias de la organización u almacén para el cual va a trabajar. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.3]{imagenes/pruebas/registro.png}
+\caption{ Inicialización - Registro\cite{propio}}
+\end{figure}
+
+Al indicar el nombre de la organización o almacén a gestionar, si es la primera vez que se se registra en el sistema, se creará la entrada en el sistema de log asociado  a la organización donde se registrarán todas las tareas y acciones llevadas a cabo por los miembros de la organización. En caso de indicar una organización o almacén ya existente en el sistema, se entiende que el usuario que esta registrándose va a pasar a formar parte del espacio de trabajo colaborativo de la organización o almacén en cuestión. El registro se puede llevar a cabo de igual forma desde la aplicación Android, pero en el caso de que la organización u almacén sean dados de alta por primera vez, este registro ha de ser realizado desde la web ya que es necesario que se inicialicen las preferencias y el sistema de log.
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.3]{imagenes/pruebas/preferencias.png}
+\caption{ Inicialización - Preferencias\cite{propio}}
+\end{figure}
+
+El siguiente paso en el bloque de inicialización consiste en la inicialización de preferencias. Las preferencias son las características o atributos de los objetos del almacén. En este caso, dichas preferencias van unidas a un sub-código identificativo que establecen en primer lugar, la entidad de la Universidad de Granada de la que procede el equipo informático en cuestión (5 dígitos), la segunda el tipo de equipo informático que vamos a gestionar(2 dígitos) y por último el estado en que se ha recibido dicho equipo informático(2 dígitos). Estas preferencias son insertadas en el sistema en formato CSV (separadas por comas). La unión de cada sub-código de preferencias junto con un número auto-incrementable y correlativo a  la primera preferencia, darán como resultado el identificador propio de cada objeto. 
+
+El registro se puede llevar a cabo de igual forma desde la aplicación Android, pero en el caso de que la organización u almacén sean dados de alta por primera vez, este registro ha de ser realizado desde la web ya que es necesario que se inicialicen las preferencias y el sistema de log.
+
+
+\section{Creación y Catalogación}
+
+El siguiente bloque de trabajo abarca las tareas de catalogación y creación de objetos para el almacén. El primer paso es la creación de un catalogo de propósito general. Los catálogos son conjuntos o colecciones de items o elementos con atributos o preferencias similares. El objetivo de crear un catalogo de propósito general es tener agrupado en un conjunto todos los elementos del almacén para conseguir tener un control total del estado de este. Como se observa en el formulario de creación de catálogos, uno de sus tributos es la fecha de alerta y la alerta en si, esto sirve para crear tareas a realizar con este catalogo a lo largo del tiempo, por ejemplo al tratarse del catalogo de propósito general, se ha decido establecer la fecha de alerta para dentro de 3 meses, fecha en la cual se deberá realizar el balance trimestral del inventario. Esta tarea también se puede llevar acabo desde el móvil como se verá mas adelante. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.3]{imagenes/pruebas/catalogo_general.png}
+\caption{ Catalogación - Propósito General\cite{propio}}
+\end{figure}
+
+Una vez creado el catálogo de propósito general, podemos observar que dicho catalogo no contienen aun ningún elemento. Ha llegado el momento de dar de alta objetos en el sistema. 
+
+En el proceso de creación de elementos, se utilizan las preferencias inicializadas en el primer bloque. Además es necesario especificar el peso del elemento en cuestión de cara a generar posteriormente estadísticos del estado del almacén. Esta característica es interesante para el problema que se esta abordando debido a como se dijo en el capitulo uno, una de las obligaciones de la OSL es generar informes representativos del almacén en los que resulta interesante comparar el total de equipos o componentes informáticos que hay y el peso que estos tienen. 
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.3]{imagenes/pruebas/nuevo_item.png}
+\caption{ Creación - Nuevo Item\cite{propio}}
+\end{figure}
+
+Como parte de la prueba del entorno colaborativo, un segundo usuario trabajará desde la aplicación Android, mostrando también el proceso de creación de un objeto. 
 
 
 
+\begin{figure}[H]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil.png}
+  \caption{Actividad Principal\cite{propio}}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil2.png}
+  \caption{Lista de Items\cite{propio}}
+\endminipage\hfill
+\end{figure}
 
+\begin{figure}[H]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil3.png}
+  \caption{Creación de Item\cite{propio}}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil4.png}
+  \caption{Creación Completada\cite{propio}}
+\endminipage\hfill
+\end{figure}
+
+\begin{figure}[H]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil5.png}
+  \caption{Lista de Items\cite{propio}}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil6.png}
+  \caption{Opciones\cite{propio}}
+\endminipage\hfill
+\end{figure}
+
+Una vez creado el objeto, las lista de items asociada se actualiza de forma automática tanto en la web como en el móvil. Ahora podemos llevar acabo la acción  de consultar en detalle el item creado, lo que nos mostrará sus atributos, sus identificadores y demás información asociada. Desde esta vista también se puede eliminar el objeto o añadirlo a un catalogo. La  otra posible opción es la de escribir el identificador este objeto en una etiqueta NFC para su posterior identificación y clasificación.
+
+\begin{figure}[H]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil7.png}
+  \caption{Detalles\cite{propio}}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil8.png}
+  \caption{Escritor NFC\cite{propio}}
+\endminipage\hfill
+\end{figure}
+
+Los objetos también pueden ser creados por lotes, especificando en el formulario de creación la cantidad de unidades a crear como por ejemplo un lote de x teclados o un lote de x ratones. Para realizar las pruebas se van a crear varios lotes de elementos, de esta forma el volumen de datos se asemejará de manera aproximada con la cantidad de elementos que hay en el almacén de la Oficina de Software Libre. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/pruebas/add_catalogo.png}
+\caption{ Creación - Items\cite{propio}}
+\end{figure}
+
+Después de crear todos estos objetos y añadirlos al catálogo de propósito general, podemos ver como los datos del catálogo han sido actualizados. Como parte del proceso de catalogación, desde la vista de catálogo, se puede generar un pdf con los códigos de barras o códigos QR identificativos de los objetos que forman parte del catálogo.  
+
+\begin{figure}[H]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/barras.png}
+  \caption{PDF-Códigos de Barras\cite{propio}}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/qr.png}
+  \caption{PDF-Códigos QR\cite{propio}}
+\endminipage\hfill
+\end{figure}
+
+
+\section{Clasificación}
+
+Como parte de las pruebas de clasificación, se va a simular un pedido al sistema, dicho pedido será generado por el usuario que trabaja con la aplicación Android. 
+
+\begin{figure}[H]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil9.png}
+  \caption{Lista Catálogos\cite{propio}}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil10.png}
+  \caption{Nuevo Catálogo\cite{propio}}
+\endminipage\hfill
+\end{figure}
+
+\begin{figure}[H]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil11.png}
+  \caption{Catalogo Completado\cite{propio}}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil12.png}
+  \caption{Lista Catálogos\cite{propio}}
+\endminipage\hfill
+\end{figure}
+
+Se puede observar que a la hora de generar el catálogo que representa el primer pedido, el usuario de la aplicación Android ha fijado la fecha de alerta para el día de hoy y en el mensaje de alerta ha indicado las acciones que quiere que se lleven acabo con este catálogo, como es la de generar el informe para el cliente del primer pedido. La importancia de esta alerta, se verá en el siguiente bloque. 
+
+Al consultar en detalle el catálogo del primer pedido, se observa que esta vacío, no tiene items asociados. Es el momento de que el usuario Android que esta trabajando en el almacén comience a clasificar Items. En función del método de identificación que se ha fijado para el almacén, el usuario de la aplicación Android podrá añadir objetos a este catalogo utilizando el lector de códigos o la detección de etiquetas NFC.  Los items también pueden ser añadidos desde la web como se vio en el bloque de catalogación.  
+
+\begin{figure}[H]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil13.png}
+  \caption{Opciones Clasificación\cite{propio}}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil17.png}
+  \caption{Clasificación NFC\cite{propio}}
+\endminipage\hfill
+\end{figure}
+
+\begin{figure}[H]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil14.png}
+  \caption{Escaner\cite{propio}}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil15.png}
+  \caption{Escaner QR\cite{propio}}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{imagenes/pruebas/movil/movil16.png}
+  \caption{Escaner Código de Barras\cite{propio}}
+\endminipage\hfill
+\end{figure}
+
+Tras el proceso de clasificación se puede consultar el catálogo asociado al primer pedido y ver como los items asociados se han ido modificando dinámicamente conforme el usuario de la aplicación Android utilizaba su Smartphone para escanear y clasificar los items que el ha considerado oprotunos que formen parte del primer pedido pertenezcan a un pack o no. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/pruebas/pedido.png}
+\caption{ Detalles - Primer Pedido\cite{propio}}
+\end{figure}
+
+\section{ Gráficos e Informes}
+
+El último bloque representa el análisis estadístico de la información y la automatización de informes, para comenzar, en la pestaña de catálogos, se puede observar que la alerta asociada al primer catálogo avisa al resto de usuarios que forman parte del entorno colaborativo, de que hay una tarea pendiente relativa a un catálogo. Dicha tarea es la de generar un informe con el primer pedido.
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/pruebas/alerta.png}
+\caption{ Alerta - Primer Pedido\cite{propio}}
+\end{figure}
+
+Para generar el informe solicitado, lo primero es comenzar generando gráficos representativos del pedido. Los gráficos se generan a partir de cada catalogo en función de los items que forman parte de ellos. Los gráficos se generan en función de las preferencias inicializadas para la organización es decir, en función de la entidad de la que proceden, del tipo de material informático y del estado en el que se encuentra. Adicionalmente se ha incluido una zona gráfica para representar el rango de fechas en el que recibieron los objetos que forman parte del pedido. Los gráficos muestran una comparativa del numero de unidades creadas con cada preferencia con el peso de dichas unidades. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/pruebas/g.png}
+\caption{ Gráficos - Primer Pedido\cite{propio}}
+\end{figure}
+
+La forma gráfica puede ser modificada variando entre columnas, barras, sectores, lineas rectas, lineas curvas o lineas y áreas. Una vez se tenga el gráfico deseado, con la apariencia deseada,  este ha de ser exportado mediante el menú de gráficos a formato png, jpg, svg o pdf para posteriormente utilizarlo en el informe. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/pruebas/g2.png}
+\caption{ Gráficos 2 - Primer Pedido\cite{propio}}
+\end{figure}
+
+El siguiente paso es comenzar a generar el informe, para ello, el sistema pone a disposición del usuario una plantilla básica de informe. Dicha plantilla se divide en 4 secciones: Introducción, Detalles, Gráficos y Catálogos. La plantilla esta situada sobre un editor de texto sobre el cual el usuario podrá personalizar el informe básico como quiera. Las secciones de Introducción y detalles son para la información que el usuario estime oportuna incluir. 
+El editor permite insertar imágenes, es decir, permite insertar los gráficos generados en la vista anterior.
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/pruebas/informe_1.png}
+\caption{ Informe - Primer Pedido\cite{propio}}
+\end{figure}
+
+La automatización de informes también permite añadir el catálogo o catálogos que el usuario considere relevantes para el informe así como la lista detallada de objetos que los configuran. Dicha información también incluye la descripción del catalogo así como el numero de unidades que contiene y el peso de las mismas.  
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/pruebas/informe_2.png}
+\caption{ Informe - Primer Pedido\cite{propio}}
+\end{figure}
+
+Una vez que el usuario decida que el informe ha sido completado, tiene la opción de exportarlo a PDF en caso de que quiera entregarlo en papel.
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/pruebas/informe_pdf.png}
+\caption{ Informe PDF - Primer Pedido\cite{propio}}
+\end{figure}
+
+Por último, es interesante resaltar el hecho de que la plataforma web cuenta con una bandeja de correo en su pagina principal. A través de dicha bandeja de correo, el interesado puede ponerse en contacto con el administrador del sistema para notificar alguna incidencia o con los usuarios que trabajan para una organización o  almacén con el objetivo de obtener información o solicitar una recogida de material informático como es el caso de la Oficina de Software Libre.  
+ 
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/pruebas/correo.png}
+\caption{ Index - Bandeja de Correo\cite{propio}}
+\end{figure}
 
 \begin{thebibliography}{aaaa}
 
