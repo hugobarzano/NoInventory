@@ -345,7 +345,7 @@ Estas conclusiones  han sido de gran utilidad para el siguiente capítulo en el 
 
 
 \section{Cloud Computing}
-La real academia de la ingeniería, define la computación en la nube o Cloud Computing  como: “La Utilización de las instalaciones propias de un servidor web albergadas por un proveedor de Internet para almacenar, desplegar y ejecutar aplicaciones a petición de los usuarios demandantes de las mismas.”\cite{RAI} La computación en la nube es un paradigma en el que la información se almacena de manera permanente en servidores de internet y se ofrece, a través de aplicaciones, como servicio. El Cloud Computing es un nuevo modelo de prestación de servicios\cite{magazine} de negocio y tecnología, pagando únicamente por el consumo efectuado.
+La real academia de la ingeniería, define la computación en la nube o Cloud Computing  como: “La Utilización de las instalaciones propias de un servidor web albergadas por un proveedor de Internet para almacenar, desplegar y ejecutar aplicaciones a petición de los usuarios demandantes de las mismas.”\cite{RAI} La computación en la nube es un paradigma en el que la información se almacena de manera permanente en servidores de internet y se ofrece, a través de aplicaciones, como servicio. El Cloud Computing es un nuevo modelo de prestación de servicios\cite{magazine} de negocio y tecnología, pagando únicamente por el consumo efectuado. Este modelo de negocio ha conseguido un lugar importante en el mercado y en la computación  por lo que se considera  interesante hacer una introducción con el objetivo de que el lector tenga un mayor grado de comprensión ya que la computación en la nube juega un papel importante dentro de este proyecto.  
 
 La computación en la nube permite aumentar el número de servicios basados en red. Esto genera beneficios para los proveedores, que ofrecen de forma rápida y eficiente, un gran número de servicios. La computación en la nube esta basada en una infraestructura tecnología dinámica que se caracteriza, por la automatización de tareas, la implantación de recursos, técnicas de visualización avanzada, fácil escalabilidad y todo esto con un coste flexible en función de las características demandadas.  La computación en la nube permite a los usuarios acceder a los sistemas o servicios utilizando un navegador web, independientemente de su ubicación, además,  las actualizaciones automáticas no afectan negativamente a los recursos TI. La siguiente imagen muestra los beneficios de la computación en la nube:
 
@@ -400,41 +400,13 @@ Estas son las ventajas características de una implementación basada en el mode
 \end{enumerate}
 
 
-\section{Desarrollo basado en test - TDD}
-
-El desarrollo basado en test o también conocido como Test-driven development\cite{tdd}(TDD) es una metodología de la ingeniería del software que consiste en escribir las pruebas o test necesarios para las funcionalidades de un sistema o aplicación, dichos test reciben el nombre de pruebas unitarias, y a partir de las pruebas unitarias, escribir el código necesario, de la manera mas simple y atómica posible para que dichas pruebas, se cumpla con éxito.  
-
-
-Utilizar esta metodología de desarrollo se traduce en una mejor organización de código, permitiendo entender de una forma simple los requisitos funcionales que ha de cumplir el sistema. Esta metodología facilita los cambios o actualizaciones en el software del sistema, ya que cualquier cambio que no cumpla con la lógica del código o no cumpla los requisitos funcionales será detectado de forma rápida. La autorización de pruebas también tiene un efecto positivo en el grado de productividad del equipo de desarrollo, ya que garantiza de forma rápida que las mejoras introducidas sean coherentes con los casos de prueba definidos. En conclusión, los proyectos software desarrollados bajo TDD son más fáciles de mejorar y más fáciles de mantener. 
-
-\begin{figure}[H] 
-\centering 
-\includegraphics[scale=0.45]{imagenes/desarrollo_herramienta/tdd.png}
-\caption{ Fases TDD\cite{tdd2}  }  
-\end{figure} 
-	
-
-
-En la imagen anterior, podemos observar las distintas fases del proceso de desarrollo basado en TDD. De estas fases, se hace especial inca pie en:
-
-\begin{enumerate}
-\item \textbf{Fase de diseño:} Donde se definen los casos de prueba a implementar partiendo de los requerimientos.
-
-\item \textbf{Fase de Pruebas:} Donde se implementan los casos de prueba, produciendo así los test unitarios.
-
-\item \textbf{Fase de Producción:} El mantenimiento del sistema exige actualizaciones o refactorizaciones , es decir, producir nuevos test unitarios. 
-\end{enumerate}
-
-	 
-
-Por ultimo resaltar que dentro de la metodología TDD están los test de integración, cuya finalidad es garantizar que las distintas funcionalidades producto de los test unitarios, funcionan correctamente de manera conjunta, es decir, las funcionalidades que dan solución a los  distintos test unitarios funcionan correctamente en conjunto. 
 
 
 \chapter{Planificación y Análisis }
 
 \section{Planificación}
 
-Una vez definidos los objetivos a cumplir para el proyecto, se presenta la planificación temporal a cumplir en forma de diagrama de Gantt. Dicho diagrama ha sido dividido en 4 partes para facilitar su comprensión. Ha sido realizado con la herramienta online Tom's Planner\cite{tomsplanner}
+Una vez definidos los objetivos a cumplir para el proyecto, se presenta la planificación temporal a cumplir en forma de diagrama de Gantt. Dicho diagrama ha sido dividido en 4 partes para facilitar su comprensión. Ha sido realizado con la herramienta web Tom's Planner\cite{tomsplanner}
 
 La primera fase del proyecto se basa en recabar información. Realizar un estudio del arte con el objetivo de identificar las ventajas e inconvenientes de algunos sistemas de almacén, analizar el problema, realizar el análisis de requisitos, la creación de los repositorios para el control de versiones y la creación de diversas redes sociales como son el blog\cite{blog} del proyecto y su perfil\cite{twitter} de Twitter. 
 
@@ -582,13 +554,19 @@ Como se define en la ingeniería de requisitos, los requisitos funcionales estab
 
 	RF-6.1. El sistema permitirá al administrador dar de alta a nuevos usuarios.
 	
-	RF-6.1. El sistema permitirá al administrador asignar perfiles de usuario.
+	RF-6.2. El sistema permitirá al administrador asignar perfiles de usuario.
 	
-	RF-6.2. El sistema permitirá iniciar sesión a los usuario.
+	RF-6.3. El sistema permitirá al administrador modificar usuarios y perfiles de usuarios.
 	
-	RF-6.2. El sistema permitirá cerrar sesión a los usuario.
+	RF-6.4. El sistema permitirá al administrador eliminar usuarios y perfiles de usuarios.
+
+	RF-6.5. El sistema permitirá iniciar sesión a los usuario.
 	
-	RF-6.2. El sistema registrará internamente las acciones realizadas por cada 	usuario, 	de cada organización. 
+	RF-6.6. El sistema permitirá cerrar sesión a los usuario.
+	
+	RF-6.6. El sistema permitirá registrarse a los usuario.
+
+	RF-6.7. El sistema registrará internamente las acciones realizadas por cada 	usuario, 	de cada organización. 
 	
 	
 
@@ -608,7 +586,7 @@ Los requisitos no funcionales, se refieren a todos los requisitos que no describ
 
 \subsection{Casos de Uso}
 
-Los diagramas de casos de uso, son diagramas UML que representan gráficamente a todos los elementos que forman parte del modelo de casos de uso junto con la frontera del sistema. Delimitan el sistema a diseñar. Determinan el contexto del uso del sistema. Describen el punto de vista de los usuarios  en el sistema 
+Los diagramas de casos de uso, son diagramas UML que representan gráficamente a todos los elementos que forman parte del modelo de casos de uso junto con la frontera del sistema. Delimitan el sistema a diseñar. Determinan el contexto del uso del sistema. Describen el punto de vista de los usuarios  en el sistema.
 
 \begin{figure}[htbpH]  
 \centering 
@@ -622,11 +600,29 @@ Los diagramas de casos de uso, son diagramas UML que representan gráficamente a
 \caption{ Casos de uso - Gestión Catalogos  }  
 \end{figure}
 
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/casosUso/graficos.jpg}
+\caption{ Casos de uso - Gestión Gráficos  }  
+\end{figure}
+
 
 \begin{figure}[H] 
 \centering 
 \includegraphics[scale=0.50]{imagenes/casosUso/Informe.jpg}
 \caption{ Casos de uso - Gestión Informes  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/casosUso/Preferencias.jpg}
+\caption{ Casos de uso - Gestión Preferencias  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/casosUso/Usuarios.jpg}
+\caption{ Casos de uso - Gestión Usuarios  }  
 \end{figure}
 
 \subsection{Diagramas de Secuencia}
@@ -646,7 +642,12 @@ Para comenzar, se especifica el proceso de registro de usuarios, en el que se de
 \caption{ Diagramas de Secuencia - Inicio Sesión de Usuario\cite{diagrama}  }  
 \end{figure}
 
-DIAGRAMAAAAAAAA INICIOALIZACION DE PREFERENCIAS 
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/Preferencias_secuencia.jpg}
+\caption{ Diagramas de Secuencia - Preferencias de la Organización\cite{diagrama}  }  
+\end{figure}
+
 
 El siguiente punto a especificar es la gestión de items. Se detallará los proceso de creación, modificación, borrado, consulta y agregado a catálogo de items:
 
@@ -752,6 +753,15 @@ Por último, los siguientes diagramas pretenden especificar el modulo de generac
 \caption{ Diagramas de Secuencia - Consultar Informe\cite{diagrama}  }  
 \end{figure}
 
+\subsection{Diagrama de Clases}
+
+Para conseguir un mayor grado de compresión de los modelos involucrados en la plataforma web, se presenta el siguiente diagrama de clases. Dicho diagrama representa los modelos Item, Catálogo e Informe junto con sus respectivos manejadores o clases encargadas de las operaciones sobre la base de datos. El diagrama también representa a los usuarios y al perfil de usuario que cada uno tiene asociado.  Además cuenta con la entidad Log y su manejador asociado, cuya finalidad es la de registrar todas las transacciones realizadas entre los modelos. Por último comentar la clase Clasificación. Dicha clase no tiene un modelo en si asociado, funciona como un manejador encargado de las preferencias de la organización y de la generación, a partir de dichas preferencias, de los identificadores de Items. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.15]{imagenes/clases/NoInventory_clases_web.jpg}
+\caption{ Diagrama de Clases - Plataforma Web\cite{propio}  }  
+\end{figure}
 
 
 \section{Analisis Aplicación Android}
@@ -771,16 +781,19 @@ RF-1.4. La aplicación permitirá detectar items mediante etiquetas NFC
 	
 RF-1.5. La aplicación permitirá escribir el localizador de un item en una etiqueta NFC
 	
-RF-1.6. La aplicación permitirá consultar un item en detalle
+RF-1.6. La aplicación permitirá consultar items
 	
 RF-1.7. La aplicación permitirá añadir un item detectado a un catálogo determinado
 	
+RF-1.8. La aplicación permitirá crear items
+
+RF-1.9. La aplicación permitirá eliminar items
 
 
 \textbf{RF-2. Administración de Catálogos} La aplicación deberá administrar los catálogos que se utilicen para clasificar los items del almacén.   
 
 
-	RF-2.1. La aplicación permitirá detectar catálogos mediante texto o ID.
+	RF-2.1. La aplicación permitirá consultar catálogos.
 	
 	RF-2.2. La aplicación permitirá añadir items  al catálogo mediante código QR.
 	
@@ -790,7 +803,9 @@ RF-1.7. La aplicación permitirá añadir un item detectado a un catálogo deter
 	
 	RF-2.5. La aplicación permitirá eliminar items de un cátalogo.
 	
-	RF-2.6. La aplicación permitirá limpiar la lista de items de un catálogo
+	RF-2.6. La aplicación permitirá eliminar todos los items de un catálogo
+	
+	RF-2.7. La aplicación permitirá crear catálogos
 	
 	
 \textbf{RF-3. Sesión de Usuario} La aplicación deberá identificar a cada usuario de manera única para certificar las tareas de administración que se lleven acabo desde la aplicación. 
@@ -804,8 +819,67 @@ RF-1.7. La aplicación permitirá añadir un item detectado a un catálogo deter
 
 
 
-\subsection{Diagrama de Clases}
+\subsection{Casos de Uso}
+Como ya se comentó anteriormente, los diagramas de casos de uso, determinan el contexto del uso de la aplicación, mostrando el punto de vista de los usuarios  y sus interacciones con el sistema.
 
+\begin{figure}[H]  
+\centering 
+\includegraphics[scale=0.50]{imagenes/casosUso/gestion_Items_Android.jpg}
+\caption{ Casos de uso - Gestión Items Android\cite{diagrama} }  
+\end{figure}
+
+\begin{figure}[H]  
+\centering 
+\includegraphics[scale=0.50]{imagenes/casosUso/gestion_catalogos_android.jpg}
+\caption{ Casos de uso - Gestión Catálogos Android\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H]  
+\centering 
+\includegraphics[scale=0.7]{imagenes/casosUso/gestion_usuarios_android.jpg}
+\caption{ Casos de uso - Gestión Usuarios Android\cite{diagrama}  }  
+\end{figure}
+
+
+\subsection{Diagramas de Secuencia}
+El siguiente punto, recoge los diagramas de secuencia de la aplicación Android,  mostrando las interacciones de la aplicación a través del tiempo. Debido a que la aplicación es una extensión de la plataforma web, se ha optado por obviar algunos diagramas de secuencia, ya que las interacciones entre usuario y sistema tienen el mismo flujo temporal que en la plataforma web. Se considera interesante en lo relativo a la gestión de items, especificar los procesos de detectar o buscar items utilizando el lector de códigos de barras o códigos QR y el lector de etiquetas NFC y también el proceso de escritura del identificador de un item en una etiqueta NFC. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/android/detectar_item_qr_barras.jpg}
+\caption{ Diagramas de Secuencia - Detectar Item Lector de Códigos\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/android/detectar_item_nfc.jpg}
+\caption{ Diagramas de Secuencia - Detectar Item Lector NFC\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/android/escribir_nfc.jpg}
+\caption{ Diagramas de Secuencia - Escribir Item Etiqueta NFC\cite{diagrama}  }  
+\end{figure}
+
+Como parte de los diagramas de secuencia, es interesante especificar en lo relativo a la gestión de catálogos, los procesos de añadir items a un catálogo específico utilizando el lector de códigos de barras o QR o el lector de etiquetas NFC.
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/android/add_item_barras.jpg}
+\caption{ Diagramas de Secuencia - Añadir Item a Catálogo - Lector de Códigos\cite{diagrama}  }  
+\end{figure}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.50]{imagenes/secuencia/android/add_item_nfc.jpg}
+\caption{ Diagramas de Secuencia - Añadir Item a Catálogo - Lector NFC\cite{diagrama}  }  
+\end{figure}
+
+
+
+\subsection{Diagrama de Clases}
+Para alcanzar un mayor grado de comprensión de la aplicación Android, se presenta también el siguiente diagrama de clases. 
 \begin{figure}[H] 
 \centering 
 \includegraphics[scale=0.15]{imagenes/clases/clasesAndroid.jpg}
@@ -821,13 +895,7 @@ En esta parte se abordarán los aspectos mas importantes de la plataforma web. Q
 
 \section{Desarrollo Web}
 
-En este proyecto, se ha utilizado TDD en la fase de desarrollo web para los modelos, así como en los manejadores asociados a los modelos, encargados de las operaciones CRUD (Create, Read, Update and Delete). En la primera fase del desarrollo web, las baterías de test, fueron realizadas directamente sobre scripts python creados exclusivamente para ellos pero en la segunda fase, se decidió, por motivos de automatización de despliegue,  migrar estos test al entorno para desarrollo basado en test que proporciona Django, framkework python que se explicará mas adelante.
-
-En esta segunda fase, y una vez creadas y testeadas las funcionalidades CRUD, para completar el proceso de desarrollo basado en TDD,  se decidió utilizar la herramienta Selenium\cite{sele} para realizar test de integridad y test de navegación, lo que permitió detectar enlaces caídos e inconsistencias en las vistas de la plataforma web, ya que Selenium funciona como una “grabadora” de las acciones que se llevan a cabo con el navegador, permitiendo reproducirlas en cualquier momento en forma de test unitarios.
-
-Es necesario resaltar el hecho de que utilizando TDD disponemos de baterías de test unitarios que garantizan el correcto funcionamiento del sistema. Dichas baterías son aprovechadas por herramientas de integración continua,  como Travis-CI o Snap-CI, a la hora de automatizar el despliegue del sistema. Estas herramientas, simulan un entorno en el que correr la aplicación y además ejecutar las baterías de test, de manera que si por algún motivo, cambios o actualización en el software, la ejecución de los test unitarios falla, el despliegue no se llevará a cabo, manteniendo en linea una versión estable del sistemas hasta que la incoherencia sea corregida. 
-
-Como parte del desarrollo web, también se ha utilizado el patrón de arquitectura software modelo-vista-controlador (MVC)\cite{mvc} cuya finalidad es separar los datos y la lógica de una aplicación de la interfaz de usuario. Este patrón de arquitectura se basa en la reutilización de código y separación de conceptos con el objetivo de facilitar el desarrollo y mantenimiento de aplicaciones que al utilizar esta metodología son fácilmente escalables. 
+En el proceso de desarrollo web, se ha seguido el patrón de arquitectura software modelo-vista-controlador (MVC)\cite{mvc} cuya finalidad es separar los datos y la lógica de una aplicación de la interfaz de usuario. Este patrón de arquitectura se basa en la reutilización de código y separación de conceptos con el objetivo de facilitar el desarrollo y mantenimiento de aplicaciones que al utilizar esta metodología son fácilmente escalables. 
 
 \begin{figure}[H] 
 \centering 
@@ -844,6 +912,9 @@ Los componentes\cite{mvc3}\cite{mvc4} del Modelo-Vista-Controlador se pueden def
 
 \item \textbf{Controlador:} Responde a eventos invocando peticiones al modelo cuando se hace alguna solicitud de la información (por ejemplo, editar un documento o un registro en una base de datos). El controlador interactúa con su vista asociada para realizar cambios en la forma de representar el modelo. 
 \end{enumerate}
+
+
+Como parte del desarrollo web también se ha utilizado la metodología de ingeniería del software conocida como desarrollo basado en test o TDD. Dicha metodología consiste en escribir los test necesarios para cubrir las funcionalidades de la plataforma web y a partir de ellos, escribir el código necesario para que dichas pruebas sean superadas, cumpliendo así la funcionalidad que se esta poniendo a prueba.  Se profundizará mas en esta metodología en el capítulo 4: Implementación y Pruebas que contiene una sección dedicada al TDD\ref{sec:TDD}
 
 Este proyecto se ha desarrollado en python, utilizando el framework Django. Como sistema de bases de datos, se ha utilizado mongoDB por su capacidad de manejar grandes cantidades de datos y su eficiencia a la hora de realizar consultas, algo imprescindible para el correcto funcionamiento tanto de la web como de la aplicación Android. Para la interacción con este motor de bases de datos se ha utilizado el cliente Pymongo. Para mejorar la experiencia de usuario, se ha utilizado técnicas de programación en el cliente basadas en Ajax, Jquery y Javascript. Para la apariencia de la web, se ha utilizado el framework CSS Bootstrap. A continuación se profundizará en las herramientas utilizadas. 
 
@@ -1240,11 +1311,129 @@ ZXing ofrece el lector de códigos de barras como una aplicación independiente 
 
 
 
-\chapter{Implementación y pruebas}
+\chapter{Implementación y Pruebas}
 
+
+\section{Desarrollo basado en test - TDD}\label{sec:TDD}
+
+El desarrollo basado en test o también conocido como Test-driven development\cite{tdd}(TDD) es una metodología de la ingeniería del software que consiste en escribir las pruebas o test necesarios para las funcionalidades de un sistema o aplicación, dichos test reciben el nombre de pruebas unitarias, y a partir de las pruebas unitarias, escribir el código necesario, de la manera mas simple y atómica posible para que dichas pruebas, se cumpla con éxito.  
+
+
+Utilizar esta metodología de desarrollo se traduce en una mejor organización de código, permitiendo entender de una forma simple los requisitos funcionales que ha de cumplir el sistema. Esta metodología facilita los cambios o actualizaciones en el software del sistema, ya que cualquier cambio que no cumpla con la lógica del código o no cumpla los requisitos funcionales será detectado de forma rápida. La autorización de pruebas también tiene un efecto positivo en el grado de productividad del equipo de desarrollo, ya que garantiza de forma rápida que las mejoras introducidas sean coherentes con los casos de prueba definidos. En conclusión, los proyectos software desarrollados bajo TDD son más fáciles de mejorar y más fáciles de mantener. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.45]{imagenes/desarrollo_herramienta/tdd.png}
+\caption{ Fases TDD\cite{tdd2}  }  
+\end{figure} 
+	
+
+
+En la imagen anterior, podemos observar las distintas fases del proceso de desarrollo basado en TDD. De estas fases, se hace especial inca pie en:
+
+\begin{enumerate}
+\item \textbf{Fase de diseño:} Donde se definen los casos de prueba a implementar partiendo de los requerimientos.
+
+\item \textbf{Fase de Pruebas:} Donde se implementan los casos de prueba, produciendo así los test unitarios.
+
+\item \textbf{Fase de Producción:} El mantenimiento del sistema exige actualizaciones o refactorizaciones , es decir, producir nuevos test unitarios. 
+\end{enumerate}
+
+	 
+
+Es importante resaltar que dentro de la metodología TDD están los test de integración, cuya finalidad es garantizar que las distintas funcionalidades producto de los test unitarios, funcionan correctamente de manera conjunta, es decir, las funcionalidades que dan solución a los  distintos test unitarios funcionan correctamente en conjunto. 
+
+
+En este proyecto, se ha utilizado TDD en la fase de desarrollo web para los modelos, así como en los manejadores asociados a los modelos, encargados de las operaciones CRUD (Create, Read, Update and Delete). En la primera fase del desarrollo web, las baterías de test, fueron realizadas directamente sobre scripts python creados exclusivamente para ellos pero en la segunda fase, se decidió, por motivos de automatización de despliegue,  migrar estos test al entorno para desarrollo basado en test que proporciona Django. Un ejemplo de Unit-Test sería el siguiente:
+\begin{lstlisting}
+class itemTestCase(TestCase):
+
+    def test_crear_item(self):
+        print "\n#######################################################"
+        print "BATERIA DE TEST - OPERACIONES CRUD PARA ITEMS - CREACION"
+        print "#######################################################\n"
+        manejadorItem = ItemsDriver()
+        manejadorCatalogo = CatalogosDriver()
+        manejadorClasificacion = ClasificacionDriver()
+        new_item = Item.build_from_json({"nombre_item":"HP pavilion",
+            "fecha_alta_item":time.strftime("%c"),
+            "descripcion_item":"Ordenador portatil super potentorro",
+            "organizacion":"osl",
+            "usuario":"usuario",
+            "tag1":"Administracion de  Servicios Centrales",
+            "tag2":"MONITOR  CRT",
+            "tag3":"DEFAULT",
+            "peso":5.2,
+            "localizador":"0000000"})
+        manejadorItem.create(new_item,manejadorClasificacion,"osl")
+        cursor=manejadorItem.database.items.find({"_id":new_item._id})
+        for c in cursor:
+            item_object=Item.build_from_json(c)
+            print("new_item = {}".format(item_object.get_as_json()))
+
+        self.assertEqual(item_object._id,new_item._id)
+        self.assertEqual(item_object.nombre_item,new_item.nombre_item)
+        self.assertEqual(item_object.fecha_alta_item,new_item.fecha_alta_item)
+        self.assertEqual(item_object.descripcion_item,new_item.descripcion_item)
+        self.assertEqual(item_object.tag1,new_item.tag1)
+        self.assertEqual(item_object.tag2,new_item.tag2)
+        self.assertEqual(item_object.tag3,new_item.tag3)
+        self.assertEqual(item_object.peso,new_item.peso)
+        self.assertEqual(item_object.localizador,new_item.localizador)
+        print "\n#######################################################"
+        print "ITEM CREADO CORRECTAMENTE"
+        print "#######################################################\n"
+\end{lstlisting}
+
+
+En la segunda fase, y una vez creadas y testeadas las funcionalidades CRUD, para completar el proceso de desarrollo basado en TDD,  se decidió utilizar la herramienta Selenium\cite{sele} para realizar test de integridad y test de navegación, lo que permitió detectar enlaces caídos e inconsistencias en las vistas de la plataforma web, ya que Selenium funciona como una “grabadora” de las acciones que se llevan a cabo con el navegador, permitiendo reproducirlas en cualquier momento en forma de test unitarios. Un ejemplo de test de navegación sería el siguiente:
+\begin{lstlisting}
+class ItemTest1(unittest.TestCase):
+    def setUp(self):
+        self.driver = webdriver.Firefox()
+        self.driver.implicitly_wait(30)
+        self.base_url = "http://noinventory.cloudapp.net"
+        self.verificationErrors = []
+        self.accept_next_alert = True
+
+    def test_item_test1(self):
+        driver = self.driver
+        driver.get(self.base_url + "/items")
+        driver.find_element_by_xpath("(//button[@type='button'])[2]").click()
+        driver.find_element_by_id("id_nombre_item").clear()
+        driver.find_element_by_id("id_nombre_item").send_keys("prueba selenium")
+        driver.find_element_by_id("id_descripcion_item").clear()
+        driver.find_element_by_id("id_descripcion_item").send_keys("descripcion del objeto con el que vamos a realizar las pruebas unitarias")
+        Select(driver.find_element_by_id("id_tag1")).select_by_visible_text("Facultad de Ciencias")
+        Select(driver.find_element_by_id("id_tag2")).select_by_visible_text("ORDENADOR CPU TORRE")
+        Select(driver.find_element_by_id("id_tag3")).select_by_visible_text("POR REVISAR")
+        driver.find_element_by_id("id_peso").clear()
+        driver.find_element_by_id("id_peso").send_keys("3.3")
+        driver.find_element_by_id("id_unidades").clear()
+        driver.find_element_by_id("id_unidades").send_keys("6")
+        Select(driver.find_element_by_id("id_tag1")).select_by_visible_text(u"Facultad de Psicologia")
+        driver.find_element_by_name("submit").click()
+        driver.find_element_by_id("texto").clear()
+        driver.find_element_by_id("texto").send_keys("prueba seleni")
+        driver.find_element_by_id("busqueda").click()
+        driver.find_element_by_xpath("(//button[@type='button'])[3]").click()
+        self.assertRegexpMatches(self.close_alert_and_get_its_text(), r"^Seguro que deseas borrar los Items[\s\S]$")
+
+\end{lstlisting}
+
+Es necesario resaltar el hecho de que utilizando TDD disponemos de baterías de test unitarios que garantizan el correcto funcionamiento del sistema. Dichas baterías son aprovechadas por herramientas de integración continua,  como Travis-CI o Snap-CI, a la hora de automatizar el despliegue del sistema. Estas herramientas, simulan un entorno en el que correr la aplicación y además ejecutar las baterías de test, de manera que si por algún motivo, cambios o actualización en el software, la ejecución de los test unitarios falla, el despliegue no se llevará a cabo, manteniendo en linea una versión estable del sistemas hasta que la incoherencia sea corregida. Un ejemplo de ejecución de Test Unitario en Snap-CI sería el siguiente:
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.35]{imagenes/pruebas/test_snap.png}
+\caption{ SnapCI - Ejecución de Test\cite{propio}}
+\end{figure}
+
+
+\section{Ejemplo de uso}
 En este capítulo se va a probar el sistema realizando una simulación del estado del almacén de la oficina de software libre así como de la gestión de dicho inventario para una campaña de donación de equipos informáticos. La simulación del almacén se va a llevar a cabo con un total de 500 artículos y con dos usuarios distintos, uno desde la web y otro desde la aplicación Android para probar también el entorno colaborativo.   Para realizar la prueba, se va a llevar a cabo una demostración y ejemplo de uso del sistema, dividiendo las tareas en 4 bloques con el objetivo de facilitar su comprensión. Los bloques en los que se ha decidido dividir el proceso son: Inicialización, Creación y Catalogación, Clasificación, Gráficos e Informes. 
 
-\section{Inicialización}
+\subsection{Inicialización}
 El primer bloque es la inicialización. En este bloque se llevará a cabo el registro del usuario que trabajará desde la plataforma web. Es tarea de este usuario inicializar las preferencias de la organización u almacén para el cual va a trabajar. 
 
 \begin{figure}[H] 
@@ -1266,7 +1455,7 @@ El siguiente paso en el bloque de inicialización consiste en la inicialización
 El registro se puede llevar a cabo de igual forma desde la aplicación Android, pero en el caso de que la organización u almacén sean dados de alta por primera vez, este registro ha de ser realizado desde la web ya que es necesario que se inicialicen las preferencias y el sistema de log.
 
 
-\section{Creación y Catalogación}
+\subsection{Creación y Catalogación}
 
 El siguiente bloque de trabajo abarca las tareas de catalogación y creación de objetos para el almacén. El primer paso es la creación de un catalogo de propósito general. Los catálogos son conjuntos o colecciones de items o elementos con atributos o preferencias similares. El objetivo de crear un catalogo de propósito general es tener agrupado en un conjunto todos los elementos del almacén para conseguir tener un control total del estado de este. Como se observa en el formulario de creación de catálogos, uno de sus tributos es la fecha de alerta y la alerta en si, esto sirve para crear tareas a realizar con este catalogo a lo largo del tiempo, por ejemplo al tratarse del catalogo de propósito general, se ha decido establecer la fecha de alerta para dentro de 3 meses, fecha en la cual se deberá realizar el balance trimestral del inventario. Esta tarea también se puede llevar acabo desde el móvil como se verá mas adelante. 
 
@@ -1357,7 +1546,7 @@ Después de crear todos estos objetos y añadirlos al catálogo de propósito ge
 \end{figure}
 
 
-\section{Clasificación}
+\subsection{Clasificación}
 
 Como parte de las pruebas de clasificación, se va a simular un pedido al sistema, dicho pedido será generado por el usuario que trabaja con la aplicación Android. 
 
@@ -1421,7 +1610,7 @@ Tras el proceso de clasificación se puede consultar el catálogo asociado al pr
 \caption{ Detalles - Primer Pedido\cite{propio}}
 \end{figure}
 
-\section{ Gráficos e Informes}
+\subsection{ Gráficos e Informes}
 
 El último bloque representa el análisis estadístico de la información y la automatización de informes, para comenzar, en la pestaña de catálogos, se puede observar que la alerta asociada al primer catálogo avisa al resto de usuarios que forman parte del entorno colaborativo, de que hay una tarea pendiente relativa a un catálogo. Dicha tarea es la de generar un informe con el primer pedido.
 
