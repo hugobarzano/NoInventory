@@ -440,7 +440,7 @@ La primera fase del proyecto se basa en recabar información. Realizar un estudi
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.45]{imagenes/planificacion/planificacion1.png}
+\includegraphics[scale=0.35]{imagenes/planificacion/planificacion1.png}
 \caption{ Fase 1 - Planificación\cite{propio}  }  
 \end{figure}
 
@@ -448,7 +448,7 @@ La segunda fase del proyecto corresponde con el comienzo del desarrollo de un pr
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.45]{imagenes/planificacion/planificacion2.png}
+\includegraphics[scale=0.35]{imagenes/planificacion/planificacion2.png}
 \caption{ Fase 2 - Planificación\cite{propio}  }  
 \end{figure}
 
@@ -456,7 +456,7 @@ La tercera fase de planificación se centra en completar el desarrollo web y pri
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.45]{imagenes/planificacion/planificacion3.png}
+\includegraphics[scale=0.35]{imagenes/planificacion/planificacion3.png}
 \caption{ Fase 3 - Planificación\cite{propio}  }  
 \end{figure}
 
@@ -464,7 +464,7 @@ La cuarta y última fase de la planificación se basa en la documentación del p
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.45]{imagenes/planificacion/planificacion4.png}
+\includegraphics[scale=0.35]{imagenes/planificacion/planificacion4.png}
 \caption{ Fase 4 - Planificación\cite{propio}  }  
 \end{figure}
 
@@ -697,7 +697,7 @@ El siguiente punto a especificar es la gestión de catálogos. Se detallarán lo
 \begin{figure}[H] 
 \centering 
 \includegraphics[scale=0.50]{imagenes/secuencia/Borrar_Catalogo.jpg}
-\caption{ Diagramas de Secuencia - Modificar Catálogo\cite{diagrama}  }  
+\caption{ Diagramas de Secuencia - Borrar Catálogo\cite{diagrama}  }  
 \end{figure}
 
 \begin{figure}[H] 
@@ -1101,8 +1101,6 @@ Con Docker Hub se vincula el repositorio del proyecto alojado en el control de v
 
 Android es un sistema operativo basado en el núcleo Linux diseñado inicialmente para teléfonos móviles, al igual que iOS, Symbian y Blackberry OS. El sistema permite programar aplicaciones en una variación de Java llamada Dalvik. El sistema operativo proporciona todas las interfaces necesarias para desarrollar aplicaciones que accedan a las funciones del teléfono. 
 
-En esta sección se hablará del entorno de programación utilizado para desarrollar la aplicación Android, así como de las tecnologías utilizadas en la aplicación para mantener la sincronización con la plataforma web y llevar a cabo las tareas de clasificación.
-
 Como parte del desarrollo Android, se ha utilizado el paradigma de programación orientada a objetos (POO)\cite{ood}. La característica principal de este paradigma es la unión de datos de entrada y procesamiento en entidades denominadas objetos,  relacionadas a su vez con otras entidades objetos para producir salidas. En función del lenguaje de programación utilizado, existen conjuntos de objetos pre-diseñados que cumplen funcionalidades especificas y que están agrupados en librerías con el objetivo de ahorrar trabajo a los programadores.
 
 
@@ -1124,6 +1122,36 @@ Las principales técnicas de la POO se pueden clasificar en:
 \item \textbf{Acoplamiento:} es la forma o nivel de interdependencia entre módulos de software. 
  Encapsulamiento: Es el ocultamiento del estado, es decir, de los datos que representan un objeto de manera que sólo se pueda modificar mediante las operaciones propias del objeto.
 \end{enumerate}
+
+
+Resulta interesante conocer el ciclo de vida\cite{col} de las actividades dentro de la aplicación. Una aplicación en Android está formada por un conjunto de elementos básicos de interacción con el usuario, conocidos como actividades y un conjunto de servicios. Una aplicación Android se ejecuta dentro de su propio proceso Linux. Este proceso se crea con la aplicación y continuará vivo hasta que ya no sea necesario y el sistema reclame su memoria para asignársela a otra aplicación. El ciclo de vida de una actividad Android representa las transiciones por las que puede pasar dicha actividad. Las actividades se gestionan como una pila, es decir, desde una actividad se puede llamar a otra, y cuando esta finaliza se vuelve a la actividad invocadora. Las actividades Android pueden pasar por los siguientes estados:
+
+\begin{enumerate}
+\item \textbf{Running o Activa:} La actividad está encima de la pila, lo que quiere decir que es visible y tiene el foco.
+\item \textbf{Paused o Visible:} La actividad es visible pero no tiene el foco. 
+\item \textbf{Stopped o Parada:} Cuando la actividad no es visible. 
+\item \textbf{Destroyed o Destruida:} Cuando la actividad termina al invocar el método finish(), o es finalizada por el sistema. 
+\end{enumerate}
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.6]{imagenes/desarrollo_herramienta/ciclo_android.png}
+\caption{ Ciclo de Vida Actividades Android\cite{colD}}
+\end{figure}
+
+Cada vez que una actividad cambia de estado se generan eventos que pueden ser capturados por métodos de la actividad con el objetivo de modelar el comportamiento de la aplicación. Dichos métodos pueden ser: 
+\begin{enumerate}
+\item \textbf{onCreate():} Se llama en la creación de la actividad. Se utiliza para realizar todo tipo de inicializaciones, como la creación de la interfaz de usuario o la inicialización de estructuras de datos. 
+\item \textbf{onStart():} Nos indica que la actividad está a punto de ser mostrada al usuario.
+\item \textbf{onResume():} La actividad va a comenzar a interactuar con el usuario. 
+\item \textbf{onPause():} La actividad va a ser lanzada a segundo plano, normalmente porque otra actividad es lanzada. 
+\item \textbf{onStop():} La actividad ya no va a ser visible para el usuario. En caso de que sean necesarios los recursos del sistema, es posible que la actividad se destruya sin llamar a este método.
+\item \textbf{onRestart():} Indica que la actividad va a volver a ser representada después de haber pasado por onStop().
+\item \textbf{onDestroy():} Se llama antes de que la actividad sea totalmente destruida. Por ejemplo, cuando el usuario pulsa el botón de volver o cuando se llama al método finish(). Ocurre igual que en el método onStop() y en el caso de que el sistema necesite mas recursos, la actividad puede ser destruida sin llamar a este método. 
+\end{enumerate}
+
+Por último, señalar que el desarrollo Android también se basa en el patrón de arquitectura software modelo-vista-controlador (MVC). En dicho patrón, el modelo esta representado por los modelos creados en el Back-End, la vista hace referencia a la interfaz de usuario representada por los ficheros XML y el controlador o lógica de la aplicación por las clases Java. 
+
 
 En este proyecto, se ha utilizado Android-Studio como entorno de desarrollo para la aplicación. La aplicación se encarga de autenticar a los usuarios y llevar a cabo las tareas de gestión, con el objetivo de poder realizarlas desde el propio almacén. La aplicación consiste en listas de  objetos (items y catálogos), actualizadas periódicamente mediante peticiones HTTP al servidor, para mantener el estado actual del inventario de la organización para la que trabaja el cliente. La aplicación funciona como lector/escritor de etiquetas NFC o como lector de códigos de barras o códigos QR, es decir, realiza las funciones de clasificación a modo de escanear, en función del método de identificación elegido. Ambos métodos (NFC o códigos) son compatibles dentro de una misma organización o almacén, facilitando el trabajo y ahorrando tiempo en las tareas de gestión e identificación. En las siguientes sub-secciones de detallará en profundidad el entorno de desarrollo además de las tecnologías utilizadas como método de identificación. 
  
@@ -1221,7 +1249,7 @@ El primer bloque es la inicialización. En este bloque se llevará a cabo el reg
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.3]{imagenes/pruebas/registro.png}
+\includegraphics[scale=0.2]{imagenes/pruebas/registro.png}
 \caption{ Inicialización - Registro\cite{propio}}
 \end{figure}
 
@@ -1229,7 +1257,7 @@ Al indicar el nombre de la organización o almacén a gestionar, si es la primer
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.3]{imagenes/pruebas/preferencias.png}
+\includegraphics[scale=0.2]{imagenes/pruebas/preferencias.png}
 \caption{ Inicialización - Preferencias\cite{propio}}
 \end{figure}
 
@@ -1244,7 +1272,7 @@ El siguiente bloque de trabajo abarca las tareas de catalogación y creación de
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.3]{imagenes/pruebas/catalogo_general.png}
+\includegraphics[scale=0.2]{imagenes/pruebas/catalogo_general.png}
 \caption{ Catalogación - Propósito General\cite{propio}}
 \end{figure}
 
@@ -1253,7 +1281,7 @@ Una vez creado el catálogo de propósito general, podemos observar que dicho ca
 En el proceso de creación de elementos, se utilizan las preferencias inicializadas en el primer bloque. Además es necesario especificar el peso del elemento en cuestión de cara a generar posteriormente estadísticos del estado del almacén. Esta característica es interesante para el problema que se esta abordando debido a como se dijo en el capitulo uno, una de las obligaciones de la OSL es generar informes representativos del almacén en los que resulta interesante comparar el total de equipos o componentes informáticos que hay y el peso que estos tienen. 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.3]{imagenes/pruebas/nuevo_item.png}
+\includegraphics[scale=0.2]{imagenes/pruebas/nuevo_item.png}
 \caption{ Creación - Nuevo Item\cite{propio}}
 \end{figure}
 
@@ -1311,7 +1339,7 @@ Los objetos también pueden ser creados por lotes, especificando en el formulari
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.25]{imagenes/pruebas/add_catalogo.png}
+\includegraphics[scale=0.2]{imagenes/pruebas/add_catalogo.png}
 \caption{ Creación - Items\cite{propio}}
 \end{figure}
 
@@ -1389,7 +1417,7 @@ Tras el proceso de clasificación se puede consultar el catálogo asociado al pr
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.25]{imagenes/pruebas/pedido.png}
+\includegraphics[scale=0.2]{imagenes/pruebas/pedido.png}
 \caption{ Detalles - Primer Pedido\cite{propio}}
 \end{figure}
 
@@ -1399,7 +1427,7 @@ El último bloque representa el análisis estadístico de la información y la a
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.25]{imagenes/pruebas/alerta.png}
+\includegraphics[scale=0.2]{imagenes/pruebas/alerta.png}
 \caption{ Alerta - Primer Pedido\cite{propio}}
 \end{figure}
 
@@ -1407,7 +1435,7 @@ Para generar el informe solicitado, lo primero es comenzar generando gráficos r
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.25]{imagenes/pruebas/g.png}
+\includegraphics[scale=0.2]{imagenes/pruebas/g.png}
 \caption{ Gráficos - Primer Pedido\cite{propio}}
 \end{figure}
 
@@ -1415,7 +1443,7 @@ La forma gráfica puede ser modificada variando entre columnas, barras, sectores
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.25]{imagenes/pruebas/g2.png}
+\includegraphics[scale=0.2]{imagenes/pruebas/g2.png}
 \caption{ Gráficos 2 - Primer Pedido\cite{propio}}
 \end{figure}
 
@@ -1424,7 +1452,7 @@ El editor permite insertar imágenes, es decir, permite insertar los gráficos g
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.25]{imagenes/pruebas/informe_1.png}
+\includegraphics[scale=0.2]{imagenes/pruebas/informe_1.png}
 \caption{ Informe - Primer Pedido\cite{propio}}
 \end{figure}
 
@@ -1432,14 +1460,14 @@ La automatización de informes también permite añadir el catálogo o catálogo
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.25]{imagenes/pruebas/informe_2.png}
+\includegraphics[scale=0.2]{imagenes/pruebas/informe_2.png}
 \caption{ Informe - Primer Pedido\cite{propio}}
 \end{figure}
 
 Una vez que el usuario decida que el informe ha sido completado, tiene la opción de exportarlo a PDF en caso de que quiera entregarlo en papel.
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.25]{imagenes/pruebas/informe_pdf.png}
+\includegraphics[scale=0.2]{imagenes/pruebas/informe_pdf.png}
 \caption{ Informe PDF - Primer Pedido\cite{propio}}
 \end{figure}
 
@@ -1450,6 +1478,11 @@ Por último, es interesante resaltar el hecho de que la plataforma web cuenta co
 \includegraphics[scale=0.25]{imagenes/pruebas/correo.png}
 \caption{ Index - Bandeja de Correo\cite{propio}}
 \end{figure}
+
+
+
+
+\chapter{Conclusión y Trabajos Futuros}
 
 \begin{thebibliography}{aaaa}
 
@@ -1741,6 +1774,14 @@ Por último, es interesante resaltar el hecho de que la plataforma web cuenta co
 \textit{POO: Diagrama }
 \url{http://image.slidesharecdn.com/presentacinpoo-120823191110-phpapp01/95/poo-programacin-orientada-a-objetos-14-728.jpg?cb=1345751433} 
 
+\bibitem[4]{col} \textsc{Developer Guide},
+\textit{Activity Lifecycle }
+\url{https://developer.android.com/reference/android/app/Activity.html} 
+
+
+\bibitem[4]{colD} \textsc{Ciclo de Vida Android},
+\textit{Diagrama}
+\url{http://static1.1.sqspcdn.com/static/f/923743/16252366/1327600283647/Ciclo+de+Vida+Android.png?token=MsCj9uNcnuKoyc7LF%2B92CpBCAfQ%3D} 
 
 \bibitem[4]{as} \textsc{Android-Studio},
 \textit{Android-Studio-Developer}

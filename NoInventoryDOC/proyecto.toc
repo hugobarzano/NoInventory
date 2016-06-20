@@ -42,21 +42,22 @@
 \contentsline {subsubsection}{Ansible}{61}{section*.8}
 \contentsline {subsubsection}{Docker}{62}{section*.9}
 \contentsline {section}{\numberline {3.3}Desarrollo Android}{63}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Android-Studio}{65}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}Librer\IeC {\'\i }a Volley}{66}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Near field communication (NFC)}{67}{subsection.3.3.3}
-\contentsline {subsection}{\numberline {3.3.4}Lector de C\IeC {\'o}digos de Barras ZXing}{68}{subsection.3.3.4}
+\contentsline {subsection}{\numberline {3.3.1}Android-Studio}{66}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Librer\IeC {\'\i }a Volley}{67}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Near field communication (NFC)}{69}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}Lector de C\IeC {\'o}digos de Barras ZXing}{69}{subsection.3.3.4}
 \contentsline {chapter}{\numberline {4}Implementaci\IeC {\'o}n y pruebas}{71}{chapter.4}
 \contentsline {section}{\numberline {4.1}Inicializaci\IeC {\'o}n}{71}{section.4.1}
-\contentsline {section}{\numberline {4.2}Creaci\IeC {\'o}n y Catalogaci\IeC {\'o}n}{73}{section.4.2}
-\contentsline {section}{\numberline {4.3}Clasificaci\IeC {\'o}n}{79}{section.4.3}
-\contentsline {section}{\numberline {4.4} Gr\IeC {\'a}ficos e Informes}{83}{section.4.4}
-\contentsline {chapter}{\numberline {5}Anexo}{95}{chapter.5}
-\contentsline {section}{\numberline {5.1}Infraestructura: Archivos De Configuraci\IeC {\'o}n}{95}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}Travis.yml}{95}{subsection.5.1.1}
-\contentsline {subsection}{\numberline {5.1.2}Vagrantfile}{95}{subsection.5.1.2}
-\contentsline {subsection}{\numberline {5.1.3}Ansible}{96}{subsection.5.1.3}
-\contentsline {subsection}{\numberline {5.1.4}Dockerfile}{97}{subsection.5.1.4}
-\contentsline {subsection}{\numberline {5.1.5}Configuraci\IeC {\'o}n Nginx}{98}{subsection.5.1.5}
-\contentsline {subsection}{\numberline {5.1.6}Configuraci\IeC {\'o}n supervisor}{98}{subsection.5.1.6}
-\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{98}{lstnumber.-7.7}
+\contentsline {section}{\numberline {4.2}Creaci\IeC {\'o}n y Catalogaci\IeC {\'o}n}{72}{section.4.2}
+\contentsline {section}{\numberline {4.3}Clasificaci\IeC {\'o}n}{77}{section.4.3}
+\contentsline {section}{\numberline {4.4} Gr\IeC {\'a}ficos e Informes}{81}{section.4.4}
+\contentsline {chapter}{\numberline {5}Conclusi\IeC {\'o}n y Trabajos Futuros}{85}{chapter.5}
+\contentsline {chapter}{\numberline {6}Anexo}{93}{chapter.6}
+\contentsline {section}{\numberline {6.1}Infraestructura: Archivos De Configuraci\IeC {\'o}n}{93}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Travis.yml}{93}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}Vagrantfile}{93}{subsection.6.1.2}
+\contentsline {subsection}{\numberline {6.1.3}Ansible}{94}{subsection.6.1.3}
+\contentsline {subsection}{\numberline {6.1.4}Dockerfile}{95}{subsection.6.1.4}
+\contentsline {subsection}{\numberline {6.1.5}Configuraci\IeC {\'o}n Nginx}{96}{subsection.6.1.5}
+\contentsline {subsection}{\numberline {6.1.6}Configuraci\IeC {\'o}n supervisor}{96}{subsection.6.1.6}
+\contentsline {chapter}{Bibliograf\IeC {\'\i }a}{96}{lstnumber.-7.7}
