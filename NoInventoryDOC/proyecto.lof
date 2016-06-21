@@ -56,56 +56,57 @@
 \contentsline {figure}{\numberline {3.5}{\ignorespaces JQuery-Logo\cite {jq2} }}{62}{figure.3.5}
 \contentsline {figure}{\numberline {3.6}{\ignorespaces Modelo Ajax\cite {aj2} }}{62}{figure.3.6}
 \contentsline {figure}{\numberline {3.7}{\ignorespaces Bootstrap-Logo\cite {booL} }}{63}{figure.3.7}
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Travis-CI Logo\cite {travisL} }}{64}{figure.3.8}
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Pipeline Snap-CI\cite {snapP} }}{64}{figure.3.9}
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Heroku Logo\cite {heroL} }}{65}{figure.3.10}
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Mlab Logo\cite {mlabL} }}{65}{figure.3.11}
-\contentsline {figure}{\numberline {3.12}{\ignorespaces Arquitectura Azure\cite {azureA} }}{66}{figure.3.12}
-\contentsline {figure}{\numberline {3.13}{\ignorespaces Funcionamiento Vagrant\cite {vg2}}}{67}{figure.3.13}
-\contentsline {figure}{\numberline {3.14}{\ignorespaces Arquitectura Ansible\cite {ans2}}}{68}{figure.3.14}
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Virtualizaci\IeC {\'o}n Docker\cite {dkw}}}{68}{figure.3.15}
-\contentsline {figure}{\numberline {3.16}{\ignorespaces Generaci\IeC {\'o}n Imagen Docker Hub\cite {dkh2}}}{69}{figure.3.16}
-\contentsline {figure}{\numberline {3.17}{\ignorespaces Diagrama POO\cite {poo}}}{70}{figure.3.17}
-\contentsline {figure}{\numberline {3.18}{\ignorespaces Ciclo de Vida Actividades Android\cite {colD}}}{71}{figure.3.18}
-\contentsline {figure}{\numberline {3.19}{\ignorespaces Android-Studio}}{73}{figure.3.19}
-\contentsline {figure}{\numberline {3.20}{\ignorespaces HTTP Esquema\cite {httpD}}}{74}{figure.3.20}
-\contentsline {figure}{\numberline {3.21}{\ignorespaces Arquitectura Volley\cite {volley2}}}{74}{figure.3.21}
-\contentsline {figure}{\numberline {3.22}{\ignorespaces Ejemplo Funcionamiento Etiquetas NFC\cite {nfc4}}}{75}{figure.3.22}
-\contentsline {figure}{\numberline {3.23}{\ignorespaces zxing - logo\cite {cebra3}}}{76}{figure.3.23}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces SendGrid-Logo\cite {sgL} }}{63}{figure.3.8}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Travis-CI Logo\cite {travisL} }}{65}{figure.3.9}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Pipeline Snap-CI\cite {snapP} }}{65}{figure.3.10}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Heroku Logo\cite {heroL} }}{66}{figure.3.11}
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Mlab Logo\cite {mlabL} }}{66}{figure.3.12}
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Arquitectura Azure\cite {azureA} }}{67}{figure.3.13}
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Funcionamiento Vagrant\cite {vg2}}}{68}{figure.3.14}
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Arquitectura Ansible\cite {ans2}}}{69}{figure.3.15}
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Virtualizaci\IeC {\'o}n Docker\cite {dkw}}}{69}{figure.3.16}
+\contentsline {figure}{\numberline {3.17}{\ignorespaces Generaci\IeC {\'o}n Imagen Docker Hub\cite {dkh2}}}{70}{figure.3.17}
+\contentsline {figure}{\numberline {3.18}{\ignorespaces Diagrama POO\cite {poo}}}{71}{figure.3.18}
+\contentsline {figure}{\numberline {3.19}{\ignorespaces Ciclo de Vida Actividades Android\cite {colD}}}{72}{figure.3.19}
+\contentsline {figure}{\numberline {3.20}{\ignorespaces Android-Studio}}{74}{figure.3.20}
+\contentsline {figure}{\numberline {3.21}{\ignorespaces HTTP Esquema\cite {httpD}}}{75}{figure.3.21}
+\contentsline {figure}{\numberline {3.22}{\ignorespaces Arquitectura Volley\cite {volley2}}}{75}{figure.3.22}
+\contentsline {figure}{\numberline {3.23}{\ignorespaces Ejemplo Funcionamiento Etiquetas NFC\cite {nfc4}}}{76}{figure.3.23}
+\contentsline {figure}{\numberline {3.24}{\ignorespaces zxing - logo\cite {cebra3}}}{77}{figure.3.24}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Fases TDD\cite {tdd2} }}{78}{figure.4.1}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces SnapCI - Ejecuci\IeC {\'o}n de Test\cite {propio}}}{80}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Inicializaci\IeC {\'o}n - Registro\cite {propio}}}{81}{figure.4.3}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Inicializaci\IeC {\'o}n - Preferencias\cite {propio}}}{82}{figure.4.4}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Catalogaci\IeC {\'o}n - Prop\IeC {\'o}sito General\cite {propio}}}{83}{figure.4.5}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Creaci\IeC {\'o}n - Nuevo Item\cite {propio}}}{84}{figure.4.6}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Actividad Principal\cite {propio}}}{84}{figure.4.7}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Lista de Items\cite {propio}}}{84}{figure.4.8}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Creaci\IeC {\'o}n de Item\cite {propio}}}{85}{figure.4.9}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Creaci\IeC {\'o}n Completada\cite {propio}}}{85}{figure.4.10}
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Lista de Items\cite {propio}}}{85}{figure.4.11}
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Opciones\cite {propio}}}{85}{figure.4.12}
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Detalles\cite {propio}}}{86}{figure.4.13}
-\contentsline {figure}{\numberline {4.14}{\ignorespaces Escritor NFC\cite {propio}}}{86}{figure.4.14}
-\contentsline {figure}{\numberline {4.15}{\ignorespaces Creaci\IeC {\'o}n - Items\cite {propio}}}{87}{figure.4.15}
-\contentsline {figure}{\numberline {4.16}{\ignorespaces PDF-C\IeC {\'o}digos de Barras\cite {propio}}}{87}{figure.4.16}
-\contentsline {figure}{\numberline {4.17}{\ignorespaces PDF-C\IeC {\'o}digos QR\cite {propio}}}{87}{figure.4.17}
-\contentsline {figure}{\numberline {4.18}{\ignorespaces Lista Cat\IeC {\'a}logos\cite {propio}}}{88}{figure.4.18}
-\contentsline {figure}{\numberline {4.19}{\ignorespaces Nuevo Cat\IeC {\'a}logo\cite {propio}}}{88}{figure.4.19}
-\contentsline {figure}{\numberline {4.20}{\ignorespaces Catalogo Completado\cite {propio}}}{88}{figure.4.20}
-\contentsline {figure}{\numberline {4.21}{\ignorespaces Lista Cat\IeC {\'a}logos\cite {propio}}}{88}{figure.4.21}
-\contentsline {figure}{\numberline {4.22}{\ignorespaces Opciones Clasificaci\IeC {\'o}n\cite {propio}}}{89}{figure.4.22}
-\contentsline {figure}{\numberline {4.23}{\ignorespaces Clasificaci\IeC {\'o}n NFC\cite {propio}}}{89}{figure.4.23}
-\contentsline {figure}{\numberline {4.24}{\ignorespaces Escaner\cite {propio}}}{90}{figure.4.24}
-\contentsline {figure}{\numberline {4.25}{\ignorespaces Escaner QR\cite {propio}}}{90}{figure.4.25}
-\contentsline {figure}{\numberline {4.26}{\ignorespaces Escaner C\IeC {\'o}digo de Barras\cite {propio}}}{90}{figure.4.26}
-\contentsline {figure}{\numberline {4.27}{\ignorespaces Detalles - Primer Pedido\cite {propio}}}{90}{figure.4.27}
-\contentsline {figure}{\numberline {4.28}{\ignorespaces Alerta - Primer Pedido\cite {propio}}}{91}{figure.4.28}
-\contentsline {figure}{\numberline {4.29}{\ignorespaces Gr\IeC {\'a}ficos - Primer Pedido\cite {propio}}}{92}{figure.4.29}
-\contentsline {figure}{\numberline {4.30}{\ignorespaces Gr\IeC {\'a}ficos 2 - Primer Pedido\cite {propio}}}{92}{figure.4.30}
-\contentsline {figure}{\numberline {4.31}{\ignorespaces Informe - Primer Pedido\cite {propio}}}{93}{figure.4.31}
-\contentsline {figure}{\numberline {4.32}{\ignorespaces Informe - Primer Pedido\cite {propio}}}{93}{figure.4.32}
-\contentsline {figure}{\numberline {4.33}{\ignorespaces Informe PDF - Primer Pedido\cite {propio}}}{94}{figure.4.33}
-\contentsline {figure}{\numberline {4.34}{\ignorespaces Index - Bandeja de Correo\cite {propio}}}{94}{figure.4.34}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Fases TDD\cite {tdd2} }}{80}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces SnapCI - Ejecuci\IeC {\'o}n de Test\cite {propio}}}{82}{figure.4.2}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Inicializaci\IeC {\'o}n - Registro\cite {propio}}}{83}{figure.4.3}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Inicializaci\IeC {\'o}n - Preferencias\cite {propio}}}{84}{figure.4.4}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Catalogaci\IeC {\'o}n - Prop\IeC {\'o}sito General\cite {propio}}}{85}{figure.4.5}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Creaci\IeC {\'o}n - Nuevo Item\cite {propio}}}{86}{figure.4.6}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Actividad Principal\cite {propio}}}{86}{figure.4.7}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Lista de Items\cite {propio}}}{86}{figure.4.8}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Creaci\IeC {\'o}n de Item\cite {propio}}}{87}{figure.4.9}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Creaci\IeC {\'o}n Completada\cite {propio}}}{87}{figure.4.10}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Lista de Items\cite {propio}}}{87}{figure.4.11}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Opciones\cite {propio}}}{87}{figure.4.12}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Detalles\cite {propio}}}{88}{figure.4.13}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Escritor NFC\cite {propio}}}{88}{figure.4.14}
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Creaci\IeC {\'o}n - Items\cite {propio}}}{89}{figure.4.15}
+\contentsline {figure}{\numberline {4.16}{\ignorespaces PDF-C\IeC {\'o}digos de Barras\cite {propio}}}{89}{figure.4.16}
+\contentsline {figure}{\numberline {4.17}{\ignorespaces PDF-C\IeC {\'o}digos QR\cite {propio}}}{89}{figure.4.17}
+\contentsline {figure}{\numberline {4.18}{\ignorespaces Lista Cat\IeC {\'a}logos\cite {propio}}}{90}{figure.4.18}
+\contentsline {figure}{\numberline {4.19}{\ignorespaces Nuevo Cat\IeC {\'a}logo\cite {propio}}}{90}{figure.4.19}
+\contentsline {figure}{\numberline {4.20}{\ignorespaces Catalogo Completado\cite {propio}}}{90}{figure.4.20}
+\contentsline {figure}{\numberline {4.21}{\ignorespaces Lista Cat\IeC {\'a}logos\cite {propio}}}{90}{figure.4.21}
+\contentsline {figure}{\numberline {4.22}{\ignorespaces Opciones Clasificaci\IeC {\'o}n\cite {propio}}}{91}{figure.4.22}
+\contentsline {figure}{\numberline {4.23}{\ignorespaces Clasificaci\IeC {\'o}n NFC\cite {propio}}}{91}{figure.4.23}
+\contentsline {figure}{\numberline {4.24}{\ignorespaces Escaner\cite {propio}}}{92}{figure.4.24}
+\contentsline {figure}{\numberline {4.25}{\ignorespaces Escaner QR\cite {propio}}}{92}{figure.4.25}
+\contentsline {figure}{\numberline {4.26}{\ignorespaces Escaner C\IeC {\'o}digo de Barras\cite {propio}}}{92}{figure.4.26}
+\contentsline {figure}{\numberline {4.27}{\ignorespaces Detalles - Primer Pedido\cite {propio}}}{92}{figure.4.27}
+\contentsline {figure}{\numberline {4.28}{\ignorespaces Alerta - Primer Pedido\cite {propio}}}{93}{figure.4.28}
+\contentsline {figure}{\numberline {4.29}{\ignorespaces Gr\IeC {\'a}ficos - Primer Pedido\cite {propio}}}{94}{figure.4.29}
+\contentsline {figure}{\numberline {4.30}{\ignorespaces Gr\IeC {\'a}ficos 2 - Primer Pedido\cite {propio}}}{94}{figure.4.30}
+\contentsline {figure}{\numberline {4.31}{\ignorespaces Informe - Primer Pedido\cite {propio}}}{95}{figure.4.31}
+\contentsline {figure}{\numberline {4.32}{\ignorespaces Informe - Primer Pedido\cite {propio}}}{95}{figure.4.32}
+\contentsline {figure}{\numberline {4.33}{\ignorespaces Informe PDF - Primer Pedido\cite {propio}}}{96}{figure.4.33}
+\contentsline {figure}{\numberline {4.34}{\ignorespaces Index - Bandeja de Correo\cite {propio}}}{96}{figure.4.34}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

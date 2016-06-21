@@ -325,7 +325,7 @@ Snappii\cite{snp} es una plataforma de desarrollo de aplicaciones a medida para 
 \end{figure}
 
 
-\subsection{PROTEO:SGA – Software de Gestión de almacén}
+\subsection{PROTEO – Software de Gestión de almacén}
 Proteo-SGA\cite{pro} es un software para la gestión en tiempo real de almacenes utilizando radiofrecuencia de la empresa Easytech\cite{easy}. Este software controla totalmente el ciclo de vida del producto. Su sistema de etiquetaje soporta RFID y códigos de barras. Gestión multi-almacén multi-zona, y multi-empresa intenta automatizar todas las tareas posibles dentro de la gestión de almacen, tareas como recepciones, ubicación, picking, expediciones, seguimiento de movimientos y trazabilidad. 
 
 \begin{figure}[H]  
@@ -1040,7 +1040,26 @@ Bootstrap\cite{boo} es un framework CSS para dar forma a sitios web mediante lib
 \centering 
 \includegraphics[scale=0.25]{imagenes/desarrollo_herramienta/bootstrap.png}
 \caption{ Bootstrap-Logo\cite{booL}  }  
-\end{figure}   
+\end{figure}  
+
+\subsection{SendGrid}
+SendGrid\cite{sg} es un servicio cloud de correo electrónico. Proporciona un sistema de entrega de correos electrónicos transaccional. SendGrid cuenta con una API flexible que facilita la integración personalizada del servicio. 
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/desarrollo_herramienta/sendgrid.png}
+\caption{ SendGrid-Logo\cite{sgL}  }  
+\end{figure}  
+
+En este proyecto, se ha utilizado SendGrid para implantar un buzón de incidencias en la página principal. Dicho buzón, permite a los usuarios interesados, contactar con el administrador del sistema en caso de incidencia o en caso de necesitar información. Dicho buzón también permite contactar con los usuarios registrados que pertenecen a alguna organización o almacén en concreto. Al utilizar Django como marco de trabajo la integración de  SendGrid  es muy sencilla. Es necesario disponer de una cuenta en el servicio y añadir las siguientes lineas al archivo de configuración settings.py de Django:
+\begin{lstlisting}
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = os.environ.get('MAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('MAIL_PASS')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+\end{lstlisting}
+El nombre de usuario y la contraseña son establecidas mediante variables de entorno para garantizar la seguridad del servicio. SendGrid facilita de manera gratuita, cuentas con 25.000 correos electrónicos gratuitos cada mes.  
  
  
 \section{Infraestructura}
@@ -1859,6 +1878,17 @@ Por último, es interesante resaltar el hecho de que la plataforma web cuenta co
 \bibitem[9]{booL} \textsc{Bootstrap Logo},
 \textit{Logo}
 \url{http://davidgaitan.com/wp-content/uploads/2015/09/singlepro-twitter-bootstrap.png}
+
+
+\bibitem[9]{sg} \textsc{SendGrid},
+\textit{Servicio Cloud de correo electrónico }
+\url{https://sendgrid.com/}
+
+\bibitem[9]{sgL} \textsc{SendGrid},
+\textit{SendGrid Logo}
+\url{https://nitrous-community.s3.amazonaws.com/images/blog/sendgrid/sendgrid.png}
+
+
 
 %infraestructura 
 
