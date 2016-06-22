@@ -1562,6 +1562,7 @@ Después de crear todos estos objetos y añadirlos al catálogo de propósito ge
   \includegraphics[width=\linewidth]{imagenes/pruebas/qr.png}
   \caption{PDF-Códigos QR\cite{propio}}
 \endminipage\hfill
+
 \end{figure}
 
 
@@ -1679,7 +1680,7 @@ Una vez que el usuario decida que el informe ha sido completado, tiene la opció
 \caption{ Informe PDF - Primer Pedido\cite{propio}}
 \end{figure}
 
-Por último, es interesante resaltar el hecho de que la plataforma web cuenta con una bandeja de correo en su pagina principal. A través de dicha bandeja de correo, el interesado puede ponerse en contacto con el administrador del sistema para notificar alguna incidencia o con los usuarios que trabajan para una organización o  almacén con el objetivo de obtener información o solicitar una recogida de material informático como es el caso de la Oficina de Software Libre.  
+Es interesante resaltar el hecho de que la plataforma web cuenta con una bandeja de correo en su pagina principal. A través de dicha bandeja de correo, el interesado puede ponerse en contacto con el administrador del sistema para notificar alguna incidencia o con los usuarios que trabajan para una organización o  almacén con el objetivo de obtener información o solicitar una recogida de material informático como es el caso de la Oficina de Software Libre.  
  
 \begin{figure}[H] 
 \centering 
@@ -1687,10 +1688,50 @@ Por último, es interesante resaltar el hecho de que la plataforma web cuenta co
 \caption{ Index - Bandeja de Correo\cite{propio}}
 \end{figure}
 
+Por último, mostrar que todo lo relativo a los usuarios del sistema, así como los perfiles de usuario asociadas a la organización o almacén pueden ser gestionados desde el panel de administración de Django.  
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.25]{imagenes/pruebas/admin.png}
+\caption{ Panel de Administración - Usuarios\cite{propio}}
+\end{figure}
 
 
 
-\chapter{Conclusión y Trabajos Futuros}
+
+\chapter{Conclusiones y Trabajos Futuros}
+
+Como capítulo final de esta memoria, se ha realizado un breve comentario sobre las conclusiones alcanzadas a lo largo de todo el proceso de desarrollo del proyecto. Además se expondrán los posibles trabajos o mejoras que se pueden llevar a cabo sobre el sistema en el futuro, de cara a conseguir un producto profesional. 
+
+\section{Conclusiones}
+
+No-Inventory es un sistema Open Source para la gestión de inventarios o almacenes, resultado de 5 meses de desarrollo software. El sistema resultante brinda una plataforma web alojada en la nube capaz de manejar grandes cantidades de datos ya que utiliza bases de datos No-Relacionales también conocidas como bases de datos documentales. El proyecto ha sido desarrollado siguiendo diversas metodologías y paradigmas de desarrollo con la finalidad de producir un sistema robusto, escalable y de fácil mantenimiento. 
+
+La plataforma simplifica las tareas de control de activos, dando al usuario la flexibilidad que necesite para organizar su almacén dentro de un entorno colaborativo. El sistema automatiza las tareas de control y generación de informes  ahorrando tiempo al cliente. No-Inventory cuenta con una infraestructura subyacente robusta y variada capaz de adaptarse a las necesidades del cliente además de una aplicación móvil que permite al cliente realizar las tareas de gestión desde el propio almacén presentando al cliente su smartphone como herramienta de trabajo. 
+
+La flexibilidad de No-inventory también está presente en los métodos de identificación  de objetos del almacén, una vez más en función de las necesidades o presupuesto del que disponga el cliente. Cuenta con soporte para códigos de barras estándar, códigos QR mas elaborados o etiquetas NFC. Todos los métodos de identificación son compatibles entre ellos dentro del mismo entorno colaborativo, es decir, dentro del mismo almacén y al ser un sistema escalable, en el futuro se podrían implantar nuevos métodos de identificación sin apenas realizar cambios significativos. 
+ 
+
+La finalidad de No-Inventory es la de procurar un sistema sencillo y flexible para gestionar inventarios  a clientes que no puedan permitirse contratar un sistema comercial, dando una metodología eficiente para gestionar sus almacenes con un coste casi nulo. 
+
+\section{Trabajos Futuros}
+No-Inventory es un sistema de inventariado capaz pero, en el proceso de análisis y desarrollo, hay ciertos aspectos que se podrían mejorar y ciertas extensiones que se podrían añadir para conseguir un sistema de gestión de activos profesional. Al igual que en el capítulo 3, el desarrollo de la herramienta se desglosó en 2 grandes bloques, las posibles extensiones también pueden dividirse en otros dos bloques. 
+
+
+Como parte del desarrollo web, se considera automatizar aun más las tareas de gestión, buscando la automatizar pedidos, el control de activos perecederos o la implantación de restricciones a ciertos usuarios del almacén.
+
+Se ha pensado también en crear la pagina personal para cada organización, de manera que si esta lo desea, pueda hacer publico los objetos que tiene disponibles, consiguiendo compra-venta al por mayor entre organizaciones o almacenes. 
+	
+Dentro del desarrollo web, como parte de la infraestructura que permite dar servicio a No-Inventory, se ha pensado para el caso de almacenes que no dispongan de conexión a internet, utilizar una Raspberry Pi para correr una instancia aislada del sistema dando servicio dentro de una red local. 
+
+
+Dentro del desarrollo móvil, resultaría interesante utilizar el módulo de gestión por comunicación de campo cercano o NFC y mejorarlo para implantar más servicios, como puede ser el pago automático o la certificación de credenciales en transacciones, algo  muy útil para empresas de mensajería. Implantar nuevos métodos de identificación como por ejemplo identificación por radiofrecuencia  o desarrollar versiones de la aplicación para Tables e IOS son también buenas extensiones.  
+
+Seria interesante mejorar la interfaz de usuario, creando una versión de la aplicación que utilice técnicas de realidad aumentada y computación ubicua,  haciendo las tareas de gestión completamente intuitivas, ya que la interacción entre cliente – sistema mejoraría de manera significativa. 
+
+Conseguir localización en interiores  o telemetría de características como la temperatura o la humedad de conjuntos de objetos perecederos tanto dentro del almacén como en su envío sería una extensión interesante y ambiciosa de cara a gestionar almacenes de gran tamaño. 
+
+En definitiva, dentro de un sistema de gestión, las mejoras y extensiones son una tarea que no acaba nunca. Las posibles extensiones o mejoras futuras también han de llevarse acabo en función de las necesidades que el cliente quiera satisfacer. 
 
 \begin{thebibliography}{aaaa}
 

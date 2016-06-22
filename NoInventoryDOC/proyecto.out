@@ -52,13 +52,15 @@
 \BOOKMARK [2][-]{subsection.4.2.2}{Creaci\363n y Catalogaci\363n}{section.4.2}% 52
 \BOOKMARK [2][-]{subsection.4.2.3}{Clasificaci\363n}{section.4.2}% 53
 \BOOKMARK [2][-]{subsection.4.2.4}{ Gr\341ficos e Informes}{section.4.2}% 54
-\BOOKMARK [0][-]{chapter.5}{Conclusi\363n y Trabajos Futuros}{}% 55
-\BOOKMARK [0][-]{chapter.6}{Anexo}{}% 56
-\BOOKMARK [1][-]{section.6.1}{Infraestructura: Archivos De Configuraci\363n}{chapter.6}% 57
-\BOOKMARK [2][-]{subsection.6.1.1}{Travis.yml}{section.6.1}% 58
-\BOOKMARK [2][-]{subsection.6.1.2}{Vagrantfile}{section.6.1}% 59
-\BOOKMARK [2][-]{subsection.6.1.3}{Ansible}{section.6.1}% 60
-\BOOKMARK [2][-]{subsection.6.1.4}{Dockerfile}{section.6.1}% 61
-\BOOKMARK [2][-]{subsection.6.1.5}{Configuraci\363n Nginx}{section.6.1}% 62
-\BOOKMARK [2][-]{subsection.6.1.6}{Configuraci\363n supervisor}{section.6.1}% 63
-\BOOKMARK [0][-]{lstnumber.-10.7}{Bibliograf\355a}{}% 64
+\BOOKMARK [0][-]{chapter.5}{Conclusiones y Trabajos Futuros}{}% 55
+\BOOKMARK [1][-]{section.5.1}{Conclusiones}{chapter.5}% 56
+\BOOKMARK [1][-]{section.5.2}{Trabajos Futuros}{chapter.5}% 57
+\BOOKMARK [0][-]{chapter.6}{Anexo}{}% 58
+\BOOKMARK [1][-]{section.6.1}{Infraestructura: Archivos De Configuraci\363n}{chapter.6}% 59
+\BOOKMARK [2][-]{subsection.6.1.1}{Travis.yml}{section.6.1}% 60
+\BOOKMARK [2][-]{subsection.6.1.2}{Vagrantfile}{section.6.1}% 61
+\BOOKMARK [2][-]{subsection.6.1.3}{Ansible}{section.6.1}% 62
+\BOOKMARK [2][-]{subsection.6.1.4}{Dockerfile}{section.6.1}% 63
+\BOOKMARK [2][-]{subsection.6.1.5}{Configuraci\363n Nginx}{section.6.1}% 64
+\BOOKMARK [2][-]{subsection.6.1.6}{Configuraci\363n supervisor}{section.6.1}% 65
+\BOOKMARK [0][-]{lstnumber.-10.7}{Bibliograf\355a}{}% 66
