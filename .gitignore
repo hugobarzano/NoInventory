@@ -24,8 +24,8 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
-*.pdf
-*.jpg
+#*.pdf
+#*.jpg
 
 *.gif
 
