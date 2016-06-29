@@ -19,15 +19,9 @@ register = template.Library()
 def qrcode(value, alt=None):
     """
     Generate QR Code image from a string with the Google charts API
-
-    http://code.google.com/intl/fr-FR/apis/chart/types.html#qrcodes
-
-    Exemple usage --
-    {{ my_string|qrcode:"my alt" }}
-
+    Ejemplo de Uso -->  {{ my_string|qrcode:"my alt" }}
     <img src="http://chart.apis.google.com/chart?chs=150x150&amp;cht=qr&amp;chl=my_string&amp;choe=UTF-8" alt="my alt" />
     """
-
     url = conditional_escape("http://chart.apis.google.com/chart?%s" % \
             urllib.urlencode({'chs':'200x200', 'cht':'qr', 'chl':value, 'choe':'UTF-8'}))
     alt = conditional_escape(alt or value)

@@ -197,7 +197,7 @@ Este proyecto tiene el objetivo de solucionar un problema real. Desde principios
 
 El problema principal radica en el desconocimiento del estado en el que este material es recogido, es decir, la OSL no sabe si el material recibido funciona, no funciona, necesita ser actualizado o directamente es inservible y ha de ser reciclado. Hay que tener en cuenta el estado actual del almacén. Tras acumular material a lo largo de estos años, el almacén sufre una situación caótica debido al gran numero de equipos sin catalogar ni reflejar el estado en el que se encuentran. 
 
-Por otra parte, el acuerdo mencionado anteriormente, obliga a la oficina a realizar informes cada cierto periodo de tiempo, reflejando el estado de las campañas de recogida, el estado del material recolectado, el peso...etc
+Por otra parte, el acuerdo mencionado anteriormente, obliga a la oficina a realizar informes cada cierto periodo de tiempo, reflejando el estado de las campañas de recogida, el estado del material recolectado o el peso.
 
 El problema presentado no es algo aislado a la OSL, gran parte de las pequeñas y medianas empresas con almacenes que gestionar presentan problemas similares. Para las  empresas, no usar plataformas de gestión para sus productos supone carencia de estrategias de crecimiento, una inadecuada utilización de las tecnologías y conocimientos, pérdidas de recursos, debilidad financiera y deficiencias en toda la organización. 
 
@@ -914,52 +914,31 @@ Los componentes\cite{mvc3}\cite{mvc4} del Modelo-Vista-Controlador se pueden def
 
 Como parte del desarrollo web también se ha utilizado la metodología de ingeniería del software conocida como desarrollo basado en test o TDD. Dicha metodología consiste en escribir los test necesarios para cubrir las funcionalidades de la plataforma web y a partir de ellos, escribir el código necesario para que dichas pruebas sean superadas, cumpliendo así la funcionalidad que se esta poniendo a prueba.  Se profundizará mas en esta metodología en el capítulo 4: Implementación y Pruebas que contiene una sección dedicada al TDD\ref{sec:TDD}
 
-Este proyecto se ha desarrollado en python, utilizando el framework Django. Como sistema de bases de datos, se ha utilizado mongoDB por su capacidad de manejar grandes cantidades de datos y su eficiencia a la hora de realizar consultas, algo imprescindible para el correcto funcionamiento tanto de la web como de la aplicación Android. Para la interacción con este motor de bases de datos se ha utilizado el cliente Pymongo. Para mejorar la experiencia de usuario, se ha utilizado técnicas de programación en el cliente basadas en Ajax, Jquery y Javascript. Para la apariencia de la web, se ha utilizado el framework CSS Bootstrap. A continuación se profundizará en las herramientas utilizadas. 
+Este proyecto se ha desarrollado en python, utilizando el framework Django. Como sistema de bases de datos, se ha utilizado mongoDB por su capacidad de manejar grandes cantidades de datos y su eficiencia a la hora de realizar consultas, algo imprescindible para el correcto funcionamiento tanto de la web como de la aplicación Android. Para la interacción con este motor de bases de datos se ha utilizado el cliente Pymongo. Para mejorar la experiencia de usuario, se ha utilizado técnicas de programación en el cliente basadas en Ajax, Jquery y Javascript. Para la apariencia de la web, se ha utilizado el framework CSS Bootstrap.La plataforma web también cuenta con diversos servicios externos como son la generación de códigos identificativos y un servicio de correo electrónico. A continuación se profundizará en las herramientas utilizadas en cada una de las partes de la plataforma web.
 
  
 
 
 
-\subsection{Django}
-Django\cite{dj}, es un Framework de alto nivel para Python. Django sigue la metodología de diseño “Modelo Vista Controlador” (MVC) lo que permite crear aplicaciones web extensibles, escalables y sostenibles. Django es de código abierto. 
+\subsection{Back-End}
 
-Django cuenta con varios módulos para asegurar la seguridad e integridad de las aplicaciones web desarrolladas con el. 
+El Back-End o lado del servidor es la capa encargada del acceso a los datos. En este proyecto se ha decidido utilizar Django\cite{dj} como framework de alto nivel para trabajar con python en el servidor. Este framework reúne diversas herramientas y aplicaciones, como por ejemplo el servidor de aplicación para desarrollo que facilita el trabajo para desarrollar de manera ágil, el modulo de autenticación de usuarios, el modulo para desarrollo basado en test o la integración de servicios externos como el cliente de mensajería interna. Al principio se planteó realizar la plataforma web en PHP utilizando el framework Symfony pero al ser un sistema bastante grande, se decidió optar por Django ya que facilitaba el proceso de desarrollo. También se pensó en el micro-framework python Flask\cite{fl} pero después del proceso de análisis, se llegó a la conclusión de que con Flask se repetiría mucho más código y con Django el diseño sería más escalable.
 
+Django sigue la metodología de diseño “Modelo – Vista - Controlador” (MVC) lo que permite crear aplicaciones web extensibles, escalables y sostenibles. Django es de código abierto y cuenta con diversos módulos para asegurar la seguridad e integridad de las aplicaciones web desarrolladas en él. 
 Django posee un sistema jerárquico de plantillas que facilita la reutilización de código y extensibilidad de aplicaciones. Además cuenta con soporte para internacionalización.
+\subsubsection{Sistema Gestor de Bases de Datos}
+La parte imprescindible para la capa de acceso a datos es el sistema gestor de bases de datos, encargado de almacenar los modelos del sistema. Como propuesta inicial para el desarrollo del sistema, se pensó en utilizar un esquema relacional utilizando sistemas gestores de bases de datos relacionales como MySQL o PostgreSQL por la manera de realizar las consultas y por la facilidad de diseño entidad-relación pero tras el proceso de análisis, se llego a la conclusión de que utilizando un esquema relacional, no se podría dotar al sistema de la flexibilidad necesaria para satisfacer las necesidades de cada entidad o almacén, ya que este esquema tradicional obliga a que todas las filas de una tabla representativa de un modelo tengan los mismos campos para mantener la entidad referencial del sistema. Debido a esto, se ha decido utilizar MongoDB\cite{mg} como sistema gestor de bases de datos no-relaciones también denominadas bases de datos documentales, con el objetivo de conseguir un esquema interno flexible y eficiente. 
 
-\begin{figure}[H] 
-\centering 
-\includegraphics[scale=0.25]{imagenes/desarrollo_herramienta/django.jpg}
-\caption{ Django-Logo\cite{djL}  }  
-\end{figure} 
-
-En este proyecto se ha decidido utilizar Django debido a que utiliza python y que además al ser un framework de alto nivel, reúne diversas herramientas y aplicaciones, como por ejemplo el servidor de aplicación para desarrollo que facilita el trabajo para desarrollar de manera ágil, el modulo de autenticación de usuarios, el modulo para desarrollo baso en test o la integración de servicios de mensajería de manera interna. Al principio se planteaba realizar la plataforma web con PHP pero al ser un sistema bastante grande, se decidió optar por Django ya que facilitaba el proceso de desarrollo. También se pensó en el micro-framework python Flask pero después del proceso de análisis, se llegó a la conclusión de que con Flask\cite{fl} se repetiría mucho mas código y con Django el diseño seria también más escalable.
-
-\subsection{MongoDB}
-
-MongoDB\cite{mg} es un sistema de base de datos NoSQL orientado a grandes cantidades de datos, guarda estructuras de datos en documentos similares a JSON haciendo que la integración de los datos en ciertas aplicaciones sea más fácil y rápida.
+MongoDB es un sistema de base de datos NoSQL orientado a grandes cantidades de datos, guarda estructuras de datos en documentos similares a JSON haciendo que la integración de los datos en ciertas aplicaciones sea más fácil y rápida.
 Se trata de una base de datos ágil que permite cambiar los esquemas de una aplicación cuando esta evoluciona. Los principales objetivos de estas bases de datos son la escalabilidad, rendimiento y gran disponibilidad.
-
 En MongoDB los documentos se agrupan en colecciones. Las colecciones  no imponen una estructura fija a los documentos que contienen, ni siquiera al tipo de datos de cada campo. Esto es una ventaja cuando estamos desarrollado un sistema en el que las entradas de la base de datos dependen de las preferencias del usuario.
 
-\begin{figure}[H] 
-\centering 
-\includegraphics[scale=0.45]{imagenes/desarrollo_herramienta/mongo.png}
-\caption{ MongoDB-Logo\cite{mongoL}  }  
-\end{figure} 
-
-Las principales características de las bases de datos no relacionales como MongoDB son la velocidad y la flexibilidad. La eficiencia en las consultas sobre bases de datos no relacionales, y mas aun, cuando estas consultas marcan la calidad de experiencia que percibe el usuario, ya sea en el portal web o en la aplicación Android.  Las tareas de consulta, inserción, modificación o borrado presentan una gran eficiencia ya que pueden ser realizadas mediante funciones JavaScript en el cliente, conectando directamente con la base de datos.
-
+Las principales características de las bases de datos no-relacionales como MongoDB son la velocidad y la flexibilidad. La eficiencia en las consultas sobre bases de datos no-relacionales, y mas aun, cuando estas consultas marcan la calidad de experiencia que percibe el usuario, ya sea en el portal web o en la aplicación Android.  Las tareas de consulta, inserción, modificación o borrado presentan una gran eficiencia ya que pueden ser realizadas mediante funciones JavaScript en el cliente, conectando directamente con la base de datos.
 En cuanto a la flexibilidad, la principal ventaja es la escalabilidad, por ejemplo, en el momento en que un usuario necesite mas atributos para clasificar sus objetos, lo que en el mundo de las bases de datos relacionales se traduciría en agregar mas columnas a las tablas que representan todos los objetos, cuando se trabaja con bases de datos no relacionales esto no es un impedimento, ya que en la misma colección pueden convivir documentos u objetos con distintos campos o valores. Esto es perfecto para darle al usuario la libertad de personalizar los atributos con los que quiere identificar sus objetos. 
-
 Las consultas sobre MongoDB son consultas Ad Hoc, las cuales soportan búsqueda por campos, consultas por rangos y expresiones regulares. También pueden ser funciones JavasScript definidas por el desarrollador. 
-
 Cualquier documento de MongoDB puede ser indexado. Los índices funcionan de manera similar a los de las bases de datos relacionales. 
-
 En cuanto a la replicación y Balanceo de carga, MongoDb soporta el paradigma maestro-esclavo. Es capaz de escalar horizontalmente y tiene la capacidad de ejecutarse en múltiples servidores, balanceando la carga y duplicando de datos para garantizar el funcionamiento del sistema en caso de fallo. 
-
 En MongoDB, los documentos los guarda en BSON, que es una forma de representar de forma binaria objetos JSON. Un ejemplo de documento almacenado en MongoDB que representa a un item del almacén, es el siguiente:
-
 \begin{lstlisting}
 {u'nombre_item': u'nombre del objeto', 
  u'descripcion_item': u'Detalles del objeto', 
@@ -972,14 +951,10 @@ En MongoDB, los documentos los guarda en BSON, que es una forma de representar d
  u'fecha_alta_item': u'2016-06-02 07:50:41',
  u'localizador': u'010B05140000001',
  u'_id': ObjectId('574fe5511a4d6d0e054d8519')}
-
 \end{lstlisting}
-
 Este documento es básico. Los documentos pueden anidarse, dando lugar a documentos mas complejos con muchas mas información. Pueden contener también listas de otros elementos o valores. 
-
-\subsection{Pymongo} 
-Pymongo\cite{pymongo} es un paquete python que facilita un cliente o driver intermediario para controlar la iteración del sistema con la base de datos MongoDB. Algunas de las características que Pymongo ofrece son:
-
+\subsubsection{Pymongo} 
+Para interactuar con MongoDB, se utiliza Pymongo\cite{pymongo}, un paquete python que facilita un cliente o driver intermediario para controlar la iteración del sistema con la base de datos MongoDB. Algunas de las características que Pymongo ofrece son:
 \begin{enumerate}
 \item Conexión con la Base de Datos
 \item Visualización de las Bases de Datos creadas.
@@ -991,26 +966,17 @@ Pymongo\cite{pymongo} es un paquete python que facilita un cliente o driver inte
 \item Búsqueda de documentos
 \item Eliminación de documentos
 \end{enumerate}
-
 Pymongo es el controlador que permite a nuestro modelos interaccionar con la base de datos, de esta manera se consigue utilizar Django, que esta pensado para bases de datos relacionales, con MongoDB que es una base de datos no relacional ya que funciona como intermediario entre los modelos de objetos creados de manera externa al framework y la base de datos.
 
-\begin{figure}[H] 
-\centering 
-\includegraphics[scale=0.25]{imagenes/desarrollo_herramienta/pymongo.jpg}
-\caption{ Logo Pymongo\cite{pymongoL}}  
-\end{figure} 
 
  
+\subsection{Front-End}
 
-\subsection{JQuery y Ajax}
+El Front-End, capa de presentación o capa de cliente es la encargada de maquetar la estructura semántica del contenido, codificar el diseño en hojas de estilo y controlar la interacción con el usuario. En este proyecto la programación en el lado cliente juega un papel importante a la hora de mejorar la experiencia del usuario en la plataforma, manteniendo los datos actualizados en función de las actualizaciones de los distintos usuarios que trabajan en un mismo entorno colaborativo. La forma de trabajar en el cliente es mediante llamadas asíncronas al servidor, utilizando JQuery y Ajax para realizar llamadas asíncronas al servidor.  
 
-JQuery\cite{jq} es una librería de JavaScript, que permite interactuar con los documentos HTML, manipular el árbol DOM, manejar eventos, desarrollar animaciones y agregar interacción con el servidor mediante llamadas asíncronas realizadas con Ajax. Su objetivo principal es dar un comportamiento dinámico a las paginas web. Jquery funciona en múltiples navegadores, ya que es compatible con CSS3.
+\subsubsection{JQuery y Ajax}
 
-\begin{figure}[H] 
-\centering 
-\includegraphics[scale=0.25]{imagenes/desarrollo_herramienta/ajax_jq.jpg}
-\caption{ JQuery-Logo\cite{jq2}  }  
-\end{figure}   
+JQuery\cite{jq} es una librería de JavaScript, que permite interactuar con los documentos HTML, manipular el árbol DOM, manejar eventos, desarrollar animaciones y agregar interacción con el servidor mediante llamadas asíncronas realizadas con Ajax. Su objetivo principal es dar un comportamiento dinámico a las paginas web. Jquery funciona en múltiples navegadores, ya que es compatible con CSS3.  
 
 Ajax\cite{aj}, abreviatura de JavaScript Asíncrono y XML es un conjunto de técnicas de desarrollo web en el cliente para crear aplicaciones asíncronas y dinámicas. Con Ajax, las aplicaciones web pueden enviar y recibir datos desde el servidor en segundo plano sin que interfiera en la visualización o el comportamiento de la aplicación. Utilizar Ajax supone crear aplicaciones web en las que la capa de intercambio de datos ha sido separada de la capa de presentación, lo que permite un comportamiento dinámico sin la necesidad de recargar el navegador. 
 
@@ -1023,7 +989,7 @@ Ajax\cite{aj}, abreviatura de JavaScript Asíncrono y XML es un conjunto de téc
 En este proyecto, el principal uso de Jquery se realiza junto con Ajax para recargar la información de la web de manera dinámica mediante llamadas asíncronas. El uso de estas tecnologías mejora la experiencia del usuario cuando interactúa con el sistema mediante la plataforma web y la aplicación Android.
 
 
-\subsection{Bootstrap}
+\subsubsection{Bootstrap}
 Bootstrap\cite{boo} es un framework CSS para dar forma a sitios web mediante librerías CSS. Bootstrap  permite crear interfaces de usuario limpias y totalmente adaptables a todo tipo de dispositivos y pantallas ya que esta caracterizado por ser responsive. Es compatible con los siguientes navegadores: 
 
 \begin{enumerate}
@@ -1033,21 +999,13 @@ Bootstrap\cite{boo} es un framework CSS para dar forma a sitios web mediante lib
 \item Internet Explorer 
 \item Opera  
 \end{enumerate}
+  
+\subsection{Servicios}
+Para dotar a la plataforma de diversas funcionalidades, se han incluido ciertos servicios externos. 
 
-\begin{figure}[H] 
-\centering 
-\includegraphics[scale=0.25]{imagenes/desarrollo_herramienta/bootstrap.png}
-\caption{ Bootstrap-Logo\cite{booL}  }  
-\end{figure}  
-
-\subsection{SendGrid}
+\subsubsection{SendGrid}
 SendGrid\cite{sg} es un servicio cloud de correo electrónico. Proporciona un sistema de entrega de correos electrónicos transaccional. SendGrid cuenta con una API flexible que facilita la integración personalizada del servicio. 
-
-\begin{figure}[H] 
-\centering 
-\includegraphics[scale=0.25]{imagenes/desarrollo_herramienta/sendgrid.png}
-\caption{ SendGrid-Logo\cite{sgL}  }  
-\end{figure}  
+ 
 
 En este proyecto, se ha utilizado SendGrid para implantar un buzón de incidencias en la página principal. Dicho buzón, permite a los usuarios interesados, contactar con el administrador del sistema en caso de incidencia o en caso de necesitar información. Dicho buzón también permite contactar con los usuarios registrados que pertenecen a alguna organización o almacén en concreto. Al utilizar Django como marco de trabajo la integración de  SendGrid  es muy sencilla. Es necesario disponer de una cuenta en el servicio y añadir las siguientes lineas al archivo de configuración settings.py de Django:
 \begin{lstlisting}
@@ -1057,8 +1015,39 @@ EMAIL_HOST_PASSWORD = os.environ.get('MAIL_PASS')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 \end{lstlisting}
-El nombre de usuario y la contraseña son establecidas mediante variables de entorno para garantizar la seguridad del servicio. SendGrid facilita de manera gratuita, cuentas con 25.000 correos electrónicos gratuitos cada mes.  
- 
+El nombre de usuario y la contraseña son establecidas mediante variables de entorno para garantizar la seguridad del servicio. SendGrid facilita de manera gratuita, cuentas con 25.000 correos electrónicos gratuitos cada mes.
+
+\subsubsection{Generación de Identificadores }
+
+Para la generación de códigos QR, se ha decidido utilizar la API  Google Charts\cite{googleqr} creando con ella un template tag de Django. Este template recibe como argumento dos cadenas de texto, una el identificador de objeto y otra la alternativa a mostrar en caso de que no sea posible generar la imagen con el código QR. 
+
+\begin{lstlisting}
+@register.filter
+@stringfilter
+def qrcode(value, alt=None):
+    """
+    Generate QR Code image from a string with the Google charts API
+    Ejemplo de Uso -->  {{ my_string|qrcode:"my alt" }}
+    <img src="http://chart.apis.google.com/chart?chs=150x150&amp;cht=qr&amp;chl=my_string&amp;choe=UTF-8" alt="my alt" />
+    """
+    url = conditional_escape("http://chart.apis.google.com/chart?%s" % \
+            urllib.urlencode({'chs':'200x200', 'cht':'qr', 'chl':value, 'choe':'UTF-8'}))
+    alt = conditional_escape(alt or value)
+
+    return mark_safe(u"""<img class="qrcode" src="%s" width="200" height="200" alt="%s" />""" % (url, alt))
+\end{lstlisting}
+
+Para la generación de códigos de barras se procede de la misma forma, pero utilizando el generador gratuito de códigos de barras MBCEStore\cite{barras} 
+
+\begin{lstlisting}
+@register.filter
+@stringfilter
+def barcode(value, alt=None):
+    #{{ my_string|barcode:"my alt" }}#
+    url='http://www.mbcestore.com.mx/generador_codigo_de_barras/codigo_de_barras.html?code='+value+'&style=197&type=C128B&width=250&height=50&xres=1&font=4'
+    alt = conditional_escape(alt or value)
+    return mark_safe(u"""<img class="barcode" style="border-radius: 0px" src="%s"  alt="%s" />""" % (url, alt))
+\end{lstlisting}
  
 \section{Infraestructura}
 
@@ -1068,14 +1057,10 @@ En esta sección se detallará la infraestructura virtual subyacente con la que 
 
 Para detallar la infraestructura subyacente con la que cuenta el proyecto, es necesario comenzar hablando de las herramientas de integración continua que se usan en el. La integración continua consiste en realizar compilaciones y ejecución de pruebas o test unitarios de todo el proyecto, cada cierto tiempo con el objetivo de detectar fallos. Debido al desarrollo TDD, el proyecto cuenta con las baterías de test asociadas a los modelos y a sus manejadores.
 
+\subsubsection{Travis-CI}
 En este proyecto la primera herramienta de integración continua utilizada es Travis-CI\cite{travis}.Travis es un  sistema distribuido de integración continua utilizado para construir y testear proyectos. Travis utiliza el control de versiones GitHub y un archivo denominado travis.yml\ref{sec:travis} para realizar el proceso de integración. En dicho fichero, se especifica el lenguaje utilizado, la versión, la instalación de dependencias y la ejecución de test unitarios. Dicho fichero también puede utilizarse para realizar despliegue de la aplicación en distintas plataformas aunque en este proyecto no ha sido el caso. Travis es una herramienta de código abierto compatible con multitud de lenguajes. 
 
-\begin{figure}[H] 
-\centering 
-\includegraphics[scale=0.25]{imagenes/desarrollo_herramienta/travis.jpg}
-\caption{ Travis-CI Logo\cite{travisL}  }  
-\end{figure} 
-
+\subsubsection{SNAP-CI}
 La segunda herramienta de integración continua utilizada ha sido SNAP-CI\cite{snap}. Esta herramienta es perfecta para el proceso de integración continua y la automatización del despliegue de la aplicación. Como podemos observar en la siguiente imagen, Snap-CI nos permite vincular el repositorio de github en el que se encuentra el sistema y desglosar en un pipeline los distintos pasos que de pasar la aplicación para completar la integración y desplegarse.En este proyecto, el pipeline esta desglosado en 3 bloques, los cuales se ejecutarán cada vez que se realice un push al repositorio:
 
 \begin{enumerate}
@@ -1097,12 +1082,7 @@ La segunda herramienta de integración continua utilizada ha sido SNAP-CI\cite{s
 \subsection{Plataforma Como Servicio}
 
 Para continuar con el desarrollo de la infraestructura, se va a hablar de la plataforma como servicio. Como se vio en la introducción, la plataforma como servicio es uno de los servicios cloud que hoy en día pueden ofrecerse. Este proyecto se encuentra desplegado en el PaaS Heroku\cite{hero} que al ser de carácter gratuito el objetivo de desplegar el sistema aquí es tener una versión disponible para que el usuario prueba el sistema sin ningún compromiso.
-
-\begin{figure}[H] 
-\centering 
-\includegraphics[scale=0.30]{imagenes/desarrollo_herramienta/heroku.jpg}
-\caption{ Heroku Logo\cite{heroL}  }  
-\end{figure}  	
+ 	
  
 
 Heroku es una plataforma en la nube basado en un sistema de contenedores gestionados, con servicios de datos integrados y un potente ecosistema, para implementar y ejecutar aplicaciones. Heroku presenta una fácil integración con github y con herramientas de integración continua como vimos en la subsección anterior. Heroku se caracteriza por el fichero de configuración denominado Procfile. Dicho fichero, se encarga de arrancar una instancia web y dejar que gunicorn (servidor de aplicación) ejecute el sistema en ella. Heroku también cuenta con una herramienta de linea de comandos que facilita la automatización de tareas y despliegues. 
@@ -1113,8 +1093,8 @@ Mlab\cite{mlab} es un servicio de base de datos alojado en la nube completamente
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.50]{imagenes/desarrollo_herramienta/mlab.png}
-\caption{ Mlab Logo\cite{mlabL}  }  
+\includegraphics[scale=0.95]{imagenes/desarrollo_herramienta/mlab.png}
+\caption{ Mlab - Native REST interface\cite{mlabL}  }  
 \end{figure} 
   
 
@@ -1929,6 +1909,15 @@ En definitiva, dentro de un sistema de gestión, las mejoras y extensiones son u
 
 
 
+\bibitem[9]{googleqr} \textsc{Google Charts},
+\textit{API Generadora de códigos QR }
+\url{https://developers.google.com/chart/interactive/docs/gallery}
+
+\bibitem[9]{barras} \textsc{MBCEStore.com},
+\textit{Generador Gratuito de Códigos de Barras }
+\url{http://www.mbcestore.com.mx/generador_codigo_de_barras/}
+
+
 %infraestructura 
 
 
@@ -1965,8 +1954,8 @@ En definitiva, dentro de un sistema de gestión, las mejoras y extensiones son u
 \url{https://mlab.com/}
 
 \bibitem[2]{mlabL} \textsc{Mlab},
-\textit{Mlab: Logo}
-\url{https://apiplug.com/blog/wp-content/uploads/2016/03/mlab_logo.png}
+\textit{Mlab - Native REST interface}
+\url{https://www.simple-talk.com/iwritefor/articlefiles/2200-DocDB-Mongo-Fig-4_Resources.png}
 
 
 

@@ -50,29 +50,21 @@
 \contentsline {figure}{\numberline {2.39}{\ignorespaces Diagrama de Clases - Android\cite {propio} }}{56}{figure.2.39}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Modelo-Vista-Controlador\cite {mvc2} }}{57}{figure.3.1}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Django-Logo\cite {djL} }}{59}{figure.3.2}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces MongoDB-Logo\cite {mongoL} }}{60}{figure.3.3}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Logo Pymongo\cite {pymongoL}}}{61}{figure.3.4}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces JQuery-Logo\cite {jq2} }}{62}{figure.3.5}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Modelo Ajax\cite {aj2} }}{62}{figure.3.6}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Bootstrap-Logo\cite {booL} }}{63}{figure.3.7}
-\contentsline {figure}{\numberline {3.8}{\ignorespaces SendGrid-Logo\cite {sgL} }}{63}{figure.3.8}
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Travis-CI Logo\cite {travisL} }}{65}{figure.3.9}
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Pipeline Snap-CI\cite {snapP} }}{65}{figure.3.10}
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Heroku Logo\cite {heroL} }}{66}{figure.3.11}
-\contentsline {figure}{\numberline {3.12}{\ignorespaces Mlab Logo\cite {mlabL} }}{66}{figure.3.12}
-\contentsline {figure}{\numberline {3.13}{\ignorespaces Arquitectura Azure\cite {azureA} }}{67}{figure.3.13}
-\contentsline {figure}{\numberline {3.14}{\ignorespaces Funcionamiento Vagrant\cite {vg2}}}{68}{figure.3.14}
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Arquitectura Ansible\cite {ans2}}}{69}{figure.3.15}
-\contentsline {figure}{\numberline {3.16}{\ignorespaces Virtualizaci\IeC {\'o}n Docker\cite {dkw}}}{69}{figure.3.16}
-\contentsline {figure}{\numberline {3.17}{\ignorespaces Generaci\IeC {\'o}n Imagen Docker Hub\cite {dkh2}}}{70}{figure.3.17}
-\contentsline {figure}{\numberline {3.18}{\ignorespaces Diagrama POO\cite {poo}}}{71}{figure.3.18}
-\contentsline {figure}{\numberline {3.19}{\ignorespaces Ciclo de Vida Actividades Android\cite {colD}}}{72}{figure.3.19}
-\contentsline {figure}{\numberline {3.20}{\ignorespaces Android-Studio}}{74}{figure.3.20}
-\contentsline {figure}{\numberline {3.21}{\ignorespaces HTTP Esquema\cite {httpD}}}{75}{figure.3.21}
-\contentsline {figure}{\numberline {3.22}{\ignorespaces Arquitectura Volley\cite {volley2}}}{75}{figure.3.22}
-\contentsline {figure}{\numberline {3.23}{\ignorespaces Ejemplo Funcionamiento Etiquetas NFC\cite {nfc4}}}{76}{figure.3.23}
-\contentsline {figure}{\numberline {3.24}{\ignorespaces zxing - logo\cite {cebra3}}}{77}{figure.3.24}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Modelo Ajax\cite {aj2} }}{62}{figure.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Pipeline Snap-CI\cite {snapP} }}{65}{figure.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Mlab - Native REST interface\cite {mlabL} }}{66}{figure.3.4}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Arquitectura Azure\cite {azureA} }}{67}{figure.3.5}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Funcionamiento Vagrant\cite {vg2}}}{68}{figure.3.6}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Arquitectura Ansible\cite {ans2}}}{69}{figure.3.7}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Virtualizaci\IeC {\'o}n Docker\cite {dkw}}}{69}{figure.3.8}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Generaci\IeC {\'o}n Imagen Docker Hub\cite {dkh2}}}{70}{figure.3.9}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Diagrama POO\cite {poo}}}{71}{figure.3.10}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Ciclo de Vida Actividades Android\cite {colD}}}{72}{figure.3.11}
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Android-Studio}}{74}{figure.3.12}
+\contentsline {figure}{\numberline {3.13}{\ignorespaces HTTP Esquema\cite {httpD}}}{75}{figure.3.13}
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Arquitectura Volley\cite {volley2}}}{75}{figure.3.14}
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Ejemplo Funcionamiento Etiquetas NFC\cite {nfc4}}}{76}{figure.3.15}
+\contentsline {figure}{\numberline {3.16}{\ignorespaces zxing - logo\cite {cebra3}}}{77}{figure.3.16}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Fases TDD\cite {tdd2} }}{80}{figure.4.1}
 \contentsline {figure}{\numberline {4.2}{\ignorespaces SnapCI - Ejecuci\IeC {\'o}n de Test\cite {propio}}}{82}{figure.4.2}
