@@ -238,12 +238,7 @@ Este proyecto también forma parte del programa de becas Talentum StartUP patroc
  
 
 \section{Inventario y Gestión}
-\begin{figure}[H]  
-\centering 
-\includegraphics[scale=0.75]{imagenes/intro/INVENTARIO.png}
-\caption{ ¿Qué es inventario?\cite{cuestion} }  
-\end{figure} 
-
+ 
 El inventario\cite{libro} es una parte esencial para muchas empresas, hace referencia al almacenamiento de los bienes que suministran a los consumidores o clientes con alguna utilidad en concreto. El inventario representa una parte significativa en la mayoría de las empresas, representa los vienes disponibles para llevar acabo las actividades económicas de la empresa.  Si una empresa ha de controlar un gran número de productos, será necesario automatizar el control de sus inventarios con el objetivo de conocer las las cantidades de materia prima, productos en proceso o productos terminados de los que puede disponer.  Lo inventarios, representan la cantidad de bienes o activos que una empresa mantiene en existencia en un momento determinado. Representa el patrimonio productivo de la empresa. Los inventarios se pueden clasificar en función de las característica físicas de los objetos que los forman: 
 
 \begin{enumerate}
@@ -260,11 +255,15 @@ A raíz de esto, surge la gestión de inventarios o procesos administrativos que
 
 
 
-La gestión de inventarios\cite{gestion} se define como una serie de políticas de control y gestión para controlar el estado de las materias primas que la empresa u organización tiene en su almacén con el objetivo de ahorrar tiempo y dinero ofreciendo a los solicitantes de materias primas o clientes un servicio eficiente y de calidad. Un sistema de gestión de inventariado es el encargado de implementar las políticas operativas adecuadas para que esto se realice de la mejor forma posible. 
+La gestión de inventarios\cite{gestion} se define como una serie de políticas de control y gestión para controlar el estado de las materias primas que la empresa u organización tiene en su almacén con el objetivo de ahorrar tiempo y dinero ofreciendo a los solicitantes de materias primas o clientes un servicio eficiente y de calidad.
 
-En la gestión de Inventarios intervienen 4 actividades principales:
+\begin{figure}[H]  
+\centering 
+\includegraphics[scale=0.7]{imagenes/intro/modelo.jpg}
+\caption{ Modelo Gestión Inventario\cite{modelo} }  
+\end{figure} 
 
-
+Un sistema de gestión de inventariado es el encargado de implementar las políticas operativas adecuadas para que esto se realice de la mejor forma posible. En la gestión de inventarios intervienen 4 actividades principales:
 \begin{enumerate}
 \item \textbf{Determinación de existencias} Define todos los procesos necesarios para conocer la información referente a las existencias físicas de los productos gestionar.
 \item \textbf{Análisis de inventarios} hace referencia al análisis estadístico de los activos, para establecer si las existencias que fueron determinadas inicialmente son las que deberían aparecer en el almacén.  
@@ -273,11 +272,7 @@ En la gestión de Inventarios intervienen 4 actividades principales:
 \end{enumerate}
  
  
-\begin{figure}[H]  
-\centering 
-\includegraphics[scale=0.7]{imagenes/intro/modelo.jpg}
-\caption{ Modelo Gestión Inventario\cite{modelo} }  
-\end{figure} 
+
 
 El principal objetivo en la gestión de inventarios es tener la cantidad adecuada de materiales, en el lugar adecuado, en el momento adecuado y con el menor coste posible. Los costes excesivos en las tareas de inventario suelen ser derivados de malas decisiones a la hora de implantar un sistema de gestión.  Con la gestión de inventarios, una empresa u organización puede realizar sus tareas de producción y compra economizando recursos, y también atender a sus clientes con más rapidez, optimizando todas las actividades de la empresa.
 
@@ -924,6 +919,12 @@ Este proyecto se ha desarrollado en python, utilizando el framework Django. Como
 
 El Back-End o lado del servidor es la capa encargada del acceso a los datos. En este proyecto se ha decidido utilizar Django\cite{dj} como framework de alto nivel para trabajar con python en el servidor. Este framework reúne diversas herramientas y aplicaciones, como por ejemplo el servidor de aplicación para desarrollo que facilita el trabajo para desarrollar de manera ágil, el modulo de autenticación de usuarios, el modulo para desarrollo basado en test o la integración de servicios externos como el cliente de mensajería interna. Al principio se planteó realizar la plataforma web en PHP utilizando el framework Symfony pero al ser un sistema bastante grande, se decidió optar por Django ya que facilitaba el proceso de desarrollo. También se pensó en el micro-framework python Flask\cite{fl} pero después del proceso de análisis, se llegó a la conclusión de que con Flask se repetiría mucho más código y con Django el diseño sería más escalable.
 
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.55]{imagenes/desarrollo_herramienta/django.png}
+\caption{ Arquitectura Django\cite{djA}  }  
+\end{figure} 
+
 Django sigue la metodología de diseño “Modelo – Vista - Controlador” (MVC) lo que permite crear aplicaciones web extensibles, escalables y sostenibles. Django es de código abierto y cuenta con diversos módulos para asegurar la seguridad e integridad de las aplicaciones web desarrolladas en él. 
 Django posee un sistema jerárquico de plantillas que facilita la reutilización de código y extensibilidad de aplicaciones. Además cuenta con soporte para internacionalización.
 \subsubsection{Sistema Gestor de Bases de Datos}
@@ -932,6 +933,12 @@ La parte imprescindible para la capa de acceso a datos es el sistema gestor de b
 MongoDB es un sistema de base de datos NoSQL orientado a grandes cantidades de datos, guarda estructuras de datos en documentos similares a JSON haciendo que la integración de los datos en ciertas aplicaciones sea más fácil y rápida.
 Se trata de una base de datos ágil que permite cambiar los esquemas de una aplicación cuando esta evoluciona. Los principales objetivos de estas bases de datos son la escalabilidad, rendimiento y gran disponibilidad.
 En MongoDB los documentos se agrupan en colecciones. Las colecciones  no imponen una estructura fija a los documentos que contienen, ni siquiera al tipo de datos de cada campo. Esto es una ventaja cuando estamos desarrollado un sistema en el que las entradas de la base de datos dependen de las preferencias del usuario.
+
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.55]{imagenes/desarrollo_herramienta/mongo.jpg}
+\caption{ Arquitectura MongoDB\cite{mongoA}  }  
+\end{figure} 
 
 Las principales características de las bases de datos no-relacionales como MongoDB son la velocidad y la flexibilidad. La eficiencia en las consultas sobre bases de datos no-relacionales, y mas aun, cuando estas consultas marcan la calidad de experiencia que percibe el usuario, ya sea en el portal web o en la aplicación Android.  Las tareas de consulta, inserción, modificación o borrado presentan una gran eficiencia ya que pueden ser realizadas mediante funciones JavaScript en el cliente, conectando directamente con la base de datos.
 En cuanto a la flexibilidad, la principal ventaja es la escalabilidad, por ejemplo, en el momento en que un usuario necesite mas atributos para clasificar sus objetos, lo que en el mundo de las bases de datos relacionales se traduciría en agregar mas columnas a las tablas que representan todos los objetos, cuando se trabaja con bases de datos no relacionales esto no es un impedimento, ya que en la misma colección pueden convivir documentos u objetos con distintos campos o valores. Esto es perfecto para darle al usuario la libertad de personalizar los atributos con los que quiere identificar sus objetos. 
@@ -1169,6 +1176,12 @@ Con Docker Hub se vincula el repositorio del proyecto alojado en el control de v
 
 Android es un sistema operativo basado en el núcleo Linux diseñado inicialmente para teléfonos móviles, al igual que iOS, Symbian y Blackberry OS. El sistema permite programar aplicaciones en una variación de Java llamada Dalvik. El sistema operativo proporciona todas las interfaces necesarias para desarrollar aplicaciones que accedan a las funciones del teléfono. 
 
+\begin{figure}[H] 
+\centering 
+\includegraphics[scale=0.5]{imagenes/desarrollo_herramienta/android.png}
+\caption{ Arquitectura Android\cite{arqAndroid}}
+\end{figure}
+
 Como parte del desarrollo Android, se ha utilizado el paradigma de programación orientada a objetos (POO)\cite{ood}. La característica principal de este paradigma es la unión de datos de entrada y procesamiento en entidades denominadas objetos,  relacionadas a su vez con otras entidades objetos para producir salidas. En función del lenguaje de programación utilizado, existen conjuntos de objetos pre-diseñados que cumplen funcionalidades especificas y que están agrupados en librerías con el objetivo de ahorrar trabajo a los programadores.
 
 
@@ -1229,11 +1242,7 @@ En este proyecto, se ha utilizado Android-Studio como entorno de desarrollo para
 
 Para trabajar con Android hay diversos entornos de desarrollo como por ejemplo Eclipse, pero el mas recomendado y el utilizado en este proyecto es Android Studio\cite{as}. Android Studio es un entorno de desarrollo integrado (IDE), basado en IntelliJ IDEA de la compañía JetBrains,  que proporciona varias mejoras con respecto al plugin ADT (Android Developer Tools) para Eclipse. Android Studio utiliza una licencia de software libre Apache 2.0
 
-\begin{figure}[H] 
-\centering 
-\includegraphics[scale=0.5]{imagenes/desarrollo_herramienta/android.png}
-\caption{ Android-Studio}
-\end{figure}
+
 
 
 Algunas características\cite{as2} de este entorno de programación son:
@@ -1296,12 +1305,6 @@ Para llevar a cabo estas tareas, se ha creado la clase NFC Manager siguiendo los
 Otro método de identificación que utiliza  No-inventory-Android-App es la lectura de códigos de barras o códigos QR que contienen, al igual que las etiquetas NFC, el localizador propio de cada objeto dado de alta en el sistema. Son códigos de respuesta rápida, con un coste reducido y con la única necesidad de disponer de una cámara en el Smartphone. 
 
 Para conseguir esto, la aplicación utiliza la librería procesadora de imágenes multi-formato Zxing\cite{cebra}. Esta librería de código abierto  es capaz de reconocer una gran variedad de formatos, como por ejemplo  UPC-A, UPC-E, EAN-8, EAN-13, Códigos 39, 93, 128, ITF, Codabar, RSS-14, Matriz de datos, Aztec, PDF 417 y códigos QR. 
-
-\begin{figure}[H] 
-\centering 
-\includegraphics[scale=0.5]{imagenes/desarrollo_herramienta/zxing.png}
-\caption{ zxing - logo\cite{cebra3}}
-\end{figure}
 
 ZXing ofrece el lector de códigos de barras como una aplicación independiente que, mediante mecanismo de control de Intens\cite{cebra2} permite que otras aplicaciones, como por ejemplo esta,  puedan integrar el lector de manera sencilla.
 
@@ -1844,9 +1847,9 @@ En definitiva, dentro de un sistema de gestión, las mejoras y extensiones son u
 \textit{Django}
 \url{https://www.djangoproject.com/}
 
-\bibitem[8]{djL} \textsc{Django},
-\textit{Django Logo}
-\url{http://blog.djangostars.com/content/images/2015/12/maxresdefault.jpg}
+\bibitem[8]{djA} \textsc{Django},
+\textit{Arquitectura Django}
+\url{https://pythonhosted.org/MyTARDIS/_images/DjangoArchitecture-JeffCroft.png}
 
 \bibitem[9]{fl} \textsc{Flask},
 \textit{Flask}
@@ -1856,9 +1859,9 @@ En definitiva, dentro de un sistema de gestión, las mejoras y extensiones son u
 \textit{MongoDB}
 \url{https://www.mongodb.com/}
 
-\bibitem[9]{mongoL} \textsc{mongo-logo},
-\textit{MongoDB-Logo}
-\url{http://cftic.centrosdeformacion.empleo.madrid.org/web/educamadrid/principal/files/abf76d62-7094-44c2-8970-5ed8387f1cbf/mongodb-logo1.png}
+\bibitem[9]{mongoA} \textsc{MongoDB},
+\textit{Arquitectura MongoDB}
+\url{http://image.slidesharecdn.com/enterprisearchitectsview2014-oct-141029130130-conversion-gate01/95/an-enterprise-architects-view-of-mongodb-16-638.jpg?cb=1414587854}
 
 \bibitem[9]{propio} \textsc{propio},
 \textit{Elaboración Propia}
@@ -2029,6 +2032,11 @@ En definitiva, dentro de un sistema de gestión, las mejoras y extensiones son u
 \bibitem[4]{colD} \textsc{Ciclo de Vida Android},
 \textit{Diagrama}
 \url{http://static1.1.sqspcdn.com/static/f/923743/16252366/1327600283647/Ciclo+de+Vida+Android.png?token=MsCj9uNcnuKoyc7LF%2B92CpBCAfQ%3D} 
+
+\bibitem[4]{arqAndroid} \textsc{Android},
+\textit{Arquitectura Android }
+\url{https://sites.google.com/a/espe.edu.ec/programacion-ii/_/rsrc/1423061434166/android/a-1---arquitectura-de-android/and.png} 
+
 
 \bibitem[4]{as} \textsc{Android-Studio},
 \textit{Android-Studio-Developer}

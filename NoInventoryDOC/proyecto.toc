@@ -5,7 +5,7 @@
 \contentsline {subsection}{\numberline {1.2.1}Alcance de los objetivos}{20}{subsection.1.2.1}
 \contentsline {section}{\numberline {1.3}Inventario y Gesti\IeC {\'o}n}{21}{section.1.3}
 \contentsline {section}{\numberline {1.4}Sistemas de Gesti\IeC {\'o}n de Inventario}{23}{section.1.4}
-\contentsline {subsection}{\numberline {1.4.1}3PL Central}{24}{subsection.1.4.1}
+\contentsline {subsection}{\numberline {1.4.1}3PL Central}{23}{subsection.1.4.1}
 \contentsline {subsection}{\numberline {1.4.2}Windward System Five's Inventory Control}{24}{subsection.1.4.2}
 \contentsline {subsection}{\numberline {1.4.3}Snappii}{25}{subsection.1.4.3}
 \contentsline {subsection}{\numberline {1.4.4}PROTEO \IeC {\textendash } Software de Gesti\IeC {\'o}n de almac\IeC {\'e}n}{26}{subsection.1.4.4}
@@ -33,27 +33,27 @@
 \contentsline {section}{\numberline {3.1}Desarrollo Web}{57}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}Back-End}{58}{subsection.3.1.1}
 \contentsline {subsubsection}{Sistema Gestor de Bases de Datos}{59}{section*.7}
-\contentsline {subsubsection}{Pymongo}{60}{section*.8}
-\contentsline {subsection}{\numberline {3.1.2}Front-End}{61}{subsection.3.1.2}
-\contentsline {subsubsection}{JQuery y Ajax}{61}{section*.9}
-\contentsline {subsubsection}{Bootstrap}{62}{section*.10}
-\contentsline {subsection}{\numberline {3.1.3}Servicios}{62}{subsection.3.1.3}
-\contentsline {subsubsection}{SendGrid}{63}{section*.11}
-\contentsline {subsubsection}{Generaci\IeC {\'o}n de Identificadores }{63}{section*.12}
-\contentsline {section}{\numberline {3.2}Infraestructura}{64}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Integraci\IeC {\'o}n Continua}{64}{subsection.3.2.1}
-\contentsline {subsubsection}{Travis-CI}{64}{section*.13}
-\contentsline {subsubsection}{SNAP-CI}{64}{section*.14}
-\contentsline {subsection}{\numberline {3.2.2}Plataforma Como Servicio}{65}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Infraestructura Como Servicio}{66}{subsection.3.2.3}
-\contentsline {subsubsection}{Vagrant}{67}{section*.15}
-\contentsline {subsubsection}{Ansible}{68}{section*.16}
-\contentsline {subsubsection}{Docker}{69}{section*.17}
-\contentsline {section}{\numberline {3.3}Desarrollo Android}{70}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}Android-Studio}{73}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}Librer\IeC {\'\i }a Volley}{74}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Near field communication (NFC)}{76}{subsection.3.3.3}
-\contentsline {subsection}{\numberline {3.3.4}Lector de C\IeC {\'o}digos de Barras ZXing}{76}{subsection.3.3.4}
+\contentsline {subsubsection}{Pymongo}{61}{section*.8}
+\contentsline {subsection}{\numberline {3.1.2}Front-End}{62}{subsection.3.1.2}
+\contentsline {subsubsection}{JQuery y Ajax}{62}{section*.9}
+\contentsline {subsubsection}{Bootstrap}{63}{section*.10}
+\contentsline {subsection}{\numberline {3.1.3}Servicios}{63}{subsection.3.1.3}
+\contentsline {subsubsection}{SendGrid}{64}{section*.11}
+\contentsline {subsubsection}{Generaci\IeC {\'o}n de Identificadores }{64}{section*.12}
+\contentsline {section}{\numberline {3.2}Infraestructura}{65}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Integraci\IeC {\'o}n Continua}{65}{subsection.3.2.1}
+\contentsline {subsubsection}{Travis-CI}{65}{section*.13}
+\contentsline {subsubsection}{SNAP-CI}{65}{section*.14}
+\contentsline {subsection}{\numberline {3.2.2}Plataforma Como Servicio}{66}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Infraestructura Como Servicio}{67}{subsection.3.2.3}
+\contentsline {subsubsection}{Vagrant}{68}{section*.15}
+\contentsline {subsubsection}{Ansible}{69}{section*.16}
+\contentsline {subsubsection}{Docker}{70}{section*.17}
+\contentsline {section}{\numberline {3.3}Desarrollo Android}{71}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Android-Studio}{75}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Librer\IeC {\'\i }a Volley}{76}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Near field communication (NFC)}{77}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.4}Lector de C\IeC {\'o}digos de Barras ZXing}{78}{subsection.3.3.4}
 \contentsline {chapter}{\numberline {4}Implementaci\IeC {\'o}n y Pruebas}{79}{chapter.4}
 \contentsline {section}{\numberline {4.1}Desarrollo basado en test - TDD}{79}{section.4.1}
 \contentsline {section}{\numberline {4.2}Ejemplo de uso}{83}{section.4.2}

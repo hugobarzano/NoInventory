@@ -1,13 +1,12 @@
 \select@language {spanish}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces \IeC {\textquestiondown }Qu\IeC {\'e} es inventario?\cite {cuestion} }}{21}{figure.1.1}
-\contentsline {figure}{\numberline {1.2}{\ignorespaces Modelo Gesti\IeC {\'o}n Inventario\cite {modelo} }}{23}{figure.1.2}
-\contentsline {figure}{\numberline {1.3}{\ignorespaces 3PL Cental }}{24}{figure.1.3}
-\contentsline {figure}{\numberline {1.4}{\ignorespaces Windward System Five's}}{25}{figure.1.4}
-\contentsline {figure}{\numberline {1.5}{\ignorespaces Snappii}}{26}{figure.1.5}
-\contentsline {figure}{\numberline {1.6}{\ignorespaces Snappii}}{27}{figure.1.6}
-\contentsline {figure}{\numberline {1.7}{\ignorespaces Beneficios Cloud Computing\cite {beneficios} }}{28}{figure.1.7}
-\contentsline {figure}{\numberline {1.8}{\ignorespaces Arquitectura Cloud Computing\cite {arquitecturaCC} }}{29}{figure.1.8}
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Modelo Gesti\IeC {\'o}n Inventario\cite {modelo} }}{22}{figure.1.1}
+\contentsline {figure}{\numberline {1.2}{\ignorespaces 3PL Cental }}{24}{figure.1.2}
+\contentsline {figure}{\numberline {1.3}{\ignorespaces Windward System Five's}}{25}{figure.1.3}
+\contentsline {figure}{\numberline {1.4}{\ignorespaces Snappii}}{26}{figure.1.4}
+\contentsline {figure}{\numberline {1.5}{\ignorespaces Snappii}}{27}{figure.1.5}
+\contentsline {figure}{\numberline {1.6}{\ignorespaces Beneficios Cloud Computing\cite {beneficios} }}{28}{figure.1.6}
+\contentsline {figure}{\numberline {1.7}{\ignorespaces Arquitectura Cloud Computing\cite {arquitecturaCC} }}{29}{figure.1.7}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Fase 1 - Planificaci\IeC {\'o}n\cite {propio} }}{31}{figure.2.1}
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Fase 2 - Planificaci\IeC {\'o}n\cite {propio} }}{32}{figure.2.2}
@@ -50,21 +49,22 @@
 \contentsline {figure}{\numberline {2.39}{\ignorespaces Diagrama de Clases - Android\cite {propio} }}{56}{figure.2.39}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Modelo-Vista-Controlador\cite {mvc2} }}{57}{figure.3.1}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Modelo Ajax\cite {aj2} }}{62}{figure.3.2}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Pipeline Snap-CI\cite {snapP} }}{65}{figure.3.3}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Mlab - Native REST interface\cite {mlabL} }}{66}{figure.3.4}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Arquitectura Azure\cite {azureA} }}{67}{figure.3.5}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Funcionamiento Vagrant\cite {vg2}}}{68}{figure.3.6}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Arquitectura Ansible\cite {ans2}}}{69}{figure.3.7}
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Virtualizaci\IeC {\'o}n Docker\cite {dkw}}}{69}{figure.3.8}
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Generaci\IeC {\'o}n Imagen Docker Hub\cite {dkh2}}}{70}{figure.3.9}
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Diagrama POO\cite {poo}}}{71}{figure.3.10}
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Ciclo de Vida Actividades Android\cite {colD}}}{72}{figure.3.11}
-\contentsline {figure}{\numberline {3.12}{\ignorespaces Android-Studio}}{74}{figure.3.12}
-\contentsline {figure}{\numberline {3.13}{\ignorespaces HTTP Esquema\cite {httpD}}}{75}{figure.3.13}
-\contentsline {figure}{\numberline {3.14}{\ignorespaces Arquitectura Volley\cite {volley2}}}{75}{figure.3.14}
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Ejemplo Funcionamiento Etiquetas NFC\cite {nfc4}}}{76}{figure.3.15}
-\contentsline {figure}{\numberline {3.16}{\ignorespaces zxing - logo\cite {cebra3}}}{77}{figure.3.16}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Arquitectura Django\cite {djA} }}{59}{figure.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Arquitectura MongoDB\cite {mongoA} }}{60}{figure.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Modelo Ajax\cite {aj2} }}{63}{figure.3.4}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Pipeline Snap-CI\cite {snapP} }}{66}{figure.3.5}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Mlab - Native REST interface\cite {mlabL} }}{67}{figure.3.6}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Arquitectura Azure\cite {azureA} }}{68}{figure.3.7}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Funcionamiento Vagrant\cite {vg2}}}{69}{figure.3.8}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Arquitectura Ansible\cite {ans2}}}{70}{figure.3.9}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Virtualizaci\IeC {\'o}n Docker\cite {dkw}}}{70}{figure.3.10}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Generaci\IeC {\'o}n Imagen Docker Hub\cite {dkh2}}}{71}{figure.3.11}
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Arquitectura Android\cite {arqAndroid}}}{72}{figure.3.12}
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Diagrama POO\cite {poo}}}{72}{figure.3.13}
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Ciclo de Vida Actividades Android\cite {colD}}}{74}{figure.3.14}
+\contentsline {figure}{\numberline {3.15}{\ignorespaces HTTP Esquema\cite {httpD}}}{76}{figure.3.15}
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Arquitectura Volley\cite {volley2}}}{76}{figure.3.16}
+\contentsline {figure}{\numberline {3.17}{\ignorespaces Ejemplo Funcionamiento Etiquetas NFC\cite {nfc4}}}{77}{figure.3.17}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Fases TDD\cite {tdd2} }}{80}{figure.4.1}
 \contentsline {figure}{\numberline {4.2}{\ignorespaces SnapCI - Ejecuci\IeC {\'o}n de Test\cite {propio}}}{82}{figure.4.2}
