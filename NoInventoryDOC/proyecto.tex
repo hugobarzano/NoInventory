@@ -179,7 +179,7 @@ pdfproducer = {pdflatex}
 %\frontmatter
 \tableofcontents
 \listoffigures
-%\listoftables
+\listoftables
 
 %
 %\mainmatter
@@ -318,8 +318,8 @@ Snappii\cite{snp} es una plataforma de desarrollo de aplicaciones a medida para 
 \end{figure}
 
 
-\subsection{PROTEO – Software de Gestión de almacén}
-Proteo-SGA\cite{pro} es un software para la gestión en tiempo real de almacenes utilizando radiofrecuencia de la empresa Easytech\cite{easy}. Este software controla totalmente el ciclo de vida del producto. Su sistema de etiquetaje soporta RFID y códigos de barras. Gestión multi-almacén multi-zona, y multi-empresa intenta automatizar todas las tareas posibles dentro de la gestión de almacen, tareas como recepciones, ubicación, picking, expediciones, seguimiento de movimientos y trazabilidad. 
+\subsection{Proteo – Software de Gestión de almacén}
+Proteo-SGA\cite{pro} es un software para la gestión en tiempo real de almacenes utilizando radiofrecuencia de la empresa Easytech\cite{easy}. Este software controla totalmente el ciclo de vida del producto. Su sistema de etiquetaje soporta RFID y códigos de barras. Gestión multi-almacén multi-zona, y multi-empresa intenta automatizar todas las tareas posibles dentro de la gestión de almacen, tareas como recepciones, ubicación, picking, expediciones, seguimiento de movimientos y trazabilidad. El presupuesto mínimo ronda entorno a los 29700\$ para un alamcen de 1000 metros cuadrados.  
 
 \begin{figure}[H]  
 \centering 
@@ -332,9 +332,26 @@ Proteo-SGA\cite{pro} es un software para la gestión en tiempo real de almacenes
 
 \subsection{Conclusiones}
 
-De todos estos productos, podemos destacar puntos fuertes como estar alojados en la nube, utilizar tecnologías de radiofrecuencia o tecnologías móviles para la gestión. Otros aspectos importantes son la automatización de tareas, controlar el flujo de entrada/salida de objetos o la generación de informes pero también presentan aspectos negativos como son el precio de los servicios o las complicadas interfaces que no facilitan su uso para empleados poco cualificados. 
+De todos estos productos, podemos destacar puntos fuertes como estar alojados en la nube, utilizar tecnologías de radiofrecuencia o tecnologías móviles para la gestión. Otros aspectos importantes son la automatización de tareas, controlar el flujo de entrada/salida de objetos o la generación de informes pero también presentan aspectos negativos como son el precio de los servicios o las complicadas interfaces que no facilitan su uso para empleados poco cualificados. En la siguiente tabla, se realiza una comparativa entre los sistemas de gestión estudiados
 
-Estas conclusiones  han sido de gran utilidad para el siguiente capítulo en el que se detallará el proceso de análisis y especificación del sistema final.  
+\begin{table}[htb]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{7}{|c|}{Características sistemas de inventariado } \\ \hline
+Sistema & Simplicidad & Automatización  & Cloud Service & RFID & Tecnologías Móviles & Coste
+\\
+\hline 
+3PL Central & NO & SI & SI & SI & NO & Alto \\ \hline
+WS5 & SI & SI & SI & NO & NO & Elevado \\ \hline
+Snappii & SI & SI & NO & NO & SI & Medio \\ \hline
+Proteo & SI & SI & SI & SI & NO & Elevado \\ \hline
+\end{tabular}
+\caption{Tabla Compartativa Caracteristicas}
+\end{table}
+
+
+Estas conclusiones  han sido de gran utilidad para el siguiente capítulo en el que se detallará el proceso de análisis y especificación del sistema final. También se puede extraer de ellas que proyectos de este tipo, son perfectos para ofrecer sus servicios desde la nube, lo que da paso al concepto de Software como Servicio o SaaS que se explica en la siguiente sección. 
 
 
 \section{Cloud Computing}
@@ -386,10 +403,10 @@ La Infraestructura como Servicio\cite{iaas} (IaaS, Infrastructure as a Service) 
 Estas son las ventajas características de una implementación basada en el modelo de Infraestructura como Servicio:
 
 \begin{enumerate}
-\item Escalabilidad
-\item Sin necesidad de invertir en hardware
-\item Independencia de la localización
-\item Seguridad física en los centros de datos
+\item Escalabilidad.
+\item Sin necesidad de invertir en hardware.
+\item Independencia de la localización.
+\item Seguridad física en los centros de datos.
 \end{enumerate}
 
 
@@ -1671,7 +1688,7 @@ Es interesante resaltar el hecho de que la plataforma web cuenta con una bandeja
 
 Por último, mostrar que todo lo relativo a los usuarios del sistema, así como los perfiles de usuario asociadas a la organización o almacén pueden ser gestionados desde el panel de administración de Django.  
 
-\begin{figure}[H] 
+\begin{figure}[htb] 
 \centering 
 \includegraphics[scale=0.25]{imagenes/pruebas/admin.png}
 \caption{ Panel de Administración - Usuarios\cite{propio}}
@@ -1686,14 +1703,32 @@ Como capítulo final de esta memoria, se ha realizado un breve comentario sobre 
 
 \section{Conclusiones}
 
-No-Inventory es un sistema Open Source para la gestión de inventarios o almacenes, resultado de 5 meses de desarrollo software. El sistema resultante brinda una plataforma web alojada en la nube capaz de manejar grandes cantidades de datos ya que utiliza bases de datos No-Relacionales también conocidas como bases de datos documentales. El proyecto ha sido desarrollado siguiendo diversas metodologías y paradigmas de desarrollo con la finalidad de producir un sistema robusto, escalable y de fácil mantenimiento. 
+No-Inventory es un sistema Open Source para la gestión de inventarios o almacenes, resultado de 5 meses de desarrollo software. El sistema resultante brinda una plataforma web alojada en la nube capaz de manejar grandes cantidades de datos ya que utiliza bases de datos No-Relacionales también conocidas como bases de datos documentales. El proyecto ha sido desarrollado siguiendo diversas metodologías y paradigmas de desarrollo con la finalidad de producir un sistema robusto, escalable y de fácil mantenimiento. La siguiente tabla compara las principales características extraídas de los sistemas de gestión del capítulo uno, con las características que presenta No-Inventory: 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}\hline
+\multicolumn{7}{|c|}{Características Sistemas de Inventariado } \\ \hline
+Sistema & Simplicidad & Automatización  & Cloud Service & RFID & Tecnologías Móviles & Coste\\\hline 
+3PL Central & NO & SI & SI & SI & NO & Alto \\ \hline
+WS5 & SI & SI & SI & NO & NO & Elevado \\ \hline
+Snappii & SI & SI & NO & NO & SI & Medio \\ \hline
+Proteo & SI & SI & SI & SI & NO & Elevado \\ \hline
+No-Inventory & SI & SI & SI & NFC & SI & Reducido \\ \hline
+\end{tabular}
+\caption{Tabla Comparativa Características No-Inventory}
+\end{table}
 
 La plataforma simplifica las tareas de control de activos, dando al usuario la flexibilidad que necesite para organizar su almacén dentro de un entorno colaborativo. El sistema automatiza las tareas de control y generación de informes  ahorrando tiempo al cliente. No-Inventory cuenta con una infraestructura subyacente robusta y variada capaz de adaptarse a las necesidades del cliente además de una aplicación móvil que permite al cliente realizar las tareas de gestión desde el propio almacén presentando al cliente su smartphone como herramienta de trabajo. 
 
-La flexibilidad de No-inventory también está presente en los métodos de identificación  de objetos del almacén, una vez más en función de las necesidades o presupuesto del que disponga el cliente. Cuenta con soporte para códigos de barras estándar, códigos QR mas elaborados o etiquetas NFC. Todos los métodos de identificación son compatibles entre ellos dentro del mismo entorno colaborativo, es decir, dentro del mismo almacén y al ser un sistema escalable, en el futuro se podrían implantar nuevos métodos de identificación sin apenas realizar cambios significativos. 
+La flexibilidad de No-inventory también está presente en los métodos de identificación  de objetos del almacén, una vez más en función de las necesidades o presupuesto del que disponga el cliente. Cuenta con soporte para códigos de barras estándar, códigos QR mas elaborados o etiquetas NFC. Todos los métodos de identificación son compatibles entre ellos dentro del mismo entorno colaborativo, es decir, dentro del mismo almacén y al ser un sistema escalable, en el futuro se podrían implantar nuevos métodos de identificación sin apenas realizar cambios significativos.
+
+La finalidad de No-Inventory es la de procurar un sistema sencillo y flexible para gestionar inventarios  a clientes que no puedan permitirse contratar un sistema comercial, dando una metodología eficiente para gestionar sus almacenes desde la web con un coste casi nulo. 
+
+
  
 
-La finalidad de No-Inventory es la de procurar un sistema sencillo y flexible para gestionar inventarios  a clientes que no puedan permitirse contratar un sistema comercial, dando una metodología eficiente para gestionar sus almacenes con un coste casi nulo. 
+ 
 
 \section{Trabajos Futuros}
 No-Inventory es un sistema de inventariado capaz pero, en el proceso de análisis y desarrollo, hay ciertos aspectos que se podrían mejorar y ciertas extensiones que se podrían añadir para conseguir un sistema de gestión de activos profesional. Al igual que en el capítulo 3, el desarrollo de la herramienta se desglosó en 2 grandes bloques, las posibles extensiones también pueden dividirse en otros dos bloques. 
