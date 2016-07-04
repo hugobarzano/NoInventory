@@ -8,7 +8,7 @@
 \contentsline {subsection}{\numberline {1.4.1}3PL Central}{25}{subsection.1.4.1}
 \contentsline {subsection}{\numberline {1.4.2}Windward System Five's Inventory Control}{26}{subsection.1.4.2}
 \contentsline {subsection}{\numberline {1.4.3}Snappii}{27}{subsection.1.4.3}
-\contentsline {subsection}{\numberline {1.4.4}Proteo \IeC {\textendash } Software de Gesti\IeC {\'o}n de almac\IeC {\'e}n}{28}{subsection.1.4.4}
+\contentsline {subsection}{\numberline {1.4.4}Proteo - Software de Gesti\IeC {\'o}n de almac\IeC {\'e}n}{28}{subsection.1.4.4}
 \contentsline {subsection}{\numberline {1.4.5}Conclusiones}{29}{subsection.1.4.5}
 \contentsline {section}{\numberline {1.5}Cloud Computing}{30}{section.1.5}
 \contentsline {subsection}{\numberline {1.5.1}Software Como Servicio}{31}{subsection.1.5.1}
