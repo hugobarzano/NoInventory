@@ -37,18 +37,19 @@
 \contentsline {subsection}{\numberline {3.1.2}Front-End}{64}{subsection.3.1.2}
 \contentsline {subsubsection}{JQuery y Ajax}{64}{section*.10}
 \contentsline {subsubsection}{Bootstrap}{65}{section*.11}
-\contentsline {subsection}{\numberline {3.1.3}Servicios}{65}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.3}Herramientas y Servicios}{65}{subsection.3.1.3}
 \contentsline {subsubsection}{SendGrid}{66}{section*.12}
 \contentsline {subsubsection}{Generaci\IeC {\'o}n de Identificadores }{66}{section*.13}
+\contentsline {subsubsection}{Github}{67}{section*.14}
 \contentsline {section}{\numberline {3.2}Infraestructura}{67}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}Integraci\IeC {\'o}n Continua}{67}{subsection.3.2.1}
-\contentsline {subsubsection}{Travis-CI}{67}{section*.14}
-\contentsline {subsubsection}{SNAP-CI}{67}{section*.15}
+\contentsline {subsubsection}{Travis-CI}{68}{section*.15}
+\contentsline {subsubsection}{SNAP-CI}{68}{section*.16}
 \contentsline {subsection}{\numberline {3.2.2}Plataforma Como Servicio}{68}{subsection.3.2.2}
 \contentsline {subsection}{\numberline {3.2.3}Infraestructura Como Servicio}{69}{subsection.3.2.3}
-\contentsline {subsubsection}{Vagrant}{70}{section*.16}
-\contentsline {subsubsection}{Ansible}{71}{section*.17}
-\contentsline {subsubsection}{Docker}{72}{section*.18}
+\contentsline {subsubsection}{Vagrant}{70}{section*.17}
+\contentsline {subsubsection}{Ansible}{71}{section*.18}
+\contentsline {subsubsection}{Docker}{72}{section*.19}
 \contentsline {section}{\numberline {3.3}Desarrollo Android}{73}{section.3.3}
 \contentsline {subsection}{\numberline {3.3.1}Android-Studio}{77}{subsection.3.3.1}
 \contentsline {subsection}{\numberline {3.3.2}Librer\IeC {\'\i }a Volley}{78}{subsection.3.3.2}

@@ -1021,7 +1021,7 @@ Bootstrap\cite{boo} es un framework CSS para dar forma a sitios web mediante lib
 \item Opera  
 \end{enumerate}
   
-\subsection{Servicios}
+\subsection{Herramientas y Servicios}
 Para dotar a la plataforma de diversas funcionalidades, se han incluido ciertos servicios externos. 
 
 \subsubsection{SendGrid}
@@ -1069,6 +1069,19 @@ def barcode(value, alt=None):
     alt = conditional_escape(alt or value)
     return mark_safe(u"""<img class="barcode" style="border-radius: 0px" src="%s"  alt="%s" />""" % (url, alt))
 \end{lstlisting}
+
+\subsubsection{Github}
+GitHub es una plataforma de desarrollo colaborativo de software para alojar proyectos utilizando el sistema de control de versiones Git. El código es almacenado de forma pública o privada. GitHub aloja tu repositorio de código y te brinda herramientas muy útiles para el trabajo en equipo, dentro de un proyecto. Github ofrece varias herramientas:
+
+\begin{enumerate}
+\item Una wiki para el mantenimiento de las distintas versiones de las páginas. 
+\item Un sistema de seguimiento de problemas que permiten a los miembros de tu equipo detallar un problema con tu software.
+\item Una herramienta de revisión de código, donde se pueden añadir anotaciones en cualquier punto de un fichero y debatir sobre determinados cambios realizados en un commit específico. 
+\item Un visor de ramas donde se pueden comparar los progresos realizados en las distintas ramas de un repositorio. 
+\end{enumerate}
+
+Como parte del desarrollo de este proyecto, se ha utilizado Github como plataforma para el control de versiones. Github también ha sido utilizado para la automatización de tareas. Como se verá en la siguiente sección, el repositorio del proyecto esta vinculado con algunas herramientas cloud, de manera que al realizar push sobre el proyecto, estas herramientas cloud lanzan disparadores para integración continua, automatizar despliegues en PaaS o generar imágenes Docker. Todo esto se verá en detalle en la siguiente sección, dedicada a la infraestructura del proyecto. Los repositorios en los que están alojados los fuentes del proyecto son los siguientes:   
+
  
 \section{Infraestructura}
 
