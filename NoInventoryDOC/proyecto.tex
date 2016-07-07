@@ -765,7 +765,7 @@ Para conseguir un mayor grado de compresión de los modelos involucrados en la p
 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.15]{imagenes/clases/NoInventory_clases_web.jpg}
+\includegraphics[scale=0.20]{imagenes/clases/NoInventory_clases_web.jpg}
 \caption{ Diagrama de Clases - Plataforma Web\cite{propio}  }  
 \end{figure}
 
@@ -888,7 +888,7 @@ Como parte de los diagramas de secuencia, es interesante especificar en lo relat
 Para alcanzar un mayor grado de comprensión de la aplicación Android, se presenta también el siguiente diagrama de clases. 
 \begin{figure}[H] 
 \centering 
-\includegraphics[scale=0.15]{imagenes/clases/clasesAndroid.jpg}
+\includegraphics[scale=0.20]{imagenes/clases/clasesAndroid.jpg}
 \caption{ Diagrama de Clases - Android\cite{propio}  }  
 \end{figure}
 
@@ -896,7 +896,8 @@ Para alcanzar un mayor grado de comprensión de la aplicación Android, se prese
 
 
 \chapter{Desarrollo del Sistema}
-En esta parte se abordarán los aspectos mas importantes de la plataforma web. Que tecnologías has sido utilizadas, como han sido utilizadas y por qué han sido utilizadas.
+En esta parte se abordarán los aspectos más importantes en el desarrollo del sistema. ¿Qué tecnologías has sido utilizadas?, ¿como han sido utilizadas? y ¿por qué han sido utilizadas?
+para alcanzar un mayor grado de comprensión, se ha desglosado el proceso de desarrollo en 3 bloques principales: Desarrollo Web, Infraestructura y Desarrollo Android. 
 
 
 \section{Desarrollo Web}
@@ -941,7 +942,7 @@ El Back-End o lado del servidor es la capa encargada del acceso a los datos. En 
 Django sigue la metodología de diseño “ Modelo - Vista - Controlador ” (MVC) lo que permite crear aplicaciones web extensibles, escalables y sostenibles. Django es de código abierto y cuenta con diversos módulos para asegurar la seguridad e integridad de las aplicaciones web desarrolladas en él. 
 Django posee un sistema jerárquico de plantillas que facilita la reutilización de código y extensibilidad de aplicaciones. Además cuenta con soporte para internacionalización.
 \subsubsection{Sistema Gestor de Bases de Datos}
-La parte imprescindible para la capa de acceso a datos es el sistema gestor de bases de datos, encargado de almacenar los modelos del sistema. Como propuesta inicial para el desarrollo del sistema, se pensó en utilizar un esquema relacional utilizando sistemas gestores de bases de datos relacionales como MySQL o PostgreSQL por la manera de realizar las consultas y por la facilidad de diseño entidad-relación pero tras el proceso de análisis, se llego a la conclusión de que utilizando un esquema relacional, no se podría dotar al sistema de la flexibilidad necesaria para satisfacer las necesidades de cada entidad o almacén, ya que este esquema tradicional obliga a que todas las filas de una tabla representativa de un modelo tengan los mismos campos para mantener la entidad referencial del sistema. Debido a esto, se ha decido utilizar MongoDB\cite{mg} como sistema gestor de bases de datos no-relaciones también denominadas bases de datos documentales, con el objetivo de conseguir un esquema interno flexible y eficiente. 
+La parte imprescindible para la capa de acceso a datos es el sistema gestor de bases de datos, encargado de almacenar los modelos del sistema. Como propuesta inicial para el desarrollo del sistema, se pensó en utilizar un esquema relacional utilizando sistemas gestores de bases de datos relacionales como MySQL o PostgreSQL por la manera de realizar las consultas y por la facilidad de diseño entidad-relación pero tras el proceso de análisis, se llego a la conclusión de que utilizando un esquema relacional, no se podría dotar al sistema de la flexibilidad necesaria para satisfacer las necesidades de cada entidad o almacén, ya que este esquema tradicional obliga a que todas las filas de una tabla representativa de un modelo tengan los mismos campos para mantener la entidad referencial del sistema. En vista de este problema, se pensó también utilizar Elasticsearch, herramienta con la que se podría alcanzar el grado de flexibilidad necesaria para los modelos, pero debido a su compleja integración con Django, finalmente se descartó la opción de utilizarla. Debido a esto, se ha decido utilizar MongoDB\cite{mg} como sistema gestor de bases de datos no-relaciones también denominadas bases de datos documentales, con el objetivo de conseguir un esquema interno flexible y eficiente. 
 
 MongoDB es un sistema de base de datos NoSQL orientado a grandes cantidades de datos, guarda estructuras de datos en documentos similares a JSON haciendo que la integración de los datos en ciertas aplicaciones sea más fácil y rápida.
 Se trata de una base de datos ágil que permite cambiar los esquemas de una aplicación cuando esta evoluciona. Los principales objetivos de estas bases de datos son la escalabilidad, rendimiento y gran disponibilidad.
