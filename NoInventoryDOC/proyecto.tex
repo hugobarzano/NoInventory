@@ -739,7 +739,7 @@ El siguiente diagrama especifica la generación de gráficos representativos de 
 \caption{ Diagramas de Secuencia - Generación de Gráficos\cite{diagrama}  }  
 \end{figure}
 
-Por último, los siguientes diagramas pretenden especificar el modulo de generación de informes, detallando los procesos de creación, borrado y consulta de informes. El diagrama de creación especifica las acciones opcionales de agregar gráficos y catálogos al informe. El diagrama de consulta, especifica además el proceso de modificación, visualización y la posibilidad de exportar dicho informe a formato PDF. 
+Por último, los siguientes diagramas pretenden especificar el módulo de generación de informes, detallando los procesos de creación, borrado y consulta de informes. El diagrama de creación especifica las acciones opcionales de agregar gráficos y catálogos al informe. El diagrama de consulta, especifica además el proceso de modificación, visualización y la posibilidad de exportar dicho informe a formato PDF. 
 
 \begin{figure}[H] 
 \centering 
@@ -896,8 +896,8 @@ Para alcanzar un mayor grado de comprensión de la aplicación Android, se prese
 
 
 \chapter{Desarrollo del Sistema}
-En esta parte se abordarán los aspectos más importantes en el desarrollo del sistema. ¿Qué tecnologías has sido utilizadas?, ¿como han sido utilizadas? y ¿por qué han sido utilizadas?
-para alcanzar un mayor grado de comprensión, se ha desglosado el proceso de desarrollo en 3 bloques principales: Desarrollo Web, Infraestructura y Desarrollo Android. 
+En esta parte se abordarán los aspectos más importantes en el desarrollo del sistema. ¿Qué tecnologías has sido utilizadas?, ¿Como han sido utilizadas? y ¿Por qué han sido utilizadas?
+Para alcanzar un mayor grado de comprensión, se ha desglosado el proceso de desarrollo en 3 bloques principales: Desarrollo Web, Infraestructura y Desarrollo Android. 
 
 
 \section{Desarrollo Web}
@@ -913,7 +913,7 @@ En el proceso de desarrollo web, se ha seguido el patrón de arquitectura softwa
 Los componentes\cite{mvc3}\cite{mvc4} del Modelo-Vista-Controlador se pueden definir en:
 
 \begin{enumerate}
-\item \textbf{Modelo:} Representa la información , gestiona los accesos a ella, la base de datos seria un componente del modelo. 
+\item \textbf{Modelo:} Representa la información , gestiona los accesos a ella, la base de datos sería un componente del modelo. 
 
 \item \textbf{Vista:} Representa el modelo en un formato adecuado para interactuar con él mediante la interfaz de usuario.  
 
@@ -931,7 +931,7 @@ Este proyecto se ha desarrollado en python, utilizando el framework Django. Como
 
 \subsection{Back-End}
 
-El Back-End o lado del servidor es la capa encargada del acceso a los datos. En este proyecto se ha decidido utilizar Django\cite{dj} como framework de alto nivel para trabajar con python en el servidor. Este framework reúne diversas herramientas y aplicaciones, como por ejemplo el servidor de aplicación para desarrollo que facilita el trabajo para desarrollar de manera ágil, el modulo de autenticación de usuarios, el modulo para desarrollo basado en test o la integración de servicios externos como el cliente de mensajería interna. Al principio se planteó realizar la plataforma web en PHP utilizando el framework Symfony pero al ser un sistema bastante grande, se decidió optar por Django ya que facilitaba el proceso de desarrollo. También se pensó en el micro-framework python Flask\cite{fl} pero después del proceso de análisis, se llegó a la conclusión de que con Flask se repetiría mucho más código y con Django el diseño sería más escalable.
+El Back-End o lado del servidor es la capa encargada del acceso a los datos. En este proyecto se ha decidido utilizar Django\cite{dj} como framework de alto nivel para trabajar con python en el servidor. Este framework reúne diversas herramientas y aplicaciones, como por ejemplo el servidor de aplicación para desarrollo que facilita el trabajo para desarrollar de manera ágil, el módulo de autenticación de usuarios, el módulo para desarrollo basado en test o la integración de servicios externos como el cliente de mensajería interna. Al principio, se planteó realizar la plataforma web en PHP utilizando el framework Symfony pero al ser un sistema bastante grande, se decidió optar por Django ya que facilitaba el proceso de desarrollo. También se pensó en el micro-framework python Flask\cite{fl} pero después del proceso de análisis, se llegó a la conclusión de que con Flask se repetiría mucho más código y con Django el diseño sería más escalable.
 
 \begin{figure}[H] 
 \centering 
@@ -946,6 +946,7 @@ La parte imprescindible para la capa de acceso a datos es el sistema gestor de b
 
 MongoDB es un sistema de base de datos NoSQL orientado a grandes cantidades de datos, guarda estructuras de datos en documentos similares a JSON haciendo que la integración de los datos en ciertas aplicaciones sea más fácil y rápida.
 Se trata de una base de datos ágil que permite cambiar los esquemas de una aplicación cuando esta evoluciona. Los principales objetivos de estas bases de datos son la escalabilidad, rendimiento y gran disponibilidad.
+
 En MongoDB los documentos se agrupan en colecciones. Las colecciones  no imponen una estructura fija a los documentos que contienen, ni siquiera al tipo de datos de cada campo. Esto es una ventaja cuando estamos desarrollado un sistema en el que las entradas de la base de datos dependen de las preferencias del usuario.
 
 \begin{figure}[H] 
@@ -955,11 +956,15 @@ En MongoDB los documentos se agrupan en colecciones. Las colecciones  no imponen
 \end{figure} 
 
 Las principales características de las bases de datos no-relacionales como MongoDB son la velocidad y la flexibilidad. La eficiencia en las consultas sobre bases de datos no-relacionales, y mas aun, cuando estas consultas marcan la calidad de experiencia que percibe el usuario, ya sea en el portal web o en la aplicación Android.  Las tareas de consulta, inserción, modificación o borrado presentan una gran eficiencia ya que pueden ser realizadas mediante funciones JavaScript en el cliente, conectando directamente con la base de datos.
-En cuanto a la flexibilidad, la principal ventaja es la escalabilidad, por ejemplo, en el momento en que un usuario necesite mas atributos para clasificar sus objetos, lo que en el mundo de las bases de datos relacionales se traduciría en agregar mas columnas a las tablas que representan todos los objetos, cuando se trabaja con bases de datos no relacionales esto no es un impedimento, ya que en la misma colección pueden convivir documentos u objetos con distintos campos o valores. Esto es perfecto para darle al usuario la libertad de personalizar los atributos con los que quiere identificar sus objetos. 
+
+En cuanto a la flexibilidad, la principal ventaja es la escalabilidad, por ejemplo, en el momento en que un usuario necesite mas atributos para clasificar sus objetos, lo que en el mundo de las bases de datos relacionales se traduciría en agregar mas columnas a las tablas que representan todos los objetos, cuando se trabaja con bases de datos no relacionales esto no es un impedimento, ya que en la misma colección pueden convivir documentos u objetos con distintos campos o valores. Esto es perfecto para darle al usuario la libertad de personalizar los atributos con los que quiere identificar sus objetos.
+
 Las consultas sobre MongoDB son consultas Ad Hoc, las cuales soportan búsqueda por campos, consultas por rangos y expresiones regulares. También pueden ser funciones JavasScript definidas por el desarrollador. 
+
 Cualquier documento de MongoDB puede ser indexado. Los índices funcionan de manera similar a los de las bases de datos relacionales. 
-En cuanto a la replicación y Balanceo de carga, MongoDb soporta el paradigma maestro-esclavo. Es capaz de escalar horizontalmente y tiene la capacidad de ejecutarse en múltiples servidores, balanceando la carga y duplicando de datos para garantizar el funcionamiento del sistema en caso de fallo. 
-En MongoDB, los documentos los guarda en BSON, que es una forma de representar de forma binaria objetos JSON. Un ejemplo de documento almacenado en MongoDB que representa a un item del almacén, es el siguiente:
+
+En cuanto a la replicación y Balanceo de carga, MongoDb soporta el paradigma maestro-esclavo. Es capaz de escalar horizontalmente y tiene la capacidad de ejecutarse en múltiples servidores, balanceando la carga y duplicando los datos para garantizar el correcto funcionamiento del sistema en caso de fallo. 
+En MongoDB, los documentos se guardan en BSON, que es una forma de representar objetos o documentos JSON binarios. Un ejemplo de documento almacenado en MongoDB que representa a un item del almacén, es el siguiente:
 \begin{lstlisting}
 {u'nombre_item': u'nombre del objeto', 
  u'descripcion_item': u'Detalles del objeto', 
@@ -977,9 +982,9 @@ Este documento es básico. Los documentos pueden anidarse, dando lugar a documen
 \subsubsection{Pymongo} 
 Para interactuar con MongoDB, se utiliza Pymongo\cite{pymongo}, un paquete python que facilita un cliente o driver intermediario para controlar la iteración del sistema con la base de datos MongoDB. Algunas de las características que Pymongo ofrece son:
 \begin{enumerate}
-\item Conexión con la Base de Datos
-\item Visualización de las Bases de Datos creadas.
-\item Creación de nuevas Bases de Datos
+\item Conexión con la base de datos
+\item Visualización de las bases de datos creadas.
+\item Creación de nuevas bases de datos
 \item Visualización de las colecciones creadas
 \item Creación de nuevas colecciones
 \item Inserción de nuevos documentos
@@ -993,11 +998,11 @@ Pymongo es el controlador que permite a nuestro modelos interaccionar con la bas
  
 \subsection{Front-End}
 
-El Front-End, capa de presentación o capa de cliente es la encargada de maquetar la estructura semántica del contenido, codificar el diseño en hojas de estilo y controlar la interacción con el usuario. En este proyecto la programación en el lado cliente juega un papel importante a la hora de mejorar la experiencia del usuario en la plataforma, manteniendo los datos actualizados en función de las actualizaciones de los distintos usuarios que trabajan en un mismo entorno colaborativo. La forma de trabajar en el cliente es mediante llamadas asíncronas al servidor, utilizando JQuery y Ajax para realizar llamadas asíncronas al servidor.  
+El Front-End, capa de presentación o capa de cliente es la encargada de maquetar la estructura semántica del contenido, codificar el diseño en hojas de estilo y controlar la interacción con el usuario. En este proyecto la programación en el lado cliente juega un papel importante a la hora de mejorar la experiencia del usuario en la plataforma, manteniendo los datos actualizados en función de las actualizaciones de los distintos usuarios que trabajan en un mismo entorno colaborativo. La forma de trabajar en el cliente es utilizando JQuery y Ajax para realizar llamadas asíncronas al servidor y actualizar los datos dinámicamente.   
 
 \subsubsection{JQuery y Ajax}
 
-JQuery\cite{jq} es una librería de JavaScript, que permite interactuar con los documentos HTML, manipular el árbol DOM, manejar eventos, desarrollar animaciones y agregar interacción con el servidor mediante llamadas asíncronas realizadas con Ajax. Su objetivo principal es dar un comportamiento dinámico a las paginas web. Jquery funciona en múltiples navegadores, ya que es compatible con CSS3.  
+JQuery\cite{jq} es una librería de JavaScript, que permite interactuar con los documentos HTML, manipular el árbol DOM, manejar eventos, desarrollar animaciones y agregar interacción con el servidor mediante llamadas asíncronas realizadas con Ajax. Su objetivo principal es dar un comportamiento dinámico a la web. Jquery funciona en múltiples navegadores y es compatible con CSS3.  
 
 Ajax\cite{aj}, abreviatura de JavaScript Asíncrono y XML es un conjunto de técnicas de desarrollo web en el cliente para crear aplicaciones asíncronas y dinámicas. Con Ajax, las aplicaciones web pueden enviar y recibir datos desde el servidor en segundo plano sin que interfiera en la visualización o el comportamiento de la aplicación. Utilizar Ajax supone crear aplicaciones web en las que la capa de intercambio de datos ha sido separada de la capa de presentación, lo que permite un comportamiento dinámico sin la necesidad de recargar el navegador. 
 
@@ -1022,13 +1027,14 @@ Bootstrap\cite{boo} es un framework CSS para dar forma a sitios web mediante lib
 \end{enumerate}
   
 \subsection{Herramientas y Servicios}
-Para dotar a la plataforma de diversas funcionalidades, se han incluido ciertos servicios externos. 
+Para alojar el código fuente del sistema y dotar a la plataforma de diversas funcionalidades, se han incluido ciertos servicios externos y se ha utilizado Github como plataforma para el control de versiones. 
 
 \subsubsection{SendGrid}
 SendGrid\cite{sg} es un servicio cloud de correo electrónico. Proporciona un sistema de entrega de correos electrónicos transaccional. SendGrid cuenta con una API flexible que facilita la integración personalizada del servicio. 
  
 
-En este proyecto, se ha utilizado SendGrid para implantar un buzón de incidencias en la página principal. Dicho buzón, permite a los usuarios interesados, contactar con el administrador del sistema en caso de incidencia o en caso de necesitar información. Dicho buzón también permite contactar con los usuarios registrados que pertenecen a alguna organización o almacén en concreto. Al utilizar Django como marco de trabajo la integración de  SendGrid  es muy sencilla. Es necesario disponer de una cuenta en el servicio y añadir las siguientes lineas al archivo de configuración settings.py de Django:
+En este proyecto, se ha utilizado SendGrid para implantar un buzón de incidencias en la página principal. Dicho buzón, permite a los usuarios interesados, contactar con el administrador del sistema en caso de incidencia o en caso de necesitar información. Dicho buzón también permite contactar con los usuarios registrados que pertenecen a alguna organización o almacén en concreto. Al utilizar Django como marco de trabajo, la integración de SendGrid es muy sencilla. Es necesario disponer de una cuenta en el servicio y añadir las siguientes lineas al archivo de configuración settings.py del proyecto Django:
+
 \begin{lstlisting}
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = os.environ.get('MAIL_USER')
@@ -1036,7 +1042,8 @@ EMAIL_HOST_PASSWORD = os.environ.get('MAIL_PASS')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 \end{lstlisting}
-El nombre de usuario y la contraseña son establecidas mediante variables de entorno para garantizar la seguridad del servicio. SendGrid facilita de manera gratuita, cuentas con 25.000 correos electrónicos gratuitos cada mes.
+
+El nombre de usuario y la contraseña han sido establecidas mediante variables de entorno para garantizar la seguridad del servicio. SendGrid facilita de manera gratuita, cuentas con 25.000 correos electrónicos gratuitos cada mes.
 
 \subsubsection{Generación de Identificadores }
 
@@ -1071,16 +1078,16 @@ def barcode(value, alt=None):
 \end{lstlisting}
 
 \subsubsection{Github}
-GitHub\cite{github} es una plataforma de desarrollo colaborativo de software para alojar proyectos utilizando el sistema de control de versiones Git. El código es almacenado de forma pública o privada. GitHub aloja tu repositorio de código y te brinda herramientas muy útiles para el trabajo en equipo, dentro de un proyecto. Github\cite{github2} ofrece varias herramientas:
+GitHub\cite{github} es una plataforma de desarrollo colaborativo de software para alojar proyectos utilizando el sistema de control de versiones Git. El código es almacenado de forma pública o privada. GitHub aloja el código en repositorios y brinda herramientas muy útiles para trabajar de forma colaborativa. Github\cite{github2} ofrece varias herramientas:
 
 \begin{enumerate}
 \item Una wiki para el mantenimiento de las distintas versiones de las páginas. 
-\item Un sistema de seguimiento de problemas que permiten a los miembros de tu equipo detallar un problema con tu software.
+\item Un sistema de seguimiento de problemas que permiten a los miembros de un equipo de desarrollo detallar problemas software.
 \item Una herramienta de revisión de código, donde se pueden añadir anotaciones en cualquier punto de un fichero y debatir sobre determinados cambios realizados en un commit específico. 
 \item Un visor de ramas donde se pueden comparar los progresos realizados en las distintas ramas de un repositorio. 
 \end{enumerate}
 
-Como parte del desarrollo de este proyecto, se ha utilizado Github como plataforma para el control de versiones. Github también ha sido utilizado para la automatización de tareas. Como se verá en la siguiente sección, el repositorio del proyecto esta vinculado con algunas herramientas cloud, de manera que al realizar push sobre el proyecto, estas herramientas cloud lanzan disparadores para integración continua, automatizar despliegues en PaaS o generar imágenes Docker. Todo esto se verá en detalle en la siguiente sección, dedicada a la infraestructura del proyecto. Los repositorios en los que están alojados los fuentes del proyecto son los siguientes: 
+Como parte del desarrollo de este proyecto, se ha utilizado Github como plataforma para el control de versiones. Github también ha sido utilizado para la automatización de tareas en la infraestructura. Como se verá en la siguiente sección, el repositorio del proyecto esta vinculado con algunas herramientas cloud, de manera que al realizar push sobre el proyecto, estas herramientas cloud lanzan disparadores para por ejemplo, integración continua, automatizar despliegues en PaaS o generar imágenes Docker. Todo esto se verá en detalle en la siguiente sección, dedicada a la infraestructura del proyecto. Los repositorios en los que están alojados los fuentes del proyecto son los siguientes: 
 
 \begin{enumerate}
 \item  \href{https://github.com/hugobarzano/NoInventory}{No-Inventory: Plataforma Web}
@@ -1092,17 +1099,17 @@ Como parte del desarrollo de este proyecto, se ha utilizado Github como platafor
  
 \section{Infraestructura}
 
-En esta sección se detallará la infraestructura virtual subyacente con la que cuenta el proyecto. Para empezar se hablará de las herramientas de integración continua utilizadas y el papel que juegan en el despliegue. Se hablará también de Heroku, la Plataforma como servicio utilizada, de como distribuir la base de datos MongoDB utilizando Mlab. También se hablará de Azure, la infraestructura como servicio utilizada, de las herramientas de despliegue utilizadas para trabajar con Azure y por último como utilizar Docker y las ventajas del aislamiento de recursos para levantar instancias del sistema de manera rápida en el caso de que la cantidad de datos a gestionar por el cliente así lo requiera. 
+En esta sección se detallará la infraestructura virtual subyacente con la que cuenta el proyecto para ofrecer Software como servicio. Para empezar se hablará de las herramientas de integración continua utilizadas y el papel que juegan en el despliegue. Se hablará también de Heroku, la Plataforma como servicio utilizada, de como distribuir la base de datos MongoDB utilizando Mlab. También se hablará de Azure, la infraestructura como servicio utilizada, de las herramientas de despliegue utilizadas para trabajar con Azure y por último como utilizar Docker y las ventajas del aislamiento de recursos para levantar instancias del sistema de manera rápida en el caso de que la cantidad de datos a gestionar por el cliente así lo requiera. 
 
 \subsection{Integración Continua}
 
-Para detallar la infraestructura subyacente con la que cuenta el proyecto, es necesario comenzar hablando de las herramientas de integración continua que se usan en el. La integración continua consiste en realizar compilaciones y ejecución de pruebas o test unitarios de todo el proyecto, cada cierto tiempo con el objetivo de detectar fallos. Debido al desarrollo TDD\ref{sec:TDD}, el proyecto cuenta con las baterías de test asociadas a los modelos y a sus manejadores.
+Para detallar la infraestructura subyacente con la que cuenta el proyecto, es necesario comenzar hablando de las herramientas de integración continua que se usan en él. La integración continua consiste en realizar compilaciones y ejecuciones de pruebas o test unitarios de todo el proyecto, cada cierto tiempo con el objetivo de detectar fallos. Debido al desarrollo TDD\ref{sec:TDD}, el proyecto cuenta con las baterías de test asociadas a los modelos y a sus manejadores(Drivers).
 
 \subsubsection{Travis-CI}
-En este proyecto la primera herramienta de integración continua utilizada es Travis-CI\cite{travis}.Travis es un  sistema distribuido de integración continua utilizado para construir y testear proyectos. Travis utiliza el control de versiones GitHub y un archivo denominado travis.yml\ref{sec:travis} para realizar el proceso de integración. En dicho fichero, se especifica el lenguaje utilizado, la versión, la instalación de dependencias y la ejecución de test unitarios. Dicho fichero también puede utilizarse para realizar despliegue de la aplicación en distintas plataformas aunque en este proyecto no ha sido el caso. Travis es una herramienta de código abierto compatible con multitud de lenguajes. 
+En este proyecto la primera herramienta de integración continua utilizada es Travis-CI\cite{travis}. Travis es un  sistema distribuido de integración continua utilizado para construir y testear proyectos. Travis utiliza el control de versiones GitHub y un archivo denominado travis.yml\ref{sec:travis} para realizar el proceso de integración. En dicho fichero, se especifica el lenguaje utilizado, la versión, la instalación de dependencias y la ejecución de test unitarios. Dicho fichero también puede utilizarse para realizar despliegue de la aplicación en distintas plataformas aunque en este proyecto no ha sido el caso. Travis es una herramienta de código abierto compatible con multitud de lenguajes. 
 
 \subsubsection{SNAP-CI}
-La segunda herramienta de integración continua utilizada ha sido SNAP-CI\cite{snap}. Esta herramienta es perfecta para el proceso de integración continua y la automatización del despliegue de la aplicación. Como podemos observar en la siguiente imagen, Snap-CI nos permite vincular el repositorio de github en el que se encuentra el sistema y desglosar en un pipeline los distintos pasos que de pasar la aplicación para completar la integración y desplegarse.En este proyecto, el pipeline esta desglosado en 3 bloques, los cuales se ejecutarán cada vez que se realice un push al repositorio:
+La segunda herramienta de integración continua utilizada ha sido SNAP-CI\cite{snap}. Esta herramienta es perfecta para el proceso de integración continua y la automatización del despliegue de la aplicación. Como podemos observar en la siguiente imagen, Snap-CI nos permite vincular el repositorio de Github en el que se encuentra el código fuente del sistema y desglosar en un pipeline los distintos pasos que ha de superar la aplicación para completar la integración y desplegarse.En este proyecto, el pipeline esta desglosado en 3 bloques, los cuales se ejecutarán cada vez que se realice un push al repositorio:
 
 \begin{enumerate}
 \item Instalación de dependencias
@@ -1122,7 +1129,7 @@ La segunda herramienta de integración continua utilizada ha sido SNAP-CI\cite{s
 
 \subsection{Plataforma Como Servicio}
 
-Para continuar con el desarrollo de la infraestructura, se va a hablar de la plataforma como servicio. Como se vio en la introducción, la plataforma como servicio es uno de los servicios cloud que hoy en día pueden ofrecerse. Este proyecto se encuentra desplegado en el PaaS Heroku\cite{hero} que al ser de carácter gratuito el objetivo de desplegar el sistema aquí es tener una versión disponible para que el usuario prueba el sistema sin ningún compromiso.
+Para continuar con el desarrollo de la infraestructura, se va a hablar de la plataforma como servicio. Como se comentó en la introducción, la plataforma como servicio es uno de los servicios cloud que hoy en día pueden ofrecerse. Este proyecto se encuentra desplegado en el PaaS Heroku\cite{hero} que es de carácter gratuito. El objetivo de desplegar el sistema aquí es tener una versión disponible para que el usuario prueba el sistema sin ningún compromiso.
  	
  
 
@@ -1130,7 +1137,7 @@ Heroku es una plataforma en la nube basado en un sistema de contenedores gestion
 
 El principal problema es que Heroku es gratuito hasta cierto punto, por ejemplo el sistema de bases de datos es de pago, por lo que se decidió utilizar Mlab para distribuir la base de datos.
 
-Mlab\cite{mlab} es un servicio de base de datos alojado en la nube completamente gestionado que proporciona servicio de bases de datos MongoDB. MLab se ejecuta en proveedores cloud como Amazon, Google y Microsoft Azure. Mlab facilita la automatización de despliegue, proporciona servicio de Backup, Recovery, monitorización y alertas de consumo desde la interfaz del navegador. Mlab proporciona de manera gratuita hasta 500MB de almacenamiento y el acceso a las bases de datos creadas en la plataforma se realiza mediante url la cual aprovechan los clientes de bases datos como Pymongo para conectar con el servicio, de esta manera se consigue distribuir la base de datos cuando estamos trabajando por ejemplo con Heroku. 
+Mlab\cite{mlab} es un servicio de base de datos alojado en la nube completamente gestionado que proporciona servicio de bases de datos MongoDB. MLab se ejecuta en proveedores cloud como Amazon, Google y Microsoft Azure. Mlab facilita la automatización de despliegue, proporciona servicio de Backup, Recovery, monitorización y alertas de consumo desde la interfaz del navegador. Mlab proporciona de manera gratuita hasta 500 MB de almacenamiento y el acceso a las bases de datos creadas en la plataforma se realiza mediante url la cual aprovechan los clientes de bases datos como Pymongo para conectar con el servicio, de esta manera se consigue distribuir la base de datos cuando estamos trabajando por ejemplo con Heroku. 
 
 \begin{figure}[H] 
 \centering 
@@ -1153,7 +1160,7 @@ Al trabajar con Azure a nivel de IaaS, disponemos de maquinas virtuales en linea
 
 \subsubsection{Vagrant}
 
-La herramienta base es Vagrant\cite{vg}, herramienta open-source para la creación y configuración de entornos de desarrollo virtualizados. Vagrant proporciona entornos de trabajo fáciles de configurar, reproducibles y portátiles. Está desarrollado con Ruby y utiliza el sistema de virtualización Virtualbox de Oracle. Este proyecto tiene asociado un fichero denominado Vagrantfile\ref{sec:vagrantfile} cuya función principal es la de describir el tipo de máquinas necesarias para la aplicación, cómo configurarlas y como aprovisionarlas. Las posibilidades con Vagrant son muy numerosas, en este proyecto se va a utilizar Vagrant para la configuración de maquinas virtuales alojadas en Azure. Dichas maquinas correrán directamente con la aplicación utilizando Ansible y también correrán con la aplicación de manera asilada utilizando contenedores. 
+La herramienta base es Vagrant\cite{vg}, herramienta Open Source para la creación y configuración de entornos de desarrollo virtualizados. Vagrant proporciona entornos de trabajo fáciles de configurar, reproducibles y portátiles. Está desarrollado con Ruby y utiliza el sistema de virtualización Virtualbox de Oracle. Este proyecto tiene asociado un fichero denominado Vagrantfile\ref{sec:vagrantfile} cuya función principal es la de describir el tipo de máquinas necesarias para la aplicación, cómo configurarlas y como aprovisionarlas. Las posibilidades con Vagrant son muy numerosas, en este proyecto se va a utilizar Vagrant para la configuración de maquinas virtuales alojadas en Azure. Dichas maquinas correrán directamente con la aplicación utilizando Ansible y también correrán con la aplicación de manera asilada utilizando contenedores. 
 
 \begin{figure}[H] 
 \centering 
@@ -1164,12 +1171,12 @@ La herramienta base es Vagrant\cite{vg}, herramienta open-source para la creaci�
 
 Dependiendo del proveedor de servicio, Vagrant será configurado de una manera u otra. En este proyecto se ha utilizado Azure, por lo que Vagrant necesita el plugin Microsoft Azure provider to Vagrant. Con este plugin detallamos entre otras cosas las credenciales necesarias para autenticación en Azure.
 
-Vagrant cuenta con infinidad de plugins para distintos cloud services y distintos entornos de de desarrollo virtuales. Con Vagrant no solo podemos trabajar individualmente maquina a máquina, podemos utilizar la caracteristica vagrant-multimachine para crear en paralelo N máquinas virtuales y aprovisionarlas cada una como queramos. 
+Vagrant cuenta con infinidad de plugins para distintos cloud services y distintos entornos de desarrollo virtuales. Con Vagrant no solo podemos trabajar individualmente maquina a máquina, podemos utilizar la característica vagrant-multimachine para crear en paralelo N máquinas virtuales y aprovisionarlas cada una como queramos. 
 
 
 \subsubsection{Ansible}
 
-Ansible\cite{ans} es una herramienta de automatización que permite configurar sistemas, implementar software y orquestar tareas complejas como por ejemplo despliegues continuos. En este proyecto se ha decidido utilizar Ansible como mecanismo de aprovisionamiento de aplicación, debido a su fiabilidad, facilidad de uso y seguridad. Para poder trabajar con Ansible es necesario crear playbooks\ref{sec:playbook} que no son mas que archivos de aprovisionamiento.yml en los que detallar todas las dependencias, servicios y tareas que nuestra aplicación necesita para funcionar. Aunque puede usarse de manera independiente, si la combinamos con herramientas de creación y administración de entornos virtuales como por ejemplo Vagrant, podemos llegar a conseguir grandes resultados.
+Ansible\cite{ans} es una herramienta de automatización que permite configurar sistemas, implementar software y orquestar tareas complejas como por ejemplo despliegues continuos. En este proyecto se ha decidido utilizar Ansible como mecanismo de aprovisionamiento de aplicación, debido a su fiabilidad, facilidad de uso y seguridad. Para poder trabajar con Ansible es necesario crear playbooks\ref{sec:playbook} que no son más que archivos de aprovisionamiento.yml en los que detallar todas las dependencias, servicios y tareas que nuestra aplicación necesita para funcionar. Aunque puede usarse de manera independiente, si la combinamos con herramientas de creación y administración de entornos virtuales como por ejemplo Vagrant, podemos llegar a conseguir grandes resultados.
 
 \begin{figure}[H] 
 \centering 
@@ -1181,7 +1188,7 @@ Ansible\cite{ans} es una herramienta de automatización que permite configurar s
 
 \subsubsection{Docker}
 
-Docker\cite{dk} es una herramienta para automatizar el despliegue de aplicaciones dentro de contenedores, proporcionando una capa de abstracción y automatización de Virtualización a nivel de sistema operativo. Docker utiliza aislamiento de recursos del kernel de Linux, para permitir que contenedores independientes se ejecuten dentro de una sola instancia de Linux, evitando la sobrecarga de iniciar y mantener máquinas virtuales.
+Docker\cite{dk} es una herramienta para automatizar el despliegue de aplicaciones dentro de contenedores, proporcionando una capa de abstracción y automatización de virtualización a nivel de sistema operativo. Docker utiliza aislamiento de recursos del kernel de Linux, para permitir que contenedores independientes se ejecuten dentro de una sola instancia de Linux, evitando la sobrecarga de iniciar y mantener máquinas virtuales.
 
 \begin{figure}[H] 
 \centering 
@@ -1189,7 +1196,7 @@ Docker\cite{dk} es una herramienta para automatizar el despliegue de aplicacione
 \caption{ Virtualización Docker\cite{dkw}}
 \end{figure}
 
-La principal diferencia con respecto a máquinas virtuales es el tamaño. Las máquinas virtuales incluyen la aplicación, el código, las librerías necesarias y un sistema operativo anfitrión completo mientras que los contenedores contienen lo mismo pero comparten el núcleo con otros contenedores corriendo como una proceso asilado en el espacio de usuario del sistema operativo anfitrión. No están vinculados con ninguna infraestructura especifica 
+La principal diferencia con respecto a máquinas virtuales es el tamaño. Las máquinas virtuales incluyen la aplicación, el código, las librerías necesarias y un sistema operativo anfitrión completo mientras que los contenedores contienen lo mismo pero comparten el núcleo con otros contenedores corriendo como un proceso asilado en el espacio de usuario del sistema operativo anfitrión. No están vinculados con ninguna infraestructura especifica. 
 
 
 En este proyecto se ha decidido utilizar Docker con el objetivo de levantar instancias del sistema de manera rápida y asilada. Esto puede ser de gran ayuda a la hora de que el sistema tenga que gestionar un almacén con una cantidad inmensa de elementos. Manejar tal cantidad de datos, podría afectar negativamente no solo al almacén en cuestión, si no a otros usuarios de otros almacenes que obtengan servicio de la misma instancia. Usar Docker puede resultar interesante también cuando los objetos a gestionar sean sensibles y el cliente requiera mayor grado de seguridad para sus datos. Docker también facilita la puesta en producción de la aplicación, ya que en un mismo archivo de configuración denominado Dockerfile\ref{sec:dockerfile}, se pueden automatizar las tareas de puesta en producción, configuración de Nginx\ref{sec:nginx} como servidor de contenido estático, configuración de gunicorn como servidor de aplicación y monitorización del sistema utilizando supervisor\ref{sec:supervisor}. 
@@ -1231,7 +1238,7 @@ Las principales técnicas de la POO se pueden clasificar en:
 
 \begin{enumerate}
 \item \textbf{Herencia:} Permite a los desarrolladores crear nuevos objetos o clases partiendo de una clase o jerarquía de clases ya existente con el objetivo de reutilizar código y extenderlo. 
-\item \textbf{Cohesión:} Establece el grado con el que los elementos de un modulo software están relacionados entre si. El objetivo de la cohesión es generar aplicaciones robustas, fiables, reutilizables y facilitar la comprensión de las mimas.
+\item \textbf{Cohesión:} Establece el grado con el que los elementos de un módulo software están relacionados entre si. El objetivo de la cohesión es generar aplicaciones robustas, fiables, reutilizables y facilitar la comprensión de las mimas.
 \item \textbf{Abstracción:} Consiste en aislar un elemento de su contexto. Expresa las características esenciales de un objeto, las cuales distinguen al objeto de los demás estableciendo limites conceptuales.
 \item \textbf{Polimorfismo:} Propiedad por la que es posible enviar mensajes sintácticamente iguales a objetos de tipos distintos. La única restricción es que los objetos han de ser capaces de contestar al mensaje. 
 \item \textbf{Acoplamiento:} es la forma o nivel de interdependencia entre módulos de software. 
@@ -1239,7 +1246,7 @@ Las principales técnicas de la POO se pueden clasificar en:
 \end{enumerate}
 
 
-Resulta interesante conocer el ciclo de vida\cite{col} de las actividades dentro de la aplicación. Una aplicación en Android está formada por un conjunto de elementos básicos de interacción con el usuario, conocidos como actividades y un conjunto de servicios. Una aplicación Android se ejecuta dentro de su propio proceso Linux. Este proceso se crea con la aplicación y continuará vivo hasta que ya no sea necesario y el sistema reclame su memoria para asignársela a otra aplicación. El ciclo de vida de una actividad Android representa las transiciones por las que puede pasar dicha actividad. Las actividades se gestionan como una pila, es decir, desde una actividad se puede llamar a otra, y cuando esta finaliza se vuelve a la actividad invocadora. Las actividades Android pueden pasar por los siguientes estados:
+Resulta interesante conocer el ciclo de vida\cite{col} de las actividades dentro de la aplicación. Una aplicación Android está formada por un conjunto de elementos básicos de interacción con el usuario, conocidos como actividades y un conjunto de servicios. Una aplicación Android se ejecuta dentro de su propio proceso Linux. Este proceso se crea con la aplicación y continuará vivo hasta que ya no sea necesario y el sistema reclame su memoria para asignársela a otra aplicación. El ciclo de vida de una actividad Android representa las transiciones por las que pueden pasar sus actividades. Las actividades se gestionan como una pila, es decir, desde una actividad se puede llamar a otra, y cuando esta finaliza se vuelve a la actividad invocadora. Las actividades Android pueden pasar por los siguientes estados:
 
 \begin{enumerate}
 \item \textbf{Running o Activa:} La actividad está encima de la pila, lo que quiere decir que es visible y tiene el foco.
