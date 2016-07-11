@@ -28,7 +28,7 @@ Twiiter: [@no_inventory](https://twitter.com/no_inventory)
 
 Contacto: hugobarzano@gmail.com
 
-Licencia: [![Licencia](https://www.dropbox.com/s/o9w70i4i2wfjs9e/gplv3-127x51.png?dl=1)](https://github.com/hugobarzano/NoInventory/blob/master/LICENSE)
+[![Licencia](https://www.dropbox.com/s/o9w70i4i2wfjs9e/gplv3-127x51.png?dl=1)](https://github.com/hugobarzano/NoInventory/blob/master/LICENSE)
 
 ##No-Inventory: Release v1.0
 
