@@ -34,7 +34,7 @@ Licencia: [![Licencia](https://www.dropbox.com/s/o9w70i4i2wfjs9e/gplv3-127x51.pn
 
 Relase generado para el certamen de proyectos de la UGR. Mayo de 2016
 
-[###No-Inventory v1.0](https://github.com/hugobarzano/NoInventory/releases/tag/v1.0)
+[No-Inventory v1.0](https://github.com/hugobarzano/NoInventory/releases/tag/v1.0)
 
 
 
