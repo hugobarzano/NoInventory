@@ -30,6 +30,14 @@ Contacto: hugobarzano@gmail.com
 
 Licencia: [![Licencia](https://www.dropbox.com/s/o9w70i4i2wfjs9e/gplv3-127x51.png?dl=1)](https://github.com/hugobarzano/NoInventory/blob/master/LICENSE)
 
+##No-Inventory: Release v1.0
+
+Relase generado para el certamen de proyectos de la UGR. Mayo de 2016
+
+[###No-Inventory v1.0](https://github.com/hugobarzano/NoInventory/releases/tag/v1.0)
+
+
+
 
 ###Plataforma Web
 
